@@ -1,5 +1,4 @@
 import string,requests,json,datetime
-from public.dataBase import *
 from mexico.gaishu import *
 from data.var_mex import *
 from mexico.mex_mgt import *

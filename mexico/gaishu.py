@@ -1,6 +1,6 @@
 import random
 
-from data.var_mex import *
+#from data.var_mex import *
 from mexico.daiqian_lanaplus import *
 from public.dataBase import *
 

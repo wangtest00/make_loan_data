@@ -1,8 +1,8 @@
 import string,requests,json,datetime
-from mexico.gaishu import *
+from gaishu import *
 from data.var_mex import *
-from mexico.mex_mgt import *
-from mexico.heads import *
+from mex_mgt import *
+from heads import *
 import io,sys
 #改编码方便jenkins运行
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="gb18030")
@@ -64,4 +64,3 @@ def bu_ding(registNo):
 
 if __name__ == '__main__':
     auto_test()
-    #gaishu('L2012106088090503701168824320')

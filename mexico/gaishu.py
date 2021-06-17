@@ -1,7 +1,7 @@
 import random
 
 #from data.var_mex import *
-from mexico.daiqian_lanaplus import *
+from daiqian_lanaplus import *
 from public.dataBase import *
 
 randnum=str(random.randint(10000000,99999999)) #8位随机数

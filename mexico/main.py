@@ -1,6 +1,6 @@
 import string,requests,json,datetime
 from gaishu import *
-from data.var_mex import *
+#from data.var_mex import *
 from mex_mgt import *
 from heads import *
 import io,sys
@@ -38,29 +38,6 @@ def auto_test():
     for i in range(1):
         registNo=str(random.randint(8000000000,9999999999)) #10位随机数作为手机号
         first_login_apply(registNo)
-
-#指定手机号，跑后续流程
-def bu_ding(registNo):
-    token=login_pwd(registNo)
-    headt=head_token(token)
-    sql="select CUST_NO from cu_cust_reg_dtl where REGIST_NO='"+registNo+"';"
-    custNo=DataBase(which_db).get_one(sql)
-    custNo=custNo[0]
-    loan_no=apply_loan(custNo,headt)
-    if loan_no is None:
-        DataBase(which_db).closeDB()
-    else:
-        bank_auth(custNo,headt)
-        update_appr_user_stat()
-        DataBase(which_db).call_4_proc()
-        approve(loan_no)  #分配审批人员并审批通过
-        insert_risk(loan_no)
-        w=withdraw(registNo,custNo,loan_no,headt)
-        if w==1:
-            gaishu(loan_no)
-        else:
-            pass
-        DataBase(which_db).closeDB()
 
 if __name__ == '__main__':
     auto_test()

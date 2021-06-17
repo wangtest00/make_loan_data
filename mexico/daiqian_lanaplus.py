@@ -1,10 +1,10 @@
 import string,requests,json,datetime
-from public.dataBase import *
-from mexico.gaishu import *
-from data.var_mex import *
-from mexico.mex_mgt import *
-from mexico.heads import *
-from public.check_api import *
+from dataBase import *
+from gaishu import *
+from var_mex import *
+from mex_mgt import *
+from heads import *
+from check_api import *
 import io,sys
 #改编码方便jenkins运行
 #sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="gb18030")

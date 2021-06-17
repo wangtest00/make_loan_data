@@ -2,7 +2,7 @@ import random
 
 #from data.var_mex import *
 from daiqian_lanaplus import *
-from public.dataBase import *
+from dataBase import *
 
 randnum=str(random.randint(10000000,99999999)) #8位随机数
 #datet=str(time.time()*1000000)[:-2]   #16位时间戳

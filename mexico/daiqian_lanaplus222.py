@@ -19,6 +19,7 @@ def compute_code(m):
     x3=str(int(m[2])+5)
     x4=str(int(m[3])+5)
     x=x4[-1:]+x3[-1:]+x2[-1:]+x1[-1:]
+    print(x)
     return x
 #第一次验证码注册登录，返回token
 def login_code(registNo):
@@ -87,8 +88,7 @@ def auth_cert(registNo,headt):
     st=''
     for j in range(4):  #生成4个随机英文大写字母
         st+=random.choice(string.ascii_uppercase)
-    data={"birthdate":"1999-5-18","civilStatus":"10050001","curp":st+"990518MM"+st+"V8","delegationOrMunicipality":"zxcvbbbccxxx","education":"10190005",
-          "fatherLastName":"WANG","gender":"10030001",
+    data={"birthdate":"1999-5-18","civilStatus":"10050001","curp":st+"990518MM"+st+"V8","delegationOrMunicipality":"zxcvbbbccxxx","education":"10190005","fatherLastName":"WANG","gender":"10030001",
           "motherLastName":"LIU","name":"YLT","outdoorNumber":"qweetyyu","phoneNo":registNo,"postalCode":"55555","state":"11130001","street":"444444","suburb":"asdfhhj","email":""}
     r=requests.post(host_api+'/api/cust/auth/cert',data=json.dumps(data),headers=headt)
     t=check_api(r)
@@ -172,34 +172,18 @@ def bank_auth(custNo,headt):
     DataBase(which_db).executeUpdateSql(sql)
 #提现接口-app点击提现按钮
 def withdraw(registNo,custNo,loan_no,headt):
-    r=requests.get(host_api+'/api/loan/latest/'+registNo,headers=headt)#获取最近一笔贷款贷款金额，注意请求头content-length的值。The request body did not contain the specified number of bytes. Got 0, expected 63
-    check_api(r)
-    t=r.json()
-    if t['errorCode']==0:
-        loanAmt=t['data']['paymentDetail']['loanAmt']
-        instNum=t['data']['paymentDetail']['instNum']
-        data={"custNo":custNo,"instNum":instNum,"loanAmt":loanAmt,"loanNo":loan_no,"prodNo":prodNo}
-        r2=requests.post(host_api+'/api/trade/fin/withdraw',data=json.dumps(data),headers=headt)
-        check_api(r2)
-        return 1
-    else:
-        print("待提现页面，未获取到最近一笔贷款的数据,不去做改数操作")
-        return 0
-#当前时间的前一天=跑批业务日期，才能正常申请借款
-def update_batch_log():
-    sql='select now();'
-    date_time=DataBase(which_db).get_one(sql)
-    d=str(date_time[0]+datetime.timedelta(days=-1))
-    yudate=d[:4]+d[5:7]+d[8:10]
-    sql2='select BUSI_DATE from sys_batch_log order by BUSI_DATE desc limit 1;'
-    BUSI_DATE=DataBase(which_db).get_one(sql2)
-    if yudate==BUSI_DATE[0]:
-        print("当前服务器日期为:",date_time[0])
-        print("当期系统跑批业务日期为:",BUSI_DATE[0],"无需修改批量日期")
-    else:
-        sql3="update sys_batch_log set BUSI_DATE='"+yudate+"' where BUSI_DATE='"+BUSI_DATE[0]+"';"
-        DataBase(which_db).executeUpdateSql(sql3)
-    DataBase(which_db).closeDB()
+    loanAmt='1140'
+    data={"custNo":custNo,"instNum":"1","loanAmt":loanAmt,"loanNo":loan_no,"prodNo":prodNo}
+    r2=requests.post(host_api+'/api/trade/fin/withdraw',data=json.dumps(data),headers=headt)
+    print(data)
+    print(r2.url)
+
 
 if __name__ == '__main__':
-    compute_code('1234567890')
+    # registNo='9807619011'
+    # custNo='C2012106178093752470557466624'
+    # loan_no='L2012106178093752577625464832'
+    # token=login_pwd(registNo)
+    # headt=head_token(token)
+    # withdraw(registNo,custNo,loan_no,headt)
+    compute_code('4884')

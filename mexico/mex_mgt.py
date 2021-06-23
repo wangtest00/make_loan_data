@@ -1,4 +1,5 @@
 from mexico.daiqian_lanaplus import *
+import requests,json
 
 def check_api(r):
     try:
@@ -39,6 +40,16 @@ def approve(loan_no):
     data2={"loanNo":loan_no,"decisionReason":"10280038","apprRemark":"测试通过","riskLevel":"DEFAULT","riskScore":"0","approveResultType":"PASS"}
     r=requests.post(host_mgt+'/api/approve/handle/approve?lang=zh',data=json.dumps(data2),headers=head)#2.审批通过
     check_api(r)
+#批量分配审批人员及审批通过
+def pl_approve(loan_no):
+    head=head_mgt_c()
+    data1={"loanNos":loan_no,"targetUserNo":"wangs2@whalekun.com"}
+    r=requests.post(host_mgt+'/api/approve/distribution/case?lang=zh',data=json.dumps(data1),headers=head)  #1.分配审批人员
+    check_api(r)
+    for loan_no in loan_no:
+        data2={"loanNo":loan_no,"decisionReason":"10280038","apprRemark":"测试通过","riskLevel":"DEFAULT","riskScore":"0","approveResultType":"PASS"}
+        r=requests.post(host_mgt+'/api/approve/handle/approve?lang=zh',data=json.dumps(data2),headers=head)#2.审批通过
+        check_api(r)
 #组装header+用户登录cookie
 def head_mgt_c():
     ssid=login_mgt()
@@ -46,7 +57,33 @@ def head_mgt_c():
 "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36","Content-Type": "application/json;charset=UTF-8","Origin": "https://test-mgt.quantx.mx","Sec-Fetch-Site": "same-origin","Sec-Fetch-Mode": "cors",
 "Sec-Fetch-Dest": "empty","Referer": "https://test-mgt.quantx.mx/","Accept-Encoding": "gzip, deflate, br","Accept-Language": "zh-CN,zh;q=0.9","Cookie": "language=zh; ssid="+ssid+"; hasLogin=1"}
     return head
-
+def head_mgt_2():
+    ssid=login_mgt()
+    head2={"Host": "test-mgt.quantx.mx","Connection": "keep-alive","sec-ch-ua": '"Not A;Brand";v="99", "Chromium";v="90", "Google Chrome";v="90"',
+"Accept": "application/json, text/plain, */*",
+"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36",
+"Sec-Fetch-Site": "same-origin",
+"Sec-Fetch-Mode": "cors",
+"Sec-Fetch-Dest": "empty","Referer": "https://test-mgt.quantx.mx/","Accept-Encoding": "gzip, deflate, br",
+"Accept-Language": "zh-CN,zh;q=0.9","Cookie": "language=zh; ssid="+ssid+"; hasLogin=1"}
+    return head2
+#批量分配及审批
+def pl_shenpi():
+    head=head_mgt_2()
+    r=requests.get(host_mgt+'/api/approve/distribution/list?pageSize=10&pageNum=1&lang=zh',headers=head)
+    t=r.json()
+    t=t['list']
+    loan_No_List=[]
+    for i in range(len(t)):
+        if t[i]['apprStat']=='10200003':
+            if t[i]['apprUserNo']=='wangs2@whalekun.com' or t[i]['apprUserNo']=='wangs@whalekun.com':
+                print(t[i]['loanNo'])
+                loan_no=t[i]['loanNo']
+                loan_No_List.append(loan_no)
+    if len(loan_No_List)==0:
+        print("无需审批")
+    else:
+        pl_approve(loan_No_List)
 
 if __name__ == '__main__':
-    approve('L2012105198083557192836743168')#L2012105198083557192836743168#L2012105198083551606640377856
+    pl_shenpi()

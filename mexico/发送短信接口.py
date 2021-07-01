@@ -26,7 +26,7 @@ def send_phone_code():
     header={"X-App-No": "201","X-App-Name": "LanaPlus","X-App-Version": "100","X-App-Type": "10090001","Content-Type": "application/json","User-Agent": "PostmanRuntime/7.28.0","Accept": "*/*","Postman-Token": "d4cecd3c-ef0d-497b-bb5c-83961855042c","Host": "test-api.quantx.mx","Accept-Encoding": "gzip, deflate, br","Connection": "keep-alive","Content-Length": "32"}
     randnum=str(random.randint(1000000000,9999999999)) #10位随机数
     data={"phoneNo":randnum}
-    r=requests.post(host+"/api/cust/phone/code",data=json.dumps(data),headers=header)
+    r=requests.post(host_api+"/api/cust/phone/code",data=json.dumps(data),headers=header)
     print(randnum)
     check_api(r)
 

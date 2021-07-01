@@ -5,6 +5,7 @@ from data.var_mex import *
 from mexico.mex_mgt import *
 from mexico.heads import *
 from public.check_api import *
+from mexico.daihou import *
 import io,sys
 #改编码方便jenkins运行
 #sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="gb18030")
@@ -88,8 +89,8 @@ def auth_cert(registNo,headt):
     for j in range(4):  #生成4个随机英文大写字母
         st+=random.choice(string.ascii_uppercase)
     data={"birthdate":"1999-5-18","civilStatus":"10050001","curp":st+"990518MM"+st+"V8","delegationOrMunicipality":"zxcvbbbccxxx","education":"10190005",
-          "fatherLastName":"WANG","gender":"10030001",
-          "motherLastName":"LIU","name":"YLT","outdoorNumber":"qweetyyu","phoneNo":registNo,"postalCode":"55555","state":"11130001","street":"444444","suburb":"asdfhhj","email":""}
+          "fatherLastName":"DUOQI","gender":"10030001",
+          "motherLastName":"TEST","name":"DQ","outdoorNumber":"qweetyyu","phoneNo":registNo,"postalCode":"55555","state":"11130001","street":"444444","suburb":"asdfhhj","email":""}
     r=requests.post(host_api+'/api/cust/auth/cert',data=json.dumps(data),headers=headt)
     t=check_api(r)
     if t!=0:
@@ -200,6 +201,63 @@ def update_batch_log():
         sql3="update sys_batch_log set BUSI_DATE='"+yudate+"' where BUSI_DATE='"+BUSI_DATE[0]+"';"
         DataBase(which_db).executeUpdateSql(sql3)
     DataBase(which_db).closeDB()
+#获取所有账单日
+def getRepayDateList(registNo,headt):
+    r=requests.get(host_api+'/api/loan/latest/'+registNo,headers=headt)#获取最近一笔贷款贷款金额，注意请求头content-length的值。The request body did not contain the specified number of bytes. Got 0, expected 63
+    check_api(r)
+    t=r.json()
+    if t['errorCode']==0:
+        repayDateList=[]
+        repaymentDetailList=t['data']['repaymentDetail']['repaymentDetailList']
+        for i in range(len(repaymentDetailList)):
+            if t['data']['repaymentDetail']['repaymentDetailList'][i]['stat']!='SETTLE_MENT':
+                repayDate=t['data']['repaymentDetail']['repaymentDetailList'][i]['repayDate']
+                repayDate=repayDate[:10]
+                timeArray = time.localtime(int(repayDate[:10]))
+                repayDate = time.strftime("%Y%m%d", timeArray)#时间戳转日期
+                repayDateList.append(repayDate)
+                print(repayDateList)
+                return repayDateList
+            else:
+                pass
+    else:
+        return 0
+
+def repay(custNo,loanNo,repayDate,headt):                                                           #OXXO用CONEKTA
+    data={"advance":"10000000","custNo":custNo,"defer":False,"loanNo":loanNo,"paymentMethod":"STP","repayDateList":[repayDate],"tranAppType":"Android"}
+    r=requests.post(host_api+'/api/trade/fin/repay',data=json.dumps(data),headers=headt)
+    m=check_api(r)
+    repayList=[]
+    if m!=0:
+        t=r.json()
+        transAmt=t['data']['stpRepayment']['transAmt']  #获取待还金额
+        print(transAmt)
+        repayList.append(transAmt)
+    else:
+        pass
+    sql="select IN_ACCT_NO from pay_tran_dtl t where LOAN_NO='"+loanNo+"' and tran_use='10330002' and IN_ACCT_ORG='10020069' and TRAN_CHAN_NAME='STP支付渠道';"
+    in_acct_no=DataBase(which_db).get_one(sql)
+    in_acct_no=in_acct_no[0]
+    if in_acct_no==None:
+        print("repay接口请求有错，未向pay_tran_dtl表写入还款账号等数据",in_acct_no)
+    else:
+        print("repay接口请求正确，向pay_tran_dtl表写入还款账号等数据",in_acct_no)
+        repayList.append(in_acct_no)
+    return repayList
+#app页面去选择stp渠道生成待还pay_tran_dtl数据，并从接口获取到所有未还账单日，取最近一期去模拟银行回调还款-单期足额
+def getRepayDateList_stp(registNo,loanNo):
+    #registNo='9136996496' loanNo='L2012106298098189178824597504'
+    sql="select CUST_NO from cu_cust_reg_dtl where REGIST_NO='"+registNo+"';"
+    custNo=DataBase(which_db).get_one(sql)
+    custNo=custNo[0]
+    token=login_pwd(registNo)
+    headt=head_token(token)
+    getRepayDate_List=getRepayDateList(registNo,headt)
+    repayDate=getRepayDate_List[0]  #获取最近一期未还的账单日
+    print("当前最近一期未还repayDate=",repayDate)
+    repayList=repay(custNo,loanNo,repayDate,headt)
+                 #还款账号       金额
+    stp_repayment(repayList[1],repayList[0])  #单期足额还款
 
 if __name__ == '__main__':
-    compute_code('1234567890')
+    getRepayDateList_stp('9901995743','L2012106308098444919275954176')

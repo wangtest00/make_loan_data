@@ -20,7 +20,7 @@ def check_api(r):
 #登录mgt,返回ssid值
 def login_mgt():
     data={"loginName":"wangs2@whalekun.com","password":"jk@123"}
-    r=requests.post(host_mgt+'/api/login/auth?lang=en&lang=zh',data=json.dumps(data),headers=head_mgt)
+    r=requests.post(host_mgt+'/api/login/auth?lang=en&lang=zh',data=json.dumps(data),headers=head_mgt,verify=False)
     check_api(r)
     for item in r.cookies:
         print(item.name,item.value)
@@ -35,20 +35,20 @@ def update_appr_user_stat():
 def approve(loan_no):
     head=head_mgt_c()
     data1={"loanNos":[loan_no],"targetUserNo":"wangs2@whalekun.com"}
-    r=requests.post(host_mgt+'/api/approve/distribution/case?lang=zh',data=json.dumps(data1),headers=head)  #1.分配审批人员
+    r=requests.post(host_mgt+'/api/approve/distribution/case?lang=zh',data=json.dumps(data1),headers=head,verify=False)  #1.分配审批人员
     check_api(r)
     data2={"loanNo":loan_no,"decisionReason":"10280038","apprRemark":"测试通过","riskLevel":"DEFAULT","riskScore":"0","approveResultType":"PASS"}
-    r=requests.post(host_mgt+'/api/approve/handle/approve?lang=zh',data=json.dumps(data2),headers=head)#2.审批通过
+    r=requests.post(host_mgt+'/api/approve/handle/approve?lang=zh',data=json.dumps(data2),headers=head,verify=False)#2.审批通过
     check_api(r)
 #批量分配审批人员及审批通过
 def pl_approve(loan_no):
     head=head_mgt_c()
     data1={"loanNos":loan_no,"targetUserNo":"wangs2@whalekun.com"}
-    r=requests.post(host_mgt+'/api/approve/distribution/case?lang=zh',data=json.dumps(data1),headers=head)  #1.分配审批人员
+    r=requests.post(host_mgt+'/api/approve/distribution/case?lang=zh',data=json.dumps(data1),headers=head,verify=False)  #1.分配审批人员
     check_api(r)
     for loan_no in loan_no:
         data2={"loanNo":loan_no,"decisionReason":"10280038","apprRemark":"测试通过","riskLevel":"DEFAULT","riskScore":"0","approveResultType":"PASS"}
-        r=requests.post(host_mgt+'/api/approve/handle/approve?lang=zh',data=json.dumps(data2),headers=head)#2.审批通过
+        r=requests.post(host_mgt+'/api/approve/handle/approve?lang=zh',data=json.dumps(data2),headers=head,verify=False)#2.审批通过
         check_api(r)
 #组装header+用户登录cookie
 def head_mgt_c():
@@ -70,13 +70,13 @@ def head_mgt_2():
 #批量分配及审批
 def pl_shenpi():
     head=head_mgt_2()
-    r=requests.get(host_mgt+'/api/approve/distribution/list?pageSize=10&pageNum=1&lang=zh',headers=head)
+    r=requests.get(host_mgt+'/api/approve/distribution/list?pageSize=10&pageNum=1&lang=zh',headers=head,verify=False)
     t=r.json()
     t=t['list']
     loan_No_List=[]
     for i in range(len(t)):
         if t[i]['apprStat']=='10200003':
-            if t[i]['apprUserNo']=='wangs2@whalekun.com' or t[i]['apprUserNo']=='wangs@whalekun.com':
+            if t[i]['apprUserNo']=='wangs2@whalekun.com' or t[i]['apprUserNo']=='wangs@whalekun.com' or t[i]['apprUserNo']=='yanglt@whalekun.com':
                 print(t[i]['loanNo'])
                 loan_no=t[i]['loanNo']
                 loan_No_List.append(loan_no)

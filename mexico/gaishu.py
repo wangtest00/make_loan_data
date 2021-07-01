@@ -24,7 +24,7 @@ def gaishu(loan_no):
 def stp_payout(loan_no,folioOrigen):
     data={"causaDevolucion": { "code": 16,"msg": "Tipo de operación errónea"},"empresa": "ASSERTIVE","estado": { "code": "0000", "msg": "canll"},"folioOrigen": folioOrigen,"id":int(randnum)}
     print(data)
-    r=requests.post("https://test-pay.quantx.mx/api/trade/stp_payout/annon/event/webhook",data=json.dumps(data),headers=head_pay)
+    r=requests.post("https://test-pay.quantx.mx/api/trade/stp_payout/annon/event/webhook",data=json.dumps(data),headers=head_pay,verify=False)
     t=r.json()
     if t['errorCode']==0:
         print("执行墨西哥模拟提现接口成功",folioOrigen)
@@ -44,6 +44,6 @@ def insert_risk(loan_no):
     DataBase(which_db).call_many_proc()
 
 if __name__ == '__main__':
-    gaishu('L2012106238095916369258389504')
-    #stp_payout('L2012106028088353440382885888','w2021060200100960003525181')
-    #insert_risk('L2012106188094165802096566272')
+    gaishu('L2012106308098461558398689280')
+    #stp_payout('L2012106298098187756796157952','w2021062900100750007111184')
+    #insert_risk('L2012106308098457646643978240')

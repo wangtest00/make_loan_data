@@ -1,10 +1,12 @@
-__all__=['host_api','host_action','host_mgt','head_api','head_mgt','head_pay','CONFIGS','prodNo','which_db']
+__all__=['host_api','host_action','host_mgt','head_api','host_pay','host_coll','head_mgt','head_pay','CONFIGS','prodNo','which_db']
 
 which_db='mex_pdl_loan'
-prodNo='90002021'
+prodNo='70002021'
 host_api="http://test-api.quantx.mx"
 host_action="https://test-action.quantx.mx"
-host_mgt="https://test-mgt.quantx.mx/"
+host_mgt="https://test-mgt.quantx.mx"
+host_pay="https://test-pay.quantx.mx/"
+host_coll="https://test-coll.quantx.mx"
 head_api={"user-agent": "Dart/2.12 (dart:io)","x-user-language": "es","x-auth-token": "Bearer" ,"accept-encoding": "gzip","content-length": "63","host": "test-api.quantx.mx","x-app-name": "LanaPlus","content-type": "application/json",
         "x-app-type": "10090001","x-app-version": "116","x-app-no": "201" }
 
@@ -26,7 +28,9 @@ prodNo=prodNo
 host_api=host_api
 host_action=host_action
 host_mgt=host_mgt
+host_pay=host_pay
 head_api=head_api
+host_coll=host_coll
 head_mgt=head_mgt
 head_pay=head_pay
 CONFIGS=CONFIGS

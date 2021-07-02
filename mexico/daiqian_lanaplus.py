@@ -90,7 +90,7 @@ def auth_cert(registNo,headt):
         st+=random.choice(string.ascii_uppercase)
     data={"birthdate":"1999-5-18","civilStatus":"10050001","curp":st+"990518MM"+st+"V8","delegationOrMunicipality":"zxcvbbbccxxx","education":"10190005",
           "fatherLastName":"DUOQI","gender":"10030001",
-          "motherLastName":"TEST","name":"DQ","outdoorNumber":"qweetyyu","phoneNo":registNo,"postalCode":"55555","state":"11130001","street":"444444","suburb":"asdfhhj","email":""}
+          "motherLastName":"TEST","name":"AUTO","outdoorNumber":"qweetyyu","phoneNo":registNo,"postalCode":"55555","state":"11130001","street":"444444","suburb":"asdfhhj","email":""}
     r=requests.post(host_api+'/api/cust/auth/cert',data=json.dumps(data),headers=headt)
     t=check_api(r)
     if t!=0:
@@ -244,20 +244,7 @@ def repay(custNo,loanNo,repayDate,headt):                                       
         print("repay接口请求正确，向pay_tran_dtl表写入还款账号等数据",in_acct_no)
         repayList.append(in_acct_no)
     return repayList
-#app页面去选择stp渠道生成待还pay_tran_dtl数据，并从接口获取到所有未还账单日，取最近一期去模拟银行回调还款-单期足额
-def getRepayDateList_stp(registNo,loanNo):
-    #registNo='9136996496' loanNo='L2012106298098189178824597504'
-    sql="select CUST_NO from cu_cust_reg_dtl where REGIST_NO='"+registNo+"';"
-    custNo=DataBase(which_db).get_one(sql)
-    custNo=custNo[0]
-    token=login_pwd(registNo)
-    headt=head_token(token)
-    getRepayDate_List=getRepayDateList(registNo,headt)
-    repayDate=getRepayDate_List[0]  #获取最近一期未还的账单日
-    print("当前最近一期未还repayDate=",repayDate)
-    repayList=repay(custNo,loanNo,repayDate,headt)
-                 #还款账号       金额
-    stp_repayment(repayList[1],repayList[0])  #单期足额还款
+
 
 if __name__ == '__main__':
-    getRepayDateList_stp('9901995743','L2012106308098444919275954176')
+    compute_code('1234567890')

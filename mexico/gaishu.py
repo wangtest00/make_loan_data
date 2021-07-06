@@ -33,7 +33,7 @@ def stp_payout(loan_no,folioOrigen):
     sql="select before_stat from lo_loan_dtl where loan_no='"+loan_no+"';"
     before_stat=DataBase(which_db).get_one(sql)
     if before_stat[0]=='10260005':
-        print("贷前状态已变更为:‘已提现’")
+        print("贷前状态已变更为:【已提现】")
     else:
         print("贷前状态未变更,查询到状态=",before_stat[0])
 

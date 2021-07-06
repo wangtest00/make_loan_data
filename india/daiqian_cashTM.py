@@ -1,9 +1,7 @@
 import json
 import random
-
 import requests
 import string
-
 from data.var_india import *
 
 
@@ -89,7 +87,11 @@ def loan(registNo,custNo,headt):
     return t
 
 if __name__ == '__main__':
-    registNo=str(random.randint(8000000000,9999999999)) #10位随机数
-    custNo=login_code(registNo)
-    #cert_auth('7771211111')
-    #conpute_code('7771214567')
+    # registNo=str(random.randint(8000000000,9999999999)) #10位随机数
+    # token=login_code(registNo)
+    # custNo=cert_auth(registNo)
+    # headt=head_token(token)
+    # auth(registNo,custNo,headt)
+    # loan(registNo,custNo,headt)
+    c=compute_code('7428089716')
+    print(c)

@@ -38,7 +38,7 @@ def login_code(registNo):
     code=compute_code(registNo)
     data={"appName":"CashTM","appNo":"102","appType":"10090001","code":code,"gaid":"12303937-ccde-46ee-a455-5146d36344dd","ipAddr":"192.168.20.223","osVersion":"10","phoneType":"vivo",
           "registNo":registNo,"utmCampaign":"","utmContent":"","utmMedium":"","utmSource":"","utmTerm":"","versionNo":"2.6.2"}
-    r=requests.post(host+"/api/cust_info/cust/login?lang=en",data=json.dumps(data),headers=head_api,verify=False)
+    r=requests.post(host_api+"/api/cust_info/cust/login?lang=en",data=json.dumps(data),headers=head_api,verify=False)
     print(r.json())
     try:
         c=check_api(r)
@@ -51,14 +51,14 @@ def login_code(registNo):
     except Exception as e:
         print(e)
         return 0
-def cert_auth(registNo):
+def cert_auth(registNo,headt):
     st=''
     for j in range(5):  #生成5个随机英文大写字母
         st+=random.choice(string.ascii_uppercase)
     num=str(random.randint(1000,9999))
     data={"appName":"CashTM","appNo":"102","birthDay":"1999-05-06","certNo":"122345666666","custFirstName":"wang","custLastName":"shuang","custMiddleName":"mimi","education":"10190006",
           "marriage":"10050001","panNo":""+st+num+"W","registNo":registNo,"sex":"10030001","useEmail":"sdfghhhj@gmail.com","useLang":"90000001"}
-    r=requests.post(host+'/api/cust_india/cert/cert_auth?lang=en',data=json.dumps(data),headers=head_api)
+    r=requests.post(host_api+'/api/cust_india/cert/cert_auth?lang=en',data=json.dumps(data),headers=headt)
     t=check_api(r)
     if t!=0:
         t=json.loads(t['message'])#字符串转字典
@@ -67,31 +67,29 @@ def cert_auth(registNo):
         pass
 def auth(registNo,custNo,headt):
     data1={"address":"wwsdddxx","county":"10010002","custNo":custNo,"postCode":"123456","residenceType":"10840005","state":"10010000"}
-    r1=requests.post(host+'/api/cust_india/cert/save_address?lang=en',data=json.dumps(data1),headers=headt)
+    r1=requests.post(host_api+'/api/cust_india/cert/save_address?lang=en',data=json.dumps(data1),headers=headt)
     check_api(r1)
     data2={"appNo":"102","certType":"WORK","custNo":custNo,"registNo":registNo}
-    r2=requests.post(host+'/api/cust_india/query/single_cust_auth?lang=en',data=json.dumps(data2),headers=headt)
+    r2=requests.post(host_api+'/api/cust_india/query/single_cust_auth?lang=en',data=json.dumps(data2),headers=headt)
     print(r2.json())
     data3={"custNo":custNo,"employeeStatus":"10850002","monSalary":"10870009"}
-    r3=requests.post(host+'/api/cust_india/work/auth?lang=en',data=json.dumps(data3),headers=headt)
+    r3=requests.post(host_api+'/api/cust_india/work/auth?lang=en',data=json.dumps(data3),headers=headt)
     check_api(r3)
     data4=[{"contactName":"wang","custNo":custNo,"phoneNo":"6666677777","relation":"10110001"},{"contactName":"ye","custNo":custNo,"phoneNo":"5555566666","relation":"10110006"}]
-    r4=requests.post(host+'/api/cust_india/contact/auth?lang=en',data=json.dumps(data4),headers=headt)
+    r4=requests.post(host_api+'/api/cust_india/contact/auth?lang=en',data=json.dumps(data4),headers=headt)
     check_api(r4)
 #申请提现
 def loan(registNo,custNo,headt):
     data={"appNo":"102","custNo":custNo,"registNo":registNo}
-    r=requests.post(host+'/api/loan_india/start?lang=en',data=json.dumps(data),headers=headt)
+    r=requests.post(host_api+'/api/loan_india/start?lang=en',data=json.dumps(data),headers=headt)
     t=r.json()
     print(t['loanNo'])
     return t
 
 if __name__ == '__main__':
-    # registNo=str(random.randint(8000000000,9999999999)) #10位随机数
-    # token=login_code(registNo)
-    # custNo=cert_auth(registNo)
-    # headt=head_token(token)
-    # auth(registNo,custNo,headt)
-    # loan(registNo,custNo,headt)
-    c=compute_code('7428089716')
-    print(c)
+    registNo=str(random.randint(8000000000,9999999999)) #10位随机数
+    token=login_code(registNo)
+    headt=head_token(token)
+    custNo=cert_auth(registNo,headt)
+    auth(registNo,custNo,headt)
+    loan(registNo,custNo,headt)

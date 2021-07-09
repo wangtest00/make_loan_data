@@ -245,6 +245,18 @@ def repay(custNo,loanNo,repayDate,headt):                                       
         repayList.append(in_acct_no)
     return repayList
 
+#提现接口-app点击提现按钮
+def single_withdraw(registNo,custNo,loan_no,headt):
+    loanAmt="1100.00"
+    instNum='3'
+    data={"custNo":custNo,"instNum":instNum,"loanAmt":loanAmt,"loanNo":loan_no,"prodNo":prodNo}
+    r=requests.post(host_api+'/api/trade/fin/withdraw',data=json.dumps(data),headers=headt)
+    print(r.json())
 
 if __name__ == '__main__':
-    compute_code('1234567890')
+    registNo='8503382216'
+    loan_no='L2012107088101402882238619648'
+    token=login_pwd(registNo)
+    headt=head_token(token)
+    custNo='C2012107088101402756057178112'
+    single_withdraw(registNo,custNo,loan_no,headt)

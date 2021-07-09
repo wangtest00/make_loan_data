@@ -1,8 +1,8 @@
-__all__=['host','host2','host_mgt','head_api','head_mgt','CONFIGS','prodNo','which_db_india']
+__all__=['host_api','host2','host_mgt','head_api','head_mgt','CONFIGS','prodNo','which_db_india']
 
 which_db_india='manage_need_loan'
 prodNo='20120701'
-host="http://api-test.quantstack.in"
+host_api="http://api-test.quantstack.in"
 host2="https://test-action.quantstack.in"
 host_mgt="https://test-mgt.quantstack.in/"
 head_api={"user-agent": "Dart/2.12 (dart:io)","x-user-language": "es","x-auth-token": "Bearer" ,"accept-encoding": "gzip","content-length": "63","host": "test-api.quantstack.in","x-app-name": "LanaPlus","content-type": "application/json",
@@ -14,7 +14,7 @@ head_mgt={"Host": "test-mgt.quantx.mx","Connection": "keep-alive","Content-Lengt
 
 CONFIGS = {'manage_need_loan': {'host':'13.235.214.155','port':3306, 'user': 'cs_wangs','password': 'cs_wangs!qw####','database': 'manage_need_loan'}}
 prodNo=prodNo
-host=host
+host_api=host_api
 host2=host2
 host_mgt=host_mgt
 head_api=head_api

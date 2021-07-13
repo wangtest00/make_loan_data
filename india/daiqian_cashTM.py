@@ -3,24 +3,21 @@ import random
 import requests
 import string
 from data.var_india import *
-
+from public.check_api import *
 
 def check_api(r):
-    try:
-        if r.status_code==200:
-            t=r.json()
-            if t['hasRegistration'] is False:
-                print("校验成功，接口返回=",t)
-                return t
-            else:
-                print("校验失败，接口返回=",t)
-                return 0
+    if r.status_code==200:
+        t=r.json()
+        if t['hasRegistration'] is False:
+            print("校验成功，接口返回=",t)
+            return t
         else:
-            print("环境可能不稳定，接口返回=",r.content)
+            print("校验失败，接口返回=",t)
             return 0
-    except Exception as e:
-        print("捕获到异常：",e)
+    else:
+        print("环境可能不稳定，接口返回=",r.content)
         return 0
+
 #短信验证码，默认手机号后4位单个+5后取个位数，在逆序排列。注意非中国手机号
 def compute_code(m):
     m=m[-4:]
@@ -31,26 +28,23 @@ def compute_code(m):
     x=x4[-1:]+x3[-1:]+x2[-1:]+x1[-1:]
     return x
 def head_token(token):
-    head={"user-agent": "Dart/2.12 (dart:io)","x-user-language": "es","accept-encoding": "gzip","content-length": "0","host": "test-api.quantx.mx","x-app-name": "LanaPlus","content-type": "application/json",
-        "x-app-type": "10090001","x-app-version": "116","x-app-no": "201","x-auth-token":'Bearer '+token }
+    head={"user-agent": "Dart/2.12 (dart:io)","x-user-language": "en","accept-encoding": "gzip","content-length": "0","host": "api-test.quantstack.in",
+          "x-app-name": "LanaPlus","content-type": "application/json;charset=utf-8","version_no":"2.6.3","app_type":"10090001",
+        "x-app-type": "10090001","app_no": "102","x-auth-token":'Bearer '+str(token),"Cookie":"JSESSIONID=d17x0ET9jFp5BBK_qidExJqVs5THhstLnVk2eMEH" }
     return head
 def login_code(registNo):
     code=compute_code(registNo)
     data={"appName":"CashTM","appNo":"102","appType":"10090001","code":code,"gaid":"12303937-ccde-46ee-a455-5146d36344dd","ipAddr":"192.168.20.223","osVersion":"10","phoneType":"vivo",
           "registNo":registNo,"utmCampaign":"","utmContent":"","utmMedium":"","utmSource":"","utmTerm":"","versionNo":"2.6.2"}
     r=requests.post(host_api+"/api/cust_info/cust/login?lang=en",data=json.dumps(data),headers=head_api,verify=False)
-    print(r.json())
-    try:
-        c=check_api(r)
-        if c!=0:
-            t=r.json()
-            token=t['token']
-            return token
-        else:
-            return 0
-    except Exception as e:
-        print(e)
+    c=check_api(r)
+    if c!=0:
+        t=r.json()
+        token=t['token']
+        return token
+    else:
         return 0
+
 def cert_auth(registNo,headt):
     st=''
     for j in range(5):  #生成5个随机英文大写字母
@@ -59,25 +53,25 @@ def cert_auth(registNo,headt):
     data={"appName":"CashTM","appNo":"102","birthDay":"1999-05-06","certNo":"122345666666","custFirstName":"wang","custLastName":"shuang","custMiddleName":"mimi","education":"10190006",
           "marriage":"10050001","panNo":""+st+num+"W","registNo":registNo,"sex":"10030001","useEmail":"sdfghhhj@gmail.com","useLang":"90000001"}
     r=requests.post(host_api+'/api/cust_india/cert/cert_auth?lang=en',data=json.dumps(data),headers=headt)
-    t=check_api(r)
+    t=r.json()
     if t!=0:
-        t=json.loads(t['message'])#字符串转字典
-        return t['custNo']
+        m=json.loads(t['message'])#字符串转字典
+        return m['custNo']
     else:
         pass
 def auth(registNo,custNo,headt):
     data1={"address":"wwsdddxx","county":"10010002","custNo":custNo,"postCode":"123456","residenceType":"10840005","state":"10010000"}
     r1=requests.post(host_api+'/api/cust_india/cert/save_address?lang=en',data=json.dumps(data1),headers=headt)
-    check_api(r1)
+    print(r1.json())
     data2={"appNo":"102","certType":"WORK","custNo":custNo,"registNo":registNo}
     r2=requests.post(host_api+'/api/cust_india/query/single_cust_auth?lang=en',data=json.dumps(data2),headers=headt)
     print(r2.json())
     data3={"custNo":custNo,"employeeStatus":"10850002","monSalary":"10870009"}
     r3=requests.post(host_api+'/api/cust_india/work/auth?lang=en',data=json.dumps(data3),headers=headt)
-    check_api(r3)
+    print(r3.json())
     data4=[{"contactName":"wang","custNo":custNo,"phoneNo":"6666677777","relation":"10110001"},{"contactName":"ye","custNo":custNo,"phoneNo":"5555566666","relation":"10110006"}]
     r4=requests.post(host_api+'/api/cust_india/contact/auth?lang=en',data=json.dumps(data4),headers=headt)
-    check_api(r4)
+    print(r4.json())
 #申请提现
 def loan(registNo,custNo,headt):
     data={"appNo":"102","custNo":custNo,"registNo":registNo}

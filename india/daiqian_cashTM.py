@@ -50,10 +50,11 @@ def cert_auth(registNo,headt):
     for j in range(5):  #生成5个随机英文大写字母
         st+=random.choice(string.ascii_uppercase)
     num=str(random.randint(1000,9999))
-    data={"appName":"CashTM","appNo":"102","birthDay":"1999-05-06","certNo":"122345666666","custFirstName":"wang","custLastName":"shuang","custMiddleName":"mimi","education":"10190006",
+    data={"appName":"CashTM","appNo":"102","birthDay":"1999-05-06","certNo":"12234566"+num,"custFirstName":"wang","custLastName":"shuang","custMiddleName":"mmmm","education":"10190006",
           "marriage":"10050001","panNo":""+st+num+"W","registNo":registNo,"sex":"10030001","useEmail":"sdfghhhj@gmail.com","useLang":"90000001"}
     r=requests.post(host_api+'/api/cust_india/cert/cert_auth?lang=en',data=json.dumps(data),headers=headt)
     t=r.json()
+    print(t)
     if t!=0:
         m=json.loads(t['message'])#字符串转字典
         return m['custNo']
@@ -78,12 +79,8 @@ def loan(registNo,custNo,headt):
     r=requests.post(host_api+'/api/loan_india/start?lang=en',data=json.dumps(data),headers=headt)
     t=r.json()
     print(t['loanNo'])
-    return t
+    return t['loanNo']
+
 
 if __name__ == '__main__':
     registNo=str(random.randint(8000000000,9999999999)) #10位随机数
-    token=login_code(registNo)
-    headt=head_token(token)
-    custNo=cert_auth(registNo,headt)
-    auth(registNo,custNo,headt)
-    loan(registNo,custNo,headt)

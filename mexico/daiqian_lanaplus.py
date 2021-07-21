@@ -89,7 +89,7 @@ def auth_cert(registNo,headt):
     for j in range(4):  #生成4个随机英文大写字母
         st+=random.choice(string.ascii_uppercase)
     data={"birthdate":"1999-5-18","civilStatus":"10050001","curp":st+"990518MM"+st+"V8","delegationOrMunicipality":"zxcvbbbccxxx","education":"10190005",
-          "fatherLastName":"DUOQI","gender":"10030001",
+          "fatherLastName":"ZIXUAN PRO","gender":"10030001",
           "motherLastName":"TEST","name":"AUTO","outdoorNumber":"qweetyyu","phoneNo":registNo,"postalCode":"55555","state":"11130001","street":"444444","suburb":"asdfhhj","email":""}
     r=requests.post(host_api+'/api/cust/auth/cert',data=json.dumps(data),headers=headt)
     t=check_api(r)
@@ -163,9 +163,8 @@ def update_kyc_auth(registNo,custNo):
     DataBase(which_db).executeUpdateSql(sql4)
 #绑定银行卡，需要把银行卡号改成明显错的，环境怕放出真实的钱
 def bank_auth(custNo,headt):
-    timev=str(time.time()*1000000)[:15]
     bank_acct_no=str(random.randint(10000,99999))
-    data={"bankCode":"10020021","clabe":timev+"123","custNo":custNo}
+    data={"bankCode":"10020037","clabe":"138455214411441118","custNo":custNo}
     r=requests.post(host_api+'/api/cust/auth/bank',data=json.dumps(data),headers=headt)
     check_api(r)
     time.sleep(1)                                         #改为4位随机数
@@ -176,11 +175,12 @@ def withdraw(registNo,custNo,loan_no,headt):
     r=requests.get(host_api+'/api/loan/latest/'+registNo,headers=headt)#获取最近一笔贷款贷款金额，注意请求头content-length的值。The request body did not contain the specified number of bytes. Got 0, expected 63
     check_api(r)
     t=r.json()
+    print('产品配置长度=',len(t['data']['trailPaymentDetail']))
     if t['errorCode']==0:
-        loanAmt=t['data']['paymentDetail']['loanAmt']
-        instNum=t['data']['paymentDetail']['instNum']
+        loanAmt=t['data']['trailPaymentDetail'][0]['loanAmt']
+        instNum=t['data']['trailPaymentDetail'][0]['instNum']
         data={"custNo":custNo,"instNum":instNum,"loanAmt":loanAmt,"loanNo":loan_no,"prodNo":prodNo}
-        r2=requests.post(host_api+'/api/trade/fin/withdraw',data=json.dumps(data),headers=headt)
+        r2=requests.post(host_api+'/api/trade/fin/confirm/withdraw',data=json.dumps(data),headers=headt)
         check_api(r2)
         return 1
     else:
@@ -244,7 +244,6 @@ def repay(custNo,loanNo,repayDate,headt):                                       
         print("repay接口请求正确，向pay_tran_dtl表写入还款账号等数据",in_acct_no)
         repayList.append(in_acct_no)
     return repayList
-
 #提现接口-app点击提现按钮
 def single_withdraw(registNo,custNo,loan_no,headt):
     loanAmt="1100.00"
@@ -254,9 +253,11 @@ def single_withdraw(registNo,custNo,loan_no,headt):
     print(r.json())
 
 if __name__ == '__main__':
-    registNo='8503382216'
-    loan_no='L2012107088101402882238619648'
-    token=login_pwd(registNo)
-    headt=head_token(token)
-    custNo='C2012107088101402756057178112'
-    single_withdraw(registNo,custNo,loan_no,headt)
+    # registNo='8987320661'
+    # loan_no='L2012107168104296760646868992'
+    # token=login_pwd(registNo)
+    # headt=head_token(token)
+    # custNo='C2012107168104296646339502080'
+    # withdraw(registNo,custNo,loan_no,headt)
+    t=compute_code('1191')
+    print(t)

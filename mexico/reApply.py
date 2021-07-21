@@ -20,20 +20,20 @@ def reApply():
     # custNo='C2012107088101421827813318656'
     print(registNo)
     update_pwd(registNo)
-    token=login_pwd(registNo)
-    headt=head_token(token)
-    #在app申请贷款
-    loanNo=apply_loan(custNo,headt)
-    #分案
-    DataBase('mex_pdl_loan').call_4_proc()
-    #审批
-    pl_shenpi()
-    #插入风险数据，完成匹配产品
-    insert_risk(loanNo)
-    #app去待提现页面申请贷款
-    withdraw(registNo,custNo,loanNo,headt)
-    #贷前状态变更为“待提现”后的后续改数操作，模拟到提现成功
-    gaishu(loanNo)
+    # token=login_pwd(registNo)
+    # headt=head_token(token)
+    # #在app申请贷款
+    # loanNo=apply_loan(custNo,headt)
+    # #分案
+    # DataBase('mex_pdl_loan').call_4_proc()
+    # #审批
+    # pl_shenpi()
+    # #插入风险数据，完成匹配产品
+    # insert_risk(loanNo)
+    # #app去待提现页面申请贷款
+    # withdraw(registNo,custNo,loanNo,headt)
+    # #贷前状态变更为“待提现”后的后续改数操作，模拟到提现成功
+    # gaishu(loanNo)
 #查询只借过一笔款且已结清的客户号
 def getCustNO():
     sql='''select  b.cust_no,count(1) as loan_cnt from

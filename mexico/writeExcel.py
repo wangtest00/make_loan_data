@@ -54,11 +54,11 @@ class WriteExcel(object):
             for j in range(0, worksheet.ncols):
                 # 逐行逐列读取数据
                 t=worksheet.cell_value(i,j)
-                #print(t)
-                # sql="UPDATE lo_deci_order_dtl set SERVICE_PROD_NO='WK122300_New_OwnRules',ORDER_NO=NULL,STATUS=NULL,START_TIME=NULL,inst_time=NULL,CALLBACK_TIME=null,CALLBACK_VALUE=NULL where BUSINESS_NO='"+t+"';"
-                # DataBase(which_db).executeUpdateSql(sql)
-                # sql2="DELETE from lo_deci_decision_dtl where BUSINESS_NO='"+t+"';"
-                # DataBase(which_db).executeUpdateSql(sql2)
+                print(t)
+                sql="UPDATE lo_deci_order_dtl set SERVICE_PROD_NO='WK122300_New_OwnRules',ORDER_NO=NULL,STATUS=NULL,START_TIME=NULL,inst_time=NULL,CALLBACK_TIME=null,CALLBACK_VALUE=NULL where BUSINESS_NO='"+t+"';"
+                DataBase(which_db).executeUpdateSql(sql)
+                sql2="DELETE from lo_deci_decision_dtl where BUSINESS_NO='"+t+"';"
+                DataBase(which_db).executeUpdateSql(sql2)
                 sql3="select CALLBACK_VALUE from lo_deci_order_dtl where BUSINESS_NO='"+t+"';"
                 s3=DataBase(which_db).get_one(sql3)
                 print(s3[0])

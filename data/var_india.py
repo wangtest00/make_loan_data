@@ -1,7 +1,7 @@
-__all__=['host_api','host2','host_mgt','head_api','head_mgt','CONFIGS','prodNo','which_db_india']
+__all__=['host_api','host2','host_mgt','head_api','head_mgt','CONFIGS','prodNo','inter_db']
 
-which_db_india='manage_need_loan'
-prodNo='20120701'
+inter_db='manage_need_loan'
+prodNo='1'
 host_api="http://api-test.quantstack.in"
 host2="https://test-action.quantstack.in"
 host_mgt="https://test-mgt.quantstack.in/"
@@ -20,4 +20,4 @@ host_mgt=host_mgt
 head_api=head_api
 head_mgt=head_mgt
 CONFIGS=CONFIGS
-which_db_india=which_db_india
+inter_db=inter_db

@@ -13,7 +13,8 @@ class DataBase():
         self.connectDB(witchdb)
     def connectDB(self,witchdb):
         try:
-            self.connect=pymysql.connect(user=CONFIGS[witchdb]['user'],password=CONFIGS[witchdb]['password'],host=CONFIGS[witchdb]['host'],database=CONFIGS[witchdb]['database'],port=CONFIGS[witchdb]['port'], charset="utf8")
+            self.connect=pymysql.connect(user=CONFIGS[witchdb]['user'],password=CONFIGS[witchdb]['password'],host=CONFIGS[witchdb]['host'],
+                                         database=CONFIGS[witchdb]['database'],port=CONFIGS[witchdb]['port'], charset="utf8")
             self.cur=self.connect.cursor()
         except pymysql.Error as e:
             print(e)

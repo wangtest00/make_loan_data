@@ -31,7 +31,8 @@ def first_apply(registNo):
         first_apply_sheipihou(loan_no,registNo,custNo,headt)
 
 def first_apply_sheipihou(loan_no,registNo,custNo,headt):
-    insert_risk(loan_no)
+    insert_risk(loan_no)#匹配产品
+    #停在【通过】状态，用户待提现
     w=withdraw(registNo,custNo,loan_no,headt)
     if w==1:
         gaishu(loan_no)

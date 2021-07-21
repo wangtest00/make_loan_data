@@ -76,7 +76,7 @@ def pl_shenpi():
     loan_No_List=[]
     for i in range(len(t)):
         if t[i]['apprStat']=='10200003':
-            if t[i]['apprUserNo']=='wangs2@whalekun.com' or t[i]['apprUserNo']=='wangs@whalekun.com' or t[i]['apprUserNo']=='yanglt@whalekun.com':
+            if t[i]['apprUserNo']=='wangs2@whalekun.com' or t[i]['apprUserNo']=='wangs@whalekun.com' or t[i]['apprUserNo']=='yanglt@whalekun.com' or t[i]['apprUserNo']=='liull@whalekun.com':
                 print(t[i]['loanNo'])
                 loan_no=t[i]['loanNo']
                 loan_No_List.append(loan_no)

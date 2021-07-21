@@ -44,6 +44,6 @@ def insert_risk(loan_no):
     DataBase(which_db).call_many_proc()
 
 if __name__ == '__main__':
-    gaishu('L2012107138103163914669170688')
+    gaishu('L2012107208105789032825004032')
     #stp_payout('L2012106298098187756796157952','w2021062900100750007111184')
-    #insert_risk('L2012107138103163914669170688')
+    #insert_risk('L2012107208105789032825004032')

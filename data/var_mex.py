@@ -1,7 +1,7 @@
 __all__=['host_api','host_action','host_mgt','head_api','host_pay','host_coll','head_mgt','head_pay','CONFIGS','prodNo','which_db']
 
 which_db='mex_pdl_loan'
-prodNo='56758910'
+prodNo='81002021'
 host_api="http://test-api.quantx.mx"         #APP
 host_action="https://test-action.quantx.mx"  #埋点
 host_mgt="https://test-mgt.quantx.mx"        #MGT
@@ -22,7 +22,8 @@ head_pay={"Host": "test-pay.quantx.mx","Connection": "keep-alive","Content-Lengt
 "Content-Type": "application/json;charset=UTF-8","Origin": "https://test-pay.quantx.mx","Sec-Fetch-Site": "same-origin","Sec-Fetch-Mode": "cors",
 "Sec-Fetch-Dest": "empty","Referer": "https://test-pay.quantx.mx/","Accept-Encoding": "gzip, deflate, br","Accept-Language": "zh-CN,zh;q=0.9","Cookie": "language=zh"}
 CONFIGS = {
-    'mex_pdl_loan': {'host':'192.168.0.60','port':3306, 'user': 'cs_wangs','password': 'cs_wangs!qw####','database': 'mex_pdl_loan'}
+    'mex_pdl_loan': {'host':'192.168.0.60','port':3306, 'user': 'cs_wangs','password': 'cs_wangs!qw####','database': 'mex_pdl_loan'},
+    'manage_need_loan': {'host':'13.235.214.155','port':3306, 'user': 'cs_wangs','password': 'cs_wangs!qw####','database': 'manage_need_loan'}
 }
 prodNo=prodNo
 host_api=host_api

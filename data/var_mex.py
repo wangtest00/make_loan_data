@@ -1,7 +1,7 @@
 __all__=['host_api','host_action','host_mgt','head_api','host_pay','host_coll','head_mgt','head_pay','CONFIGS','prodNo','which_db']
 
 which_db='mex_pdl_loan'
-prodNo='81002021'
+prodNo='71002021'
 host_api="http://test-api.quantx.mx"         #APP
 host_action="https://test-action.quantx.mx"  #埋点
 host_mgt="https://test-mgt.quantx.mx"        #MGT

@@ -81,4 +81,4 @@ def list_append(a,*args):
 
 
 if __name__ == '__main__':
-    check_db_zc('L2012106028088374726173696000')
+    check_db_zc('L2012107218106135169306107904')

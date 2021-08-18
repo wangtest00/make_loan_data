@@ -1,5 +1,6 @@
-from mexico.daiqian_lanaplus import *
+from make_loan_data.mexico.daiqian_lanaplus import *
 import requests,json
+
 
 def check_api(r):
     try:

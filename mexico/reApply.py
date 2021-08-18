@@ -1,11 +1,11 @@
 import string,requests,json,datetime
-from public.dataBase import *
-from mexico.gaishu import *
-from data.var_mex import *
-from mexico.mex_mgt import *
-from mexico.heads import *
-from public.check_api import *
-from mexico.daihou import *
+from make_loan_data.public.dataBase import *
+from make_loan_data.mexico.gaishu import *
+from make_loan_data.data.var_mex import *
+from make_loan_data.mexico.mex_mgt import *
+from make_loan_data.mexico.heads import *
+from make_loan_data.public.check_api import *
+from make_loan_data.mexico.daihou import *
 import io,sys
 #改编码方便jenkins运行
 #sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="gb18030")

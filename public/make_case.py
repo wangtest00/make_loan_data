@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 import xmind
-from public.writeExcel import *
+from make_loan_data.public.writeExcel import *
 
 
 def make_case():

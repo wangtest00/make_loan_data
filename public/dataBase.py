@@ -5,7 +5,7 @@ Created on 2018-11-26
 '''
 import time
 import pymysql
-from data.var_mex import *
+from make_loan_data.data.var_mex import *
 
 
 class DataBase():

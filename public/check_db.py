@@ -1,4 +1,4 @@
-from public.dataBase import *
+from make_loan_data.public.dataBase import *
 import datetime
 
 #检查放款成功，贷后状态为“正常”的贷款数据

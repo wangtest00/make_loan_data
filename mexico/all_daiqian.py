@@ -1,7 +1,7 @@
 from concurrent.futures import ThreadPoolExecutor  # 线程池执行器
-from mexico.first_apply import *
+from make_loan_data.mexico.first_apply import *
 import threading
-from public.check_api import *
+from make_loan_data.public.check_api import *
 
 
 def all_daiqian(x):

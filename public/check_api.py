@@ -18,7 +18,7 @@ def check_api(r):
         return 0
 
 #报错后重试2次,且不会停止代码运行
-def error(**outer_kwargs):
+def hulue_error(**outer_kwargs):
     def decorator(func):
         @functools.wraps(func)
         def wrapper(*args,**kwargs):

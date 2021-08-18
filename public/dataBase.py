@@ -42,7 +42,7 @@ class DataBase():
             self.cur.execute(sql)
             self.connect.commit()
             print ("更新表字段成功",sql)
-            #self.closeDB()
+            self.closeDB()
         except Exception as e:
             print("更新异常：",e)
             return 0

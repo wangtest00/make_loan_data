@@ -12,6 +12,7 @@ def gaishu(loan_no):
     #sql4="update pay_tran_dtl set tran_order_no='"+randnum+"' where  LOAN_NO='"+loan_no+"';"
     sql5="update lo_loan_dtl set before_stat='10260008' where loan_no='"+loan_no+"';"
     DataBase(which_db).executeUpdateSql(sql1)
+    DataBase(which_db).executeUpdateSql(sql1)
     tran_flow_no=DataBase(which_db).get_one(sql2)
     sql3="update pay_tran_dtl set utr_no='"+tran_flow_no[0]+"' ,TRAN_STAT='10220001',tran_order_no='"+randnum+"' where  LOAN_NO='"+loan_no+"';"
     DataBase(which_db).executeUpdateSql(sql5)
@@ -33,7 +34,7 @@ def stp_payout(loan_no,folioOrigen):
     sql="select before_stat from lo_loan_dtl where loan_no='"+loan_no+"';"
     before_stat=DataBase(which_db).get_one(sql)
     if before_stat[0]=='10260005':
-        print("贷前状态已变更为:【已提现】")
+        print("贷前状态已变更为:【已提现】",loan_no)
     else:
         print("贷前状态未变更,查询到状态=",before_stat[0])
 
@@ -44,6 +45,6 @@ def insert_risk(loan_no):
     DataBase(which_db).call_many_proc()
 
 if __name__ == '__main__':
-    gaishu('L2012107218106135169306107904')
+    gaishu('L2012108128114053579768373248')
     #stp_payout('L2012106298098187756796157952','w2021062900100750007111184')
-    #insert_risk('L2012107208105789032825004032')
+    #insert_risk('L2012108118113997262894702592')

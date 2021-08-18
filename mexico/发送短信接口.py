@@ -1,8 +1,6 @@
 import json
 import random
-
 import requests
-
 from data.var_mex import *
 #注意可能会发送真实短信出去
 

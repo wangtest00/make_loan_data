@@ -259,5 +259,5 @@ if __name__ == '__main__':
     # headt=head_token(token)
     # custNo='C2012107168104296646339502080'
     # withdraw(registNo,custNo,loan_no,headt)
-    t=compute_code('9716')
+    t=compute_code('8008259915')
     print(t)

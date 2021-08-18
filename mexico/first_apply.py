@@ -27,7 +27,7 @@ def first_apply(registNo):
         bank_auth(custNo,headt)
         update_appr_user_stat()
         DataBase(which_db).call_4_proc()
-        pl_shenpi()
+        approve(loan_no)
         first_apply_sheipihou(loan_no,registNo,custNo,headt)
 
 def first_apply_sheipihou(loan_no,registNo,custNo,headt):
@@ -68,5 +68,5 @@ def bu_ding(registNo):
         DataBase(which_db).closeDB()
 
 if __name__ == '__main__':
-    for i in range(5):
+    for i in range(1):
         auto_test()

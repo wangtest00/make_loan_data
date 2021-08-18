@@ -45,7 +45,6 @@ def head_token_w(token):
     return head
 def login_code(registNo):
     code=compute_code(registNo)
-    print(code)
     data={"appName":"CashTM","appNo":"102","appType":"10090001","code":code,"gaid":"12303937-ccde-46ee-a455-5146d36344dd","ipAddr":"192.168.20.223","osVersion":"10","phoneType":"HUAWEI",
           "registNo":registNo,"utmCampaign":"","utmContent":"","utmMedium":"","utmSource":"","utmTerm":"","versionNo":"2.6.3"}
     r=requests.post(india_api+"/api/cust_info/cust/login?lang=en",data=json.dumps(data),headers=head_api,verify=False)
@@ -63,7 +62,6 @@ def cert_auth(registNo,headt):
     num=str(random.randint(1000,9999))
     data={"appName":"CashTM","appNo":"102","birthDay":"1999-05-06","certNo":num+"4566"+num,"custFirstName":"wang","custLastName":"shuang","custMiddleName":"mmmm","education":"10190006",
           "marriage":"10050001","panNo":""+st+num+"W","registNo":registNo,"sex":"10030001","useEmail":"sdfghhhj@gmail.com","useLang":"90000001"}
-    print("认证数据data=",data)
     r=requests.post(india_api+'/api/cust_india/cert/cert_auth?lang=en',data=json.dumps(data),headers=headt)
     t=r.json()
     print(t)
@@ -116,7 +114,7 @@ def bank_auth(custNo,headt):
     bank_acct_no=str(random.randint(10000000,99999999))
     data={"bankAcctName":"wangmmmmshuang","bankAcctNo":bank_acct_no,"custNo":custNo,"ifscCode":"SBIN0001537"}
     r=requests.post(india_api+'/api/cust_india/bank/bank_auth?lang=en',data=json.dumps(data),headers=headt)
-    print("绑卡接口响应=",r.json())
+    print("绑卡认证接口响应=",r.json())
 
 #当前时间的前一天=跑批业务日期，才能正常申请借款
 def update_Batch_Log():
@@ -164,7 +162,6 @@ def withdraw(registNo,custNo,loanNo,headt,headw):
         payout_mock_apply(loanNo,custNo)#提现mock接口
 
 if __name__ == '__main__':
-    #registNo=str(random.randint(8000000000,9999999999)) #10位随机数
     registNo='8239717364'
     token=login_code(registNo)
     headt=head_token_w(token)

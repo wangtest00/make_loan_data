@@ -3,7 +3,7 @@ from data.var_india import *
 from public.check_api import *
 from public.dataBase import *
 
-@error()
+@hulue_error()
 def payout_mock_apply(loanNo,custNo):
     data={
     "loanNo": loanNo,

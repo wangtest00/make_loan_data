@@ -22,7 +22,7 @@ def case_ass():
     r=requests.post(host_coll+'/api/insecure/task/case/ass')
     print(r.json())
 if __name__ == '__main__':
-    #sync()
-    recycle()
-    clue_ass()
+    sync()
+    # recycle()
+    # clue_ass()
     # case_ass()

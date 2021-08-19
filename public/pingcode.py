@@ -55,6 +55,7 @@ def get_notifications():
             print(t[i]['object']['name'])
         else:
             pass
+
 if __name__ == '__main__':
     get_mywork_list()
-    get_notifications()
+    #get_notifications()

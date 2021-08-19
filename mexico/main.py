@@ -25,7 +25,6 @@ def first_login_apply(registNo):
         DataBase(which_db).closeDB()
     else:
         bank_auth(custNo,headt)
-        pl_shenpi()
         update_appr_user_stat()
         DataBase(which_db).call_4_proc()
         approve(loan_no)  #分配审批人员并审批通过

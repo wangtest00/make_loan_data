@@ -87,4 +87,5 @@ def pl_shenpi():
         pl_approve(loan_No_List)
 
 if __name__ == '__main__':
-    pl_shenpi()
+    #pl_shenpi()
+    approve('L2012108188116218565239939072')

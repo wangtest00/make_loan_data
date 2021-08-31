@@ -1,7 +1,7 @@
 __all__=['india_api','host2','india_mgt','head_api','head_mgt','CONFIGS','india_prodNo','inter_db','head_india_pay']
 
 inter_db='manage_need_loan'
-india_prodNo='4'
+india_prodNo='5'
 india_api="http://api-test.quantstack.in"
 host2="https://test-action.quantstack.in"
 india_mgt="http://test-mgt.quantstack.in/"

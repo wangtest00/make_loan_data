@@ -259,5 +259,6 @@ if __name__ == '__main__':
     # headt=head_token(token)
     # custNo='C2012107168104296646339502080'
     # withdraw(registNo,custNo,loan_no,headt)
-    t=compute_code('8008259915')
+    #update_pwd('8888811111')
+    t=compute_code('9381304655')
     print(t)

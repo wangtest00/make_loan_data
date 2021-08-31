@@ -22,4 +22,4 @@ def chaXun_Stat(loanNo):
         print("贷前状态未变更,查询到状态=",before_stat[0],loanNo)
 
 if __name__ == '__main__':
-    payout_mock_apply('L1022107268107973946738016256','C1022107268107973848008294400')
+    payout_mock_apply('L1022108318120871775139594240','C1022108318120871626262773760')

@@ -14,7 +14,7 @@ def quan_zuhe(fenzi_name,loop_val):
     return m
 
 def duqu_zuhe():
-    all_list=WriteExcel().read_Excel_Xls('C:\\Users\\wangshuang\\Desktop\\demo1.xls')
+    all_list=WriteExcel().read_Excel_Xls('C:\\Users\\wangshuang\\Desktop\\全排列组合.xls')
     new_list=[]
     fenzi_name=[]
     for i in range(1,len(all_list)):#从第二行开始打印

@@ -31,7 +31,7 @@ def cx_db_write(tableName,custNo):
         sum_res.insert(1,column_name) #保存表中所有字段名
         sum_res.append(['占位'])
         # print(sum_res)
-        sum_list=sum_list+sum_res
+        sum_list=sum_list+sum_res   #二维列表合并在一起
     print(sum_list)
     WriteExcel().write_for_cx_db_write(sum_list)
 

@@ -1,6 +1,6 @@
 import requests,json
 import random
-from make_loan_data.data.var_mex import *
+from make_loan_data.data.var_mex_majiabao import *
 from make_loan_data.mexico.daiqian_lanaplus import *
 from make_loan_data.public.dataBase import *
 

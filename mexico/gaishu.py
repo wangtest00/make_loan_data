@@ -1,7 +1,7 @@
 import random
-from make_loan_data.data.var_mex import *
 from make_loan_data.mexico.daiqian_lanaplus import *
 from make_loan_data.public.dataBase import *
+from make_loan_data.data.var_mex_majiabao import *
 
 randnum=str(random.randint(10000000,99999999)) #8位随机数
 #datet=str(time.time()*1000000)[:-2]   #16位时间戳
@@ -19,7 +19,9 @@ def gaishu(loan_no):
     DataBase(which_db).executeUpdateSql(sql3)
     time.sleep(1)
     stp_payout(loan_no,tran_flow_no[0])
-
+    tran_time=str(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+    sql6="update fin_tran_pay_dtl set tran_pay_stat='10420002',tran_time='"+tran_time+"' where loan_no='"+loan_no+"';" #解决-引导去googlePlay评分页面
+    DataBase(which_db).executeUpdateSql(sql6)
 
 #墨西哥-提现mock    # date=int(str(datetime.datetime.now().strftime('%Y%m%d%H%M%S')) #日期时分秒
 def stp_payout(loan_no,folioOrigen):
@@ -45,6 +47,6 @@ def insert_risk(loan_no):
     DataBase(which_db).call_many_proc()
 
 if __name__ == '__main__':
-    gaishu('L2012108128114053579768373248')
-    #stp_payout('L2012106298098187756796157952','w2021062900100750007111184')
+    gaishu('L2012109028121643760722944000')
+    #stp_payout('L2012109018121275925296750592','w2021090100150414400100720091')
     #insert_risk('L2012108118113997262894702592')

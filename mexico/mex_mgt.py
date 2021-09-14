@@ -1,4 +1,5 @@
 from make_loan_data.mexico.daiqian_lanaplus import *
+from make_loan_data.data.var_mex_majiabao import *
 import requests,json
 
 
@@ -20,7 +21,7 @@ def check_api(r):
         return 0
 #登录mgt,返回ssid值
 def login_mgt():
-    data={"loginName":"wangs2@whalekun.com","password":"jk@123"}
+    data={"loginName":shenpiren[appNo],"password":"jk@123"}
     r=requests.post(host_mgt+'/api/login/auth?lang=en&lang=zh',data=json.dumps(data),headers=head_mgt,verify=False)
     check_api(r)
     for item in r.cookies:
@@ -30,21 +31,21 @@ def login_mgt():
 #注意：审批人员平均推单存储过程，只对空闲在线的审批人推单
 ##将审批人的审批状态为空闲： 空闲10460001   审批中10460002 离开10460003
 def update_appr_user_stat():
-    sql="update sys_user_info set APPR_USER_STAT='10460001',ON_LINE='10000001',IS_USE='10000001'  where user_no='wangs2@whalekun.com';"
+    sql="update sys_user_info set APPR_USER_STAT='10460001',ON_LINE='10000001',IS_USE='10000001'  where user_no='"+shenpiren[appNo]+"';"
     DataBase(which_db).executeUpdateSql(sql)
 #分配审批人员及审批通过
 def approve(loan_no):
     head=head_mgt_c()
-    data1={"loanNos":[loan_no],"targetUserNo":"wangs2@whalekun.com"}
+    data1={"loanNos":[loan_no],"targetUserNo":shenpiren[appNo]}
     r=requests.post(host_mgt+'/api/approve/distribution/case?lang=zh',data=json.dumps(data1),headers=head,verify=False)  #1.分配审批人员
     check_api(r)
-    data2={"loanNo":loan_no,"decisionReason":"10280038","apprRemark":"测试通过","riskLevel":"DEFAULT","riskScore":"0","approveResultType":"PASS"}
+    data2={"loanNo":loan_no,"decisionReason":"10280038","apprRemark":"备注:测试通过","riskLevel":"AA","riskScore":prodNo,"approveResultType":"PASS"}
     r=requests.post(host_mgt+'/api/approve/handle/approve?lang=zh',data=json.dumps(data2),headers=head,verify=False)#2.审批通过
     check_api(r)
 #批量分配审批人员及审批通过
 def pl_approve(loan_no):
     head=head_mgt_c()
-    data1={"loanNos":loan_no,"targetUserNo":"wangs2@whalekun.com"}
+    data1={"loanNos":[loan_no],"targetUserNo":shenpiren[appNo]}
     r=requests.post(host_mgt+'/api/approve/distribution/case?lang=zh',data=json.dumps(data1),headers=head,verify=False)  #1.分配审批人员
     check_api(r)
     for loan_no in loan_no:
@@ -77,7 +78,7 @@ def pl_shenpi():
     loan_No_List=[]
     for i in range(len(t)):
         if t[i]['apprStat']=='10200003':
-            if t[i]['apprUserNo']=='wangs2@whalekun.com' or t[i]['apprUserNo']=='wangs@whalekun.com' or t[i]['apprUserNo']=='yanglt@whalekun.com' or t[i]['apprUserNo']=='liull@whalekun.com':
+            if t[i]['apprUserNo']==shenpiren[appNo]:
                 print(t[i]['loanNo'])
                 loan_no=t[i]['loanNo']
                 loan_No_List.append(loan_no)
@@ -88,4 +89,5 @@ def pl_shenpi():
 
 if __name__ == '__main__':
     #pl_shenpi()
-    approve('L2012108188116218565239939072')
+    #approve('L2012108188116218565239939072')
+    print(shenpiren[appNo])

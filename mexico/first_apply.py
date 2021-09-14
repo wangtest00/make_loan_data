@@ -1,9 +1,9 @@
 import string,requests,json,datetime
 from make_loan_data.public.dataBase import *
 from make_loan_data.mexico.gaishu import *
-from make_loan_data.data.var_mex import *
 from make_loan_data.mexico.mex_mgt import *
 from make_loan_data.mexico.heads import *
+from make_loan_data.data.var_mex_majiabao import *
 import io,sys
 #改编码方便jenkins运行
 #sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="gb18030")
@@ -70,3 +70,5 @@ def bu_ding(registNo):
 if __name__ == '__main__':
     for i in range(1):
         auto_test()
+    #first_apply('8223300005')
+    #print(shenpiren[appNo])

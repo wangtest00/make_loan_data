@@ -71,4 +71,3 @@ if __name__ == '__main__':
     for i in range(1):
         auto_test()
     #first_apply('8223300005')
-    #print(shenpiren[appNo])

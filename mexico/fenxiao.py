@@ -11,4 +11,4 @@ def withdraw(phoneNo,money,headt):
 if __name__ == '__main__':
     token=login_pwd('8667722222')
     headt=head_token(token)
-    withdraw('8667722222','5000000',headt)#尝试用很大的金额去提现
+    withdraw('8667722222','5000000',headt)#测试用很大的金额去提现

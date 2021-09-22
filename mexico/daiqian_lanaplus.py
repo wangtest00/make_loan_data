@@ -89,7 +89,7 @@ def auth_cert(registNo,headt):
     for j in range(4):  #生成4个随机英文大写字母
         st+=random.choice(string.ascii_uppercase)
     data={"birthdate":"1999-5-18","civilStatus":"10050001","curp":st+"990518MM"+st+"V8","delegationOrMunicipality":"zxcvbbbccxxx","education":"10190005",
-          "fatherLastName":"PRODUCT","gender":"10030001",
+          "fatherLastName":"JINGJING","gender":"10030001",
           "motherLastName":"TEST","name":"AUTO","outdoorNumber":"qweetyyu","phoneNo":registNo,"postalCode":"55555","state":"11130001","street":"444444","suburb":"asdfhhj","email":""}
     r=requests.post(host_api+'/api/cust/auth/cert',data=json.dumps(data),headers=headt)
     t=check_api(r)
@@ -253,6 +253,6 @@ def single_withdraw(registNo,custNo,loan_no,headt):
     print(r.json())
 
 if __name__ == '__main__':
-    t=compute_code('5565376994')
-    print(t)
-   # update_pwd('5617874561')
+    # t=compute_code('5565376994')
+    # print(t)
+    login_pwd('8585852222')

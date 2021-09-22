@@ -1,9 +1,9 @@
 __all__=['host_api','host_action','host_mgt','head_api','host_pay','host_coll','head_mgt','head_pay','CONFIGS','prodNo','which_db','appNo','shenpiren']
 
-appNo='201'
+appNo='202'
 shenpiren={'201':'wangs2@whalekun.com','202':'wangs@whalekun.com'}
 which_db='mex_pdl_loan'
-prodNo='56758910'  #81002021多期   71002021单期
+prodNo='25002400'  #81002021多期   71002021单期
 host_api="https://test-api.quantx.mx"         #APP
 host_action="https://test-action.quantx.mx"  #埋点
 host_mgt="https://test-mgt.quantx.mx"        #MGT

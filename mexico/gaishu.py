@@ -30,9 +30,9 @@ def stp_payout(loan_no,folioOrigen):
     r=requests.post("https://test-pay.quantx.mx/api/trade/stp_payout/annon/event/webhook",data=json.dumps(data),headers=head_pay,verify=False)
     t=r.json()
     if t['errorCode']==0:
-        print("执行墨西哥模拟提现接口成功",folioOrigen)
+        print("执行墨西哥模拟提现接口成功",loan_no)
     else:
-        print("执行墨西哥模拟提现接口失败",folioOrigen)
+        print("执行墨西哥模拟提现接口失败",loan_no)
     sql="select before_stat from lo_loan_dtl where loan_no='"+loan_no+"';"
     before_stat=DataBase(which_db).get_one(sql)
     if before_stat[0]=='10260005':

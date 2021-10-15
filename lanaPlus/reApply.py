@@ -1,11 +1,11 @@
 import string,requests,json,datetime
 from make_loan_data.public.dataBase import *
-from make_loan_data.mexico.gaishu import *
+from make_loan_data.lanaPlus.gaishu import *
 from make_loan_data.data.var_mex import *
-from make_loan_data.mexico.mex_mgt import *
-from make_loan_data.mexico.heads import *
+from make_loan_data.lanaPlus.mex_mgt import *
+from make_loan_data.lanaPlus.heads import *
 from make_loan_data.public.check_api import *
-from make_loan_data.mexico.daihou import *
+from make_loan_data.lanaPlus.daihou import *
 import io,sys
 #改编码方便jenkins运行
 #sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="gb18030")
@@ -16,8 +16,8 @@ def reApply():
     # sql="select REGIST_NO from cu_cust_reg_dtl where CUST_NO='"+custNo+"';"
     # registNo=DataBase(which_db).get_one(sql)
     # registNo=registNo[0]
-    registNo='8696993102'
-    custNo='C2022109248129660897322008576'
+    registNo='9383893927'
+    custNo='C2022109268130336452866408448'
     print(registNo)
     update_pwd(registNo)
     token=login_pwd(registNo)
@@ -27,7 +27,7 @@ def reApply():
     #分案
     DataBase('mex_pdl_loan').call_4_proc()
     #审批
-    pl_shenpi()
+    approve(loanNo)
     #插入风险数据，完成匹配产品
     insert_risk(loanNo)
     #app去待提现页面申请贷款

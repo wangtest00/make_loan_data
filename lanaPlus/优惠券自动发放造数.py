@@ -1,9 +1,9 @@
 import string,requests,json,datetime
 from public.dataBase import *
-from mexico.gaishu import *
+from lanaPlus.gaishu import *
 from data.var_mex import *
-from mexico.mex_mgt import *
-from mexico.heads import *
+from lanaPlus.mex_mgt import *
+from lanaPlus.heads import *
 import io,sys
 #改编码方便jenkins运行
 #sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="gb18030")

@@ -68,10 +68,8 @@ def third_track_detail(registNo,headt2):
         {"eventId":"login_otp_no_pw","label":"fill_in_otp","key":"content","value":code,"innerNetworkIp":"2409:8162:a46:5405:1:0:107f:acec%20","networkType":"1","recordTime":timev,"timeOnline":"","remark":""}],"androidId":"274b98eb5c8aed06","custNo":"","loanNo":""}
     data2={"phoneNo":registNo,"enventList":[{"eventId":"password_set","label":"enter_the_page","key":"in","value":timev,"innerNetworkIp":"2409:8162:a46:5405:1:0:107f:acec%20","networkType":"1",
                                             "recordTime":timev,"timeOnline":"","remark":""}],"androidId":"274b98eb5c8aed06","custNo":"","loanNo":""}
-    print(data1)
     print(host_action+"/api/third/track/detail")
     r1=requests.post(host_action+"/api/third/track/detail",data=json.dumps(data1),headers=headt2)
-    print(r1.status_code)
     check_api(r1)
     r2=requests.post(host_action+"/api/third/track/detail",data=json.dumps(data2),headers=headt2,verify=False)
     check_api(r2)
@@ -145,7 +143,7 @@ def apply_loan(custNo,headt):
     data10={"custNo":custNo}
     r=requests.post(host_api+'/api/loan/apply',data=json.dumps(data10),headers=headt)#申请贷款
     apply=check_api(r)
-    #print(apply['data']['loanNo'],apply['data']['beforeStat'])
+    print(apply['data']['loanNo'],apply['data']['beforeStat'])
     return apply['data']['loanNo']
 #更新kyc认证状态及其值
 def update_kyc_auth(registNo,custNo):
@@ -254,6 +252,6 @@ def single_withdraw(registNo,custNo,loan_no,headt):
     print(r.json())
 
 if __name__ == '__main__':
-    t=compute_code('3927')
+    t=compute_code('9720356326')
     print(t)
-    #login_pwd('8585852222')
+    # login_pwd('8585852222')

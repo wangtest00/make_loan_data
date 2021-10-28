@@ -7,7 +7,7 @@ host_api="https://test-api.lanadigital.mx"         #APP接口
 host_action="https://test-action.lanadigital.mx"   #埋点
 host_mgt="https://test-mgt.lanadigital.mx"         #MGT
 host_pay="https://test-pay.lanadigital.mx"         #支付
-host_coll="https://test-coll.lanadigital.mx"       #催收
+host_coll="https://test-collection.lanadigital.mx"       #催收
 
 head_api={"user-agent": "okhttp/4.9.1","x-user-language": "es","x-auth-token": "Bearer" ,"accept-encoding": "gzip","content-length": "25","host": host_api[8:],
           "x-app-name": "LanaDigital","content-type": "application/json;charset=utf-8","x-app-type": "10090001","x-app-version": "1.0.0","x-app-no": appNo }

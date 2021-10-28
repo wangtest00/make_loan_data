@@ -29,6 +29,7 @@ def first_apply(registNo):
         DataBase(which_db).call_4_proc()
         approve(loan_no)
         first_apply_sheipihou(loan_no,registNo,custNo,headt)
+        #getRepayDateList_stp(registNo,loan_no)
 
 def first_apply_sheipihou(loan_no,registNo,custNo,headt):
     insert_risk(loan_no)#匹配产品
@@ -66,6 +67,6 @@ def bu_ding(registNo):
         DataBase(which_db).closeDB()
 
 if __name__ == '__main__':
-    for i in range(1):
+    for i in range(5):
         auto_test()
-    #first_apply('8223300005')
+    #bu_ding('9499645987')

@@ -1,7 +1,7 @@
 import string,requests,json,datetime,random
 from make_loan_data.data.var_mex_credit import *
 from make_loan_data.credit.heads import *
-from make_loan_data.credit.daiqian_lanadigital import *
+from make_loan_data.credit.daiqian import *
 import io,sys
 #改编码方便jenkins运行
 #sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="gb18030")
@@ -21,6 +21,8 @@ def first_apply(registNo):
     auth_review_bank(custNo,headt)
     risk_credit(headt)
     chaxun_risk_level(custNo)
+    #time.sleep(3)
+    #web_hook_payout_stp(custNo)   #模拟银行回调-放款
 
 def auto_test():
     registNo=str(random.randint(8000000000,9999999999)) #10位随机数作为手机号

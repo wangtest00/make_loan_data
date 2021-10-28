@@ -96,7 +96,7 @@ def auth_cert(registNo,headt):
     data={"birthdate":"1999-5-18","civilStatus":"10050001","curp":st+"990518MM"+st+"V8","delegationOrMunicipality":"zxcvbbbccxxx","education":"10190005",
           "fatherLastName":"AUTO","gender":"10030001","lockKey":"",
           "motherLastName":"TEST","name":"SHUANG","outdoorNumber":"qweetyyu","phoneNo":registNo,"postalCode":"55555","state":"11130001","street":"444444","suburb":"asdfhhj","email":""}
-    r=requests.post(host_api+'/api/cust/auth/cert',data=json.dumps(data),headers=headt)
+    r=requests.post(host_api+'/api/cust/auth/cert',data=json.dumps(data),headers=headt,verify=False)
     t=check_api(r)
     if t!=0:
         return t['data']['custNo']
@@ -110,15 +110,15 @@ def kyc_auth(registNo,custNo,headt):
 #第三个页面，工作信息认证接口
 def auth_work(custNo,headt):
     data1={"certType":"WORK","custNo":custNo}
-    r1=requests.post(host_api+'/api/cust/auth/review',data=json.dumps(data1),headers=headt)
+    r1=requests.post(host_api+'/api/cust/auth/review',data=json.dumps(data1),headers=headt,verify=False)
     check_api(r1)
     data2={"companyAddress":"","companyName":"","companyPhone":"","custNo":custNo,"income":"10870004","industry":"","jobType":"10130006"}#工作收入来源
-    r2=requests.post(host_api+'/api/cust/auth/work',data=json.dumps(data2),headers=headt)
+    r2=requests.post(host_api+'/api/cust/auth/work',data=json.dumps(data2),headers=headt,verify=False)
     check_api(r2)
 
 def auth_review_contact(custNo,headt):
     data3={"certType":"CONTACT","custNo":custNo}
-    r3=requests.post(host_api+'/api/cust/auth/review',data=json.dumps(data3),headers=headt)
+    r3=requests.post(host_api+'/api/cust/auth/review',data=json.dumps(data3),headers=headt,verify=False)
     check_api(r3)
 #抓取数据接口
 def auth_app_grab_data(phoneNo,custNo,headt):
@@ -139,20 +139,20 @@ def auth_app_grab_data(phoneNo,custNo,headt):
     data8={"appNo":appNo,"phoneNo":phoneNo,"dataType":"11090001","pageGet":"Contact","recordTime":"1621332187731","grabData":{"data":[{"appName":"安全教育平台","appPackage":"com.jzzs.ParentsHelper","appVersionNo":"1.7.0","deviceId":"a2eff92b-86cb-4614-a66c-84ae322f3adcA2:B4:74:63:FB:40LIO-AL00","imei":"a2eff92b-86cb-4614-a66c-84ae322f3adc","installTime":1599480832637,"lastUpdateTime":1618934047038,"mac":"A2:B4:74:63:FB:40","phoneNo":phoneNo,"recordBehavior":"App列表抓取","recordTime":"1621332187731","userId":custNo}]},"custNo":custNo}
     data0=[data4,data5,data6,data7,data8]
     for data0 in data0:
-        r0=requests.post(host_api+'/api/common/grab/app_grab_data',data=json.dumps(data0),headers=headt)  #抓取用户手机设备信息，短信，通讯录，已安装app，位置信息
+        r0=requests.post(host_api+'/api/common/grab/app_grab_data',data=json.dumps(data0),headers=headt,verify=False)  #抓取用户手机设备信息，短信，通讯录，已安装app，位置信息
         check_api(r0)
         time.sleep(1)
 # 第四个页面，其他联系人信息认证接口
 def auth_contact(custNo,headt):
     #data9={"contacts":[{"name":"test","phone":"8888455666","relationship":"10110004"},{"name":"test2","phone":"8883355777","relationship":"10110003"}],"custNo":custNo}
     data9={"custNo":custNo,"contacts":[{"custNo":custNo,"name":"test1","phone":"123333","relationship":"10110004","relationshipName":"Hermanos"},{"custNo":custNo,"name":"test2","phone":"543212601","relationship":"10110001","relationshipName":"Padres"}]}
-    r9=requests.post(host_api+'/api/cust/auth/other/contact',data=json.dumps(data9),headers=headt)#最后一步，填写2个联系人的联系方式
+    r9=requests.post(host_api+'/api/cust/auth/other/contact',data=json.dumps(data9),headers=headt,verify=False)#最后一步，填写2个联系人的联系方式
     check_api(r9)
 
 #查看认证信息接口，查看银行卡绑卡现状和历史绑卡信息
 def auth_review_bank(custNo,headt):
     data = {"certType": "BANK", "custNo": custNo}
-    r = requests.post(host_api + '/api/cust/auth/review', data=json.dumps(data), headers=headt)
+    r = requests.post(host_api + '/api/cust/auth/review', data=json.dumps(data), headers=headt,verify=False)
     check_api(r)
 #更新KYC认证状态及照片路径
 def update_kyc_auth(phoneNo,custNo):
@@ -170,22 +170,19 @@ def update_kyc_auth(phoneNo,custNo):
     DataBase(which_db).executeUpdateSql(sql2)
     DataBase(which_db).executeUpdateSql(sql3)
     DataBase(which_db).executeUpdateSql(sql4)
-#更新其他联系人认证状态
-# def update_other_contact(custNo):
-#     sql1 = "update cu_cust_auth_dtl set OTHER_CONTACT_AUTH='1' WHERE CUST_NO='" + custNo + "';"  # 客户认证信息明细表其他联系人认证状态
-#     DataBase(which_db).executeUpdateSql(sql1)
+
 #绑定银行卡接口，需要把银行卡号改成明显错的，环境怕放出真实的钱
 def auth_bank(custNo,headt):
     #bank_acct_no=str(random.randint(100000,999999))
     data={"bankCode":"10020008","BBVA BANCOMER":"","clabe":"012121212121212128","custNo":custNo}
-    r=requests.post(host_api+'/api/cust/auth/bank',data=json.dumps(data),headers=headt)
+    r=requests.post(host_api+'/api/cust/auth/bank',data=json.dumps(data),headers=headt,verify=False)
     check_api(r)                                         #改为6位随机数
    # sql="update cu_cust_bank_card_dtl set BANK_ACCT_NO='"+bank_acct_no+"' where CUST_NO='"+custNo+"';"
    # DataBase(which_db).executeUpdateSql(sql)
 
 #风控授信调度接口：api调风控，获得风控回调结果
 def risk_credit(headt):
-    r = requests.post(host_api+'/api/task/risk/credit',headers=headt)
+    r = requests.post(host_api+'/api/task/risk/credit',headers=headt,verify=False)
     check_api(r)
     print("api调风控，获得风控回调结果")
 
@@ -204,13 +201,36 @@ def chaxun_risk_level(custNo):
         print("风控未回调给api授信结果, 请检查风控",custNo)
     return risk_level
 
-#提现接口-app点击提现按钮
-def single_withdraw(registNo,custNo,loan_no,headt):
-    loanAmt="1100.00"
-    instNum='3'
-    data={"custNo":custNo,"instNum":instNum,"loanAmt":loanAmt,"loanNo":loan_no,"prodNo":prodNo}
-    r=requests.post(host_api+'/api/trade/fin/withdraw',data=json.dumps(data),headers=headt)
+#模拟银行回调-放款
+def web_hook_payout_stp(cust_no):
+    delay_payout_handler()
+    sql="select tran_no,tran_order_no from pay_tran_dtl where tran_no=(select ORDER_NO from lo_loan_payout_dtl where LOAN_NO=(select loan_no from lo_loan_dtl  where CUST_NO='"+cust_no+"')); "
+    #print(sql)
+    list=DataBase(which_db).get_one(sql)
+    print(list)
+    data={
+    "causaDevolucion": {
+        "code": 16,
+        "msg": "Tipo de operación errónea"
+    },
+    "empresa": "ASSERTIVE",
+    "estado": {
+        "code": "0000",   #非0000，则模拟到放款失败
+        "msg": "canll"
+    },
+    "folioOrigen": list[0],
+    "id": int(list[1])
+}
+    r=requests.post(host_pay+'/api/web_hook/payout/stp',data=json.dumps(data),headers=head_pay,verify=False)
     print(r.json())
+#处理延迟放款
+def delay_payout_handler():
+    for i in range(1):
+        r=requests.post(host_api+"/api/credit/payment/anon/delay_payout_handler",headers=head_api,verify=False)
+        print(r.json())
+        time.sleep(3)
 
 if __name__ == '__main__':
-    chaxun_risk_level('C2082110148136936439893131264')
+    #chaxun_risk_level('C2082110148136936439893131264')
+    web_hook_payout_stp('C2082110288142014288152952832')
+    #delay_payout_handler()

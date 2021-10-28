@@ -52,4 +52,4 @@ HAVING loan_cnt=1;'''
     return custNo[0]
 if __name__ == '__main__':
     reApply()
-    #getCustNO()
+    getCustNO()

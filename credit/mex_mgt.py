@@ -1,4 +1,4 @@
-from make_loan_data.credit.daiqian_lanadigital import *
+from make_loan_data.credit.daiqian import *
 from make_loan_data.data.var_mex_credit import *
 import requests,json
 
@@ -50,6 +50,7 @@ def approve(custNo):
             data2={"flowId":flowId,"decisionReason":"10280038","apprRemark":"test for approve","approveResultType":"PASS"}
             r=requests.post(host_mgt+'/api/approve/handle/approve?lang=zh',data=json.dumps(data2),headers=head,verify=False)#2.审批通过
             check_api(r)
+            print("该笔案件-审批通过")
         else:
             print("该笔授信案件不是该客户的")
 
@@ -63,11 +64,8 @@ def head_mgt_c():
 def head_mgt_2():
     ssid=login_mgt()
     head2={"Host": "test-mgt.lanadigital.mx","Connection": "keep-alive","sec-ch-ua": '"Not A;Brand";v="99", "Chromium";v="90", "Google Chrome";v="90"',
-"Accept": "application/json, text/plain, */*",
-"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36",
-"Sec-Fetch-Site": "same-origin",
-"Sec-Fetch-Mode": "cors",
-"Sec-Fetch-Dest": "empty","Referer": "https://test-mgt.lanadigital.mx/","Accept-Encoding": "gzip, deflate, br",
+"Accept": "application/json, text/plain, */*","User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36",
+"Sec-Fetch-Site": "same-origin","Sec-Fetch-Mode": "cors","Sec-Fetch-Dest": "empty","Referer": "https://test-mgt.lanadigital.mx/","Accept-Encoding": "gzip, deflate, br",
 "Accept-Language": "zh-CN,zh;q=0.9","Cookie": "language=zh; ssid="+ssid+"; hasLogin=1"}
     return head2
 

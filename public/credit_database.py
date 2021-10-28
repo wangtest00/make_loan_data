@@ -49,7 +49,7 @@ class DataBase():
     #调用mysql存储过程
     def call_proc(self,procName,date):
         try:
-            self.cur.callproc(procName,args=(date,"@o_stat",))
+            self.cur.callproc(procName,args=(date,"@o_stat"))
             self.connect.commit()
             print ("调用存储过程成功:",procName,date)
             #self.closeDB()
@@ -83,7 +83,8 @@ class DataBase():
         for i in range(2):
             DataBase('mex_credit').call_one_proc('proc_apr_appr_allocation_control')
 if __name__ == '__main__':
-    #DataBase('mex_credit').batch('20211015','20211015')
-    DataBase('mex_credit').call_proc_apr_appr_allocation_control()
+    DataBase('mex_credit').batch('20211027','20211126')
+    #DataBase('mex_credit').batch('20211127','20211127')
+    #DataBase('mex_credit').call_proc_apr_appr_allocation_control()
 
 

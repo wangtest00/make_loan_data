@@ -26,4 +26,4 @@ def create_assist_date(datestart=None, dateend=None):
     return date_list
 
 if __name__ == '__main__':
-    create_assist_date('20211015','20211115')
+    create_assist_date('20211026','20211026')

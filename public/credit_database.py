@@ -83,8 +83,8 @@ class DataBase():
         for i in range(2):
             DataBase('mex_credit').call_one_proc('proc_apr_appr_allocation_control')
 if __name__ == '__main__':
-    DataBase('mex_credit').batch('20211027','20211126')
-    #DataBase('mex_credit').batch('20211127','20211127')
-    #DataBase('mex_credit').call_proc_apr_appr_allocation_control()
+    DataBase('mex_credit').batch('20211101','20211201')
+    #DataBase('mex_credit').batch('20211030','20211128')
+   # DataBase('mex_credit').call_proc_apr_appr_allocation_control()
 
 

@@ -196,16 +196,17 @@ def chaxun_risk_level(custNo):
         else:
             print("走人审，需要跑分案存储过程",custNo)
             DataBase('mex_credit').call_proc_apr_appr_allocation_control()
-            approve(custNo)
+            #approve(custNo)
     else:
         print("风控未回调给api授信结果, 请检查风控",custNo)
     return risk_level
 
 #模拟银行回调-放款
-def web_hook_payout_stp(cust_no):
+def web_hook_payout_stp():
     delay_payout_handler()
-    sql="select tran_no,tran_order_no from pay_tran_dtl where tran_no=(select ORDER_NO from lo_loan_payout_dtl where LOAN_NO=(select loan_no from lo_loan_dtl  where CUST_NO='"+cust_no+"')); "
+    #sql="select tran_no,tran_order_no from pay_tran_dtl where tran_no=(select ORDER_NO from lo_loan_payout_dtl where LOAN_NO=(select loan_no from lo_loan_dtl  where CUST_NO='"+cust_no+"')); "
     #print(sql)
+    sql="select TRAN_NO,TRAN_ORDER_NO from pay_tran_dtl t where  t.TRAN_TYPE='10320003'  and IN_ACCT_NO='012121212121212128' and  ACT_TRAN_AMT is null  order by INST_TIME desc limit 1;"
     list=DataBase(which_db).get_one(sql)
     print(list)
     data={
@@ -232,5 +233,5 @@ def delay_payout_handler():
 
 if __name__ == '__main__':
     #chaxun_risk_level('C2082110148136936439893131264')
-    web_hook_payout_stp('C2082110288142014288152952832')
+    web_hook_payout_stp()
     #delay_payout_handler()

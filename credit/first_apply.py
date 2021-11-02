@@ -20,9 +20,12 @@ def first_apply(registNo):
     auth_bank(custNo, headt)
     auth_review_bank(custNo,headt)
     risk_credit(headt)
-    chaxun_risk_level(custNo)
-    #time.sleep(3)
-    #web_hook_payout_stp(custNo)   #模拟银行回调-放款
+    cx_risk_and_approve(custNo)
+    withdraw(headt)
+    time.sleep(1)
+    web_hook_payout_stp()   #模拟银行回调-放款
+    time.sleep(1)
+    check_stat(custNo)
 
 def auto_test():
     registNo=str(random.randint(8000000000,9999999999)) #10位随机数作为手机号

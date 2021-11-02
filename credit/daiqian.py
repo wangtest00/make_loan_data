@@ -184,9 +184,9 @@ def auth_bank(custNo,headt):
 def risk_credit(headt):
     r = requests.post(host_api+'/api/task/risk/credit',headers=headt,verify=False)
     check_api(r)
-    print("api调风控，获得风控回调结果")
+    print("api调风控接口，获得风控回调结果")
 
-def chaxun_risk_level(custNo):
+def cx_risk_and_approve(custNo):
     sql="select RISK_LEVEL from cu_credit_risk_order_dtl where BUSINESS_NO='"+custNo+"';"
     risk_level=DataBase('mex_credit').get_one(sql)
     print(risk_level)
@@ -196,12 +196,12 @@ def chaxun_risk_level(custNo):
         else:
             print("走人审，需要跑分案存储过程",custNo)
             DataBase('mex_credit').call_proc_apr_appr_allocation_control()
-            #approve(custNo)
+            approve(custNo)
     else:
         print("风控未回调给api授信结果, 请检查风控",custNo)
     return risk_level
 
-#模拟银行回调-放款
+#模拟银行回调-放款,可能会调失败
 def web_hook_payout_stp():
     delay_payout_handler()
     #sql="select tran_no,tran_order_no from pay_tran_dtl where tran_no=(select ORDER_NO from lo_loan_payout_dtl where LOAN_NO=(select loan_no from lo_loan_dtl  where CUST_NO='"+cust_no+"')); "
@@ -228,8 +228,29 @@ def web_hook_payout_stp():
 def delay_payout_handler():
     for i in range(1):
         r=requests.post(host_api+"/api/credit/payment/anon/delay_payout_handler",headers=head_api,verify=False)
-        print(r.json())
+        check_api(r)
         time.sleep(3)
+
+def payment_detail(headt):
+    r=requests.post(host_api+"/api/credit/payment/detail",headers=headt,verify=False)
+    check_api(r)
+def payment(headt):
+    data={"withdrawAmt":"500.0"}
+    r=requests.post(host_api+"/api/credit/payment",data=json.dumps(data),headers=headt,verify=False)
+    check_api(r)
+
+def check_stat(cust_no):
+    sql="select BEFORE_STAT,AFTER_STAT from lo_loan_dtl t where CUST_NO='"+cust_no+"' order by INST_TIME desc limit 1;"
+    res=DataBase(which_db).get_one(sql)
+    if res[0]=='10260005' and res[1]=='10270002':
+        print("【贷前提现成功，贷后正常】",cust_no)
+    else:
+        print("【贷前贷后状态未更新】",cust_no)
+
+
+def withdraw(headt):
+    payment_detail(headt)
+    payment(headt)
 
 if __name__ == '__main__':
     #chaxun_risk_level('C2082110148136936439893131264')

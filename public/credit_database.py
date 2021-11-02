@@ -60,7 +60,7 @@ class DataBase():
         proc=['proc_sys_batch_log_start','proc_fin_ad_record','proc_fin_ad_dtl','proc_sys_batch_log_end']
         for proc in proc:
             self.call_proc(proc,date)
-        self.closeDB()
+
 #loanAmt='{0:f}'.format(t[0])#decimal转字符串
     def batch(self,date1,date2):
         sql="delete from sys_batch_log;"  #跑批前，先清空batch_log表跑批记录
@@ -83,8 +83,8 @@ class DataBase():
         for i in range(2):
             DataBase('mex_credit').call_one_proc('proc_apr_appr_allocation_control')
 if __name__ == '__main__':
-    DataBase('mex_credit').batch('20211101','20211201')
-    #DataBase('mex_credit').batch('20211030','20211128')
+    #DataBase('mex_credit').batch('20211101','20211201')
+    DataBase('mex_credit').batch('20211102','20220601')
    # DataBase('mex_credit').call_proc_apr_appr_allocation_control()
 
 

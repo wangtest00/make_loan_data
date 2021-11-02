@@ -52,7 +52,8 @@ def approve(custNo):
             check_api(r)
             print("该笔案件-审批通过")
         else:
-            print("该笔授信案件不是该客户的")
+            #print("该笔授信案件不是该客户的")
+            pass
 
 #组装header+用户登录cookie
 def head_mgt_c():
@@ -69,6 +70,23 @@ def head_mgt_2():
 "Accept-Language": "zh-CN,zh;q=0.9","Cookie": "language=zh; ssid="+ssid+"; hasLogin=1"}
     return head2
 
+def pl_approve(head):
+    r=requests.get("https://test-mgt.lanadigital.mx/api/approve/flow/list?pageSize=10&pageNum=1&params[registNo]=&lang=zh",headers=head,verify=False)
+    t=r.json()
+    s=t['list']
+    for i in range(len(s)):
+        flowId=s[i]['flowId']
+        data1={"flowIds":[flowId],"targetUserNo":user[0]}
+        r=requests.post(host_mgt+'/api/approve/distribution/case?lang=zh',data=json.dumps(data1),headers=head,verify=False)  #1.分配审批人员
+        check_api(r)
+        data2={"flowId":flowId,"decisionReason":"10280038","apprRemark":"test for approve","approveResultType":"PASS"}
+        r=requests.post(host_mgt+'/api/approve/handle/approve?lang=zh',data=json.dumps(data2),headers=head,verify=False)#2.审批通过
+        check_api(r)
+        print("该笔案件-审批通过")
+
+def pl_shenpi():
+    head=head_mgt_c()
+    pl_approve(head)
 
 if __name__ == '__main__':
     approve('C2082110148136909639519502336')

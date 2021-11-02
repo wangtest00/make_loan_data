@@ -9,7 +9,6 @@ randnum=str(random.randint(10000000,99999999)) #8位随机数
 def gaishu(loan_no):
     sql1="update fin_tran_pay_dtl set tran_pay_stat='10420001' where loan_no='"+loan_no+"';"
     sql2="select tran_flow_no from pay_tran_dtl  where LOAN_NO='"+loan_no+"';"
-    #sql4="update pay_tran_dtl set tran_order_no='"+randnum+"' where  LOAN_NO='"+loan_no+"';"
     sql5="update lo_loan_dtl set before_stat='10260008' where loan_no='"+loan_no+"';"
     DataBase(which_db).executeUpdateSql(sql1)
     DataBase(which_db).executeUpdateSql(sql1)

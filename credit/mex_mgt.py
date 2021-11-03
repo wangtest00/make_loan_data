@@ -79,8 +79,9 @@ def pl_approve(head):
         data1={"flowIds":[flowId],"targetUserNo":user[0]}
         r=requests.post(host_mgt+'/api/approve/distribution/case?lang=zh',data=json.dumps(data1),headers=head,verify=False)  #1.分配审批人员
         check_api(r)
-        data2={"flowId":flowId,"decisionReason":"10280038","apprRemark":"test for approve","approveResultType":"PASS"}
-        r=requests.post(host_mgt+'/api/approve/handle/approve?lang=zh',data=json.dumps(data2),headers=head,verify=False)#2.审批通过
+        #data2={"flowId":flowId,"decisionReason":"10280038","apprRemark":"test for approve","approveResultType":"PASS"}#2.审批通过
+        data2={"flowId":flowId,"decisionReason":"10280024","apprRemark":"test for approve","approveResultType":"REJECT"}#3.审批拒绝
+        r=requests.post(host_mgt+'/api/approve/handle/approve?lang=zh',data=json.dumps(data2),headers=head,verify=False)
         check_api(r)
         print("该笔案件-审批通过")
 
@@ -89,4 +90,5 @@ def pl_shenpi():
     pl_approve(head)
 
 if __name__ == '__main__':
-    approve('C2082110148136909639519502336')
+    #approve('C2082110148136909639519502336')
+    pl_shenpi()

@@ -203,7 +203,7 @@ def cx_risk_and_approve(custNo):
 
 #模拟银行回调-放款,可能会调失败
 def web_hook_payout_stp():
-    delay_payout_handler()
+   # delay_payout_handler()
     #sql="select tran_no,tran_order_no from pay_tran_dtl where tran_no=(select ORDER_NO from lo_loan_payout_dtl where LOAN_NO=(select loan_no from lo_loan_dtl  where CUST_NO='"+cust_no+"')); "
     #print(sql)
     sql="select TRAN_NO,TRAN_ORDER_NO from pay_tran_dtl t where  t.TRAN_TYPE='10320003'  and IN_ACCT_NO='012121212121212128' and  ACT_TRAN_AMT is null  order by INST_TIME desc limit 1;"
@@ -239,14 +239,29 @@ def payment(headt):
     r=requests.post(host_api+"/api/credit/payment",data=json.dumps(data),headers=headt,verify=False)
     check_api(r)
 
-def check_stat(cust_no):
+#检查放款成功
+def check_stat_fk(cust_no):
     sql="select BEFORE_STAT,AFTER_STAT from lo_loan_dtl t where CUST_NO='"+cust_no+"' order by INST_TIME desc limit 1;"
     res=DataBase(which_db).get_one(sql)
     if res[0]=='10260005' and res[1]=='10270002':
         print("【贷前提现成功，贷后正常】",cust_no)
     else:
         print("【贷前贷后状态未更新】",cust_no)
-
+#检查还款结清
+def check_stat_jq(cust_no):
+    sql="select BEFORE_STAT,AFTER_STAT from lo_loan_dtl t where CUST_NO='"+cust_no+"' order by INST_TIME desc limit 1;"
+    res=DataBase(which_db).get_one(sql)
+    if res[0]=='10260005' and res[1]=='10270005':
+        print("【贷前提现成功，贷后已结清】",cust_no)
+    else:
+        print("【贷前贷后状态未更新】",cust_no)
+    sql2="select BILL_STATUS from cu_cust_bill_dtl  where cust_no='"+cust_no+"';"
+    res2=DataBase(which_db).get_one(sql2)
+    res2=res2[0]
+    if res2=='20060001':
+        print("cu_cust_bill_dtl表状态已更新为已结清",cust_no)
+    else:
+        print("cu_cust_bill_dtl表未更新",cust_no)
 
 def withdraw(headt):
     payment_detail(headt)

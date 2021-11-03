@@ -25,7 +25,7 @@ def first_apply(registNo):
     time.sleep(1)
     web_hook_payout_stp()   #模拟银行回调-放款
     time.sleep(1)
-    check_stat(custNo)
+    check_stat_fk(custNo)
 
 def auto_test():
     registNo=str(random.randint(8000000000,9999999999)) #10位随机数作为手机号

@@ -1,7 +1,7 @@
 import requests,json
 import random
-from make_loan_data.data.var_mex_lp import *
-from make_loan_data.lanaPlus.daiqian_lanaplus import *
+from make_loan_data.data.var_mex_fr import *
+from make_loan_data.FeriaRapida.daiqian_fr import *
 from make_loan_data.public.dataBase import *
 
 #模拟银行回调接口-模拟还款stp（只需修改卡号cuentaBeneficiario和金额monto）

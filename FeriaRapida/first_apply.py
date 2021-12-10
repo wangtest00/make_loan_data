@@ -1,9 +1,10 @@
 import string,requests,json,datetime
 from make_loan_data.public.dataBase import *
-from make_loan_data.lanaPlus.gaishu import *
-from make_loan_data.lanaPlus.mex_mgt_lp import *
-from make_loan_data.lanaPlus.heads import *
-from make_loan_data.data.var_mex_lp import *
+from make_loan_data.FeriaRapida.gaishu import *
+from make_loan_data.FeriaRapida.mex_mgt_fr import *
+from make_loan_data.FeriaRapida.heads import *
+from make_loan_data.data.var_mex_fr import *
+from make_loan_data.FeriaRapida.daiqian_fr import *
 #import io,sys
 #改编码方便jenkins运行
 #sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="gb18030")
@@ -29,7 +30,6 @@ def first_apply(registNo):
         DataBase(which_db).call_4_proc()
         approve(loan_no)
         first_apply_sheipihou(loan_no,registNo,custNo,headt)
-        ##getRepayDateList_stp(registNo,loan_no)
 
 def first_apply_sheipihou(loan_no,registNo,custNo,headt):
     insert_risk(loan_no)#匹配产品
@@ -69,3 +69,4 @@ def bu_ding(registNo):
 if __name__ == '__main__':
     for i in range(1):
         auto_test()
+    #bu_ding("8385862222")

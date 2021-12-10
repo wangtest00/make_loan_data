@@ -1,5 +1,5 @@
-from make_loan_data.lanaPlus.daiqian_lanaplus import *
-from make_loan_data.data.var_mex_majiabao import *
+from make_loan_data.FeriaRapida.daiqian_fr import *
+from make_loan_data.data.var_mex_fr import *
 import requests,json
 
 
@@ -45,49 +45,43 @@ def approve(loan_no):
 #批量分配审批人员及审批通过
 def pl_approve(loan_no):
     head=head_mgt_c()
-    data1={"loanNos":[loan_no],"targetUserNo":shenpiren[appNo][0]}
-    r=requests.post(host_mgt+'/api/approve/distribution/case?lang=zh',data=json.dumps(data1),headers=head,verify=False)  #1.分配审批人员
-    check_api(r)
     for loan_no in loan_no:
-        data2={"loanNo":loan_no,"decisionReason":"10280038","apprRemark":"测试通过","riskLevel":"DEFAULT","riskScore":"0","approveResultType":"PASS"}
+        data2={"loanNo":loan_no,"decisionReason":"10150001","apprRemark":"测试通过","riskLevel":"DEFAULT","riskScore":"0","approveResultType":"PASS"}
         r=requests.post(host_mgt+'/api/approve/handle/approve?lang=zh',data=json.dumps(data2),headers=head,verify=False)#2.审批通过
         check_api(r)
 #组装header+用户登录cookie
 def head_mgt_c():
     ssid=login_mgt()
-    head={"Host": "test-mgt.quantx.mx","Connection": "keep-alive","Content-Length": "55","sec-ch-ua": '"Not A;Brand";v="99", "Chromium";v="90", "Google Chrome";v="90"',"Accept": "application/json, text/plain, */*","sec-ch-ua-mobile": "?0",
-"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36","Content-Type": "application/json;charset=UTF-8","Origin": "https://test-mgt.quantx.mx","Sec-Fetch-Site": "same-origin","Sec-Fetch-Mode": "cors",
-"Sec-Fetch-Dest": "empty","Referer": "https://test-mgt.quantx.mx/","Accept-Encoding": "gzip, deflate, br","Accept-Language": "zh-CN,zh;q=0.9","Cookie": "language=zh; ssid="+ssid+"; hasLogin=1"}
+    head={"Host": host_mgt[8:],"Connection": "keep-alive","Content-Length": "55","sec-ch-ua": '"Not A;Brand";v="99", "Chromium";v="90", "Google Chrome";v="90"',"Accept": "application/json, text/plain, */*","sec-ch-ua-mobile": "?0",
+"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36",
+"Content-Type": "application/json;charset=UTF-8","Origin": host_mgt,"Sec-Fetch-Site": "same-origin","Sec-Fetch-Mode": "cors",
+"Sec-Fetch-Dest": "empty","Referer": host_mgt,"Accept-Encoding": "gzip, deflate, br","Accept-Language": "zh-CN,zh;q=0.9","Cookie": "language=zh; ssid="+ssid+"; hasLogin=1"}
     return head
 def head_mgt_2():
     ssid=login_mgt()
-    head2={"Host": "test-mgt.quantx.mx","Connection": "keep-alive","sec-ch-ua": '"Not A;Brand";v="99", "Chromium";v="90", "Google Chrome";v="90"',
+    head2={"Host": host_mgt[8:],"Connection": "keep-alive","sec-ch-ua": '"Not A;Brand";v="99", "Chromium";v="90", "Google Chrome";v="90"',
 "Accept": "application/json, text/plain, */*",
 "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36",
 "Sec-Fetch-Site": "same-origin",
 "Sec-Fetch-Mode": "cors",
-"Sec-Fetch-Dest": "empty","Referer": "https://test-mgt.quantx.mx/","Accept-Encoding": "gzip, deflate, br",
+"Sec-Fetch-Dest": "empty","Referer": host_mgt,"Accept-Encoding": "gzip, deflate, br",
 "Accept-Language": "zh-CN,zh;q=0.9","Cookie": "language=zh; ssid="+ssid+"; hasLogin=1"}
     return head2
-#批量分配及审批
+#批量审批自己手上的
 def pl_shenpi():
     head=head_mgt_2()
-    r=requests.get(host_mgt+'/api/approve/distribution/list?pageSize=10&pageNum=1&lang=zh',headers=head,verify=False)
+    r=requests.get(host_mgt+'/api/approve/flow/list?pageSize=10&pageNum=1&lang=zh',headers=head,verify=False)
     t=r.json()
     t=t['list']
     loan_No_List=[]
     for i in range(len(t)):
-        if t[i]['apprStat']=='10200003':
-            if t[i]['apprUserNo']==shenpiren[appNo][0]:
-                print(t[i]['loanNo'])
-                loan_no=t[i]['loanNo']
-                loan_No_List.append(loan_no)
-    if len(loan_No_List)==0:
-        print("无需审批")
-    else:
-        pl_approve(loan_No_List)
+        print(t[i])
+        loan_no=t[i]['loanNo']
+        loan_No_List.append(loan_no)
+    pl_approve(loan_No_List)
 
 if __name__ == '__main__':
-    pl_shenpi()
+    for i in range(3):
+        pl_shenpi()
     #approve('L2012108188116218565239939072')
     #login_mgt()

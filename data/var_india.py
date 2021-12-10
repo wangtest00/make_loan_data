@@ -1,8 +1,9 @@
-__all__=['india_api','host2','india_mgt','head_api','head_mgt','CONFIGS','india_prodNo','inter_db','head_india_pay']
+__all__=['india_api','host2','india_mgt','head_api','head_mgt','CONFIGS','india_prodNo','inter_db','head_india_pay','host_india_pay']
 
 inter_db='manage_need_loan'
 india_prodNo='5'
 india_api="http://api-test.quantstack.in"
+host_india_pay="https://test-pay.quantstack.in"
 host2="https://test-action.quantstack.in"
 india_mgt="http://test-mgt.quantstack.in/"
 head_api={"user-agent": "Dart/2.12 (dart:io)","x-user-language": "es","x-auth-token": "Bearer" ,"accept-encoding": "gzip","content-length": "63","host": "test-api.quantstack.in","x-app-name": "LanaPlus","content-type": "application/json",
@@ -16,12 +17,12 @@ head_india_pay={"Host":"test-pay.quantstack.in","Connection":"keep-alive","Conte
                 "User-Agent":"PostmanRuntime/7.28.2","Accept":"*/*","Content-Type":"application/json","Accept-Encoding":"gzip, deflate, br"}
 
 CONFIGS = {'manage_need_loan': {'host':'13.235.214.155','port':3306, 'user': 'cs_wangs','password': 'cs_wangs!qw####','database': 'manage_need_loan'}}
-india_prodNo=india_prodNo
-india_api=india_api
-host2=host2
-india_mgt=india_mgt
-head_api=head_api
-head_mgt=head_mgt
-CONFIGS=CONFIGS
-inter_db=inter_db
-head_india_pay=head_india_pay
+# india_prodNo=india_prodNo
+# india_api=india_api
+# host2=host2
+# india_mgt=india_mgt
+# head_api=head_api
+# head_mgt=head_mgt
+# CONFIGS=CONFIGS
+# inter_db=inter_db
+# head_india_pay=head_india_pay

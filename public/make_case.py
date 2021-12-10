@@ -7,7 +7,7 @@ def make_case(path):
     # 加载已有xmind文件，如果不存在，则新建
     workbook = xmind.load(path)
     t=workbook.getData()[0]
-    #print(t) # 获取整个xmind数据(字典的形式)
+    print(t) # 获取整个xmind数据(字典的形式)
     t=t['topic']
     t=t['topics']
     #print(len(t))
@@ -21,7 +21,7 @@ def make_case(path):
         for s in range(len(m)):
             y=m[s]
             #print('222222222',y)
-            print('二级模块名称=',y['title'])  #打印模块名
+            #print('二级模块名称=',y['title'])  #打印模块名
             erji=y['title']
             y=y['topics']
             #print(len(m))    #打印主测试点个数
@@ -50,4 +50,4 @@ def make_case(path):
     WriteExcel().write_Excel_Xls_Append(case_list)
 
 if __name__ == '__main__':
-    make_case('C:\\Users\\wangshuang\\Desktop\\LanaDigital测试方案(初版)\\授信产品-测试分析0826.xmind')
+    make_case('C:\\Users\\wangshuang\\Desktop\\LanaDigital测试方案(0910)\\授信产品-测试分析0910-副本.xmind')

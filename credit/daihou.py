@@ -160,7 +160,8 @@ def repay_stp(registNo):
 
 
 if __name__ == '__main__':
-   #stp_repayment('646170000000000970','507.50')
+   #stp_repayment('646170000000001403','30.45')
+   stp_repayment('646180244001052731','600')
    # getRepayDateList_stp('8545945423','L2012106248096585023351070720')
    # oxxo_repay('1','L2022109278130737450944495616')
-   repay_stp('8656925502')
+   #repay_stp('9532088528')

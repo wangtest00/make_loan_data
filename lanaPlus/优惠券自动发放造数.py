@@ -2,7 +2,7 @@ import string,requests,json,datetime
 from public.dataBase import *
 from lanaPlus.gaishu import *
 from data.var_mex import *
-from lanaPlus.mex_mgt import *
+from lanaPlus.mex_mgt_lp import *
 from lanaPlus.heads import *
 import io,sys
 #改编码方便jenkins运行

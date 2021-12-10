@@ -174,7 +174,7 @@ def update_kyc_auth(phoneNo,custNo):
 #绑定银行卡接口，需要把银行卡号改成明显错的，环境怕放出真实的钱
 def auth_bank(custNo,headt):
     #bank_acct_no=str(random.randint(100000,999999))
-    data={"bankCode":"10020008","BBVA BANCOMER":"","clabe":"012121212121212128","custNo":custNo}
+    data={"bankCode":"10020008","bankCodeName":"BBVA BANCOMER","clabe":"012121212121212128","custNo":custNo}
     r=requests.post(host_api+'/api/cust/auth/bank',data=json.dumps(data),headers=headt,verify=False)
     check_api(r)                                         #改为6位随机数
    # sql="update cu_cust_bank_card_dtl set BANK_ACCT_NO='"+bank_acct_no+"' where CUST_NO='"+custNo+"';"
@@ -203,7 +203,7 @@ def cx_risk_and_approve(custNo):
 
 #模拟银行回调-放款,可能会调失败
 def web_hook_payout_stp():
-   # delay_payout_handler()
+    delay_payout_handler()
     #sql="select tran_no,tran_order_no from pay_tran_dtl where tran_no=(select ORDER_NO from lo_loan_payout_dtl where LOAN_NO=(select loan_no from lo_loan_dtl  where CUST_NO='"+cust_no+"')); "
     #print(sql)
     sql="select TRAN_NO,TRAN_ORDER_NO from pay_tran_dtl t where  t.TRAN_TYPE='10320003'  and IN_ACCT_NO='012121212121212128' and  ACT_TRAN_AMT is null  order by INST_TIME desc limit 1;"
@@ -224,7 +224,7 @@ def web_hook_payout_stp():
 }
     r=requests.post(host_pay+'/api/web_hook/payout/stp',data=json.dumps(data),headers=head_pay,verify=False)
     print(r.json())
-#处理延迟放款
+#唤醒延迟放款
 def delay_payout_handler():
     for i in range(1):
         r=requests.post(host_api+"/api/credit/payment/anon/delay_payout_handler",headers=head_api,verify=False)
@@ -252,16 +252,16 @@ def check_stat_jq(cust_no):
     sql="select BEFORE_STAT,AFTER_STAT from lo_loan_dtl t where CUST_NO='"+cust_no+"' order by INST_TIME desc limit 1;"
     res=DataBase(which_db).get_one(sql)
     if res[0]=='10260005' and res[1]=='10270005':
-        print("【贷前提现成功，贷后已结清】",cust_no)
+        print("【lo_loan_dtl表状态已更新为-已结清】",cust_no)
     else:
-        print("【贷前贷后状态未更新】",cust_no)
+        print("【lo_loan_dtl表状态未更新】",cust_no)
     sql2="select BILL_STATUS from cu_cust_bill_dtl  where cust_no='"+cust_no+"';"
     res2=DataBase(which_db).get_one(sql2)
     res2=res2[0]
     if res2=='20060001':
-        print("cu_cust_bill_dtl表状态已更新为已结清",cust_no)
+        print("【cu_cust_bill_dtl表状态已更新-已结清】",cust_no)
     else:
-        print("cu_cust_bill_dtl表未更新",cust_no)
+        print("【cu_cust_bill_dtl表未更新】",cust_no)
 
 def withdraw(headt):
     payment_detail(headt)
@@ -269,5 +269,5 @@ def withdraw(headt):
 
 if __name__ == '__main__':
     #chaxun_risk_level('C2082110148136936439893131264')
-    web_hook_payout_stp()
-    #delay_payout_handler()
+    #web_hook_payout_stp()
+    delay_payout_handler()

@@ -1,11 +1,11 @@
 import string,requests,json,datetime
 from make_loan_data.public.dataBase import *
-from make_loan_data.lanaPlus.gaishu import *
-from make_loan_data.lanaPlus.mex_mgt_lp import *
-from make_loan_data.lanaPlus.heads import *
+from make_loan_data.FeriaRapida.gaishu import *
+from make_loan_data.FeriaRapida.mex_mgt_fr import *
+from make_loan_data.FeriaRapida.heads import *
 from make_loan_data.public.check_api import *
-from make_loan_data.lanaPlus.daihou import *
-from make_loan_data.data.var_mex_lp import *
+from make_loan_data.FeriaRapida.daihou import *
+from make_loan_data.data.var_mex_fr import *
 import io,sys
 #改编码方便jenkins运行
 #sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="gb18030")

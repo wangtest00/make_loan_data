@@ -1,14 +1,14 @@
 import string,requests,json,datetime
 from make_loan_data.public.dataBase import *
-from make_loan_data.lanaPlus.gaishu import *
-from make_loan_data.lanaPlus.mex_mgt_lp import *
-from make_loan_data.lanaPlus.heads import *
-from make_loan_data.data.var_mex_lp import *
+from make_loan_data.FeriaRapida.gaishu import *
+from make_loan_data.data.var_mex_fr import *
+from make_loan_data.FeriaRapida.mex_mgt_fr import *
+from make_loan_data.FeriaRapida.heads import *
 import io,sys
 #改编码方便jenkins运行
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="gb18030")
 
-#注册,认证，提交多种信息申请贷款到达待审批状态
+#注册,认证，提交多种信息申请贷款
 def first_apply(registNo):
     update_pwd(registNo)
     token=login_pwd(registNo)
@@ -27,23 +27,18 @@ def first_apply(registNo):
         bank_auth(custNo,headt)
         update_appr_user_stat()
         DataBase(which_db).call_4_proc()
-        approve(loan_no)
-        first_apply_sheipihou(loan_no,registNo,custNo,headt)
-
-def first_apply_sheipihou(loan_no,registNo,custNo,headt):
-    insert_risk(loan_no)#匹配产品
-    #停在【通过】状态，用户待提现
-    w=withdraw(registNo,custNo,loan_no,headt)  #app页面点击提现
-    if w==1:
-        gaishu(loan_no)
-    else:
-        pass
-    DataBase(which_db).closeDB()
+        approve(loan_no)  #分配审批人员并审批通过
+        insert_risk(loan_no)
+        w=withdraw(registNo,custNo,loan_no,headt)
+        if w==1:
+            gaishu(loan_no)
+        else:
+            pass
+        DataBase(which_db).closeDB()
 def auto_test():
     for i in range(1):
         registNo=str(random.randint(8000000000,9999999999)) #10位随机数作为手机号
         first_apply(registNo)
-
 def make_tongguo():
     registNo=str(random.randint(8000000000,9999999999)) #10位随机数作为手机号
     update_pwd(registNo)

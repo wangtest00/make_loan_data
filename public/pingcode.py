@@ -1,5 +1,6 @@
 import requests
 import time
+
 header={'Accept':'application/json, text/plain, */*',
 'Accept-Encoding': 'gzip, deflate, br',
 'Accept-Language': 'zh-CN,zh;q=0.9',
@@ -14,6 +15,7 @@ header={'Accept':'application/json, text/plain, */*',
 'Sec-Fetch-Site': 'same-origin',
 'sentry-trace': '6c746120100749baa1bbae987903a8d4-a4d48ab519eadc9f-1',
 'User-Agent': 'Mozilla/'}
+
 def get_mywork_list():
     url="https://quantstack.pingcode.com/api/ladon/dashboard/widgets/5ff2f731afa9fe001738acde/content?t=1629181171048"
     r=requests.get(url,headers=header)
@@ -26,7 +28,7 @@ def get_mywork_list():
         print(t[i]['title'])
         work_list.append(t[i]['title'])
     print(work_list)
-
+#获取提示消息中，所有关于任务项的名称
 def get_notifications():
     timev=str(time.time()*1000000)[:13]
     header2={'Accept':'application/json, text/plain, */*',
@@ -55,11 +57,13 @@ def get_notifications():
         else:
             pass
 
-def get_work_item():
+#获取某个版本下，所有测试相关的任务项，并且组装
+def get_work_item(version_id):
     r=requests.get('https://quantstack.pingcode.com/api/agile/projects/5f34d1a73fa4b651a03b4a48/scrum/release/work-item/related-work-items?'
-                   'version_id=61500d3e05609ef6438f5b88&sort_by=type&sort_type=1&t=1634897835071 HTTP/1.1',headers=header)
+                   'version_id='+version_id+'&sort_by=type&sort_type=1&t=1634897835071 HTTP/1.1',headers=header)
     t=r.json()
     t=t['data']['value']
+    sum=[]
     for i in range(len(t)):
         #print(t[i])
         r=requests.get("https://quantstack.pingcode.com/api/agile/work-items/"+t[i]['_id']+"/children?t=1634898646091",headers=header)
@@ -67,7 +71,6 @@ def get_work_item():
         s=s['data']['value']
         #print(s)
         muban=[]
-        sum=[]
         for j in range(len(s)):
             #print(s[j])
             if '测试' in s[j]['title']:
@@ -76,7 +79,7 @@ def get_work_item():
                 sum.append(muban)
             else:
                 pass
-    print(sum)
+    #print(sum)
 if __name__ == '__main__':
-    get_work_item()
+    get_work_item('61500defce5ebdc638c85e74')    #version_id
     #get_notifications()

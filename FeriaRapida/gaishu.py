@@ -1,7 +1,7 @@
 import random
-from make_loan_data.lanaPlus.daiqian_lanaplus import *
+from make_loan_data.FeriaRapida.daiqian_fr import *
 from make_loan_data.public.dataBase import *
-from make_loan_data.data.var_mex_lp import *
+from make_loan_data.data.var_mex_fr import *
 
 randnum=str(random.randint(10000000,99999999)) #8位随机数
 #datet=str(time.time()*1000000)[:-2]   #16位时间戳

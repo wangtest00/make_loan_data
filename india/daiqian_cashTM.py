@@ -1,9 +1,9 @@
 import random,time,datetime
 import requests,json,string
-from india.daihou import *
-from public.check_api import *
-from public.dataBase import *
-from data.var_india import *
+from make_loan_data.india.daihou import *
+from make_loan_data.public.check_api import *
+from make_loan_data.public.dataBase_india import *
+from make_loan_data.data.var_india import *
 
 def check_api(r):
     if r.status_code==200:
@@ -28,18 +28,18 @@ def compute_code(m):
     x=x4[-1:]+x3[-1:]+x2[-1:]+x1[-1:]
     return x
 def head_token(token):
-    head={"user-agent": "Dart/2.12 (dart:io)","x-user-language": "en","accept-encoding": "gzip","content-length": "0","host": "api-test.quantstack.in",
+    head={"user-agent": "Dart/2.12 (dart:io)","x-user-language": "en","accept-encoding": "gzip","content-length": "0","host": "test-appa.quantstack.in",
           "content-type": "application/json;charset=utf-8","version_no":"2.6.3","app_type":"10090001",
         "x-app-type": "10090001","app_no": "102","x-auth-token":'Bearer '+str(token),"Cookie":"JSESSIONID=d17x0ET9jFp5BBK_qidExJqVs5THhstLnVk2eMEH" }
     return head
 def head_token_f(token):
-    head={"user-agent":"Dart/2.12 (dart:io)","Accept-Language":"en","accept-encoding":"gzip","content-length":"277","host":"api-test.quantstack.in",
+    head={"user-agent":"Dart/2.12 (dart:io)","Accept-Language":"en","accept-encoding":"gzip","content-length":"277","host":"test-appa.quantstack.in",
           "content-type":"multipart/form-data; boundary=65d7b53d-2308-466f-8b4a-42f32dd4a9f9","version_no":"2.6.3","app_type":"10090001",
           "app_no":"102","x-auth-token":'Bearer '+str(token),"Cookie":"JSESSIONID=ffUdZQ5pBRFudhsBmGLidri4nNB7GRSE4BieOKlY" }
     return head
 def head_token_w(token):
     head={"user-agent":"Mozilla/5.0 (Linux; U; Android 10; en; LIO-AL00 Build/HUAWEILIO-AL00) AppleWebKit/533.1 (KHTML, like Gecko) Version/5.0 Mobile Safari/533.1",
-          "Accept-Language":"en","accept-encoding":"gzip","content-length":"277","host":"api-test.quantstack.in",
+          "Accept-Language":"en","accept-encoding":"gzip","content-length":"277","host":"test-appa.quantstack.in",
           "content-type":"application/x-www-form-urlencoded","version_no":"2.6.3","app_type":"10090001",
           "app_no":"102","x-auth-token":'Bearer '+str(token),"Cookie":"JSESSIONID=ffUdZQ5pBRFudhsBmGLidri4nNB7GRSE4BieOKlY" }
     return head
@@ -49,6 +49,7 @@ def login_code(registNo):
           "registNo":registNo,"utmCampaign":"","utmContent":"","utmMedium":"","utmSource":"","utmTerm":"","versionNo":"2.6.3"}
     r=requests.post(india_api+"/api/cust_info/cust/login?lang=en",data=json.dumps(data),headers=head_api,verify=False)
     c=r.json()
+    print(c)
     if c!=0:
         token=c['token']
         return token
@@ -62,7 +63,7 @@ def cert_auth(registNo,headt):
     num=str(random.randint(1000,9999))
     data={"appName":"CashTM","appNo":"102","birthDay":"1999-05-06","certNo":num+"4566"+num,"custFirstName":"wang","custLastName":"shuang","custMiddleName":"mmmm","education":"10190006",
           "marriage":"10050001","panNo":""+st+num+"W","registNo":registNo,"sex":"10030001","useEmail":"sdfghhhj@gmail.com","useLang":"90000001"}
-    r=requests.post(india_api+'/api/cust_india/cert/cert_auth?lang=en',data=json.dumps(data),headers=headt)
+    r=requests.post(india_api+'/api/cust_india/cert/cert_auth?lang=en',data=json.dumps(data),headers=headt,verify=False)
     t=r.json()
     print(t)
     if t!=0:
@@ -72,21 +73,21 @@ def cert_auth(registNo,headt):
         pass
 def auth(registNo,custNo,headt):
     data1={"address":"wwsdddxx","county":"10010002","custNo":custNo,"postCode":"123456","residenceType":"10840005","state":"10010000"}
-    r1=requests.post(india_api+'/api/cust_india/cert/save_address?lang=en',data=json.dumps(data1),headers=headt)
+    r1=requests.post(india_api+'/api/cust_india/cert/save_address?lang=en',data=json.dumps(data1),headers=headt,verify=False)
     print(r1.json())
     data2={"appNo":"102","certType":"WORK","custNo":custNo,"registNo":registNo}
-    r2=requests.post(india_api+'/api/cust_india/query/single_cust_auth?lang=en',data=json.dumps(data2),headers=headt)
+    r2=requests.post(india_api+'/api/cust_india/query/single_cust_auth?lang=en',data=json.dumps(data2),headers=headt,verify=False)
     print(r2.json())
     data3={"custNo":custNo,"employeeStatus":"10850002","monSalary":"10870009"}
-    r3=requests.post(india_api+'/api/cust_india/work/auth?lang=en',data=json.dumps(data3),headers=headt)
+    r3=requests.post(india_api+'/api/cust_india/work/auth?lang=en',data=json.dumps(data3),headers=headt,verify=False)
     print(r3.json())
     data4=[{"contactName":"wang","custNo":custNo,"phoneNo":"6666677777","relation":"10110001"},{"contactName":"ye","custNo":custNo,"phoneNo":"7555566666","relation":"10110006"}]
-    r4=requests.post(india_api+'/api/cust_india/contact/auth?lang=en',data=json.dumps(data4),headers=headt)
+    r4=requests.post(india_api+'/api/cust_india/contact/auth?lang=en',data=json.dumps(data4),headers=headt,verify=False)
     print(r4.json())
 #申请提现
 def loan(registNo,custNo,headt):
     data={"appNo":"102","custNo":custNo,"registNo":registNo}
-    r=requests.post(india_api+'/api/loan_india/start?lang=en',data=json.dumps(data),headers=headt)
+    r=requests.post(india_api+'/api/loan_india/start?lang=en',data=json.dumps(data),headers=headt,verify=False)
     t=r.json()
     print(t)
     return t['loanNo']
@@ -113,7 +114,7 @@ def update_kyc_auth(registNo,custNo):
 def bank_auth(custNo,headt):
     bank_acct_no=str(random.randint(10000000,99999999))
     data={"bankAcctName":"wangmmmmshuang","bankAcctNo":bank_acct_no,"custNo":custNo,"ifscCode":"SBIN0001537"}
-    r=requests.post(india_api+'/api/cust_india/bank/bank_auth?lang=en',data=json.dumps(data),headers=headt)
+    r=requests.post(india_api+'/api/cust_india/bank/bank_auth?lang=en',data=json.dumps(data),headers=headt,verify=False)
     print("绑卡认证接口响应=",r.json())
 
 #当前时间的前一天=跑批业务日期，才能正常申请借款
@@ -134,7 +135,7 @@ def update_Batch_Log():
 
 def trial_instalment(loanNo,headt):
     data={"loanNo":loanNo}
-    r=requests.post(india_api+"/api/loan_info/trial/instalment?lang=en",data=data,headers=headt)
+    r=requests.post(india_api+"/api/loan_info/trial/instalment?lang=en",data=data,headers=headt,verify=False)
     t=r.json()
     #print(t)
     list=[]
@@ -157,13 +158,10 @@ def withdraw(registNo,custNo,loanNo,headt,headw):
         instNum=trial_list[0]
         loanAmt=trial_list[1]
         data={"custNo":custNo,"instNum":instNum,"loanAmt":loanAmt,"loanNo":loanNo,"prodNo":india_prodNo}
-        r=requests.post(india_api+"/api/trade/fin/less/withdraw?lang=en",data=json.dumps(data),headers=headt)
+        r=requests.post(india_api+"/api/trade/fin/less/withdraw?lang=en",data=json.dumps(data),headers=headt,verify=False)
         print("暂时忽略该报错Unbound bank card,响应=",r.json())
         payout_mock_apply(loanNo,custNo)#提现mock接口
 
 if __name__ == '__main__':
-    registNo='8239717364'
+    registNo='8239717365'
     token=login_code(registNo)
-    headt=head_token_w(token)
-    loanNo='L1022107278108298042654916608'
-    trial_instalment(loanNo,headt)

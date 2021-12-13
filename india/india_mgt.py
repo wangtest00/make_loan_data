@@ -1,7 +1,7 @@
-from india.daiqian_cashTM import *
+from make_loan_data.india.daiqian_cashTM import *
 import requests,json
-from public.dataBase import *
-from data.var_india import *
+from make_loan_data.public.dataBase_india import *
+from make_loan_data.data.var_india import *
 
 def check_api(r):
     try:
@@ -88,4 +88,5 @@ def pl_shenpi():
         pl_approve(loan_No_List)
 
 if __name__ == '__main__':
-    approve('L1022107268107956427100848128')
+    # approve('L1022107268107956427100848128')
+    login_mgt()

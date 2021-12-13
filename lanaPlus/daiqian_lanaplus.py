@@ -252,6 +252,6 @@ def single_withdraw(registNo,custNo,loan_no,headt):
     print(r.json())
 
 if __name__ == '__main__':
-    t=compute_code('3332517713')
+    t=compute_code('0817')
     print(t)
     #login_pwd('8585852222')

@@ -5,6 +5,9 @@ from make_loan_data.india.daiqian_cashTM import *
 from make_loan_data.public.dataBase_india import *
 from make_loan_data.india.india_mgt import *
 from make_loan_data.india.daihou import *
+import io,sys
+#改编码方便jenkins运行
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="gb18030")
 
 def first_apply():
     update_Batch_Log()

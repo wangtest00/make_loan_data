@@ -93,3 +93,4 @@ def apply_jieqing():
 if __name__ == '__main__':
     auto_test()
     make_tongguo()
+    apply_jieqing()

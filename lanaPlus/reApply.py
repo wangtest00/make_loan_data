@@ -12,13 +12,10 @@ import io,sys
 
 #复客再次申请贷款，接口正案例
 def reApply():
-    # custNo=get_CustNO()
-    # sql="select REGIST_NO from cu_cust_reg_dtl where CUST_NO='"+custNo+"';"
-    # registNo=DataBase(which_db).get_one(sql)
-    # registNo=registNo[0]
-    registNo='9383893927'
-    custNo='C2022109268130336452866408448'
-    print(registNo)
+    custNo=get_CustNO()
+    sql="select REGIST_NO from cu_cust_reg_dtl where CUST_NO='"+custNo+"';"
+    registNo=DataBase(which_db).get_one(sql)
+    registNo=registNo[0]
     update_pwd(registNo)
     token=login_pwd(registNo)
     headt=head_token(token)

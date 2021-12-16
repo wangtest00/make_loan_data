@@ -23,6 +23,12 @@ def getRepayDateList_stp(registNo,loanNo,headt):
     repayList=repay(custNo,loanNo,repayDate,headt)
                  #还款账号       金额
     stp_repayment(repayList[1],repayList[0])  #单期足额还款STP
+    stat=cx_beforeStat_afterStat(loanNo)
+    if stat==('10260005','10270005'):
+        print("贷后状态已结清",loanNo,stat)
+    else:
+        print("贷后状态未结清",loanNo,stat)
+
 
 def oxxo_repay(amount,loanNo):
     '''

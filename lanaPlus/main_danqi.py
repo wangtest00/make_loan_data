@@ -90,6 +90,6 @@ def apply_jieqing():
         getRepayDateList_stp(registNo,loan_no,headt)
 
 if __name__ == '__main__':
-    auto_test()
-    make_tongguo()
+    #auto_test()
+    #make_tongguo()
     apply_jieqing()

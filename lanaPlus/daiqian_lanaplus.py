@@ -251,6 +251,10 @@ def single_withdraw(registNo,custNo,loan_no,headt):
     r=requests.post(host_api+'/api/trade/fin/withdraw',data=json.dumps(data),headers=headt)
     print(r.json())
 
+def cx_beforeStat_afterStat(loanNo):
+    sql='''select BEFORE_STAT,AFTER_STAT from lo_loan_dtl where LOAN_NO="'''+loanNo+'''";'''
+    stat=DataBase(which_db).get_one(sql)
+    return stat
 if __name__ == '__main__':
     t=compute_code('8669333983')
     print(t)

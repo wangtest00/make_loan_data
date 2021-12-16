@@ -24,7 +24,11 @@ def getRepayDateList_stp(registNo,loanNo,headt):
     repayList=repay(custNo,loanNo,repayDate,headt)
                  #还款账号       金额
     stp_repayment(repayList[1],repayList[0])  #单期足额还款
-
+    stat=cx_beforeStat_afterStat(loanNo)
+    if stat==('10260005','10270005'):
+        print("贷后状态已结清",loanNo,stat)
+    else:
+        print("贷后状态未结清",loanNo,stat)
 def oxxo_repay(amount,loanNo):
     '''
     #前提条件：用户在app页面选择OXXO渠道后调用了还款申请接口

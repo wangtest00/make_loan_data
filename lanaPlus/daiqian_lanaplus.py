@@ -4,7 +4,6 @@ from make_loan_data.lanaPlus.gaishu import *
 from make_loan_data.lanaPlus.mex_mgt_lp import *
 from make_loan_data.lanaPlus.heads import *
 from make_loan_data.public.check_api import *
-#from make_loan_data.lanaPlus.daihou import *
 from make_loan_data.data.var_mex_lp import *
 import io,sys
 #改编码方便jenkins运行

@@ -8,7 +8,7 @@ from make_loan_data.lanaPlus_danqi.daihou import *
 from make_loan_data.lanaPlus_danqi.daiqian_lanaplus_danqi import *
 import io,sys
 #改编码方便jenkins运行
-#sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="gb18030")
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="gb18030")
 
 #注册,认证，提交多种信息申请贷款到达待审批状态
 def first_apply(registNo):

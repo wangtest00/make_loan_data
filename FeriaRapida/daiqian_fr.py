@@ -4,7 +4,6 @@ from make_loan_data.FeriaRapida.gaishu import *
 from make_loan_data.FeriaRapida.mex_mgt_fr import *
 from make_loan_data.FeriaRapida.heads import *
 from make_loan_data.public.check_api import *
-from make_loan_data.FeriaRapida.daihou import *
 from make_loan_data.data.var_mex_fr import *
 import io,sys
 #改编码方便jenkins运行
@@ -166,7 +165,7 @@ def bank_auth(custNo,headt):
     data={"bankCode":"10020037","clabe":"138455214411441118","custNo":custNo}
     r=requests.post(host_api+'/api/cust/auth/bank',data=json.dumps(data),headers=headt)
     check_api(r)
-    time.sleep(1)                                         #改为4位随机数
+    time.sleep(1)                                         #改为6位随机数
     sql="update cu_cust_bank_card_dtl set BANK_ACCT_NO='"+bank_acct_no+"' where CUST_NO='"+custNo+"';"
     DataBase(which_db).executeUpdateSql(sql)
 #提现接口-app点击提现按钮
@@ -222,7 +221,7 @@ def getRepayDateList(registNo,headt):
     else:
         return 0
 
-def repay(custNo,loanNo,repayDate,headt):                                                           #OXXO用CONEKTA
+def repay(custNo,loanNo,repayDate,headt):                                              #OXXO用CONEKTA
     data={"advance":"10000000","custNo":custNo,"defer":False,"loanNo":loanNo,"paymentMethod":"STP","repayDateList":[repayDate],"tranAppType":"Android"}
     r=requests.post(host_api+'/api/trade/fin/repay',data=json.dumps(data),headers=headt)
     m=check_api(r)
@@ -234,7 +233,7 @@ def repay(custNo,loanNo,repayDate,headt):                                       
         repayList.append(transAmt)
     else:
         pass
-    sql="select IN_ACCT_NO from pay_tran_dtl t where LOAN_NO='"+loanNo+"' and tran_use='10330002' and IN_ACCT_ORG='10020069' and TRAN_CHAN_NAME='STP支付渠道';"
+    sql="select IN_ACCT_NO from pay_tran_dtl t where LOAN_NO='"+loanNo+"' and tran_use='10330002' and IN_ACCT_ORG='10020069' and TRAN_CHAN_NAME='STP';"
     in_acct_no=DataBase(which_db).get_one(sql)
     in_acct_no=in_acct_no[0]
     if in_acct_no==None:

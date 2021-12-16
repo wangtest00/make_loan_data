@@ -4,7 +4,7 @@ from make_loan_data.lanaPlus.gaishu import *
 from make_loan_data.lanaPlus.mex_mgt_lp import *
 from make_loan_data.lanaPlus.heads import *
 from make_loan_data.public.check_api import *
-from make_loan_data.lanaPlus.daihou import *
+#from make_loan_data.lanaPlus.daihou import *
 from make_loan_data.data.var_mex_lp import *
 import io,sys
 #改编码方便jenkins运行
@@ -166,8 +166,8 @@ def bank_auth(custNo,headt):
     data={"bankCode":"10020037","clabe":"138455214411441118","custNo":custNo}
     r=requests.post(host_api+'/api/cust/auth/bank',data=json.dumps(data),headers=headt)
     check_api(r)
-    time.sleep(1)                                         #改为4位随机数
-    sql="update cu_cust_bank_card_dtl set BANK_ACCT_NO='"+bank_acct_no+"' where CUST_NO='"+custNo+"';"
+    time.sleep(1)                                         #改为6位随机数
+    sql="update cu_cust_bank_card_dtl set BANK_ACCT_NO='"+bank_acct_no+"' where CUST_NO='"+custNo+"';"#修改成随机卡号，避免触发绑卡被拒:同一张银行卡不能被超过2个人绑定并放款成功
     DataBase(which_db).executeUpdateSql(sql)
 #提现接口-app点击提现按钮
 def withdraw(registNo,custNo,loan_no,headt):
@@ -252,6 +252,6 @@ def single_withdraw(registNo,custNo,loan_no,headt):
     print(r.json())
 
 if __name__ == '__main__':
-    t=compute_code('0817')
+    t=compute_code('8669333983')
     print(t)
     #login_pwd('8585852222')

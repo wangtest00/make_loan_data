@@ -8,24 +8,21 @@ from make_loan_data.public.dataBase import *
 #1.遇到脏数据，可能会报“参数为空”
 def stp_repayment(cuentaBeneficiario,monto):
     data={"abono":{"id":"37755992","fechaOperacion":"20210108","institucionOrdenante":"40012","institucionBeneficiaria":"90646","claveRastreo":"MBAN01002101080089875109","monto":monto,"nombreOrdenante":"HAZEL VIRIDIANA RUIZ RICO               ","tipoCuentaOrdenante":"40","cuentaOrdenante":"012420028362208190","rfcCurpOrdenante":"RURH8407075F8","nombreBeneficiario":"STP                                     ","tipoCuentaBeneficiario":"40","cuentaBeneficiario":cuentaBeneficiario,"rfcCurpBeneficiario":"null","conceptoPago":"ESTELA SOLICITO TRANSFERENCIA","referenciaNumerica":"701210","empresa":"QUANTX_TECH"}}
-    print(data)
+    #print(data)
     r=requests.post(host_pay+"/api/trade/stp_repayment/annon/event/webhook",data=json.dumps(data),headers=head_pay,verify=False)
     print(r.json())
     print("模拟银行回调成功")
 #app页面去选择stp渠道生成待还pay_tran_dtl数据，并从接口获取到所有未还账单日，取最近一期去模拟银行回调还款-单期足额
-def getRepayDateList_stp(registNo,loanNo):
-    #registNo='9136996496' loanNo='L2012106298098189178824597504'
+def getRepayDateList_stp(registNo,loanNo,headt):
     sql="select CUST_NO from cu_cust_reg_dtl where REGIST_NO='"+registNo+"';"
     custNo=DataBase(which_db).get_one(sql)
     custNo=custNo[0]
-    token=login_pwd(registNo)
-    headt=head_token(token)
     getRepayDate_List=getRepayDateList(registNo,headt)
     repayDate=getRepayDate_List[0]  #获取最近一期未还的账单日
     print("当前最近一期未还repayDate=",repayDate)
     repayList=repay(custNo,loanNo,repayDate,headt)
                  #还款账号       金额
-    stp_repayment(repayList[1],repayList[0])  #单期足额还款
+    stp_repayment(repayList[1],repayList[0])  #单期足额还款STP
 
 def oxxo_repay(amount,loanNo):
     '''
@@ -115,6 +112,6 @@ def oxxo_repay(amount,loanNo):
     print(r.json())
 
 if __name__ == '__main__':
-    stp_repayment('646180244001052731','1200')
-    #getRepayDateList_stp('8545945423','L2012106248096585023351070720')
+    #stp_repayment('646180244001052731','1200')
+    getRepayDateList_stp('8639812802','L2012112168159706926905753600')
     #oxxo_repay('2091','L2012012308032639321542524928')

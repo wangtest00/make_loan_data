@@ -44,7 +44,6 @@ def first_apply_sheipihou(loan_no,registNo,custNo,headt):
 def auto_test():
     registNo=str(random.randint(8000000000,9999999999)) #10位随机数作为手机号
     first_apply(registNo)
-
 def make_tongguo():
     registNo=str(random.randint(8000000000,9999999999)) #10位随机数作为手机号
     update_pwd(registNo)
@@ -66,7 +65,6 @@ def make_tongguo():
         DataBase(which_db).call_4_proc()
         approve(loan_no)  #分配审批人员并审批通过
         insert_risk(loan_no)
-
 def apply_jieqing():
     registNo=str(random.randint(8000000000,9999999999)) #10位随机数作为手机号
     update_pwd(registNo)

@@ -161,7 +161,7 @@ def update_kyc_auth(registNo,custNo):
     DataBase(which_db).executeUpdateSql(sql4)
 #绑定银行卡，需要把银行卡号改成明显错的，环境怕放出真实的钱
 def bank_auth(custNo,headt):
-    bank_acct_no=str(random.randint(100000,999999))
+    bank_acct_no=str(random.randint(1000000,9999999))
     data={"bankCode":"10020037","clabe":"138455214411441118","custNo":custNo}
     r=requests.post(host_api+'/api/cust/auth/bank',data=json.dumps(data),headers=headt)
     check_api(r)
@@ -221,7 +221,7 @@ def getRepayDateList(registNo,headt):
     else:
         return 0
 
-def repay(custNo,loanNo,repayDate,headt):                                                           #OXXO用CONEKTA
+def repay(custNo,loanNo,repayDate,headt):                                               #OXXO用CONEKTA
     data={"advance":"10000000","custNo":custNo,"defer":False,"loanNo":loanNo,"paymentMethod":"STP","repayDateList":[repayDate],"tranAppType":"Android"}
     r=requests.post(host_api+'/api/trade/fin/repay',data=json.dumps(data),headers=headt)
     m=check_api(r)

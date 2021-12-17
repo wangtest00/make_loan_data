@@ -166,9 +166,9 @@ def bank_auth(custNo,headt):
     data={"bankCode":"10020037","clabe":"138455214411441118","custNo":custNo}
     r=requests.post(host_api+'/api/cust/auth/bank',data=json.dumps(data),headers=headt)
     check_api(r)
-    time.sleep(1)                                         #改为6位随机数
-    sql="update cu_cust_bank_card_dtl set BANK_ACCT_NO='"+bank_acct_no+"' where CUST_NO='"+custNo+"';"#修改成随机卡号，避免触发绑卡被拒:同一张银行卡不能被超过2个人绑定并放款成功
-    DataBase(which_db).executeUpdateSql(sql)
+    # time.sleep(1)                                         #改为6位随机数
+    # sql="update cu_cust_bank_card_dtl set BANK_ACCT_NO='"+bank_acct_no+"' where CUST_NO='"+custNo+"';"#修改成随机卡号，避免触发绑卡被拒:同一张银行卡不能被超过2个人绑定并放款成功
+    # DataBase(which_db).executeUpdateSql(sql)
 #提现接口-app点击提现按钮
 def withdraw(registNo,custNo,loan_no,headt):
     r=requests.get(host_api+'/api/loan/latest/'+registNo,headers=headt)#获取最近一笔贷款贷款金额，注意请求头content-length的值。The request body did not contain the specified number of bytes. Got 0, expected 63

@@ -17,10 +17,10 @@ def gaishu(loan_no):
     DataBase(which_db).executeUpdateSql(sql5)
     DataBase(which_db).executeUpdateSql(sql3)
     time.sleep(1)
-    # stp_payout(loan_no,tran_flow_no[0])
-    # tran_time=str(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
-    # sql6="update fin_tran_pay_dtl set tran_pay_stat='10420002',tran_time='"+tran_time+"' where loan_no='"+loan_no+"';" #解决-引导去googlePlay评分页面
-    # DataBase(which_db).executeUpdateSql(sql6)
+    stp_payout(loan_no,tran_flow_no[0])
+    tran_time=str(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+    sql6="update fin_tran_pay_dtl set tran_pay_stat='10420002',tran_time='"+tran_time+"' where loan_no='"+loan_no+"';" #解决-引导去googlePlay评分页面
+    DataBase(which_db).executeUpdateSql(sql6)
 
 #墨西哥-提现mock    # date=int(str(datetime.datetime.now().strftime('%Y%m%d%H%M%S')) #日期时分秒
 def stp_payout(loan_no,folioOrigen):

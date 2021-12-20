@@ -67,5 +67,5 @@ def bu_ding(registNo):
         # DataBase(which_db).closeDB()
 
 if __name__ == '__main__':
-    for i in range(20):
+    for i in range(10):
         auto_test()

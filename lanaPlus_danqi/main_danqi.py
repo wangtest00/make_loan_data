@@ -8,7 +8,7 @@ from make_loan_data.lanaPlus_danqi.daihou import *
 from make_loan_data.lanaPlus_danqi.daiqian_lanaplus_danqi import *
 import io,sys
 #改编码方便jenkins运行
-sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="gb18030")
+#sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="gb18030")
 
 #注册,认证，提交多种信息申请贷款到达待审批状态
 def first_apply(registNo):
@@ -42,8 +42,9 @@ def first_apply_sheipihou(loan_no,registNo,custNo,headt):
         pass
     DataBase(which_db).closeDB()
 def auto_test():
-    registNo=str(random.randint(8000000000,9999999999)) #10位随机数作为手机号
-    first_apply(registNo)
+    for i in range(5):
+        registNo=str(random.randint(8000000000,9999999999)) #10位随机数作为手机号
+        first_apply(registNo)
 def make_tongguo():
     registNo=str(random.randint(8000000000,9999999999)) #10位随机数作为手机号
     update_pwd(registNo)

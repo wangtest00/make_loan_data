@@ -37,7 +37,7 @@ def first_apply(registNo):
             pass
         DataBase(which_db).closeDB()
 def auto_test():
-    for i in range(1):
+    for i in range(2):
         registNo=str(random.randint(8000000000,9999999999)) #10位随机数作为手机号
         first_apply(registNo)
 def make_tongguo():

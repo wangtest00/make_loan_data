@@ -23,6 +23,7 @@ def case_ass():
     print(r.json())
 if __name__ == '__main__':
     sync()
+    upload()
     # recycle()
     # clue_ass()
     # case_ass()

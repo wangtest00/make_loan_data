@@ -255,6 +255,6 @@ def cx_beforeStat_afterStat(loanNo):
     stat=DataBase(which_db).get_one(sql)
     return stat
 if __name__ == '__main__':
-    t=compute_code('8218213663')
+    t=compute_code('9313895029')
     print(t)
     #login_pwd('8585852222')

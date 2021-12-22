@@ -41,7 +41,8 @@ def cx_clableNo():
         else:
             m.append(jiaoyan_clabeNo(clableNo[i][0]))
     print(len(m),m)
-    sql2='''select BANK_ACCT_NO from cu_cust_bank_card_dtl where USEABLE='10000000' and REMARK='批量处理不符合校验规则银行卡为失效状态';
+    sql2='''  #查询处理为失效的银行卡号
+    select BANK_ACCT_NO from cu_cust_bank_card_dtl where USEABLE='10000000' and REMARK='批量处理不符合校验规则银行卡为失效状态';
 '''
     chengxu_clableNo=DataBase(which_db).get_all(sql2)
     #print(len(chengxu_clableNo),chengxu_clableNo)
@@ -56,4 +57,4 @@ def cx_clableNo():
             pass
 if __name__ == '__main__':
     #cx_clableNo()
-    jiaoyan_clabeNo('138828272727272721')
+    jiaoyan_clabeNo('127180016851886127')

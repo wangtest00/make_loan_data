@@ -71,11 +71,6 @@ def cx_for_zhanqi():
     print(cust_no)
     return cust_no
 
-def test_zhanqi():
-    cust_no=cx_for_zhanqi()
-    inst_lo_extension_log(cust_no[0],cust_no[1])
-    data=zhanqi(cust_no[1])
-    stp_repayment(data[0],str(data[1]))
 
 def check_zhanqi(loan_no):
     sql='''select TRAN_STAT from pay_tran_dtl where LOAN_NO="'''+loan_no+'''" and TRAN_USE='10330005';'''   #展期还款-10330005
@@ -97,7 +92,13 @@ def check_zhanqi(loan_no):
     else:
         print("新贷款生成失败-状态失败",loan_no+"_01")
 
+def test_zhanqi():
+    cust_no=cx_for_zhanqi()
+    inst_lo_extension_log(cust_no[0],cust_no[1])
+    data=zhanqi(cust_no[1])
+    stp_repayment(data[0],str(data[1]))
+    check_zhanqi(cust_no[0])
 
 if __name__ == '__main__':
-    #test_zhanqi()
-    check_zhanqi("L2012112168159712308449443840")
+    test_zhanqi()
+    #check_zhanqi("L2012112168159712308449443840")

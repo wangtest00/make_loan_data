@@ -3,29 +3,30 @@ from make_loan_data.lanaPlus.daiqian_lanaplus import *
 from make_loan_data.public.dataBase import *
 from make_loan_data.data.var_mex_lp import *
 
-randnum=str(random.randint(10000000,99999999)) #8位随机数
+
 #datet=str(time.time()*1000000)[:-2]   #16位时间戳
 #用户在app操作了添加绑卡信息，同意协议并点击确认提现按钮，贷前状态变更为“待提现”后的后续改数操作，模拟到提现成功
 def gaishu(loan_no):
+    randnum=str(random.randint(10000000,99999999)) #8位随机数
     sql1="update fin_tran_pay_dtl set tran_pay_stat='10420001' where loan_no='"+loan_no+"';"
-    sql2="select tran_flow_no from pay_tran_dtl  where LOAN_NO='"+loan_no+"';"
-    sql5="update lo_loan_dtl set before_stat='10260008' where loan_no='"+loan_no+"';"
+    sql2="select tran_flow_no from pay_tran_dtl where LOAN_NO='"+loan_no+"';"
     DataBase(which_db).executeUpdateSql(sql1)
+    time.sleep(1)
     DataBase(which_db).executeUpdateSql(sql1)
     tran_flow_no=DataBase(which_db).get_one(sql2)
     sql3="update pay_tran_dtl set utr_no='"+tran_flow_no[0]+"' ,TRAN_STAT='10220001',tran_order_no='"+randnum+"' where  LOAN_NO='"+loan_no+"';"
-    DataBase(which_db).executeUpdateSql(sql5)
     DataBase(which_db).executeUpdateSql(sql3)
     time.sleep(1)
-    tran_time=str(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
-    sql6="update fin_tran_pay_dtl set tran_pay_stat='10420001',tran_time='"+tran_time+"' where loan_no='"+loan_no+"';" #解决-引导去googlePlay评分页面
-    DataBase(which_db).executeUpdateSql(sql6)
-    stp_payout(loan_no,tran_flow_no[0])
+    sql4="update lo_loan_dtl set before_stat='10260008' where loan_no='"+loan_no+"';"
+    DataBase(which_db).executeUpdateSql(sql4)
+    time.sleep(1)
+    stp_payout(loan_no,tran_flow_no[0],randnum)
 
 
 #墨西哥-提现mock    # date=int(str(datetime.datetime.now().strftime('%Y%m%d%H%M%S')) #日期时分秒
-def stp_payout(loan_no,folioOrigen):
-    data={"causaDevolucion": { "code": 16,"msg": "Tipo de operación errónea"},"empresa": "ASSERTIVE","estado": { "code": "0000", "msg": "canll"},"folioOrigen": folioOrigen,"id":int(randnum)}
+def stp_payout(loan_no,folioOrigen,id):
+    data={"causaDevolucion": { "code": 16,"msg": "Tipo de operación errónea"},"empresa": "ASSERTIVE","estado":
+                             { "code": "0000", "msg": "canll"},"folioOrigen": folioOrigen,"id":int(id)}
     print(data)
     r=requests.post("https://test-pay.quantx.mx/api/trade/stp_payout/annon/event/webhook",data=json.dumps(data),headers=head_pay,verify=False)
     t=r.json()
@@ -48,6 +49,6 @@ def insert_risk(loan_no):
     DataBase(which_db).call_many_proc()
 
 if __name__ == '__main__':
-    gaishu('L2022111308153944044268093440')
-    #stp_payout('L2012110188138307996821422080','w2021101800143309100100360099')
+    #gaishu('L2022111308153944044268093440')
+    stp_payout('L2012112238162296529248518144','w2021122303562166300100560040','31564088')
     #insert_risk('L2022109268130350832635019264')

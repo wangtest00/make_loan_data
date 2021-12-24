@@ -12,6 +12,8 @@ def gaishu(loan_no):
     sql2="select tran_flow_no from pay_tran_dtl where LOAN_NO='"+loan_no+"';"
     DataBase(which_db).executeUpdateSql(sql1)
     time.sleep(1)
+    DataBase(which_db).executeUpdateSql(sql1)
+    time.sleep(1)
     tran_flow_no=DataBase(which_db).get_one(sql2)
     sql3="update pay_tran_dtl set utr_no='"+tran_flow_no[0]+"' ,TRAN_STAT='10220001',tran_order_no='"+randnum+"' where  LOAN_NO='"+loan_no+"';"
     DataBase(which_db).executeUpdateSql(sql3)

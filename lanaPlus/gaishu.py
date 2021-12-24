@@ -13,6 +13,7 @@ def gaishu(loan_no):
     DataBase(which_db).executeUpdateSql(sql1)
     time.sleep(1)
     DataBase(which_db).executeUpdateSql(sql1)
+    time.sleep(1)
     tran_flow_no=DataBase(which_db).get_one(sql2)
     sql3="update pay_tran_dtl set utr_no='"+tran_flow_no[0]+"' ,TRAN_STAT='10220001',tran_order_no='"+randnum+"' where  LOAN_NO='"+loan_no+"';"
     DataBase(which_db).executeUpdateSql(sql3)
@@ -20,13 +21,15 @@ def gaishu(loan_no):
     sql4="update lo_loan_dtl set before_stat='10260008' where loan_no='"+loan_no+"';"
     DataBase(which_db).executeUpdateSql(sql4)
     time.sleep(1)
-    stp_payout(loan_no,tran_flow_no[0],randnum)
-
+    stp_payout(loan_no,tran_flow_no[0],randnum,'0000')   #模拟回调提现成功
+    tran_time=str(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+    sql5="update fin_tran_pay_dtl set tran_pay_stat='10420002',tran_time='"+tran_time+"' where loan_no='"+loan_no+"';"
+    DataBase(which_db).executeUpdateSql(sql5)
 
 #墨西哥-提现mock    # date=int(str(datetime.datetime.now().strftime('%Y%m%d%H%M%S')) #日期时分秒
-def stp_payout(loan_no,folioOrigen,id):
+def stp_payout(loan_no,folioOrigen,id,code):
     data={"causaDevolucion": { "code": 16,"msg": "Tipo de operación errónea"},"empresa": "ASSERTIVE","estado":
-                             { "code": "0000", "msg": "canll"},"folioOrigen": folioOrigen,"id":int(id)}
+                             { "code": code, "msg": "canll"},"folioOrigen": folioOrigen,"id":int(id)}
     print(data)
     r=requests.post("https://test-pay.quantx.mx/api/trade/stp_payout/annon/event/webhook",data=json.dumps(data),headers=head_pay,verify=False)
     t=r.json()

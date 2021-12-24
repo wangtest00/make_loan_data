@@ -7,7 +7,7 @@ from make_loan_data.FeriaRapida.heads import *
 from make_loan_data.FeriaRapida.daihou import *
 import io,sys
 #改编码方便jenkins运行
-#sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="gb18030")
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="gb18030")
 
 #注册,认证，提交多种信息申请贷款
 def first_apply(registNo):

@@ -1,6 +1,6 @@
 __all__=['host_api','host_action','host_mgt','head_api','host_pay','host_coll','head_mgt','head_pay','CONFIGS','prodNo','which_db','appNo','shenpiren']
 
-appNo='201'    #当前产品号，测试201用多期，马甲包只支持单期无积分和优惠券
+appNo='201'    #当前产品号，测试201用多期，马甲包只支持单期无积分和优惠券  28070110
 shenpiren={'201':['wangs2@whalekun.com','https://test-mgt.lanaplus.mx','28070110','mex_pdl_loan','LanaPlus'],'202':['wangs@whalekun.com','https://test-mgt.feriarapida.mx','25002400','mex_pdl_loan','FeriaRapida']}
 which_db=shenpiren[appNo][3]   #数据库库名
 prodNo=shenpiren[appNo][2]     #产品编号

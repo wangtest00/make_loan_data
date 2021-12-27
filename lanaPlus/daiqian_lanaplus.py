@@ -221,7 +221,7 @@ def getRepayDateList(registNo,headt):
     else:
         return 0
 
-def repay(custNo,loanNo,repayDate,headt):                                               #OXXO用CONEKTA
+def repay(custNo,loanNo,repayDate,headt):                                                   #OXXO用CONEKTA
     data={"advance":"10000000","custNo":custNo,"defer":False,"loanNo":loanNo,"paymentMethod":"STP","repayDateList":[repayDate],"tranAppType":"Android"}
     r=requests.post(host_api+'/api/trade/fin/repay',data=json.dumps(data),headers=headt)
     m=check_api(r)

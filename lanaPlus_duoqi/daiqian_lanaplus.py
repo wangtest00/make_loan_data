@@ -1,8 +1,8 @@
 import string,requests,json,datetime
 from make_loan_data.public.dataBase import *
-from make_loan_data.lanaPlus.gaishu import *
-from make_loan_data.lanaPlus.mex_mgt_lp import *
-from make_loan_data.lanaPlus.heads import *
+from make_loan_data.lanaPlus_duoqi.gaishu import *
+from make_loan_data.lanaPlus_duoqi.mex_mgt_lp import *
+from make_loan_data.lanaPlus_duoqi.heads import *
 from make_loan_data.public.check_api import *
 from make_loan_data.data.var_mex_lp import *
 import io,sys
@@ -86,6 +86,19 @@ def auth_cert(registNo,headt):
     for j in range(4):  #生成4个随机英文大写字母
         st+=random.choice(string.ascii_uppercase)
     data={"birthdate":"1999-5-18","civilStatus":"10050001","curp":st+"990518MM"+st+"V8","delegationOrMunicipality":"zxcvbbbccxxx","education":"10190005",
+          "fatherLastName":"SHUANG","gender":"10030001",
+          "motherLastName":"TEST","name":"AUTO","outdoorNumber":"qweetyyu","phoneNo":registNo,"postalCode":"55555","state":"11130001","street":"444444","suburb":"asdfhhj","email":""}
+    r=requests.post(host_api+'/api/cust/auth/cert',data=json.dumps(data),headers=headt)
+    t=check_api(r)
+    if t!=0:
+        return t['data']['custNo']
+    else:
+        pass
+def auth_cert_curp(registNo,headt,curp):
+    st=''
+    for j in range(4):  #生成4个随机英文大写字母
+        st+=random.choice(string.ascii_uppercase)
+    data={"birthdate":"1999-5-18","civilStatus":"10050001","curp":curp,"delegationOrMunicipality":"zxcvbbbccxxx","education":"10190005",
           "fatherLastName":"SHUANG","gender":"10030001",
           "motherLastName":"TEST","name":"AUTO","outdoorNumber":"qweetyyu","phoneNo":registNo,"postalCode":"55555","state":"11130001","street":"444444","suburb":"asdfhhj","email":""}
     r=requests.post(host_api+'/api/cust/auth/cert',data=json.dumps(data),headers=headt)
@@ -196,7 +209,7 @@ def update_batch_log():
         print("当前服务器日期为:",date_time[0])
         print("当期系统跑批业务日期为:",BUSI_DATE[0],"无需修改批量日期")
     else:
-        sql3="update sys_batch_log set BUSI_DATE='"+yudate+"' where BUSI_DATE='"+BUSI_DATE[0]+"';"
+        sql3="update sys_batch_log set BUSI_DATE='"+yudate+"',BATCH_STAT='10490002',IS_PROD_SEL='10000001' where BUSI_DATE='"+BUSI_DATE[0]+"';"
         DataBase(which_db).executeUpdateSql(sql3)
     DataBase(which_db).closeDB()
 #获取所有账单日
@@ -255,6 +268,6 @@ def cx_beforeStat_afterStat(loanNo):
     stat=DataBase(which_db).get_one(sql)
     return stat
 if __name__ == '__main__':
-    t=compute_code('8347897750')
+    t=compute_code('9049087238')
     print(t)
     #login_pwd('8585852222')

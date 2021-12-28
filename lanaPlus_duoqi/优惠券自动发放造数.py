@@ -1,9 +1,9 @@
 import string,requests,json,datetime
 from public.dataBase import *
-from lanaPlus.gaishu import *
+from lanaPlus_duoqi.gaishu import *
 from data.var_mex import *
-from lanaPlus.mex_mgt_lp import *
-from lanaPlus.heads import *
+from lanaPlus_duoqi.mex_mgt_lp import *
+from lanaPlus_duoqi.heads import *
 import io,sys
 #改编码方便jenkins运行
 #sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="gb18030")

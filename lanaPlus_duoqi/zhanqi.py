@@ -1,10 +1,10 @@
 import string,requests,json,datetime,random
 from make_loan_data.public.dataBase import *
-from make_loan_data.lanaPlus.gaishu import *
-from make_loan_data.lanaPlus.mex_mgt_lp import *
-from make_loan_data.lanaPlus.heads import *
+from make_loan_data.lanaPlus_duoqi.gaishu import *
+from make_loan_data.lanaPlus_duoqi.mex_mgt_lp import *
+from make_loan_data.lanaPlus_duoqi.heads import *
 from make_loan_data.data.var_mex_lp import *
-from make_loan_data.lanaPlus.daihou import *
+from make_loan_data.lanaPlus_duoqi.daihou import *
 
 randnum=str(random.randint(10000000,99999999))
 #插入允许展期的记录

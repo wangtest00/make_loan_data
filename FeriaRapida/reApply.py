@@ -1,7 +1,7 @@
 import string,requests,json,datetime
 from make_loan_data.public.dataBase import *
 from make_loan_data.FeriaRapida.gaishu import *
-from make_loan_data.data.var_mex import *
+from make_loan_data.data.var_mex_lp import *
 from make_loan_data.FeriaRapida.mex_mgt_fr import *
 from make_loan_data.FeriaRapida.heads import *
 from make_loan_data.public.check_api import *
@@ -12,11 +12,13 @@ import io,sys
 
 #复客再次申请贷款，接口正案例
 def reApply():
-    custNo=get_CustNO()
-    sql="select REGIST_NO from cu_cust_reg_dtl where CUST_NO='"+custNo+"';"
-    registNo=DataBase(which_db).get_one(sql)
-    registNo=registNo[0]
-    print(registNo)
+    # custNo=get_CustNO()
+    # sql="select REGIST_NO from cu_cust_reg_dtl where CUST_NO='"+custNo+"';"
+    # registNo=DataBase(which_db).get_one(sql)
+    # registNo=registNo[0]
+    # print(registNo)
+    registNo='8220059068'
+    custNo='C2022112268163675473809965056'
     update_pwd(registNo)
     token=login_pwd(registNo)
     headt=head_token(token)
@@ -50,4 +52,3 @@ HAVING loan_cnt=1;'''
     return custNo[0]
 if __name__ == '__main__':
     reApply()
-    get_CustNO()

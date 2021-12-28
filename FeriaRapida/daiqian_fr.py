@@ -94,6 +94,19 @@ def auth_cert(registNo,headt):
         return t['data']['custNo']
     else:
         pass
+def auth_cert_curp(registNo,headt):
+    st=''
+    for j in range(4):  #生成4个随机英文大写字母
+        st+=random.choice(string.ascii_uppercase)
+    data={"birthdate":"1999-5-18","civilStatus":"10050001","curp":"GPDC990518MMGPDCV8","delegationOrMunicipality":"zxcvbbbccxxx","education":"10190005",
+          "fatherLastName":"SHUANG","gender":"10030001",
+          "motherLastName":"TEST","name":"AUTO","outdoorNumber":"qweetyyu","phoneNo":registNo,"postalCode":"55555","state":"11130001","street":"444444","suburb":"asdfhhj","email":""}
+    r=requests.post(host_api+'/api/cust/auth/cert',data=json.dumps(data),headers=headt)
+    t=check_api(r)
+    if t!=0:
+        return t['data']['custNo']
+    else:
+        pass
 #第二个页面。暂时有问题，不可用
 def kyc_auth(registNo,custNo,headt):
     files={'kycImg':('1.jpg',open(r'D:\pic\1.jpg', 'rb'),'image/jpeg'),'custNo':(None,custNo),'kycType':(None,'10070001') }
@@ -196,7 +209,7 @@ def update_batch_log():
         print("当前服务器日期为:",date_time[0])
         print("当期系统跑批业务日期为:",BUSI_DATE[0],"无需修改批量日期")
     else:
-        sql3="update sys_batch_log set BUSI_DATE='"+yudate+"' where BUSI_DATE='"+BUSI_DATE[0]+"';"
+        sql3="update sys_batch_log set BUSI_DATE='"+yudate+"',BATCH_STAT='10490002',IS_PROD_SEL='10000001' where BUSI_DATE='"+BUSI_DATE[0]+"';"
         DataBase(which_db).executeUpdateSql(sql3)
     DataBase(which_db).closeDB()
 #获取所有账单日

@@ -1,21 +1,23 @@
 import string,requests,json,datetime
 from make_loan_data.public.dataBase import *
-from make_loan_data.lanaPlus.gaishu import *
+from make_loan_data.lanaPlus_duoqi.gaishu import *
 from make_loan_data.data.var_mex_lp import *
-from make_loan_data.lanaPlus.mex_mgt_lp import *
-from make_loan_data.lanaPlus.heads import *
+from make_loan_data.lanaPlus_duoqi.mex_mgt_lp import *
+from make_loan_data.lanaPlus_duoqi.heads import *
 from make_loan_data.public.check_api import *
-from make_loan_data.lanaPlus.daihou import *
+from make_loan_data.lanaPlus_duoqi.daihou import *
 import io,sys
 #改编码方便jenkins运行
 #sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="gb18030")
 
 #复客再次申请贷款，接口正案例
 def reApply():
-    custNo=get_CustNO()
-    sql="select REGIST_NO from cu_cust_reg_dtl where CUST_NO='"+custNo+"';"
-    registNo=DataBase(which_db).get_one(sql)
-    registNo=registNo[0]
+    # custNo=get_CustNO()
+    # sql="select REGIST_NO from cu_cust_reg_dtl where CUST_NO='"+custNo+"';"
+    # registNo=DataBase(which_db).get_one(sql)
+    #registNo=registNo[0]
+    registNo='8220059068'
+    custNo='C2022112268163675473809965056'
     update_pwd(registNo)
     token=login_pwd(registNo)
     headt=head_token(token)
@@ -49,4 +51,3 @@ HAVING loan_cnt=1;'''
     return custNo[0]
 if __name__ == '__main__':
     reApply()
-    get_CustNO()

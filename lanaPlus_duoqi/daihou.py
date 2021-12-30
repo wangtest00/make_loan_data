@@ -120,9 +120,9 @@ def oxxo_repay(amount,loanNo):
 	print(r.json())
 
 if __name__ == '__main__':
-	stp_repayment('646180244001061175','100')
+	#stp_repayment('646180244001063717','66')
 	#getRepayDateList_stp('8639812802','L2012112168159706926905753600')
-	#oxxo_repay('600','L2012112218161865102488961024')
+	oxxo_repay('123','L2022112308164794177532657664')
 	# token=login_pwd('8684947326')
 	# headt=head_token(token)
 	# getRepayDateList_stp('8684947326','L2012112178160096181670838272',headt)

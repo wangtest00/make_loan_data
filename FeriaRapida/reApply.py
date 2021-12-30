@@ -54,5 +54,5 @@ HAVING loan_cnt=1 order by b.INST_TIME desc;'''
     print(custNo[0])
     return custNo[0]
 if __name__ == '__main__':
-    for i in range(1):
+    for i in range(4):
         reApply()

@@ -12,12 +12,12 @@ import io,sys
 
 #复客再次申请贷款，接口正案例
 def reApply():
-    # custNo=get_CustNO()
-    # sql="select REGIST_NO from cu_cust_reg_dtl where CUST_NO='"+custNo+"';"
-    # registNo=DataBase(which_db).get_one(sql)
-    #registNo=registNo[0]
-    registNo='8220059068'
-    custNo='C2022112268163675473809965056'
+    custNo=get_CustNO()
+    sql="select REGIST_NO from cu_cust_reg_dtl where CUST_NO='"+custNo+"';"
+    registNo=DataBase(which_db).get_one(sql)
+    registNo=registNo[0]
+    # registNo='8220059068'
+    # custNo='C2022112268163675473809965056'
     update_pwd(registNo)
     token=login_pwd(registNo)
     headt=head_token(token)
@@ -43,7 +43,8 @@ WHERE
 AND a.AFTER_STAT = '10270005'
 GROUP BY a.cust_no
 HAVING count(1) =1
-)a INNER JOIN lo_loan_dtl b on a.cust_no=b.cust_no inner join cu_cust_reg_dtl c on b.cust_no=c.cust_no where c.APP_NO="'''+appNo+'''"
+)a INNER JOIN lo_loan_dtl b on a.cust_no=b.cust_no inner join cu_cust_reg_dtl c on b.cust_no=c.cust_no left join cu_cust_bank_card_dtl d on c.CUST_NO=d.CUST_NO
+where c.APP_NO="'''+appNo+'''" and d.USEABLE='10000001' and d.BANK_ACCT_NO is not null
 group by  b.cust_no
 HAVING loan_cnt=1;'''
     custNo=DataBase(which_db).get_one(sql)

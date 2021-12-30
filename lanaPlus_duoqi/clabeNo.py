@@ -7,6 +7,8 @@ for j in range(6):
         #print(i%10)
 #print(quanzhi[:-1])
 quanzhi_list=quanzhi[:-1]  #权重因子
+
+
 def jiaoyan_clabeNo(clabeNo):
     if len(clabeNo)==18:
         sum_quanzhi=0

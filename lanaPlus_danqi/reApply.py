@@ -51,4 +51,3 @@ HAVING loan_cnt=1 order by b.INST_TIME desc;'''
     return custNo[0]
 if __name__ == '__main__':
     reApply()
-    get_CustNO()

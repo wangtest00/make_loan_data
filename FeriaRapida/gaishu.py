@@ -25,6 +25,8 @@ def gaishu(loan_no):
     tran_time=str(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
     sql5="update fin_tran_pay_dtl set tran_pay_stat='10420002',tran_time='"+tran_time+"' where loan_no='"+loan_no+"';"
     DataBase(which_db).executeUpdateSql(sql5)
+    sql6="DELETE from pay_payout_retry where loan_no='"+loan_no+"';" # 需要删除，否则调重试申请
+    DataBase(which_db).executeUpdateSql(sql6)
 
 #墨西哥-提现mock    # date=int(str(datetime.datetime.now().strftime('%Y%m%d%H%M%S')) #日期时分秒
 def stp_payout(loan_no,folioOrigen,id,code):
@@ -52,6 +54,6 @@ def insert_risk(loan_no):
     DataBase(which_db).call_many_proc()
 
 if __name__ == '__main__':
-    gaishu('L2022112238162306991390392320')
+    gaishu('L2022201068167331656815017984')
     #stp_payout('L2022112238162298857846407168','w2021122304053675800100100043','71924576')
     #insert_risk('L2022109268130350832635019264')

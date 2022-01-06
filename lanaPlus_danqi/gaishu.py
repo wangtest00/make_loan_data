@@ -21,6 +21,8 @@ def gaishu(loan_no):
     tran_time=str(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
     sql6="update fin_tran_pay_dtl set tran_pay_stat='10420002',tran_time='"+tran_time+"' where loan_no='"+loan_no+"';" #解决-引导去googlePlay评分页面
     DataBase(which_db).executeUpdateSql(sql6)
+    sql7="DELETE from pay_payout_retry where loan_no='"+loan_no+"';" # 需要删除，否则调重试申请会置为提现失败
+    DataBase(which_db).executeUpdateSql(sql7)
 
 #墨西哥-提现mock    # date=int(str(datetime.datetime.now().strftime('%Y%m%d%H%M%S')) #日期时分秒
 def stp_payout(loan_no,folioOrigen):

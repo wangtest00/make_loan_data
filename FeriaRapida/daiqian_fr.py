@@ -246,7 +246,7 @@ def repay(custNo,loanNo,repayDate,headt):                                       
         repayList.append(transAmt)
     else:
         pass
-    sql="select IN_ACCT_NO from pay_tran_dtl t where LOAN_NO='"+loanNo+"' and tran_use='10330002' and IN_ACCT_ORG='10020069' and TRAN_CHAN_NAME='STP';"
+    sql="select CLABE_NO from fin_clabe_usable_dtl where CUST_NO='"+custNo+"';"
     in_acct_no=DataBase(which_db).get_one(sql)
     in_acct_no=in_acct_no[0]
     if in_acct_no==None:

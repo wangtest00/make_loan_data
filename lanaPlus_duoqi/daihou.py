@@ -39,7 +39,7 @@ def oxxo_repay(amount,loanNo):
 	#注意：1.交易流水号和卡号每次生成的都不一样，可以非足额，足额，超额回调，超出金额部分科目号99
 		   2.返回响应结果不是errCode=1，具体还款结果可查：回款查询，pay_tran_dtl和fin_tran_repay_dtl表'''
 	#查询预计交易金额，交易流水号，入账账号，条件：OXXO渠道+实际交易金额为空
-	sql="select SHD_TRAN_AMT,tran_order_no,in_acct_no from pay_tran_dtl t where LOAN_NO='"+loanNo+"' and TRAN_CHAN_NAME ='Conekta支付渠道' and ACT_TRAN_AMT is null;"
+	sql="select SHD_TRAN_AMT,tran_order_no,in_acct_no from pay_tran_dtl t where LOAN_NO='"+loanNo+"' and TRAN_CHAN_NAME ='Conekta_Payment_LanaPlusProd' and ACT_TRAN_AMT is null;"
 	three_list=DataBase(which_db).get_one(sql)
 	print(three_list)
 	data={"data": {"object": {
@@ -121,9 +121,9 @@ def oxxo_repay(amount,loanNo):
 	print(r.json())
 
 if __name__ == '__main__':
-	stp_repayment('646180244001070409','1200')
+	stp_repayment('646180244001071848','1220')
 	#getRepayDateList_stp('8639812802','L2012112168159706926905753600')
-	#oxxo_repay('123','L2022112308164794177532657664')
+	#oxxo_repay('600','L2012201078167710050958376960')
 	# token=login_pwd('8684947326')
 	# headt=head_token(token)
 	# getRepayDateList_stp('8684947326','L2012112178160096181670838272',headt)

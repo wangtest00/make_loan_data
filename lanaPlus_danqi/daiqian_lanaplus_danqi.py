@@ -256,6 +256,9 @@ def cx_beforeStat_afterStat(loanNo):
     stat=DataBase(which_db).get_one(sql)
     return stat
 if __name__ == '__main__':
-    t=compute_code('8669333983')
-    print(t)
-    #login_pwd('8585852222')
+    # t=compute_code('8669333983')
+    # print(t)
+    registNo='8223382996'
+    token=login_pwd(registNo)
+    headt=head_token(token)
+    getRepayDateList(registNo,headt)

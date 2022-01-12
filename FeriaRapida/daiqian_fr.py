@@ -175,7 +175,7 @@ def update_kyc_auth(registNo,custNo):
 #绑定银行卡，需要把银行卡号改成明显错的，环境怕放出真实的钱
 def bank_auth(custNo,headt):
     bank_acct_no=str(random.randint(100000,999999))
-    data={"bankCode":"10020037","clabe":"138455214411441118","custNo":custNo}
+    data={"bankCode":"10020037","clabe":"012180015365516420","custNo":custNo}
     r=requests.post(host_api+'/api/cust/auth/bank',data=json.dumps(data),headers=headt)
     check_api(r)
     time.sleep(1)                                         #改为6位随机数

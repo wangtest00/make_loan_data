@@ -88,6 +88,6 @@ def first_apply_curp(registNo):
         approve(loan_no)
         first_apply_sheipihou(loan_no,registNo,custNo,headt)
 if __name__ == '__main__':
-    for i in range(1):
+    for i in range(2):
         auto_test()
     #bu_ding("8385862222")

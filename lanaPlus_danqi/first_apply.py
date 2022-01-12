@@ -30,7 +30,6 @@ def first_apply(registNo):
         DataBase(which_db).call_4_proc()
         approve(loan_no)
         first_apply_sheipihou(loan_no,registNo,custNo,headt)
-        #getRepayDateList_stp(registNo,loan_no,headt)
 
 def first_apply_sheipihou(loan_no,registNo,custNo,headt):
     insert_risk(loan_no)#匹配产品

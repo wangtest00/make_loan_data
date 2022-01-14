@@ -1,17 +1,18 @@
-__all__=['host_api','host_action','host_mgt','head_api','host_pay','host_coll','head_mgt','head_pay','CONFIGS','prodNo','which_db','appNo','shenpiren']
+__all__=['host_api','host_action','host_mgt','head_api','host_pay','host_coll','head_mgt','head_pay','CONFIGS','prodNo','which_db','appNo','shenpiren','app_type']
 
 appNo='201'    #当前产品号，测试201用多期，马甲包只支持单期无积分和优惠券
+app_type='10090001'
 shenpiren={'201':['wangs_danqi@whalekun.com','https://test-mgt.lanaplus.mx','25002400','mex_pdl_loan','LanaPlus'],
            '202':['wangs@whalekun.com','https://test-mgt.feriarapida.mx','25002400','mex_pdl_loan','FeriaRapida']}
 which_db=shenpiren[appNo][3]   #数据库库名
 prodNo=shenpiren[appNo][2]     #产品编号
 host_mgt=shenpiren[appNo][1]   #MGT域名
-host_api="https://test-api.quantx.mx"        #APP
+host_api="https://test-api.quantx.mx"        #API
 host_action="https://test-action.quantx.mx"  #埋点
 host_pay="https://test-pay.quantx.mx"        #支付
 host_coll="https://test-coll.quantx.mx"      #催收
 head_api={"user-agent": "Dart/2.12 (dart:io)","x-user-language": "es","x-auth-token": "Bearer" ,"accept-encoding": "gzip","content-length": "63","host":"test-api.quantx.mx","x-app-name": shenpiren[appNo][4],
-          "content-type": "application/json","x-app-type": "10090001","x-app-version": "116","x-app-no": appNo }
+          "content-type": "application/json","x-app-type": app_type,"x-app-version": "116","x-app-no": appNo }
 
 head_mgt={"Host": host_mgt[8:],"Connection": "keep-alive","Content-Length": "55",
 "sec-ch-ua": '"Not A;Brand";v="99", "Chromium";v="90", "Google Chrome";v="90"',"Accept": "application/json, text/plain, */*","sec-ch-ua-mobile": "?0",

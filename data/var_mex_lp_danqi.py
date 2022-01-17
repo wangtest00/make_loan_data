@@ -1,9 +1,10 @@
 __all__=['host_api','host_action','host_mgt','head_api','host_pay','host_coll','head_mgt','head_pay','CONFIGS','prodNo','which_db','appNo','shenpiren','app_type']
 
 appNo='201'    #当前产品号，测试201用多期，马甲包只支持单期无积分和优惠券
-app_type='10090001'
-shenpiren={'201':['wangs_danqi@whalekun.com','https://test-mgt.lanaplus.mx','25002400','mex_pdl_loan','LanaPlus','FC423D8F-BC7E-4430-BD97-66E903DANQI'],
-           '202':['wangs@whalekun.com','https://test-mgt.feriarapida.mx','25002400','mex_pdl_loan','FeriaRapida']}
+app_type='10090001'   #IOS=10090002   Android=10090001
+shenpiren={                                                                                                 #GAID                           app版本号
+'201':['wangs_danqi@whalekun.com','https://test-mgt.lanaplus.mx','25002400','mex_pdl_loan','LanaPlus','FC423D8F-BC7E-4430-BD97-66E903DANQI','136'],
+'202':['wangs@whalekun.com','https://test-mgt.feriarapida.mx','25002400','mex_pdl_loan','FeriaRapida']}
 which_db=shenpiren[appNo][3]   #数据库库名
 prodNo=shenpiren[appNo][2]     #产品编号
 host_mgt=shenpiren[appNo][1]   #MGT域名

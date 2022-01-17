@@ -49,7 +49,7 @@ def stp_payout(loan_no,folioOrigen,id,code):
 
 #5.借据贷前状态=“待匹配产品”，贷款与客户基本关系表' 需要手动插数risk_level AA和risk_score 20120701(印度)，25002400或26002401（墨西哥）（调度系统跑批识别出来，分配对应产品）
 def insert_risk(loan_no):
-    sql="update lo_loan_cust_rel set risk_level='U_NewA',risk_score='"+prodNo+"' where LOAN_NO='"+loan_no+"';"
+    sql="update lo_loan_cust_rel set risk_level='AA',risk_score='"+prodNo+"' where LOAN_NO='"+loan_no+"';"
     DataBase(which_db).executeUpdateSql(sql)
     DataBase(which_db).call_many_proc()
 

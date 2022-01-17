@@ -24,7 +24,7 @@ def compute_code(m):
 #第一次验证码注册登录，返回token
 def login_code(registNo):
     code=compute_code(registNo)
-    data={"registNo":registNo,"code":code,"gaid":"Exception:null"}
+    data={"registNo":registNo,"code":code,"gaid":shenpiren[appNo][5]}
     r=requests.post(host_api+"/api/cust/login",data=json.dumps(data),headers=head_api,verify=False)
     try:
         c=check_api(r)
@@ -39,7 +39,7 @@ def login_code(registNo):
         return 0
 #通过密码登录，返回token
 def login_pwd(registNo):
-    data={"registNo":registNo,"password":"123456","gaid":"Exception:null"}
+    data={"registNo":registNo,"password":"123456","gaid":shenpiren[appNo][5]}
     r=requests.post(host_api+"/api/cust/pwd/login",data=json.dumps(data),headers=head_api,verify=False)
     try:
         c=check_api(r)

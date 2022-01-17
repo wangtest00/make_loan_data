@@ -23,7 +23,7 @@ def compute_code(m):
 #第一次验证码注册登录，返回token
 def login_code(registNo):
     code=compute_code(registNo)
-    data={"registNo":registNo,"code":code,"gaid":"Exception:null"}
+    data={"registNo":registNo,"code":code,"gaid":shenpiren[appNo][5]}
     r=requests.post(host_api+"/api/cust/login",data=json.dumps(data),headers=head_api,verify=False)
     try:
         c=check_api(r)
@@ -38,7 +38,7 @@ def login_code(registNo):
         return 0
 #通过密码登录，返回token
 def login_pwd(registNo):
-    data={"registNo":registNo,"password":"123456","gaid":"Exception:null"}
+    data={"registNo":registNo,"password":"123456","gaid":shenpiren[appNo][5]}
     r=requests.post(host_api+"/api/cust/pwd/login",data=json.dumps(data),headers=head_api,verify=False)
     try:
         c=check_api(r)
@@ -143,12 +143,12 @@ def auth_app_grab_data(registNo,custNo,headt):
     data8={"appNo":appNo,"phoneNo":registNo,"dataType":"11090001","pageGet":"10000001","recordTime":"1621332187731","grabData":{"data":[{"appName":"安全教育平台","appPackage":"com.jzzs.ParentsHelper","appVersionNo":"1.7.0","deviceId":"a2eff92b-86cb-4614-a66c-84ae322f3adcA2:B4:74:63:FB:40LIO-AL00","imei":imei,"installTime":1599480832637,"lastUpdateTime":1618934047038,"mac":"A2:B4:74:63:FB:40","phoneNo":registNo,"recordBehavior":"App列表抓取","recordTime":"1621332187731","userId":custNo}]},"custNo":custNo}
     data0=[data4,data5,data6,data7,data8]
     for data0 in data0:
-        r0=requests.post(host_api+'/api/common/grab/app_grab_data',data=json.dumps(data0),headers=headt)  #抓取用户手机短信，通讯录，已安装app等信息
+        r0=requests.post(host_api+'/api/common/grab/app_grab_data',data=json.dumps(data0),headers=headt)  #抓取用户手机短信，通讯录，已安装app等信息，目前写死
         check_api(r0)
         time.sleep(1)
 def auth_contact(custNo,headt):
     data9={"contacts":[{"name":"test","phone":"8888455666","relationship":"10110004"},{"name":"test2","phone":"8883355777","relationship":"10110003"}],"custNo":custNo}
-    r9=requests.post(host_api+'/api/cust/auth/other/contact',data=json.dumps(data9),headers=headt)#最后一步，填写2个联系人的联系方式
+    r9=requests.post(host_api+'/api/cust/auth/other/contact',data=json.dumps(data9),headers=headt)#最后一步，填写2个联系人的联系方式,目前写死
     check_api(r9)
 #4个认证都通过后调申请贷款接口
 def apply_loan(custNo,headt):

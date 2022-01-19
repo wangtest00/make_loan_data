@@ -32,9 +32,9 @@ def getRepayDateList_stp(registNo,loanNo,headt):
 	else:
 		print("贷后状态未结清",loanNo,stat)
 
-
-def oxxo_repay(amount,loanNo):
+def oxxo_repay(amount,loanNo,type):
 	'''
+	type:非order.paid则还款回调失败
 	#前提条件：用户在app页面选择OXXO渠道后调用了还款申请接口
 	#注意：1.交易流水号和卡号每次生成的都不一样，可以非足额，足额，超额回调，超出金额部分科目号99
 		   2.返回响应结果不是errCode=1，具体还款结果可查：回款查询，pay_tran_dtl和fin_tran_repay_dtl表'''
@@ -103,7 +103,7 @@ def oxxo_repay(amount,loanNo):
 	"webhook_status": "",
 	"id": "",
 	"object": "",
-	"type": "order.paid",
+	"type": "order."+type,
 	"created_at": 0,
 	"webhook_logs": [
 		{
@@ -121,9 +121,9 @@ def oxxo_repay(amount,loanNo):
 	print(r.json())
 
 if __name__ == '__main__':
-	stp_repayment('646180244001026631','1100')
+	#stp_repayment('646180244000010758','200')
 	#getRepayDateList_stp('8639812802','L2012112168159706926905753600')
-	#oxxo_repay('600','L2012201078167710050958376960')
+	oxxo_repay('600','L2012201178171608587286806528','refunded')
 	# token=login_pwd('8684947326')
 	# headt=head_token(token)
 	# getRepayDateList_stp('8684947326','L2012112178160096181670838272',headt)

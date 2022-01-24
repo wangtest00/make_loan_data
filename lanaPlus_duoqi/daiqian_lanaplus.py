@@ -94,19 +94,7 @@ def auth_cert(registNo,headt):
         return t['data']['custNo']
     else:
         pass
-def auth_cert(registNo,headt):
-    st=''
-    for j in range(4):  #生成4个随机英文大写字母
-        st+=random.choice(string.ascii_uppercase)
-    data={"birthdate":"1999-5-18","civilStatus":"10050001","curp":st+"990518MM"+st+"V8","delegationOrMunicipality":"zxcvbbbccxxx","education":"10190005",
-          "fatherLastName":"SHUANG","gender":"10030001",
-          "motherLastName":"TEST","name":"AUTO","outdoorNumber":"qweetyyu","phoneNo":registNo,"postalCode":"55555","state":"11130001","street":"444444","suburb":"asdfhhj","email":""}
-    r=requests.post(host_api+'/api/cust/auth/cert',data=json.dumps(data),headers=headt)
-    t=check_api(r)
-    if t!=0:
-        return t['data']['custNo']
-    else:
-        pass
+
 #第二个页面。暂时有问题，不可用
 def kyc_auth(registNo,custNo,headt):
     files={'kycImg':('1.jpg',open(r'D:\pic\1.jpg', 'rb'),'image/jpeg'),'custNo':(None,custNo),'kycType':(None,'10070001') }
@@ -268,6 +256,6 @@ def cx_beforeStat_afterStat(loanNo):
     stat=DataBase(which_db).get_one(sql)
     return stat
 if __name__ == '__main__':
-    t=compute_code('8748243845')
+    t=compute_code('7641053690')
     print(t)
     #login_pwd('8585852222')

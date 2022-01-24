@@ -113,6 +113,7 @@ def update_kyc_auth(registNo,custNo):
 #绑定银行卡，需要把银行卡号改成明显错的，环境怕放出真实的钱
 def bank_auth(custNo,headt):
     bank_acct_no=str(random.randint(10000000,99999999))
+   # bank_acct_no='5555555555'
     data={"bankAcctName":"wangmmmmshuang","bankAcctNo":bank_acct_no,"custNo":custNo,"ifscCode":"SBIN0001537"}
     r=requests.post(india_api+'/api/cust_india/bank/bank_auth?lang=en',data=json.dumps(data),headers=headt,verify=False)
     print("绑卡认证接口响应=",r.json())

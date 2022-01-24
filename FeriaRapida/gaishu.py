@@ -1,5 +1,5 @@
 import random
-from make_loan_data.FeriaRapida.daiqian_fr import *
+from make_loan_data.feriaRapida.daiqian_fr import *
 from make_loan_data.public.dataBase import *
 from make_loan_data.data.var_mex_fr import *
 

@@ -1,10 +1,13 @@
 import json,random,requests,string
-from make_loan_data.data.var_india import *
+from make_loan_data.data.var_tez_loan import *
 from make_loan_data.public.check_api import *
-from make_loan_data.india.daiqian_cashTM import *
+from make_loan_data.tez_loan.daiqian_tez import *
 from make_loan_data.public.dataBase_india import *
-from make_loan_data.india.india_mgt import *
-from make_loan_data.india.daihou import *
+from make_loan_data.tez_loan.mgt_tez import *
+from make_loan_data.tez_loan.daihou_tez import *
+import io,sys
+#改编码方便jenkins运行
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="gb18030")
 
 def first_apply():
     update_Batch_Log()
@@ -39,7 +42,6 @@ def first_apply():
     DataBase(inter_db).executeUpdateSql(sql5)
     DataBase(inter_db).call_many_proc()
     withdraw(registNo,custNo,loanNo,headt,headw)
-    time.sleep(5)
     chaXun_Stat(loanNo)
 
 def chaXunDaiQian(loanNo):

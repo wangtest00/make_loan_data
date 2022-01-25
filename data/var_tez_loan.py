@@ -1,13 +1,14 @@
-__all__=['host_api','host_mgt','host_pay','head_api','head_mgt','head_pay','CONFIGS','prodNo','appNo','appName','inter_db']
+__all__=['host_api','host_mgt','host_pay','head_api','head_mgt','head_pay','CONFIGS','prodNo','appNo','appName','tez_db']
 
-inter_db='manage_need_loan'
+tez_db='india_tez_loan'
 prodNo_tez=['5','102','ZET_LOAN']
 prodNo=prodNo_tez[0]
 appNo=prodNo_tez[1]
 appName=prodNo_tez[2]
-host_api="https://test-appa.quantstack.in"
-host_pay="https://test-pay.quantstack.in"
-host_mgt="https://test-mgt.quantstack.in"
+host_api="https://test-api.loantez.in"
+host_pay="https://test-pay.loantez.in"
+host_mgt="https://test-mgt.loantez.in"
+host_coll="https://test-collection.loantez.in"
 head_api={"user-agent": "Dart/2.12 (dart:io)","x-user-language": "es","x-auth-token": "Bearer" ,"accept-encoding": "gzip","content-length": "63","host": host_api[8:],"x-app-name": appName,"content-type": "application/json",
         "x-app-type": "10090001","x-app-version": "116","x-app-no": appNo }
 
@@ -18,4 +19,4 @@ head_mgt={"Host": host_mgt[8:],"Connection": "keep-alive","Content-Length": "55"
 head_pay={"Host":host_pay[8:],"Connection":"keep-alive","Content-Length":"116","Postman-Token":"68cc47f6-8c1f-4ebd-a929-b1ae10b7dd19",
                 "User-Agent":"PostmanRuntime/7.28.2","Accept":"*/*","Content-Type":"application/json","Accept-Encoding":"gzip, deflate, br"}
 
-CONFIGS = {'manage_need_loan': {'host':'172.31.25.83','port':3306, 'user': 'cs_wangs','password': 'cs_wangs!qw####','database': 'manage_need_loan'}}
+CONFIGS = {'india_tez_loan': {'host':'176.60.0.21','port':3306, 'user': 'cs_wangs','password': 'cs_wangs!qw####','database': 'india_tez_loan'}}

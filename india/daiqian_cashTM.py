@@ -34,7 +34,7 @@ def head_token(token):
     return head
 def head_token_f(token):
     head={"user-agent":"Dart/2.12 (dart:io)","Accept-Language":"en","accept-encoding":"gzip","content-length":"277","host":"test-appa.quantstack.in",
-          "content-type":"multipart/form-data; boundary=65d7b53d-2308-466f-8b4a-42f32dd4a9f9","version_no":"2.6.3","app_type":"10090001",
+          "content-type":"multipart/form-data; boundary=89795e05-6272-4b47-a620-b40b5a0ebcdc","version_no":"2.6.3","app_type":"10090001",
           "app_no":"102","x-auth-token":'Bearer '+str(token),"Cookie":"JSESSIONID=ffUdZQ5pBRFudhsBmGLidri4nNB7GRSE4BieOKlY" }
     return head
 def head_token_w(token):
@@ -72,15 +72,19 @@ def cert_auth(registNo,headt):
     else:
         pass
 def auth(registNo,custNo,headt):
+    #第3个页面-家庭地址
     data1={"address":"wwsdddxx","county":"10010002","custNo":custNo,"postCode":"123456","residenceType":"10840005","state":"10010000"}
     r1=requests.post(india_api+'/api/cust_india/cert/save_address?lang=en',data=json.dumps(data1),headers=headt,verify=False)
     print(r1.json())
+    #第4个页面-工作认证1
     data2={"appNo":"102","certType":"WORK","custNo":custNo,"registNo":registNo}
     r2=requests.post(india_api+'/api/cust_india/query/single_cust_auth?lang=en',data=json.dumps(data2),headers=headt,verify=False)
     print(r2.json())
+    #第4个页面-工作认证2
     data3={"custNo":custNo,"employeeStatus":"10850002","monSalary":"10870009"}
     r3=requests.post(india_api+'/api/cust_india/work/auth?lang=en',data=json.dumps(data3),headers=headt,verify=False)
     print(r3.json())
+    #第5个页面-联系人认证
     data4=[{"contactName":"wang","custNo":custNo,"phoneNo":"6666677777","relation":"10110001"},{"contactName":"ye","custNo":custNo,"phoneNo":"7555566666","relation":"10110006"}]
     r4=requests.post(india_api+'/api/cust_india/contact/auth?lang=en',data=json.dumps(data4),headers=headt,verify=False)
     print(r4.json())

@@ -1,6 +1,6 @@
 import requests,json
 from make_loan_data.public.check_api import *
-from make_loan_data.public.dataBase_india import *
+from make_loan_data.public.dataBase_tez import *
 from make_loan_data.data.var_tez_loan import *
 
 @hulue_error()
@@ -15,7 +15,7 @@ def payout_mock_apply(loanNo,custNo):
 
 def chaXun_Stat(loanNo):
     sql="select before_stat from lo_loan_dtl where loan_no='"+loanNo+"';"
-    before_stat=DataBase(inter_db).get_one(sql)
+    before_stat=DataBase(tez_db).get_one(sql)
     if before_stat[0]=='10260005':
         print("贷前状态已变更为:【已提现】",before_stat[0],loanNo)
     else:

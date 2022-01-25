@@ -1,6 +1,6 @@
 from make_loan_data.tez_loan.daiqian_tez import *
 import requests,json
-from make_loan_data.public.dataBase_india import *
+from make_loan_data.public.dataBase_tez import *
 from make_loan_data.data.var_tez_loan import *
 
 def check_api(r):
@@ -32,7 +32,7 @@ def login_mgt():
 ##将审批人的审批状态为空闲： 空闲10460001   审批中10460002 离开10460003
 def update_appr_user_stat():
     sql="update sys_user_info set APPR_USER_STAT='10460001',ON_LINE='10000001',IS_USE='10000001'  where user_no='wangs@whalekun.com';"
-    DataBase(inter_db).executeUpdateSql(sql)
+    DataBase(tez_db).executeUpdateSql(sql)
 #分配审批人员及审批通过
 def approve(loan_no):
     head=head_mgt_c()

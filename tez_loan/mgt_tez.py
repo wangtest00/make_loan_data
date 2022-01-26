@@ -21,7 +21,7 @@ def check_api(r):
         return 0
 #登录mgt,返回ssid值
 def login_mgt():
-    data={"loginName":"wangs@whalekun.com","password":"jk@123"}
+    data={"loginName":mgt_user,"password":mgt_user_pwd}
     r=requests.post(host_mgt+'/api/login/auth?lang=en&lang=zh',data=json.dumps(data),headers=head_mgt,verify=False)
     check_api(r)
     for item in r.cookies:
@@ -31,12 +31,12 @@ def login_mgt():
 #注意：审批人员平均推单存储过程，只对空闲在线的审批人推单
 ##将审批人的审批状态为空闲： 空闲10460001   审批中10460002 离开10460003
 def update_appr_user_stat():
-    sql="update sys_user_info set APPR_USER_STAT='10460001',ON_LINE='10000001',IS_USE='10000001'  where user_no='wangs@whalekun.com';"
+    sql="update sys_user_info set APPR_USER_STAT='10460001',ON_LINE='10000001',IS_USE='10000001'  where user_no='"+mgt_user+"';"
     DataBase(tez_db).executeUpdateSql(sql)
 #分配审批人员及审批通过
 def approve(loan_no):
     head=head_mgt_c()
-    data1={"loanNos":[loan_no],"targetUserNo":"wangs@whalekun.com"}
+    data1={"loanNos":[loan_no],"targetUserNo":mgt_user}
     r=requests.post(host_mgt+'/api/approve/distribution/case?lang=zh',data=json.dumps(data1),headers=head,verify=False)  #1.分配审批人员
     check_api(r)
     data2={"loanNo":loan_no,"decisionReason":"10280020","apprRemark":"test","approveResultType":"PASS"}
@@ -45,7 +45,7 @@ def approve(loan_no):
 #批量分配审批人员及审批通过
 def pl_approve(loan_no):
     head=head_mgt_c()
-    data1={"loanNos":loan_no,"targetUserNo":"wangs@whalekun.com"}
+    data1={"loanNos":loan_no,"targetUserNo":mgt_user}
     r=requests.post(host_mgt+'/api/approve/distribution/case?lang=zh',data=json.dumps(data1),headers=head,verify=False)  #1.分配审批人员
     check_api(r)
     for loan_no in loan_no:
@@ -78,7 +78,7 @@ def pl_shenpi():
     loan_No_List=[]
     for i in range(len(t)):
         if t[i]['apprStat']=='10200003':
-            if t[i]['apprUserNo']=='wangs@whalekun.com' or t[i]['apprUserNo']=='wangs@whalekun.com' or t[i]['apprUserNo']=='yanglt@whalekun.com' or t[i]['apprUserNo']=='liull@whalekun.com':
+            if t[i]['apprUserNo']==mgt_user or t[i]['apprUserNo']=='liulingling':
                 print(t[i]['loanNo'])
                 loan_no=t[i]['loanNo']
                 loan_No_List.append(loan_no)

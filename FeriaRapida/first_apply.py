@@ -67,26 +67,7 @@ def bu_ding(registNo):
         # else:
         #     pass
         # DataBase(which_db).closeDB()
-def first_apply_curp(registNo):
-    update_pwd(registNo)
-    token=login_pwd(registNo)
-    headt=head_token(token)
-    custNo=auth_cert_curp(registNo,headt)
-    auth_work(custNo,headt)
-    auth_review_contact(custNo,headt)
-    auth_app_grab_data(registNo,custNo,headt)
-    auth_contact(custNo,headt)
-    update_kyc_auth(registNo,custNo)
-    update_batch_log()
-    loan_no=apply_loan(custNo,headt)
-    if loan_no is None:
-        DataBase(which_db).closeDB()
-    else:
-        bank_auth(custNo,headt)
-        update_appr_user_stat()
-        DataBase(which_db).call_4_proc()
-        approve(loan_no)
-        first_apply_sheipihou(loan_no,registNo,custNo,headt)
+
 if __name__ == '__main__':
     for i in range(1):
         auto_test()

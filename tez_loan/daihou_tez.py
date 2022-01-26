@@ -13,6 +13,15 @@ def payout_mock_apply(loanNo,custNo):
     r=requests.post(host_pay+"/api/fin/payout/mock/apply",data=json.dumps(data),headers=head_pay,verify=False)
     print("调提现mock接口，暂时忽略报错",r.json())
 
+def payout_apply(loanNo,custNo):
+    data={
+    "loanNo": loanNo,
+    "custNo": custNo,
+    "appNo": appNo
+}
+    r=requests.post(host_pay+"/api/fin/payout/apply",data=json.dumps(data),headers=head_pay,verify=False)
+    print("调提现mock接口，暂时忽略报错",r.json())
+
 def chaXun_Stat(loanNo):
     sql="select before_stat from lo_loan_dtl where loan_no='"+loanNo+"';"
     before_stat=DataBase(tez_db).get_one(sql)

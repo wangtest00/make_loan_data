@@ -51,7 +51,7 @@ def login_code(registNo):
     c=r.json()
     print(c)
     if c!=0:
-        token=c['token']
+        token=c['data']['token']
         return token
     else:
         return 0
@@ -68,8 +68,8 @@ def cert_auth(registNo,headt):
     t=r.json()
     print(t)
     if t!=0:
-        m=json.loads(t['message'])#字符串转字典
-        return m['custNo']
+        #m=json.loads(t['message'])#字符串转字典
+        return t['data']['custNo']
     else:
         pass
 def auth(registNo,custNo,headt):

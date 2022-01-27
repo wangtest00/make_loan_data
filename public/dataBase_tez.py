@@ -72,6 +72,14 @@ class DataBase():
         self.closeDB()
     #调用存储过程，执行日终批量
     def call_daily_important_batch(self,date):
+        sql="select count(1) from sys_batch_log where BUSI_DATE='"+date+"';"
+        num=DataBase(tez_db).get_one(sql)
+        print('当前批量日期存在batch_log的数量=',num[0])
+        if num[0]==0:
+            pass
+        else:
+            sql="delete from sys_batch_log where BUSI_DATE='"+date+"';"
+            DataBase(tez_db).executeUpdateSql(sql)
         proc=['proc_sys_batch_log_start','proc_dc_flow_dtl','proc_fin_ad_reduce','proc_dc_flow_dtl_settle','proc_fin_ad_ovdu','proc_fin_ad_detail_dtl','proc_fin_ad_dtl','proc_lo_ovdu_dtl','proc_sys_batch_log_end']
         for proc in proc:
             self.call_proc_args(proc,date)

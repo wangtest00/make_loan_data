@@ -38,10 +38,10 @@ def first_apply():
     sql5="update lo_loan_cust_rel set risk_level='AA',risk_score='"+prodNo+"' where LOAN_NO='"+loanNo+"';"
     DataBase(tez_db).executeUpdateSql(sql5)
     DataBase(tez_db).call_many_proc()
-    status=withdraw(registNo,custNo,loanNo,headt,headw)  #该接口会调起支付payout_apply接口
+    status=withdraw(registNo,custNo,loanNo,headt,headw)#该接口会调起支付payout_apply接口
     if status==1:
         time.sleep(3)
-        globpay_webhook_payout(loanNo)
+        globpay_webhook_payout(loanNo)#模拟回调
         time.sleep(3)
         chaXun_Stat(loanNo)
     else:

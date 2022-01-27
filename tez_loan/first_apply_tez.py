@@ -38,9 +38,10 @@ def first_apply():
     sql5="update lo_loan_cust_rel set risk_level='AA',risk_score='"+prodNo+"' where LOAN_NO='"+loanNo+"';"
     DataBase(tez_db).executeUpdateSql(sql5)
     DataBase(tez_db).call_many_proc()
-    status=withdraw(registNo,custNo,loanNo,headt,headw)
+    status=withdraw(registNo,custNo,loanNo,headt,headw)  #该接口会调起支付payout_apply接口
     if status==1:
-        payout_apply(loanNo,custNo)#提现mock接口
+        time.sleep(3)
+        globpay_webhook_payout(loanNo)
         time.sleep(3)
         chaXun_Stat(loanNo)
     else:
@@ -63,5 +64,5 @@ def lunXunDaiQian(loanNo):
 
 
 if __name__ == '__main__':
-    for i in range(1):
+    for i in range(10):
         first_apply()

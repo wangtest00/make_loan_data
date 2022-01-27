@@ -119,6 +119,8 @@ def bank_auth(custNo,headt):
     data={"bankAcctName":"wangmmmmshuang","bankAcctNo":bank_acct_no,"custNo":custNo,"ifscCode":"SBIN0001537"}
     r=requests.post(host_api+'/api/cust_india/bank/bank_auth?lang=en',data=json.dumps(data),headers=headt,verify=False)
     print("绑卡认证接口响应=",r.json())
+    sql="update cu_cust_bank_card_dtl set OPEN_ORG='shtest' where cust_No='"+custNo+"';"#支付放款需要查询银行机构，临时update，正式提测，需要喊接口写入
+    DataBase(tez_db).executeUpdateSql(sql)
 
 #当前时间的前一天=跑批业务日期，才能正常申请借款
 def update_Batch_Log():

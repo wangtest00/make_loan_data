@@ -56,16 +56,30 @@ class DataBase():
         except Exception as e:
             print("调用存储过程异常：",e)
             return 0
+    def call_proc_args(self,procName,date):
+        try:
+            self.cur.callproc(procName,args=(date,"@o_stat"))
+            self.connect.commit()
+            print ("调用存储过程成功:",procName,date)
+            #self.closeDB()
+        except Exception as e:
+            print("调用存储过程异常：",e)
+            return 0
     def call_many_proc(self):
         proc=['proc_apr_loan_prod_sel','proc_apr_appr_all_user','proc_apr_appr_allocation','proc_apr_appr_allo_user_deal']
         for proc in proc:
             self.call_proc(proc)
         self.closeDB()
-    def call_4_proc(self):
-        for i in range(2):
-            DataBase('india_tez_loan').call_many_proc()
+    #调用存储过程，执行日终批量
+    def call_daily_important_batch(self,date):
+        proc=['proc_sys_batch_log_start','proc_dc_flow_dtl','proc_fin_ad_reduce','proc_dc_flow_dtl_settle','proc_fin_ad_ovdu','proc_fin_ad_detail_dtl','proc_fin_ad_dtl','proc_lo_ovdu_dtl','proc_sys_batch_log_end']
+        for proc in proc:
+            self.call_proc_args(proc,date)
             time.sleep(1)
+        self.closeDB()
+
+
 #loanAmt='{0:f}'.format(t[0])#decimal转字符串
 
 if __name__ == '__main__':
-    DataBase(tez_db).call_many_proc()
+    DataBase(tez_db).call_daily_important_batch('20220127')

@@ -74,7 +74,7 @@ class DataBase():
     def call_daily_important_batch(self,date):
         sql="select count(1) from sys_batch_log where BUSI_DATE='"+date+"';"
         num=DataBase(tez_db).get_one(sql)
-        print('当前批量日期存在batch_log的数量=',num[0])
+        print('当前目标批量日期存在batch_log的数量=',num[0])
         if num[0]==0:
             pass
         else:
@@ -90,4 +90,4 @@ class DataBase():
 #loanAmt='{0:f}'.format(t[0])#decimal转字符串
 
 if __name__ == '__main__':
-    DataBase(tez_db).call_daily_important_batch('20220127')
+    DataBase(tez_db).call_daily_important_batch('20220126')

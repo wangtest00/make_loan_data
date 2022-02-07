@@ -22,7 +22,7 @@ def globpay_webhook_payout(loan_no):
     "paySuccessTime": paySuccessTime,
     "message": '模拟回调放款成功',
     "extra": '123456',
-    "sign": '123',
+    "sign": '123'
 }
     print(data)
     r=requests.post(host_pay+"/api/trade/globpay/webhook/payout",data,headers=head_pay_f,verify=False)
@@ -31,6 +31,7 @@ def globpay_webhook_payout(loan_no):
         print("模拟回调,执行成功")
     else:
         print("模拟回调，执行失败")
+
 def payout_apply(loanNo,custNo):
     data={
     "loanNo": loanNo,
@@ -68,6 +69,15 @@ def bank_open_annon_event(virtual_account_number,amount):
     t=r.json()
     print(t)
 
+@hulue_error()
+def payout_mock_apply(loanNo,custNo):
+    data={
+    "loanNo": loanNo,
+    "custNo": custNo,
+    "appNo": "301"
+}
+    r=requests.post(host_pay+"/api/fin/payout/mock/apply",data=json.dumps(data),headers=head_pay,verify=False)
+    print("调提现mock接口，暂时忽略报错",r.json())
 if __name__ == '__main__':
-    globpay_webhook_payout('L3012201278174928330651762688')
+    globpay_webhook_payout('L3012202078178927426834432000')
     #bank_open_annon_event('363636300062850013','10')

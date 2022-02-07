@@ -40,8 +40,9 @@ def first_apply():
     DataBase(tez_db).call_many_proc()
     status=withdraw(registNo,custNo,loanNo,headt,headw)#该接口会调起支付payout_apply接口
     if status==1:
-        time.sleep(3)
+        time.sleep(10)
         globpay_webhook_payout(loanNo)#模拟回调-放款成功
+        #payout_mock_apply(loanNo,custNo)  #mock放款成功cashtm
         time.sleep(3)
         chaXun_Stat(loanNo)
     else:

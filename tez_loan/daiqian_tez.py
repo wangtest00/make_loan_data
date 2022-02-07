@@ -115,11 +115,11 @@ def update_kyc_auth(registNo,custNo):
     DataBase(tez_db).executeUpdateSql(sql5)
 #绑定银行卡，需要把银行卡号改成明显错的，环境怕放出真实的钱
 def bank_auth(custNo,headt):
-    bank_acct_no=str(random.randint(10000000,99999999))
+    bank_acct_no=str(random.randint(100000000,999999999))
     data={"bankAcctName":"wangmmmmshuang","bankAcctNo":bank_acct_no,"custNo":custNo,"ifscCode":"SBIN0001537"}
     r=requests.post(host_api+'/api/cust_india/bank/bank_auth?lang=en',data=json.dumps(data),headers=headt,verify=False)
     print("绑卡认证接口响应=",r.json())
-    sql="update cu_cust_bank_card_dtl set OPEN_ORG='shtest' where cust_No='"+custNo+"';"#支付放款需要查询银行机构，临时update，正式提测，需要喊接口写入
+    sql="update cu_cust_bank_card_dtl set OPEN_ORG='QATEST' where cust_No='"+custNo+"';"#支付放款需要查询银行机构，临时update，正式提测，需要喊接口写入
     DataBase(tez_db).executeUpdateSql(sql)
 
 #当前时间的前一天=跑批业务日期，才能正常申请借款
@@ -165,7 +165,7 @@ def withdraw(registNo,custNo,loanNo,headt,headw):
         loanAmt=trial_list[1]
         data={"custNo":custNo,"instNum":instNum,"loanAmt":loanAmt,"loanNo":loanNo,"prodNo":prodNo}
         r=requests.post(host_api+"/api/trade/fin/less/withdraw?lang=en",data=json.dumps(data),headers=headt,verify=False)
-        print("暂时忽略该报错Unbound bank card,响应=",r.json())
+        print("api申请提现接口响应=",r.json())
         return 1
 
 

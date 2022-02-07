@@ -6,7 +6,7 @@ Created on 2018-11-26
 import time
 import pymysql
 from make_loan_data.data.var_tez_loan import *
-
+from make_loan_data.public.date_calculate import *
 
 class DataBase():
     def __init__(self,witchdb):
@@ -71,23 +71,20 @@ class DataBase():
             self.call_proc(proc)
         self.closeDB()
     #调用存储过程，执行日终批量，跑到指定日期
-    def call_daily_important_batch(self,date):
-        sql="select count(1) from sys_batch_log where BUSI_DATE='"+date+"';"
-        num=DataBase(tez_db).get_one(sql)
-        print('当前目标批量日期存在batch_log的数量=',num[0])
-        if num[0]==0:
-            pass
-        else:
-            sql="delete from sys_batch_log where BUSI_DATE='"+date+"';"
-            DataBase(tez_db).executeUpdateSql(sql)
+    def call_daily_important_batch(self,date1,date2):
+        sql="delete from sys_batch_log;"
+        DataBase(tez_db).executeUpdateSql(sql)
         proc=['proc_sys_batch_log_start','proc_dc_flow_dtl','proc_fin_ad_reduce','proc_dc_flow_dtl_settle','proc_fin_ad_ovdu','proc_fin_ad_detail_dtl','proc_fin_ad_dtl','proc_lo_ovdu_dtl','proc_sys_batch_log_end']
-        for proc in proc:
-            self.call_proc_args(proc,date)
-            time.sleep(1)
+        date=create_assist_date(date1,date2)
+        print(date)
+        for j in range(len(date)):
+            for i in range(len(proc)):
+                self.call_proc_args(proc[i],date[j])
+                time.sleep(1)
         self.closeDB()
 
 
 #loanAmt='{0:f}'.format(t[0])#decimal转字符串
 
 if __name__ == '__main__':
-    DataBase(tez_db).call_daily_important_batch('20220127')
+    DataBase(tez_db).call_daily_important_batch('20220208','20220214')

@@ -70,7 +70,7 @@ class DataBase():
         for proc in proc:
             self.call_proc(proc)
         self.closeDB()
-    #调用存储过程，执行日终批量，跑到指定日期
+    #调用存储过程，执行日终批量，从日期1跑到日期2
     def call_daily_important_batch(self,date1,date2):
         sql="delete from sys_batch_log;"
         DataBase(tez_db).executeUpdateSql(sql)

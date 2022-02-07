@@ -42,12 +42,7 @@ def first_apply():
     DataBase(tez_db).executeUpdateSql(sql5)
     DataBase(tez_db).call_many_proc()
     status=withdraw(registNo,custNo,loanNo,headt,headw)
-    if status==1:
-        payout_mock_apply(loanNo,custNo)#提现mock接口
-        time.sleep(3)
-        chaXun_Stat(loanNo)
-    else:
-        print(status)
+
 
 def chaXunDaiQian(loanNo):
     sql1="select BEFORE_STAT from lo_loan_dtl where LOAN_NO='"+loanNo+"';"

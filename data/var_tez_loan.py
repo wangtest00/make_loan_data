@@ -1,4 +1,4 @@
-__all__=['host_api','host_mgt','host_pay','head_pay_f','head_api','head_mgt','head_pay','CONFIGS','prodNo','appNo','appName','tez_db','mgt_user','mgt_user_pwd']
+__all__=['host_api','host_mgt','host_pay','head_pay_f','host_coll','head_api','head_mgt','head_pay','CONFIGS','prodNo','appNo','appName','tez_db','mgt_user','mgt_user_pwd']
 
 tez_db='india_tez_loan'
 prodNo_tez=['10001','301','Zet_Loan','wangs@quantditech.com','jk@123']
@@ -24,4 +24,4 @@ head_pay={"Host":host_pay[8:],"Connection":"keep-alive","Content-Length":"116","
 head_pay_f={"Host":host_pay[8:],"Connection":"keep-alive","Content-Length":"116","Postman-Token":"68cc47f6-8c1f-4ebd-a929-b1ae10b7dd19",
                 "User-Agent":"PostmanRuntime/7.28.2","Accept":"*/*","Accept-Encoding":"gzip, deflate, br"}
 
-CONFIGS = {'india_tez_loan': {'host':'176.60.0.21','port':3306, 'user': 'cs_wangs','password': 'cs_wangs!qw####','database': 'india_tez_loan'}}
+CONFIGS = {'india_tez_loan': {'host':'172.21.1.97','port':3306, 'user': 'cs_wangs','password': 'cs_wangs!qw####','database': 'india_tez_loan'}}

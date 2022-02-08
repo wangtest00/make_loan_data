@@ -4,7 +4,7 @@ from make_loan_data.public.check_api import *
 
 #from make_loan_data.lanaPlus_danqi.daihou import *
 from make_loan_data.data.var_mex_lp_danqi import *
-
+import random,datetime
 
 #改编码方便jenkins运行
 #sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="gb18030")

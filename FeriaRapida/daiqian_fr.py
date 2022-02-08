@@ -1,10 +1,11 @@
-from make_loan_data.data.var_mex_fr import *
-from make_loan_data.feriaRapida.heads import *
+
+
 from make_loan_data.feriaRapida.mex_mgt_fr import *
 from make_loan_data.public.check_api import *
 from make_loan_data.database.dataBase import *
-
-
+import random,datetime,string
+from make_loan_data.feriaRapida.heads import *
+from make_loan_data.data.var_mex_fr import *
 #改编码方便jenkins运行
 #sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="gb18030")
 
@@ -37,7 +38,7 @@ def login_code(registNo):
         return 0
 #通过密码登录，返回token
 def login_pwd(registNo):
-    data={"registNo":registNo,"password":"123456","gaid":shenpiren[appNo][5]}
+    data={"registNo":registNo,"password":"123456","gaid":shenpiren[appNo][5],"channelNo":""}
     r=requests.post(host_api+"/api/cust/pwd/login",data=json.dumps(data),headers=head_api,verify=False)
     try:
         c=check_api(r)

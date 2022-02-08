@@ -1,7 +1,7 @@
-from database.dataBase import *
+from make_loan_data.database.dataBase import *
 from make_loan_data.data.var_mex_lp import *
 from make_loan_data.lanaPlus_duoqi.daiqian_lanaplus import *
-
+import random,datetime
 
 #datet=str(time.time()*1000000)[:-2]   #16位时间戳
 #用户在app操作了添加绑卡信息，同意协议并点击确认提现按钮，贷前状态变更为“待提现”后的后续改数操作，模拟到提现成功

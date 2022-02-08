@@ -1,4 +1,7 @@
+
 from make_loan_data.lanaPlus_duoqi.daihou import *
+from make_loan_data.lanaPlus_duoqi.daiqian_lanaplus import *
+from make_loan_data.lanaPlus_duoqi.gaishu import *
 #import io,sys
 #改编码方便jenkins运行
 #sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="gb18030")

@@ -1,7 +1,7 @@
-from make_loan_data.data.var_mex_lp_danqi import *
 from make_loan_data.lanaPlus_danqi.daiqian_lanaplus_danqi import *
 import random,datetime
 from make_loan_data.database.dataBase import *
+from make_loan_data.data.var_mex_lp_danqi import *
 
 randnum=str(random.randint(10000000,99999999)) #8位随机数
 #datet=str(time.time()*1000000)[:-2]   #16位时间戳

@@ -1,5 +1,6 @@
 from make_loan_data.tez_loan.daiqian_tez import *
 from make_loan_data.tez_loan.mgt_tez import *
+from make_loan_data.tez_loan.daihou_tez import *
 
 
 def first_apply():

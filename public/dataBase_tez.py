@@ -72,7 +72,7 @@ class DataBase():
         self.closeDB()
     #调用存储过程，执行日终批量，从日期1跑到日期2
     def call_daily_important_batch(self,date1,date2):
-        sql="delete from sys_batch_log;"
+        sql="delete from sys_batch_log;"      #先清空batch_log
         DataBase(tez_db).executeUpdateSql(sql)
         proc=['proc_sys_batch_log_start','proc_dc_flow_dtl','proc_fin_ad_reduce','proc_dc_flow_dtl_settle','proc_fin_ad_ovdu','proc_fin_ad_detail_dtl','proc_fin_ad_dtl','proc_lo_ovdu_dtl','proc_sys_batch_log_end']
         date=create_assist_date(date1,date2)
@@ -87,4 +87,4 @@ class DataBase():
 #loanAmt='{0:f}'.format(t[0])#decimal转字符串
 
 if __name__ == '__main__':
-    DataBase(tez_db).call_daily_important_batch('20220208','20220214')
+    DataBase(tez_db).call_daily_important_batch('20220209','20220215')

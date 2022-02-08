@@ -28,25 +28,25 @@ def compute_code(m):
     return x
 def head_token(token):
     head={"user-agent": "Dart/2.12 (dart:io)","x-user-language": "en","accept-encoding": "gzip","content-length": "0","host": host_api[8:],
-          "content-type": "application/json;charset=utf-8","version_no":"2.6.3","app_type":"10090001",
-        "x-app-type": "10090001","app_no": appNo,"x-auth-token":'Bearer '+str(token),"Cookie":"JSESSIONID=d17x0ET9jFp5BBK_qidExJqVs5THhstLnVk2eMEH" }
+          "content-type": "application/json;charset=utf-8","X-App-Version":"1.0.0","X-App-Type":"10090001",
+          "X-App-No": appNo,"x-auth-token":'Bearer '+str(token),"Cookie":"JSESSIONID=d17x0ET9jFp5BBK_qidExJqVs5THhstLnVk2eMEH" }
     return head
 def head_token_f(token):
     head={"user-agent":"Dart/2.12 (dart:io)","Accept-Language":"en","accept-encoding":"gzip","content-length":"277","host":host_api[8:],
-          "content-type":"multipart/form-data; boundary=65d7b53d-2308-466f-8b4a-42f32dd4a9f9","version_no":"2.6.3","app_type":"10090001",
-          "app_no":appNo,"x-auth-token":'Bearer '+str(token),"Cookie":"JSESSIONID=ffUdZQ5pBRFudhsBmGLidri4nNB7GRSE4BieOKlY" }
+          "content-type":"multipart/form-data; boundary=65d7b53d-2308-466f-8b4a-42f32dd4a9f9","X-App-Version":"1.0.0","X-App-Type":"10090001",
+          "X-App-No":appNo,"x-auth-token":'Bearer '+str(token),"Cookie":"JSESSIONID=ffUdZQ5pBRFudhsBmGLidri4nNB7GRSE4BieOKlY" }
     return head
 def head_token_w(token):
     head={"user-agent":"Mozilla/5.0 (Linux; U; Android 10; en; LIO-AL00 Build/HUAWEILIO-AL00) AppleWebKit/533.1 (KHTML, like Gecko) Version/5.0 Mobile Safari/533.1",
           "Accept-Language":"en","accept-encoding":"gzip","content-length":"277","host":host_api[8:],
-          "content-type":"application/x-www-form-urlencoded","version_no":"2.6.3","app_type":"10090001",
-          "app_no":appNo,"x-auth-token":'Bearer '+str(token),"Cookie":"JSESSIONID=ffUdZQ5pBRFudhsBmGLidri4nNB7GRSE4BieOKlY" }
+          "content-type":"application/x-www-form-urlencoded","X-App-Version":"1.0.0","X-App-Type":"10090001",
+          "X-App-No":appNo,"x-auth-token":'Bearer '+str(token),"Cookie":"JSESSIONID=ffUdZQ5pBRFudhsBmGLidri4nNB7GRSE4BieOKlY" }
     return head
 def login_code(registNo):
     code=compute_code(registNo)
     data={"appName":appName,"appNo":appNo,"appType":"10090001","code":code,"gaid":"12303937-ccde-46ee-a455-5146d36344dd",
           "ipAddr":"192.168.20.196","osVersion":"10","phoneType":"HUAWEI",
-          "registNo":registNo,"utmCampaign":"","utmContent":"","utmMedium":"","utmSource":"","utmTerm":"","versionNo":"2.6.3"}
+          "registNo":registNo,"utmCampaign":"","utmContent":"","utmMedium":"","utmSource":"","utmTerm":"","versionNo":"1.0.0"}
     r=requests.post(host_api+"/api/cust_info/cust/login?lang=en",data=json.dumps(data),headers=head_api,verify=False)
     c=r.json()
     print(c)
@@ -61,7 +61,7 @@ def cert_auth(registNo,headt):
     for j in range(5):  #生成5个随机英文大写字母
         st+=random.choice(string.ascii_uppercase)
     num=str(random.randint(1000,9999))
-    data={"appName":appName,"appNo":appNo,"birthDay":"1999-05-06","certNo":num+"4566"+num,"custFirstName":"wang","custLastName":"shuang",
+    data={"appName":appName,"appNo":appNo,"birthDay":"1995-05-06","certNo":num+"4566"+num,"custFirstName":"wang","custLastName":"shuang",
           "custMiddleName":"mmmm","education":"10190006","marriage":"10050001","panNo":""+st+num+"W","registNo":registNo,"sex":"10030001",
           "useEmail":"370sdfghhhj@gmail.com","useLang":"90000001"}
     r=requests.post(host_api+'/api/cust_india/cert/cert_auth?lang=en',data=json.dumps(data),headers=headt,verify=False)
@@ -93,7 +93,7 @@ def loan(registNo,custNo,headt):
     r=requests.post(host_api+'/api/loan_india/start?lang=en',data=json.dumps(data),headers=headt,verify=False)
     t=r.json()
     print(t)
-    return t['loanNo']
+    return t['data']['loanNo']
 
 #更新kyc认证状态及其值
 def update_kyc_auth(registNo,custNo):
@@ -142,11 +142,11 @@ def trial_instalment(loanNo,headt):
     data={"loanNo":loanNo}
     r=requests.post(host_api+"/api/loan_info/trial/instalment?lang=en",data=data,headers=headt,verify=False)
     t=r.json()
-    #print(t)
+    print(t)
     list=[]
-    if t['single'] is True:
-        loanInstNums=str(t['loanInstNums'])
-        loanAmount=t['loanAmount']
+    if t['data']['single'] is True:
+        loanInstNums=str(t['data']['loanInstNums'])
+        loanAmount=t['data']['loanAmount']
         list.append(loanInstNums)
         list.append(loanAmount)
         print("期数，贷款金额=",list)

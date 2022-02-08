@@ -65,5 +65,5 @@ def lunXunDaiQian(loanNo):
 
 
 if __name__ == '__main__':
-    for i in range(1):
+    for i in range(2):
         first_apply()

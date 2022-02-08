@@ -1,7 +1,7 @@
 __all__=['host_api','host_mgt','host_pay','head_pay_f','host_coll','head_api','head_mgt','head_pay','CONFIGS','prodNo','appNo','appName','tez_db','mgt_user','mgt_user_pwd']
 
-tez_db='india_tez_loan'
-prodNo_tez=['10001','301','Zet_Loan','wangs@quantditech.com','jk@123']
+tez_db='india_tez_loan'   #目前只支持单期（产品匹配）
+prodNo_tez=['10003','301','Zet_Loan','wangs@quantditech.com','jk@123']
 prodNo=prodNo_tez[0]
 appNo=prodNo_tez[1]
 appName=prodNo_tez[2]

@@ -1,7 +1,6 @@
-import random
+import random,string
 import requests
-
-from database.credit_database import *
+from make_loan_data.database.credit_database import *
 from make_loan_data.credit.heads import *
 from make_loan_data.credit.mex_mgt import *
 from make_loan_data.public.check_api import *

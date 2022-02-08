@@ -1,11 +1,12 @@
-import string,json,datetime
-from make_loan_data.credit.mex_mgt import *
+import random
+import requests
+
+from database.credit_database import *
 from make_loan_data.credit.heads import *
+from make_loan_data.credit.mex_mgt import *
 from make_loan_data.public.check_api import *
-from make_loan_data.data.var_mex_credit import *
-from make_loan_data.public.credit_database import *
-import io,sys
-import requests,random
+
+
 #改编码方便jenkins运行
 #sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="gb18030")
 

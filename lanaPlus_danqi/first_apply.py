@@ -1,10 +1,7 @@
-import string,requests,json,datetime
-from make_loan_data.public.dataBase import *
-from make_loan_data.lanaPlus_danqi.gaishu import *
-from make_loan_data.lanaPlus_danqi.mex_mgt_lp import *
-from make_loan_data.lanaPlus_danqi.heads import *
-from make_loan_data.data.var_mex_lp_danqi import *
 from make_loan_data.lanaPlus_danqi.daihou import *
+from make_loan_data.lanaPlus_danqi.gaishu import *
+
+
 #import io,sys
 #改编码方便jenkins运行
 #sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="gb18030")

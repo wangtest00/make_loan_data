@@ -1,4 +1,4 @@
-from make_loan_data.public.dataBase import *
+from database.dataBase import *
 
 
 def cx_update_repaydate():

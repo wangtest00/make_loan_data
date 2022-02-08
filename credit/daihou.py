@@ -1,8 +1,12 @@
-from make_loan_data.credit.daiqian import *
-from make_loan_data.public.credit_database import *
-from make_loan_data.data.var_mex_credit import *
 import random
-import requests,json
+
+import json
+import requests
+
+from database.credit_database import *
+from make_loan_data.credit.daiqian import *
+from make_loan_data.data.var_mex_credit import *
+
 
 #模拟银行回调接口-模拟还款stp（只需修改卡号cuentaBeneficiario和金额monto）
 def stp_repayment(cuentaBeneficiario,monto):

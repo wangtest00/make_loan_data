@@ -1,9 +1,11 @@
-import random,time,datetime
-import requests,json,string
-from make_loan_data.india.daihou import *
-from make_loan_data.public.check_api import *
-from make_loan_data.public.dataBase_india import *
+import datetime
+import random
+import string
+
+from database.dataBase_india import *
 from make_loan_data.data.var_india import *
+from make_loan_data.india.daihou import *
+
 
 def check_api(r):
     if r.status_code==200:

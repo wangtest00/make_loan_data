@@ -1,7 +1,10 @@
-from make_loan_data.tez_loan.daiqian_tez import *
-import requests,json
-from make_loan_data.public.dataBase_tez import *
+import json
+import requests
+
+from make_loan_data.database.dataBase_tez import *
 from make_loan_data.data.var_tez_loan import *
+from make_loan_data.tez_loan.daiqian_tez import *
+
 
 def check_api(r):
     try:

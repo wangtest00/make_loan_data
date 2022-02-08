@@ -1,10 +1,6 @@
-import json,random,requests,string
-from make_loan_data.data.var_india import *
-from make_loan_data.public.check_api import *
-from make_loan_data.india.daiqian_cashTM import *
-from make_loan_data.public.dataBase_india import *
-from make_loan_data.india.india_mgt import *
 from make_loan_data.india.daihou import *
+from make_loan_data.india.india_mgt import *
+
 
 def first_apply():
     update_Batch_Log()

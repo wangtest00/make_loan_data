@@ -1,7 +1,9 @@
-import requests,json
-from make_loan_data.data.var_india import *
+import json
+import requests
+
+from make_loan_data.database.dataBase_india import *
 from make_loan_data.public.check_api import *
-from make_loan_data.public.dataBase_india import *
+
 
 @hulue_error()
 def payout_mock_apply(loanNo,custNo):

@@ -3,11 +3,12 @@
 20190507
 注意，文件在本地打开的时候不能删除
 '''
-import xlrd,datetime
-import xlwt,os
-import xlsxwriter # 在Excel中设置单元格格式的方法和属性
+import datetime
+import os
+import xlrd
+import xlwt
 from xlutils.copy import copy
-from public.dataBase import *
+
 
 class WriteExcel(object):
     # 设置表格样式

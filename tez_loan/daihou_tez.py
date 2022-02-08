@@ -1,7 +1,9 @@
-import requests,json,datetime
-from make_loan_data.public.check_api import *
-from make_loan_data.public.dataBase_tez import *
+import json
+import requests
+from make_loan_data.database.dataBase_tez import *
 from make_loan_data.data.var_tez_loan import *
+from make_loan_data.public.check_api import *
+
 
 #放款-模拟回调
 def globpay_webhook_payout(loan_no):
@@ -123,7 +125,6 @@ def glopay_webhook_repay(mchOrderNo,payOrderId,orderAmount):
         "extra": '111111',
         "sign": '111'
 }
-    print(data)
     r=requests.post(host_pay+"/api/trade/globpay/webhook/repay",data=data,headers=head_pay_f,verify=False)
     print(r.content)
 #申请还款，还款回调，结清
@@ -133,4 +134,4 @@ def glopay_apply_repay(loanNo):
 
 if __name__ == '__main__':
     #globpay_webhook_payout('L3012202078178927426834432000')
-    glopay_apply_repay('L3012201278174952117258584064')
+    glopay_apply_repay('L3012202088179270620847308800')

@@ -1,7 +1,6 @@
-import random
-from make_loan_data.lanaPlus_duoqi.daiqian_lanaplus import *
-from make_loan_data.public.dataBase import *
+from database.dataBase import *
 from make_loan_data.data.var_mex_lp import *
+from make_loan_data.lanaPlus_duoqi.daiqian_lanaplus import *
 
 
 #datet=str(time.time()*1000000)[:-2]   #16位时间戳

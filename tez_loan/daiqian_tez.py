@@ -1,8 +1,10 @@
-import random,time,datetime
-import requests,json,string
-from make_loan_data.tez_loan.daihou_tez import *
-from make_loan_data.public.dataBase_tez import *
+import random
+import string
+
+from make_loan_data.database.dataBase_tez import *
 from make_loan_data.data.var_tez_loan import *
+from make_loan_data.tez_loan.daihou_tez import *
+
 
 def check_api(r):
     if r.status_code==200:

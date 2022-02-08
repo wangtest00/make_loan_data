@@ -1,11 +1,9 @@
-import json,random,requests,string
-from make_loan_data.data.var_tez_loan import *
-from make_loan_data.public.check_api import *
-from make_loan_data.tez_loan.daiqian_tez import *
-from make_loan_data.public.dataBase_tez import *
-from make_loan_data.tez_loan.mgt_tez import *
+import io
+import sys
+
 from make_loan_data.tez_loan.daihou_tez import *
-import io,sys
+from make_loan_data.tez_loan.mgt_tez import *
+
 #改编码方便jenkins运行
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="gb18030")
 

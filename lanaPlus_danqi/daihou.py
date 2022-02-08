@@ -1,8 +1,7 @@
-import requests,json
 import random
-from make_loan_data.data.var_mex_lp_danqi import *
+from make_loan_data.database.dataBase import *
 from make_loan_data.lanaPlus_danqi.daiqian_lanaplus_danqi import *
-from make_loan_data.public.dataBase import *
+
 
 #模拟银行回调接口-模拟还款stp（只需修改卡号cuentaBeneficiario和金额monto）
 #1.遇到脏数据，可能会报“参数为空”

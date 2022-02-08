@@ -3,10 +3,12 @@
 20190507
 注意，文件在本地打开的时候不能删除
 '''
-import xlrd,datetime
-import xlwt,os
+import datetime
+import os
+import xlrd
+import xlwt
 from xlutils.copy import copy
-from public.dataBase import *
+
 
 class WriteExcel(object):
     def write_Excel_Xls(self,value):

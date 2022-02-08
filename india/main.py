@@ -1,11 +1,9 @@
-import json,random,requests,string
-from make_loan_data.data.var_india import *
-from make_loan_data.public.check_api import *
-from make_loan_data.india.daiqian_cashTM import *
-from make_loan_data.public.dataBase_india import *
-from make_loan_data.india.india_mgt import *
+import io
+import sys
+
 from make_loan_data.india.daihou import *
-import io,sys
+from make_loan_data.india.india_mgt import *
+
 #改编码方便jenkins运行
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="gb18030")
 

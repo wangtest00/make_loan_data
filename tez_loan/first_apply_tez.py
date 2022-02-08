@@ -1,10 +1,6 @@
-import json,random,requests,string
-from make_loan_data.data.var_tez_loan import *
-from make_loan_data.public.check_api import *
-from make_loan_data.public.dataBase_tez import *
-from make_loan_data.tez_loan.mgt_tez import *
-from make_loan_data.tez_loan.daihou_tez import *
 from make_loan_data.tez_loan.daiqian_tez import *
+from make_loan_data.tez_loan.mgt_tez import *
+
 
 def first_apply():
     update_Batch_Log()

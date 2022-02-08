@@ -1,11 +1,10 @@
-import string,requests,json,datetime
-from make_loan_data.public.dataBase import *
-from make_loan_data.feriaRapida.gaishu import *
-from make_loan_data.feriaRapida.mex_mgt_fr import *
-from make_loan_data.feriaRapida.heads import *
-from make_loan_data.public.check_api import *
 from make_loan_data.data.var_mex_fr import *
-import io,sys
+from make_loan_data.feriaRapida.heads import *
+from make_loan_data.feriaRapida.mex_mgt_fr import *
+from make_loan_data.public.check_api import *
+from make_loan_data.database.dataBase import *
+
+
 #改编码方便jenkins运行
 #sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="gb18030")
 

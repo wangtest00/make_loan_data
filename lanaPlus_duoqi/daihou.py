@@ -1,6 +1,6 @@
 import random
 
-from database.dataBase import *
+from make_loan_data.database.dataBase import *
 from make_loan_data.lanaPlus_duoqi.daiqian_lanaplus import *
 
 

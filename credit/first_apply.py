@@ -34,6 +34,6 @@ def auto_test():
 
 
 if __name__ == '__main__':
-    for i in range(5):
+    for i in range(1):
         auto_test()
     #first_apply('9383893927')

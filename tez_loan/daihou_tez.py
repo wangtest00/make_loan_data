@@ -78,6 +78,59 @@ def payout_mock_apply(loanNo,custNo):
 }
     r=requests.post(host_pay+"/api/fin/payout/mock/apply",data=json.dumps(data),headers=head_pay,verify=False)
     print("调提现mock接口，暂时忽略报错",r.json())
+
+
+#还款申请,还款金额只能等于应收表，待收金额！,金额不一致会报错{'errorCode': 30001, 'message': '参数为空'}
+def re_payment_apply(loanNo):
+    sql1="select RECEIVE_AMT from fin_ad_dtl where LOAN_NO='"+loanNo+"';"
+    amt=DataBase(tez_db).get_one(sql1)
+    transAmt=amt[0]
+    sql="select CUST_NO,REPAY_DATE from lo_loan_dtl where LOAN_NO='"+loanNo+"';"
+    custNox=DataBase(tez_db).get_one(sql)
+    custNo=custNox[0]
+    Repay_Date=custNox[1]
+    data={"appNo": "301",
+          "loanNo": loanNo,
+          "custNo": custNo,
+          "instNum": 1,
+          "repayDate": Repay_Date,
+          "transAmt": float(transAmt),
+          "custName": "wangshang",
+          "advance": "10000000",
+          "isDefer": "10000000"}
+    r=requests.post(host_pay+"/api/fin/re_payment/apply",data=json.dumps(data),headers=head_pay,verify=False)
+    t=r.json()
+    print(t)
+    m=[]
+    m.append(t['tranFlowNo'])
+    m.append(t['globpayRepayment']['payOrderId'])
+    m.append(t['globpayRepayment']['orderAmount'])
+    print(m)
+    return m
+
+def glopay_webhook_repay(mchOrderNo,payOrderId,orderAmount):
+    paySuccessTime=str(time.time())
+    paySuccessTime=paySuccessTime[:10]+paySuccessTime[11:14]
+    data={
+        "code": '1',
+        "mchId": '1143',
+        "mchOrderNo": mchOrderNo,
+        "productId": '21',
+        "orderAmount": int(float(orderAmount)*100),
+        "payOrderId": payOrderId,
+        "paySuccessTime": paySuccessTime,
+        "message": '模拟回调放款成功',
+        "extra": '111111',
+        "sign": '111'
+}
+    print(data)
+    r=requests.post(host_pay+"/api/trade/globpay/webhook/repay",data=data,headers=head_pay_f,verify=False)
+    print(r.content)
+#申请还款，还款回调，结清
+def glopay_apply_repay(loanNo):
+    data=re_payment_apply(loanNo)
+    glopay_webhook_repay(data[0],data[1],data[2])
+
 if __name__ == '__main__':
-    globpay_webhook_payout('L3012202078178927426834432000')
-    #bank_open_annon_event('363636300062850013','10')
+    #globpay_webhook_payout('L3012202078178927426834432000')
+    glopay_apply_repay('L3012201278174952117258584064')

@@ -1,8 +1,9 @@
 import io
 import sys
-
+from make_loan_data.tez_loan.daiqian_tez import *
 from make_loan_data.tez_loan.daihou_tez import *
 from make_loan_data.tez_loan.mgt_tez import *
+
 
 #改编码方便jenkins运行
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="gb18030")

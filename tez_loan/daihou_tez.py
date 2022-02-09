@@ -87,28 +87,31 @@ def re_payment_apply(loanNo):
     sql1="select RECEIVE_AMT from fin_ad_dtl where LOAN_NO='"+loanNo+"';"
     amt=DataBase(tez_db).get_one(sql1)
     transAmt=amt[0]
-    sql="select CUST_NO,REPAY_DATE from lo_loan_dtl where LOAN_NO='"+loanNo+"';"
-    custNox=DataBase(tez_db).get_one(sql)
-    custNo=custNox[0]
-    Repay_Date=custNox[1]
-    data={"appNo": "301",
-          "loanNo": loanNo,
-          "custNo": custNo,
-          "instNum": 1,
-          "repayDate": Repay_Date,
-          "transAmt": float(transAmt),
-          "custName": "wangshang",
-          "advance": "10000000",
-          "isDefer": "10000000"}
-    r=requests.post(host_pay+"/api/fin/re_payment/apply",data=json.dumps(data),headers=head_pay,verify=False)
-    t=r.json()
-    print(t)
-    m=[]
-    m.append(t['tranFlowNo'])
-    m.append(t['globpayRepayment']['payOrderId'])
-    m.append(t['globpayRepayment']['orderAmount'])
-    print(m)
-    return m
+    if transAmt is None:
+        print("应收表待收金额为空，不去还款申请，回调")
+    else:
+        sql="select CUST_NO,REPAY_DATE from lo_loan_dtl where LOAN_NO='"+loanNo+"';"
+        custNox=DataBase(tez_db).get_one(sql)
+        custNo=custNox[0]
+        Repay_Date=custNox[1]
+        data={"appNo": "301",
+              "loanNo": loanNo,
+              "custNo": custNo,
+              "instNum": 1,
+              "repayDate": Repay_Date,
+              "transAmt": float(transAmt),
+              "custName": "wangshang",
+              "advance": "10000000",
+              "isDefer": "10000000"}
+        r=requests.post(host_pay+"/api/fin/re_payment/apply",data=json.dumps(data),headers=head_pay,verify=False)
+        t=r.json()
+        print(t)
+        m=[]
+        m.append(t['tranFlowNo'])
+        m.append(t['globpayRepayment']['payOrderId'])
+        m.append(t['globpayRepayment']['orderAmount'])
+        print(m)
+        return m
 
 def glopay_webhook_repay(mchOrderNo,payOrderId,orderAmount):
     paySuccessTime=str(time.time())
@@ -134,4 +137,4 @@ def glopay_apply_repay(loanNo):
 
 if __name__ == '__main__':
     #globpay_webhook_payout('L3012202078178927426834432000')
-    glopay_apply_repay('L3012202098179601328755474432')
+    glopay_apply_repay('L3012202098179681032172503040')

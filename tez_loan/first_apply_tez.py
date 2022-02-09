@@ -6,9 +6,10 @@ from make_loan_data.tez_loan.daihou_tez import *
 def first_apply():
     update_Batch_Log()
     registNo=str(random.randint(8000000000,9999999999)) #10位随机数
-    token=login_code(registNo)
-    headt=head_token(token)
-    custNo=cert_auth(registNo,headt)
+    custNo=login_code(registNo)
+    headt=head_token(custNo[0])
+    custNo=custNo[1]
+    custNo=cert_auth(registNo,custNo,headt)
     auth(registNo,custNo,headt)
     update_kyc_auth(registNo,custNo)
     loanNo=loan(registNo,custNo,headt)
@@ -21,10 +22,10 @@ def first_apply():
     DataBase(tez_db).executeUpdateSql(sql3)
     sql4="update lo_loan_cust_rel set risk_level='AA',risk_score='"+prodNo+"' where LOAN_NO='"+loanNo+"';"
     DataBase(tez_db).executeUpdateSql(sql4)
-    time.sleep(5)
-    token=login_code(registNo)
-    headt=head_token(token)
-    headw=head_token_w(token)
+    time.sleep(5)#再次进件
+    custNo2=login_code(registNo)
+    headt=head_token(custNo2[0])
+    headw=head_token_w(custNo2[0])
     auth(registNo,custNo,headt)
     loanNo=loan(registNo,custNo,headt)
     bank_auth(custNo,headt)
@@ -38,7 +39,7 @@ def first_apply():
     status=withdraw(registNo,custNo,loanNo,headt,headw)#该接口会调起支付payout_apply接口
     if status==1:
         time.sleep(10)
-        globpay_webhook_payout(loanNo)#模拟回调-放款成功
+        globpay_webhook_payout(loanNo)#模拟回调-放款成功    注意现在是模拟查询返成功，投产前需要改成查询三方放款订单状态
         #payout_mock_apply(loanNo,custNo)  #mock放款成功cashtm
         time.sleep(3)
         chaXun_Stat(loanNo)

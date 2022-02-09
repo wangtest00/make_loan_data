@@ -80,11 +80,10 @@ class DataBase():
         for j in range(len(date)):
             for i in range(len(proc)):
                 self.call_proc_args(proc[i],date[j])
-                time.sleep(1)
+                #time.sleep(1)
         self.closeDB()
 
 
 #loanAmt='{0:f}'.format(t[0])#decimal转字符串
-
 if __name__ == '__main__':
-    DataBase(tez_db).call_daily_important_batch('20220209','20220215')
+    DataBase(tez_db).call_daily_important_batch('20220209','20220216')

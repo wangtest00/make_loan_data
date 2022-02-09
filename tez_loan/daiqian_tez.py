@@ -52,20 +52,22 @@ def login_code(registNo):
     r=requests.post(host_api+"/api/cust_info/cust/login?lang=en",data=json.dumps(data),headers=head_api,verify=False)
     c=r.json()
     print(c)
+    m=[]
     if c!=0:
-        token=c['data']['token']
-        return token
+        m.append(c['data']['token'])
+        m.append(c['data']['custNo'])
+        return m
     else:
         return 0
 
-def cert_auth(registNo,headt):
+def cert_auth(registNo,custNo,headt):
     st=''
     for j in range(5):  #生成5个随机英文大写字母
         st+=random.choice(string.ascii_uppercase)
     num=str(random.randint(1000,9999))
-    data={"appName":appName,"appNo":appNo,"birthDay":"1995-05-06","certNo":num+"4566"+num,"custFirstName":"wang","custLastName":"shuang",
+    data={"appName":appName,"appNo":appNo,"birthDay":"1992-05-06","certNo":num+"4567"+num,"custFirstName":"wang","custLastName":"shuang",
           "custMiddleName":"mmmm","education":"10190006","marriage":"10050001","panNo":""+st+num+"W","registNo":registNo,"sex":"10030001",
-          "useEmail":"370sdfghhhj@gmail.com","useLang":"90000001"}
+          "useEmail":"370sdfghhhj@gmail.com","useLang":"90000001","custNo":custNo}
     r=requests.post(host_api+'/api/cust_india/cert/cert_auth?lang=en',data=json.dumps(data),headers=headt,verify=False)
     t=r.json()
     print(t)

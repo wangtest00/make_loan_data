@@ -1,6 +1,5 @@
 import json
 import requests
-
 from make_loan_data.database.dataBase_tez import *
 from make_loan_data.data.var_tez_loan import *
 from make_loan_data.tez_loan.daiqian_tez import *

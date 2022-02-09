@@ -1,7 +1,7 @@
 import datetime
 import random
 import string
-from database.dataBase_india import *
+from make_loan_data.database.dataBase_india import *
 from make_loan_data.data.var_india import *
 from make_loan_data.india.daihou import *
 

@@ -1,6 +1,11 @@
-from make_loan_data.india.daihou import *
-from make_loan_data.india.india_mgt import *
+import io
+import sys
 
+from make_loan_data.cashTm.daihou import *
+from make_loan_data.cashTm.india_mgt import *
+
+#改编码方便jenkins运行
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="gb18030")
 
 def first_apply():
     update_Batch_Log()
@@ -35,7 +40,6 @@ def first_apply():
     DataBase(inter_db).executeUpdateSql(sql5)
     DataBase(inter_db).call_many_proc()
     withdraw(registNo,custNo,loanNo,headt,headw)
-    time.sleep(5)
     chaXun_Stat(loanNo)
 
 def chaXunDaiQian(loanNo):

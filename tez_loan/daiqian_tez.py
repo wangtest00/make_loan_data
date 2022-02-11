@@ -27,6 +27,7 @@ def compute_code(m):
     x3=str(int(m[2])+5)
     x4=str(int(m[3])+5)
     x=x4[-1:]+x3[-1:]+x2[-1:]+x1[-1:]
+    print(x)
     return x
 def head_token(token):
     head={"user-agent": "Dart/2.12 (dart:io)","x-user-language": "en","accept-encoding": "gzip","content-length": "0","host": host_api[8:],
@@ -46,10 +47,9 @@ def head_token_w(token):
     return head
 def login_code(registNo):
     code=compute_code(registNo)
-    data={"appName":appName,"appNo":appNo,"appType":"10090001","code":code,"gaid":"12303937-ccde-46ee-a455-5146d36344dd",
-          "ipAddr":"192.168.20.196","osVersion":"10","phoneType":"HUAWEI",
-          "registNo":registNo,"utmCampaign":"","utmContent":"","utmMedium":"","utmSource":"","utmTerm":"","versionNo":"1.0.0"}
-    r=requests.post(host_api+"/api/cust_info/cust/login?lang=en",data=json.dumps(data),headers=head_api,verify=False)
+    data={"appName":"TezLoan","appNo":"301","appType":"10090001","code":code,"gaid":"04b0a543-4f1e-45b8-9e1b-1f99be85ceaa",
+          "ipAddr":"","latitude":"","longitude":"","osVersion":"11","phoneType":"lenovo","registNo":registNo,"versionNo":"1.0.0"}
+    r=requests.post(host_api+"/api/cust/login",data=json.dumps(data),headers=head_api,verify=False)
     c=r.json()
     print(c)
     m=[]
@@ -66,9 +66,10 @@ def cert_auth(registNo,custNo,headt):
         st+=random.choice(string.ascii_uppercase)
     num=str(random.randint(1000,9999))
     data={"appName":appName,"appNo":appNo,"birthDay":"1992-05-06","certNo":num+"4567"+num,"custFirstName":"wang","custLastName":"shuang",
-          "custMiddleName":"mmmm","education":"10190006","marriage":"10050001","panNo":""+st+num+"W","registNo":registNo,"sex":"10030001",
-          "useEmail":"370sdfghhhj@gmail.com","useLang":"90000001","custNo":custNo}
-    r=requests.post(host_api+'/api/cust_india/cert/cert_auth?lang=en',data=json.dumps(data),headers=headt,verify=False)
+          "custMiddleName":"mmmm","education":"10190006","educationValue":"Doctorate/PhD","marriage":"10050001","marriageValue":"Married",
+          "panNo":""+st+num+"W","registNo":registNo,"sex":"10070004","useEmail":"370sdfghhhj@gmail.com","useLang":"90000001",
+          "useLangValue":"English","custNo":custNo}
+    r=requests.post(host_api+'/api/cust/auth/cert',data=json.dumps(data),headers=headt,verify=False)
     t=r.json()
     print(t)
     if t!=0:
@@ -77,24 +78,27 @@ def cert_auth(registNo,custNo,headt):
     else:
         pass
 def auth(registNo,custNo,headt):
-    data1={"address":"wwsdddxx","county":"10010002","custNo":custNo,"postCode":"123456","residenceType":"10840005","state":"10010000"}
-    r1=requests.post(host_api+'/api/cust_india/cert/save_address?lang=en',data=json.dumps(data1),headers=headt,verify=False)
+    data1={"address":"werttyyew","addressName":"Arunachal Pradesh Anjaw","county":"10360002","custNo":custNo,
+           "postCode":"552555","residenceType":"10840004","residenceTypeValue":"Company distribution","state":"10360000"}
+    r1=requests.post(host_api+'/api/cust/auth/address',data=json.dumps(data1),headers=headt,verify=False)
     print(r1.json())
-    data2={"appNo":appNo,"certType":"WORK","custNo":custNo,"registNo":registNo}
-    r2=requests.post(host_api+'/api/cust_india/query/single_cust_auth?lang=en',data=json.dumps(data2),headers=headt,verify=False)
+    data2={"appNo":"301","certType":"WORK","custNo":custNo,"registNo":registNo}
+    r2=requests.post(host_api+'/api/cust/auth/query/single/info',data=json.dumps(data2),headers=headt,verify=False)
     print(r2.json())
     #工作认证
-    data3={"custNo":custNo,"employeeStatus":"10850002","monSalary":"10870009"}
-    r3=requests.post(host_api+'/api/cust_india/work/auth?lang=en',data=json.dumps(data3),headers=headt,verify=False)
+    data3={"cityValue":"Andaman and Nicobar Island Nicobar","county":"10000001","custNo":custNo,"employeeStatus":"10850001",
+           "employeeStatusValue":"Salaried","monSalary":"10870005","monSalaryValue":"30,000-50,000","state":"10000000","unitName":"test"}
+    r3=requests.post(host_api+'/api/cust/auth/work',data=json.dumps(data3),headers=headt,verify=False)
     print(r3.json())
     #其他联系人认证
-    data4=[{"contactName":"wang","custNo":custNo,"phoneNo":"6666677777","relation":"10110001"},{"contactName":"ye","custNo":custNo,"phoneNo":"7555566666","relation":"10110006"}]
-    r4=requests.post(host_api+'/api/cust_india/contact/auth?lang=en',data=json.dumps(data4),headers=headt,verify=False)
+    data4=[{"contactName":"test111111","custNo":custNo,"phoneNo":"8686512345","relation":"10110001","relationValue":"Father"},
+          {"contactName":"test22222222","custNo":custNo,"phoneNo":"8686861234","relation":"10110003","relationValue":"Spouse"}]
+    r4=requests.post(host_api+'/api/cust/auth/contact',data=json.dumps(data4),headers=headt,verify=False)
     print(r4.json())
 #申请提现
 def loan(registNo,custNo,headt):
     data={"appNo":appNo,"custNo":custNo,"registNo":registNo}
-    r=requests.post(host_api+'/api/loan_india/start?lang=en',data=json.dumps(data),headers=headt,verify=False)
+    r=requests.post(host_api+'/api/loan/apply',data=json.dumps(data),headers=headt,verify=False)
     t=r.json()
     print(t)
     return t['data']['loanNo']
@@ -109,10 +113,10 @@ def update_kyc_auth(registNo,custNo):
     inst_time=str(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
     sql="update cu_cust_auth_dtl set KYC_AUTH='1' WHERE CUST_NO='"+custNo+"';"  #客户认证信息明细表kyc认证状态
     DataBase(tez_db).executeUpdateSql(sql)
-    sql2="INSERT INTO cu_cust_file_dtl(`ID`, `REGIST_NO`, `CUST_NO`, `APP_NO`, `BUSI_TYPE`, `SAVE_ATT_NAME`, `UPLOAD_ATT_NAME`, `ATT_TYPE`, `ATT_FILE`, `ATT_SIZE`, `PH_PATH`, `IN_PATH`, `REMARK`, `INST_TIME`, `INST_USER_NO`, `UPDT_TIME`, `UPDT_USER_NO`) VALUES ('"+t+'b88f206222e0'+tnum1+"', '"+registNo+"', '"+custNo+"', '"+appNo+"', '10070015', '100700151627276671905.jpg', '100700151627276671905.jpg', '10080001', '.jpg', '918911', '102/20210726/"+registNo+"/', 'https://qt-fpdl-app.s3.ap-south-1.amazonaws.com/102/20210726/"+registNo+"/100700151627276671905.jpg', NULL, '"+inst_time+"', 'sys', NULL, NULL);"
-    sql3="INSERT INTO cu_cust_file_dtl(`ID`, `REGIST_NO`, `CUST_NO`, `APP_NO`, `BUSI_TYPE`, `SAVE_ATT_NAME`, `UPLOAD_ATT_NAME`, `ATT_TYPE`, `ATT_FILE`, `ATT_SIZE`, `PH_PATH`, `IN_PATH`, `REMARK`, `INST_TIME`, `INST_USER_NO`, `UPDT_TIME`, `UPDT_USER_NO`) VALUES ('"+t+'b88f206222e0'+tnum2+"', '"+registNo+"', '"+custNo+"', '"+appNo+"', '10070016', '100700161627276676407.jpg', '100700161627276676407.jpg', '10080001', '.jpg', '581306', '102/20210726/"+registNo+"/', 'https://qt-fpdl-app.s3.ap-south-1.amazonaws.com/102/20210726/"+registNo+"/100700161627276676407.jpg', NULL, '"+inst_time+"', 'sys', NULL, NULL);"
-    sql4="INSERT INTO cu_cust_file_dtl(`ID`, `REGIST_NO`, `CUST_NO`, `APP_NO`, `BUSI_TYPE`, `SAVE_ATT_NAME`, `UPLOAD_ATT_NAME`, `ATT_TYPE`, `ATT_FILE`, `ATT_SIZE`, `PH_PATH`, `IN_PATH`, `REMARK`, `INST_TIME`, `INST_USER_NO`, `UPDT_TIME`, `UPDT_USER_NO`) VALUES ('"+t+'b88f206222e0'+tnum3+"', '"+registNo+"', '"+custNo+"', '"+appNo+"', '10070017', '100700171627276682497.jpg', '100700171627276682497.jpg', '10080001', '.jpg', '569745', '102/20210726/"+registNo+"/', 'https://qt-fpdl-app.s3.ap-south-1.amazonaws.com/102/20210726/"+registNo+"/100700171627276682497.jpg', NULL, '"+inst_time+"', 'sys', NULL, NULL);"
-    sql5="INSERT INTO cu_cust_file_dtl(`ID`, `REGIST_NO`, `CUST_NO`, `APP_NO`, `BUSI_TYPE`, `SAVE_ATT_NAME`, `UPLOAD_ATT_NAME`, `ATT_TYPE`, `ATT_FILE`, `ATT_SIZE`, `PH_PATH`, `IN_PATH`, `REMARK`, `INST_TIME`, `INST_USER_NO`, `UPDT_TIME`, `UPDT_USER_NO`) VALUES ('"+t+'b88f206222e0'+tnum4+"', '"+registNo+"', '"+custNo+"', '"+appNo+"', '10070004', '100700041627276687389.jpg', '100700041627276687389.jpg', '10080001', '.jpg', '575899', '102/20210726/"+registNo+"/', 'https://qt-fpdl-app.s3.ap-south-1.amazonaws.com/102/20210726/"+registNo+"/100700041627276687389.jpg', NULL, '"+inst_time+"', 'sys', NULL, NULL);"
+    sql2="INSERT INTO cu_cust_file_dtl(`ID`, `REGIST_NO`, `CUST_NO`, `APP_NO`, `BUSI_TYPE`, `SAVE_ATT_NAME`, `UPLOAD_ATT_NAME`, `ATT_TYPE`, `ATT_FILE`, `ATT_SIZE`, `PH_PATH`, `IN_PATH`, `REMARK`, `INST_TIME`, `INST_USER_NO`, `UPDT_TIME`, `UPDT_USER_NO`) VALUES ('"+t+'b88f206222e0'+tnum1+"', '"+registNo+"', '"+custNo+"', '"+appNo+"', '10070015', '100700151644565274220.png', '100700151644565274220.png', '10080001', '.png', '248831', '301/20220211/"+registNo+"/', 'https://test-tez-loan.s3.ap-south-1.amazonaws.com/301/20220211/8686862222/100700151644565274220.png', NULL, '"+inst_time+"', 'sys', NULL, NULL);"
+    sql3="INSERT INTO cu_cust_file_dtl(`ID`, `REGIST_NO`, `CUST_NO`, `APP_NO`, `BUSI_TYPE`, `SAVE_ATT_NAME`, `UPLOAD_ATT_NAME`, `ATT_TYPE`, `ATT_FILE`, `ATT_SIZE`, `PH_PATH`, `IN_PATH`, `REMARK`, `INST_TIME`, `INST_USER_NO`, `UPDT_TIME`, `UPDT_USER_NO`) VALUES ('"+t+'b88f206222e0'+tnum2+"', '"+registNo+"', '"+custNo+"', '"+appNo+"', '10070016', '100700161644565285532.png', '100700161644565285532.png', '10080001', '.png', '269185', '301/20220211/"+registNo+"/', 'https://test-tez-loan.s3.ap-south-1.amazonaws.com/301/20220211/8686862222/100700161644565285532.png', NULL, '"+inst_time+"', 'sys', NULL, NULL);"
+    sql4="INSERT INTO cu_cust_file_dtl(`ID`, `REGIST_NO`, `CUST_NO`, `APP_NO`, `BUSI_TYPE`, `SAVE_ATT_NAME`, `UPLOAD_ATT_NAME`, `ATT_TYPE`, `ATT_FILE`, `ATT_SIZE`, `PH_PATH`, `IN_PATH`, `REMARK`, `INST_TIME`, `INST_USER_NO`, `UPDT_TIME`, `UPDT_USER_NO`) VALUES ('"+t+'b88f206222e0'+tnum3+"', '"+registNo+"', '"+custNo+"', '"+appNo+"', '10070017', '100700171644565292459.png', '100700171644565292459.png', '10080001', '.png', '270091', '301/20220211/"+registNo+"/', 'https://test-tez-loan.s3.ap-south-1.amazonaws.com/301/20220211/8686862222/100700171644565292459.png', NULL, '"+inst_time+"', 'sys', NULL, NULL);"
+    sql5="INSERT INTO cu_cust_file_dtl(`ID`, `REGIST_NO`, `CUST_NO`, `APP_NO`, `BUSI_TYPE`, `SAVE_ATT_NAME`, `UPLOAD_ATT_NAME`, `ATT_TYPE`, `ATT_FILE`, `ATT_SIZE`, `PH_PATH`, `IN_PATH`, `REMARK`, `INST_TIME`, `INST_USER_NO`, `UPDT_TIME`, `UPDT_USER_NO`) VALUES ('"+t+'b88f206222e0'+tnum4+"', '"+registNo+"', '"+custNo+"', '"+appNo+"', '10070004', '100700041644565333697.png', '100700041644565333697.png', '10080001', '.png', '269815', '301/20220211/"+registNo+"/', 'https://test-tez-loan.s3.ap-south-1.amazonaws.com/301/20220211/8686862222/100700041644565333697.png', NULL, '"+inst_time+"', 'sys', NULL, NULL);"
     DataBase(tez_db).executeUpdateSql(sql2)
     DataBase(tez_db).executeUpdateSql(sql3)
     DataBase(tez_db).executeUpdateSql(sql4)
@@ -120,8 +124,8 @@ def update_kyc_auth(registNo,custNo):
 #绑定银行卡，需要把银行卡号改成明显错的，环境怕放出真实的钱
 def bank_auth(custNo,headt):
     bank_acct_no=str(random.randint(100000000,999999999))
-    data={"bankAcctName":"wangmmmmshuang","bankAcctNo":bank_acct_no,"custNo":custNo,"ifscCode":"SBIN0001537"}
-    r=requests.post(host_api+'/api/cust_india/bank/bank_auth?lang=en',data=json.dumps(data),headers=headt,verify=False)
+    data={"bankAcctName":"wangmshuang","bankAcctNo":bank_acct_no,"bankAcctNoConfirm":bank_acct_no,"custNo":custNo,"ifscCode":"SBIN0001537"}
+    r=requests.post(host_api+'/api/cust/auth/bank',data=json.dumps(data),headers=headt,verify=False)
     print("绑卡认证接口响应=",r.json())
     sql="update cu_cust_bank_card_dtl set OPEN_ORG='QATEST' where cust_No='"+custNo+"';"#支付放款需要查询银行机构，临时update，正式提测，需要喊接口写入
     DataBase(tez_db).executeUpdateSql(sql)
@@ -144,7 +148,7 @@ def update_Batch_Log():
 
 def trial_instalment(loanNo,headt):
     data={"loanNo":loanNo}
-    r=requests.post(host_api+"/api/loan_info/trial/instalment?lang=en",data=data,headers=headt,verify=False)
+    r=requests.post(host_api+"/api/loan/trial/instalment",data=data,headers=headt,verify=False)
     t=r.json()
     print(t)
     list=[]
@@ -167,11 +171,11 @@ def withdraw(registNo,custNo,loanNo,headt,headw):
     else:
         instNum=trial_list[0]
         loanAmt=trial_list[1]
-        data={"custNo":custNo,"instNum":instNum,"loanAmt":loanAmt,"loanNo":loanNo,"prodNo":prodNo}
-        r=requests.post(host_api+"/api/trade/fin/less/withdraw?lang=en",data=json.dumps(data),headers=headt,verify=False)
+        data={"prodNo":prodNo,"custNo":custNo,"loanNo":loanNo,"loanAmt":loanAmt,"instNum":instNum}
+        r=requests.post(host_api+"/api/trade/fin/less/withdraw",data=json.dumps(data),headers=headt,verify=False)
         print("api申请提现接口响应=",r.json())
         return 1
 
 
 if __name__ == '__main__':
-    update_Batch_Log()
+    compute_code("9761202266")

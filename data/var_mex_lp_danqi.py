@@ -21,6 +21,7 @@ head_mgt={"Host": host_mgt[8:],"Connection": "keep-alive","Content-Length": "55"
 "Content-Type": "application/json;charset=UTF-8","Origin":host_mgt,"Sec-Fetch-Site": "same-origin","Sec-Fetch-Mode": "cors",
 "Sec-Fetch-Dest": "empty","Referer": host_mgt,"Accept-Encoding": "gzip, deflate, br",
 "Accept-Language": "zh-CN,zh;q=0.9","Cookie": "language=zh"}
+
 head_pay={"Host": host_pay[8:],"Connection": "keep-alive","Content-Length": "55",
 "sec-ch-ua": '"Not A;Brand";v="99", "Chromium";v="90", "Google Chrome";v="90"',"Accept": "application/json, text/plain, */*","sec-ch-ua-mobile": "?0",
 "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36",

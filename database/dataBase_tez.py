@@ -86,4 +86,5 @@ class DataBase():
 
 #loanAmt='{0:f}'.format(t[0])#decimal转字符串
 if __name__ == '__main__':
-    DataBase(tez_db).call_daily_important_batch('20220209','20220216')
+    DataBase(tez_db).call_many_proc()
+   # DataBase(tez_db).call_daily_important_batch('20220211','20220218')

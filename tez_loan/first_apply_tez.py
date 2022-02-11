@@ -1,6 +1,7 @@
 from make_loan_data.tez_loan.daiqian_tez import *
 from make_loan_data.tez_loan.mgt_tez import *
 from make_loan_data.tez_loan.daihou_tez import *
+from make_loan_data.data.var_tez_loan import *
 
 
 def first_apply():
@@ -40,7 +41,6 @@ def first_apply():
     if status==1:
         time.sleep(10)
         globpay_webhook_payout(loanNo)#模拟回调-放款成功    注意现在是模拟查询返成功，投产前需要改成查询三方放款订单状态
-        #payout_mock_apply(loanNo,custNo)  #mock放款成功cashtm
         time.sleep(3)
         chaXun_Stat(loanNo)
     else:
@@ -62,6 +62,16 @@ def lunXunDaiQian(loanNo):
             continue
 
 
+def buding(custNo,loanNo):
+    sql2="update cu_cust_dtl set RISK_LEVEL='AA',risk_score='"+prodNo+"' where cust_no='"+custNo+"';"
+    DataBase(tez_db).executeUpdateSql(sql2)
+    sql4="update lo_loan_cust_rel set risk_level='AA',risk_score='"+prodNo+"' where LOAN_NO='"+loanNo+"';"
+    DataBase(tez_db).executeUpdateSql(sql4)
+    DataBase(tez_db).call_many_proc()
+    DataBase(tez_db).call_many_proc()
+    approve(loanNo)
+    DataBase(tez_db).call_many_proc()
 if __name__ == '__main__':
-    for i in range(1):
-        first_apply()
+    # for i in range(1):
+    #     first_apply()
+    buding('C3012202118180407131842445312','L3012202118180416572239282176')

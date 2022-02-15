@@ -49,6 +49,8 @@ def chaXun_Stat(loanNo):
         print("贷前状态已变更为:【已提现】",before_stat[0],loanNo)
     else:
         print("贷前状态未变更,查询到状态=",before_stat[0],loanNo)
+
+
 def bank_open_annon_event(virtual_account_number,amount):
     '''bankopen-还款模拟回调'''
     data={"event_source":"virtual_account_payment",
@@ -112,7 +114,7 @@ def re_payment_apply(loanNo):
         m.append(t['globpayRepayment']['orderAmount'])
         print(m)
         return m
-
+#还款模拟回调
 def glopay_webhook_repay(mchOrderNo,payOrderId,orderAmount):
     paySuccessTime=str(time.time())
     paySuccessTime=paySuccessTime[:10]+paySuccessTime[11:14]
@@ -125,9 +127,10 @@ def glopay_webhook_repay(mchOrderNo,payOrderId,orderAmount):
         "payOrderId": payOrderId,
         "paySuccessTime": paySuccessTime,
         "message": '模拟回调放款成功',
-        "extra": '111111',
+        "extra": '',
         "sign": '111'
 }
+    #print(data)
     r=requests.post(host_pay+"/api/trade/globpay/webhook/repay",data=data,headers=head_pay_f,verify=False)
     print(r.content)
 #申请还款，还款回调，结清
@@ -136,5 +139,5 @@ def glopay_apply_repay(loanNo):
     glopay_webhook_repay(data[0],data[1],data[2])
 
 if __name__ == '__main__':
-    globpay_webhook_payout('L3012202118180416572239282176')
-    #glopay_apply_repay('L3012202108179967581863706624')
+    globpay_webhook_payout('L3012202158181813395073957888')
+    #glopay_apply_repay('L3012202158181802724273848320')

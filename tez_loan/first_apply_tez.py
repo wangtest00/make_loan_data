@@ -61,7 +61,7 @@ def lunXunDaiQian(loanNo):
             print("贷前状态未变更为拒绝")
             continue
 
-
+#重新进件待审批后，去更新评分并审批
 def buding(custNo,loanNo):
     sql2="update cu_cust_dtl set RISK_LEVEL='AA',risk_score='"+prodNo+"' where cust_no='"+custNo+"';"
     DataBase(tez_db).executeUpdateSql(sql2)
@@ -71,7 +71,8 @@ def buding(custNo,loanNo):
     DataBase(tez_db).call_many_proc()
     approve(loanNo)
     DataBase(tez_db).call_many_proc()
+
 if __name__ == '__main__':
-    # for i in range(1):
-    #     first_apply()
-    buding('C3012202118180407131842445312','L3012202118180416572239282176')
+    for i in range(2):
+        first_apply()
+    #buding('C3012202148181434714541686784','L3012202148181436195936305152')

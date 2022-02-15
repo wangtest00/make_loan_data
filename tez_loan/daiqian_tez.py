@@ -121,7 +121,7 @@ def update_kyc_auth(registNo,custNo):
     DataBase(tez_db).executeUpdateSql(sql3)
     DataBase(tez_db).executeUpdateSql(sql4)
     DataBase(tez_db).executeUpdateSql(sql5)
-#绑定银行卡，需要把银行卡号改成明显错的，环境怕放出真实的钱
+#绑定银行卡，需要把银行卡号改成明显错的，环境怕放出真实的钱   卡号不足9位就是提现失败，三方验证失败
 def bank_auth(custNo,headt):
     bank_acct_no=str(random.randint(100000000,999999999))
     data={"bankAcctName":"wangmshuang","bankAcctNo":bank_acct_no,"bankAcctNoConfirm":bank_acct_no,"custNo":custNo,"ifscCode":"SBIN0001537"}
@@ -178,4 +178,4 @@ def withdraw(registNo,custNo,loanNo,headt,headw):
 
 
 if __name__ == '__main__':
-    compute_code("9761202266")
+    compute_code("8647487264")

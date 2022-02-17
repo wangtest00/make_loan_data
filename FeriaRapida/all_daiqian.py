@@ -1,5 +1,5 @@
 from concurrent.futures import ThreadPoolExecutor  # 线程池执行器
-from make_loan_data.feriaRapida.first_apply import *
+from make_loan_data.feriaRapida.first_apply_fr import *
 import threading,datetime
 
 

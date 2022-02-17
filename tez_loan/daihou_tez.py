@@ -139,5 +139,5 @@ def glopay_apply_repay(loanNo):
     glopay_webhook_repay(data[0],data[1],data[2])
 
 if __name__ == '__main__':
-    globpay_webhook_payout('L3012202158181813395073957888')
-    #glopay_apply_repay('L3012202158181802724273848320')
+    #globpay_webhook_payout('L3012202158181832433061756928')
+    glopay_apply_repay('L3012202168182138484482539520')

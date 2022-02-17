@@ -1,6 +1,6 @@
 import random
 import string
-
+from make_loan_data.tez_loan.heads_tez import *
 from make_loan_data.database.dataBase_tez import *
 from make_loan_data.data.var_tez_loan import *
 from make_loan_data.tez_loan.daihou_tez import *
@@ -29,22 +29,7 @@ def compute_code(m):
     x=x4[-1:]+x3[-1:]+x2[-1:]+x1[-1:]
     print(x)
     return x
-def head_token(token):
-    head={"user-agent": "Dart/2.12 (dart:io)","x-user-language": "en","accept-encoding": "gzip","content-length": "0","host": host_api[8:],
-          "content-type": "application/json;charset=utf-8","X-App-Version":"1.0.0","X-App-Type":"10090001",
-          "X-App-No": appNo,"x-auth-token":'Bearer '+str(token),"Cookie":"JSESSIONID=d17x0ET9jFp5BBK_qidExJqVs5THhstLnVk2eMEH" }
-    return head
-def head_token_f(token):
-    head={"user-agent":"Dart/2.12 (dart:io)","Accept-Language":"en","accept-encoding":"gzip","content-length":"277","host":host_api[8:],
-          "content-type":"multipart/form-data; boundary=65d7b53d-2308-466f-8b4a-42f32dd4a9f9","X-App-Version":"1.0.0","X-App-Type":"10090001",
-          "X-App-No":appNo,"x-auth-token":'Bearer '+str(token),"Cookie":"JSESSIONID=ffUdZQ5pBRFudhsBmGLidri4nNB7GRSE4BieOKlY" }
-    return head
-def head_token_w(token):
-    head={"user-agent":"Mozilla/5.0 (Linux; U; Android 10; en; LIO-AL00 Build/HUAWEILIO-AL00) AppleWebKit/533.1 (KHTML, like Gecko) Version/5.0 Mobile Safari/533.1",
-          "Accept-Language":"en","accept-encoding":"gzip","content-length":"277","host":host_api[8:],
-          "content-type":"application/x-www-form-urlencoded","X-App-Version":"1.0.0","X-App-Type":"10090001",
-          "X-App-No":appNo,"x-auth-token":'Bearer '+str(token),"Cookie":"JSESSIONID=ffUdZQ5pBRFudhsBmGLidri4nNB7GRSE4BieOKlY" }
-    return head
+
 def login_code(registNo):
     code=compute_code(registNo)
     data={"appName":"TezLoan","appNo":"301","appType":"10090001","code":code,"gaid":"04b0a543-4f1e-45b8-9e1b-1f99be85ceaa",
@@ -77,6 +62,7 @@ def cert_auth(registNo,custNo,headt):
         return t['data']['custNo']
     else:
         pass
+
 def auth(registNo,custNo,headt):
     data1={"address":"werttyyew","addressName":"Arunachal Pradesh Anjaw","county":"10360002","custNo":custNo,
            "postCode":"552555","residenceType":"10840004","residenceTypeValue":"Company distribution","state":"10360000"}
@@ -178,4 +164,56 @@ def withdraw(registNo,custNo,loanNo,headt,headw):
 
 
 if __name__ == '__main__':
-    compute_code("8647487264")
+    i=["9231203715",
+"8827216608",
+"8220297862",
+"8064984550",
+"8940594622",
+"8609863379",
+"9290084277",
+"8112188381",
+"8885131398",
+"9244004279",
+"8197243798",
+"9793051512",
+"9190452991",
+"9954053179",
+"8089924453",
+"8071506466",
+"8043630562",
+"9804470246",
+"9661881859",
+"8282558232",
+"8222494849",
+"8570175787",
+"9478407035",
+"9333004994",
+"9458905005",
+"9299094062",
+"9274587570",
+"8835758347",
+"9977412783",
+"8259479421",
+"8402860090",
+"9035263725",
+"8771605500",
+"8534580557",
+"9029831695",
+"8102892585",
+"9312075544",
+"9714517765",
+"9777522518",
+"8176647524",
+"9580262992",
+"9518468477",
+"9128577339",
+"9618156488",
+"9861115681",
+"8241353285",
+"9254440561",
+"9238276508",
+"9799511924",
+"9397018739"
+    ]
+    for i in i:
+        compute_code(i)

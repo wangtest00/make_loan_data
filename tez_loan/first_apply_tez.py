@@ -2,7 +2,7 @@ from make_loan_data.tez_loan.daiqian_tez import *
 from make_loan_data.tez_loan.mgt_tez import *
 from make_loan_data.tez_loan.daihou_tez import *
 from make_loan_data.data.var_tez_loan import *
-
+from make_loan_data.tez_loan.heads_tez import *
 
 def first_apply():
     update_Batch_Log()
@@ -37,14 +37,14 @@ def first_apply():
     sql5="update lo_loan_cust_rel set risk_level='AA',risk_score='"+prodNo+"' where LOAN_NO='"+loanNo+"';"
     DataBase(tez_db).executeUpdateSql(sql5)
     DataBase(tez_db).call_many_proc()
-    status=withdraw(registNo,custNo,loanNo,headt,headw)#该接口会调起支付payout_apply接口
-    if status==1:
-        time.sleep(10)
-        globpay_webhook_payout(loanNo)#模拟回调-放款成功    注意现在是模拟查询返成功，投产前需要改成查询三方放款订单状态
-        time.sleep(3)
-        chaXun_Stat(loanNo)
-    else:
-        print(status)
+    # status=withdraw(registNo,custNo,loanNo,headt,headw)#该接口会调起支付payout_apply接口
+    # if status==1:
+    #     time.sleep(10)
+    #     globpay_webhook_payout(loanNo)#模拟回调-放款成功    注意现在是模拟查询返成功，投产前需要改成查询三方放款订单状态
+    #     time.sleep(3)
+    #     chaXun_Stat(loanNo)
+    # else:
+    #     print(status)
 
 def chaXunDaiQian(loanNo):
     sql1="select BEFORE_STAT from lo_loan_dtl where LOAN_NO='"+loanNo+"';"
@@ -73,6 +73,6 @@ def buding(custNo,loanNo):
     DataBase(tez_db).call_many_proc()
 
 if __name__ == '__main__':
-    for i in range(2):
+    for i in range(10):
         first_apply()
     #buding('C3012202148181434714541686784','L3012202148181436195936305152')

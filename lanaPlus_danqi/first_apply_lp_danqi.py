@@ -1,7 +1,7 @@
 from make_loan_data.lanaPlus_danqi.daihou import *
 from make_loan_data.lanaPlus_danqi.gaishu import *
 from make_loan_data.lanaPlus_danqi.daiqian_lanaplus_danqi import *
-
+from make_loan_data.lanaPlus_danqi.mgt_lp_danqi import *
 
 #import io,sys
 #改编码方便jenkins运行

@@ -1,6 +1,6 @@
-from make_loan_data.data.var_mex_lp import *
+from make_loan_data.data.var_mex_lp_duoqi import *
 from make_loan_data.lanaPlus_duoqi.heads import *
-from make_loan_data.lanaPlus_duoqi.mex_mgt_lp import *
+from make_loan_data.lanaPlus_duoqi.mgt_lp_duoqi import *
 from make_loan_data.public.check_api import *
 import random,datetime,string
 

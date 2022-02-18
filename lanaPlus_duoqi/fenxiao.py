@@ -1,5 +1,5 @@
 import requests,json
-from make_loan_data.data.var_mex_lp import *
+from make_loan_data.data.var_mex_lp_duoqi import *
 from make_loan_data.lanaPlus_duoqi.daiqian_lanaplus import *
 
 #三级分销-用户调提现接口

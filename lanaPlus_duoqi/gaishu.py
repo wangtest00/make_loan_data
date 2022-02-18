@@ -1,5 +1,5 @@
 from make_loan_data.database.dataBase import *
-from make_loan_data.data.var_mex_lp import *
+from make_loan_data.data.var_mex_lp_duoqi import *
 from make_loan_data.lanaPlus_duoqi.daiqian_lanaplus import *
 import random,datetime
 

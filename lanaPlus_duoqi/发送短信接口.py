@@ -1,5 +1,5 @@
 import json,requests,random
-from make_loan_data.data.var_mex_lp import *
+from make_loan_data.data.var_mex_lp_duoqi import *
 #注意可能会发送真实短信出去
 
 def check_api(r):

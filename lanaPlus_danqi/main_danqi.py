@@ -2,9 +2,10 @@ import io
 import sys
 
 from make_loan_data.lanaPlus_danqi.daihou import *
-from make_loan_data.lanaPlus_danqi.daiqian_lanaplus_danqi import *
 from make_loan_data.lanaPlus_danqi.gaishu import *
-
+from make_loan_data.lanaPlus_danqi.daiqian_lanaplus_danqi import *
+from make_loan_data.lanaPlus_danqi.mgt_lp_danqi import *
+from make_loan_data.data.var_mex_lp_danqi import *
 #改编码方便jenkins运行
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="gb18030")
 

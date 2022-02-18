@@ -1,5 +1,5 @@
 from make_loan_data.cashTm.daihou import *
-from make_loan_data.cashTm.india_mgt import *
+from make_loan_data.cashTm.mgt_cashTm import *
 
 
 def first_apply():

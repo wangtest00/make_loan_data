@@ -1,6 +1,6 @@
 import random
 from make_loan_data.database.dataBase import *
-from make_loan_data.lanaPlus_danqi.daiqian_lanaplus_danqi import *
+from make_loan_data.lanaPlus_danqi.daiqian_lp_danqi import *
 
 
 #模拟银行回调接口-模拟还款stp（只需修改卡号cuentaBeneficiario和金额monto）

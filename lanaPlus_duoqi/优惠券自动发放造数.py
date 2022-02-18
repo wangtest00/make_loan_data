@@ -1,7 +1,7 @@
 from data.var_mex import *
 
-from lanaPlus_duoqi.gaishu import *
-from lanaPlus_duoqi.heads import *
+from lanaPlus_duoqi.gaishu_lp_duoqi import *
+from lanaPlus_duoqi.heads_lp_duoqi import *
 from lanaPlus_duoqi.mgt_lp_duoqi import *
 
 

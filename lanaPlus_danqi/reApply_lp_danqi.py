@@ -1,5 +1,5 @@
-from make_loan_data.lanaPlus_duoqi.daihou import *
-from make_loan_data.lanaPlus_duoqi.gaishu import *
+from make_loan_data.lanaPlus_danqi.daihou_lp_danqi import *
+from make_loan_data.lanaPlus_danqi.gaishu_lp_danqi import *
 
 
 #改编码方便jenkins运行
@@ -7,12 +7,11 @@ from make_loan_data.lanaPlus_duoqi.gaishu import *
 
 #复客再次申请贷款，接口正案例
 def reApply():
-    # custNo=get_CustNO()
-    # sql="select REGIST_NO from cu_cust_reg_dtl where CUST_NO='"+custNo+"';"
-    # registNo=DataBase(which_db).get_one(sql)
-    # registNo=registNo[0]
-    registNo='8586873333'
-    custNo='C2012201148170214513585618944'
+    custNo=get_CustNO()
+    #custNo='C2012201098168704182996631552'
+    sql="select REGIST_NO from cu_cust_reg_dtl where CUST_NO='"+custNo+"';"
+    registNo=DataBase(which_db).get_one(sql)
+    registNo=registNo[0]
     update_pwd(registNo)
     token=login_pwd(registNo)
     headt=head_token(token)
@@ -48,3 +47,4 @@ HAVING loan_cnt=1 order by b.INST_TIME desc;'''
     return custNo[0]
 if __name__ == '__main__':
     reApply()
+    #get_CustNO()

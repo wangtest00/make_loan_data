@@ -1,4 +1,4 @@
-from make_loan_data.lanaPlus_danqi.heads import *
+from make_loan_data.lanaPlus_danqi.heads_lp_danqi import *
 from make_loan_data.lanaPlus_danqi.mgt_lp_danqi import *
 from make_loan_data.public.check_api import *
 #from make_loan_data.lanaPlus_danqi.daihou import *

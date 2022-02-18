@@ -5,6 +5,7 @@ from make_loan_data.lanaPlus_duoqi.daihou_lp_duoqi import *
 from make_loan_data.lanaPlus_duoqi.daiqian_lanaplus import *
 from make_loan_data.lanaPlus_duoqi.gaishu_lp_duoqi import *
 from make_loan_data.data.var_mex_lp_duoqi import *
+from make_loan_data.lanaPlus_duoqi.mgt_lp_duoqi import *
 #改编码方便jenkins运行
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="gb18030")
 

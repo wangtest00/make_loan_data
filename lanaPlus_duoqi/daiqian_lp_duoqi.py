@@ -66,7 +66,7 @@ def third_track_detail(registNo,headt2):
     data2={"phoneNo":registNo,"enventList":[{"eventId":"password_set","label":"enter_the_page","key":"in","value":timev,"innerNetworkIp":"2409:8162:a46:5405:1:0:107f:acec%20","networkType":"1",
                                             "recordTime":timev,"timeOnline":"","remark":""}],"androidId":"274b98eb5c8aed06","custNo":"","loanNo":""}
     print(host_action+"/api/third/track/detail")
-    r1=requests.post(host_action+"/api/third/track/detail",data=json.dumps(data1),headers=headt2)
+    r1=requests.post(host_action+"/api/third/track/detail",data=json.dumps(data1),headers=headt2,verify=False)
     check_api(r1)
     r2=requests.post(host_action+"/api/third/track/detail",data=json.dumps(data2),headers=headt2,verify=False)
     check_api(r2)
@@ -86,7 +86,7 @@ def auth_cert(registNo,headt):
     data={"birthdate":"1999-5-18","civilStatus":"10050001","curp":st+"990518MM"+st+"V8","delegationOrMunicipality":"zxcvbbbccxxx","education":"10190005",
           "fatherLastName":"SHUANG","gender":"10030001",
           "motherLastName":"TEST","name":"AUTO","outdoorNumber":"qweetyyu","phoneNo":registNo,"postalCode":"55555","state":"11130001","street":"444444","suburb":"asdfhhj","email":""}
-    r=requests.post(host_api+'/api/cust/auth/cert',data=json.dumps(data),headers=headt)
+    r=requests.post(host_api+'/api/cust/auth/cert',data=json.dumps(data),headers=headt,verify=False)
     t=check_api(r)
     if t!=0:
         return t['data']['custNo']
@@ -101,14 +101,14 @@ def kyc_auth(registNo,custNo,headt):
 
 def auth_work(custNo,headt):
     data1={"certType":"WORK","custNo":custNo}
-    r1=requests.post(host_api+'/api/cust/auth/review',data=json.dumps(data1),headers=headt)
+    r1=requests.post(host_api+'/api/cust/auth/review',data=json.dumps(data1),headers=headt,verify=False)
     check_api(r1)
     data2={"companyAddress":"","companyName":"","companyPhone":"","custNo":custNo,"income":"10870004","industry":"","jobType":"10130006"}#工作收入来源
-    r2=requests.post(host_api+'/api/cust/auth/work',data=json.dumps(data2),headers=headt)
+    r2=requests.post(host_api+'/api/cust/auth/work',data=json.dumps(data2),headers=headt,verify=False)
     check_api(r2)
 def auth_review_contact(custNo,headt):
     data3={"certType":"CONTACT","custNo":custNo}
-    r3=requests.post(host_api+'/api/cust/auth/review',data=json.dumps(data3),headers=headt)
+    r3=requests.post(host_api+'/api/cust/auth/review',data=json.dumps(data3),headers=headt,verify=False)
     check_api(r3)
 def auth_app_grab_data(registNo,custNo,headt):
     imei='a2eff92b-86cb-6666-a66c-84ae322f3adc'
@@ -129,17 +129,17 @@ def auth_app_grab_data(registNo,custNo,headt):
     data8={"appNo":appNo,"phoneNo":registNo,"dataType":"11090001","pageGet":"10000001","recordTime":"1621332187731","grabData":{"data":[{"appName":"安全教育平台","appPackage":"com.jzzs.ParentsHelper","appVersionNo":"1.7.0","deviceId":"a2eff92b-86cb-4614-a66c-84ae322f3adcA2:B4:74:63:FB:40LIO-AL00","imei":imei,"installTime":1599480832637,"lastUpdateTime":1618934047038,"mac":"A2:B4:74:63:FB:40","phoneNo":registNo,"recordBehavior":"App列表抓取","recordTime":"1621332187731","userId":custNo}]},"custNo":custNo}
     data0=[data4,data5,data6,data7,data8]
     for data0 in data0:
-        r0=requests.post(host_api+'/api/common/grab/app_grab_data',data=json.dumps(data0),headers=headt)  #抓取用户手机短信，通讯录，已安装app等信息
+        r0=requests.post(host_api+'/api/common/grab/app_grab_data',data=json.dumps(data0),headers=headt,verify=False)  #抓取用户手机短信，通讯录，已安装app等信息
         check_api(r0)
         time.sleep(1)
 def auth_contact(custNo,headt):
     data9={"contacts":[{"name":"test","phone":"8888455666","relationship":"10110004"},{"name":"test2","phone":"8883355777","relationship":"10110003"}],"custNo":custNo}
-    r9=requests.post(host_api+'/api/cust/auth/other/contact',data=json.dumps(data9),headers=headt)#最后一步，填写2个联系人的联系方式
+    r9=requests.post(host_api+'/api/cust/auth/other/contact',data=json.dumps(data9),headers=headt,verify=False)#最后一步，填写2个联系人的联系方式
     check_api(r9)
 #4个认证都通过后调申请贷款接口
 def apply_loan(custNo,headt):
     data10={"custNo":custNo}
-    r=requests.post(host_api+'/api/loan/apply',data=json.dumps(data10),headers=headt)#申请贷款
+    r=requests.post(host_api+'/api/loan/apply',data=json.dumps(data10),headers=headt,verify=False)#申请贷款
     apply=check_api(r)
     print(apply['data']['loanNo'],apply['data']['beforeStat'])
     return apply['data']['loanNo']
@@ -162,14 +162,14 @@ def update_kyc_auth(registNo,custNo):
 def bank_auth(custNo,headt):
     bank_acct_no=str(random.randint(1000000,9999999))
     data={"bankCode":"10020037","clabe":"138455214411441118","custNo":custNo}
-    r=requests.post(host_api+'/api/cust/auth/bank',data=json.dumps(data),headers=headt)
+    r=requests.post(host_api+'/api/cust/auth/bank',data=json.dumps(data),headers=headt,verify=False)
     check_api(r)
     time.sleep(1)                                         #改为6位随机数
     sql="update cu_cust_bank_card_dtl set BANK_ACCT_NO='"+bank_acct_no+"' where CUST_NO='"+custNo+"';"#修改成随机卡号，避免触发绑卡被拒:同一张银行卡不能被超过2个人绑定并放款成功
     DataBase(which_db).executeUpdateSql(sql)
 #提现接口-app点击提现按钮
 def withdraw(registNo,custNo,loan_no,headt):
-    r=requests.get(host_api+'/api/loan/latest/'+registNo,headers=headt)#获取最近一笔贷款贷款金额，注意请求头content-length的值。The request body did not contain the specified number of bytes. Got 0, expected 63
+    r=requests.get(host_api+'/api/loan/latest/'+registNo,headers=headt,verify=False)#获取最近一笔贷款贷款金额，注意请求头content-length的值。The request body did not contain the specified number of bytes. Got 0, expected 63
     check_api(r)
     t=r.json()
     print('产品配置长度=',len(t['data']['trailPaymentDetail']))
@@ -177,7 +177,7 @@ def withdraw(registNo,custNo,loan_no,headt):
         loanAmt=t['data']['trailPaymentDetail'][0]['loanAmt']
         instNum=t['data']['trailPaymentDetail'][0]['instNum']
         data={"custNo":custNo,"instNum":instNum,"loanAmt":loanAmt,"loanNo":loan_no,"prodNo":prodNo}
-        r2=requests.post(host_api+'/api/trade/fin/confirm/withdraw',data=json.dumps(data),headers=headt)
+        r2=requests.post(host_api+'/api/trade/fin/confirm/withdraw',data=json.dumps(data),headers=headt,verify=False)
         check_api(r2)
         return 1
     else:
@@ -200,7 +200,7 @@ def update_batch_log():
     DataBase(which_db).closeDB()
 #获取所有账单日
 def getRepayDateList(registNo,headt):
-    r=requests.get(host_api+'/api/loan/latest/'+registNo,headers=headt)#获取最近一笔贷款贷款金额，注意请求头content-length的值。The request body did not contain the specified number of bytes. Got 0, expected 63
+    r=requests.get(host_api+'/api/loan/latest/'+registNo,headers=headt,verify=False)#获取最近一笔贷款贷款金额，注意请求头content-length的值。The request body did not contain the specified number of bytes. Got 0, expected 63
     check_api(r)
     t=r.json()
     if t['errorCode']==0:
@@ -222,7 +222,7 @@ def getRepayDateList(registNo,headt):
 
 def repay(custNo,loanNo,repayDate,headt):                                                   #OXXO用CONEKTA
     data={"advance":"10000000","custNo":custNo,"defer":False,"loanNo":loanNo,"paymentMethod":"STP","repayDateList":[repayDate],"tranAppType":"Android"}
-    r=requests.post(host_api+'/api/trade/fin/repay',data=json.dumps(data),headers=headt)
+    r=requests.post(host_api+'/api/trade/fin/repay',data=json.dumps(data),headers=headt,verify=False)
     m=check_api(r)
     repayList=[]
     if m!=0:
@@ -246,7 +246,7 @@ def single_withdraw(registNo,custNo,loan_no,headt):
     loanAmt="1100.00"
     instNum='3'
     data={"custNo":custNo,"instNum":instNum,"loanAmt":loanAmt,"loanNo":loan_no,"prodNo":prodNo}
-    r=requests.post(host_api+'/api/trade/fin/withdraw',data=json.dumps(data),headers=headt)
+    r=requests.post(host_api+'/api/trade/fin/withdraw',data=json.dumps(data),headers=headt,verify=False)
     print(r.json())
 
 def cx_beforeStat_afterStat(loanNo):

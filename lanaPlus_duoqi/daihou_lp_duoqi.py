@@ -1,7 +1,7 @@
 import random
 
 from make_loan_data.database.dataBase import *
-from make_loan_data.lanaPlus_duoqi.daiqian_lanaplus import *
+from make_loan_data.lanaPlus_duoqi.daiqian_lp_duoqi import *
 
 
 #模拟银行回调接口-模拟还款stp（只需修改卡号cuentaBeneficiario和金额monto）
@@ -11,8 +11,6 @@ def stp_repayment(cuentaBeneficiario,monto):
 	print("payment_id=",payment_id)
 	data={"abono":{"id":payment_id,"fechaOperacion":"20210108","institucionOrdenante":"40012","institucionBeneficiaria":"90646","claveRastreo":"MBAN01002101080089875109","monto":monto,"nombreOrdenante":"HAZEL VIRIDIANA RUIZ RICO               ","tipoCuentaOrdenante":"40","cuentaOrdenante":"012420028362208190","rfcCurpOrdenante":"RURH8407075F8","nombreBeneficiario":"STP                                     ","tipoCuentaBeneficiario":"40","cuentaBeneficiario":cuentaBeneficiario,"rfcCurpBeneficiario":"null","conceptoPago":"ESTELA SOLICITO TRANSFERENCIA","referenciaNumerica":"701210","empresa":"QUANTX_TECH"}}
 	r=requests.post(host_pay+"/api/trade/stp_repayment/annon/event/webhook",data=json.dumps(data),headers=head_pay,verify=False)
-	print(data)
-	print(r.url)
 	print(r.json())
 	print("模拟银行回调成功")
 #app页面去选择stp渠道生成待还pay_tran_dtl数据，并从接口获取到所有未还账单日，取最近一期去模拟银行回调还款-单期足额
@@ -121,7 +119,7 @@ def oxxo_repay(amount,loanNo,type):
 	print(r.json())
 
 if __name__ == '__main__':
-	stp_repayment('646180244000011061','100')
+	stp_repayment('646180244000017683','800')
 	#getRepayDateList_stp('8639812802','L2012112168159706926905753600')
 	#oxxo_repay('120','L2012201188171985290832052224','paid')
 	# token=login_pwd('8684947326')

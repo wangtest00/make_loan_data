@@ -1,4 +1,4 @@
-from make_loan_data.lanaPlus_duoqi.daiqian_lanaplus import *
+from make_loan_data.lanaPlus_duoqi.daiqian_lp_duoqi import *
 import requests,json
 from make_loan_data.database.dataBase import *
 from make_loan_data.data.var_mex_lp_duoqi import *

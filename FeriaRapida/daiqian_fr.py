@@ -179,7 +179,7 @@ def withdraw(registNo,custNo,loan_no,headt):
         loanAmt=t['data']['trailPaymentDetail'][0]['loanAmt']
         instNum=t['data']['trailPaymentDetail'][0]['instNum']
         data={"custNo":custNo,"instNum":instNum,"loanAmt":loanAmt,"loanNo":loan_no,"prodNo":prodNo}
-        r2=requests.post(host_api+'/api/trade/fin/confirm/withdraw',data=json.dumps(data),headers=headt)
+        r2=requests.post(host_api+'/api/trade/fin/confirm/withdraw',data=json.dumps(data),headers=headt) #确认提现-去做提现申请
         check_api(r2)
         return 1
     else:
@@ -255,6 +255,8 @@ def cx_beforeStat_afterStat(loanNo):
     stat=DataBase(which_db).get_one(sql)
     return stat
 if __name__ == '__main__':
-    t=compute_code('3332517713')
-    print(t)
-    #login_pwd('8585852222')
+    # t=compute_code('3332517713')
+    # print(t)
+    registNo=str(random.randint(8000000000,9999999999))
+    print(registNo)
+    login_code(registNo)

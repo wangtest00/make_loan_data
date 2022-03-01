@@ -256,7 +256,6 @@ def cx_beforeStat_afterStat(loanNo):
 if __name__ == '__main__':
     # t=compute_code('8669333983')
     # print(t)
-    registNo='8223382996'
-    token=login_pwd(registNo)
-    headt=head_token(token)
-    getRepayDateList(registNo,headt)
+    registNo=str(random.randint(8000000000,9999999999))
+    print(registNo)
+    login_code(registNo)

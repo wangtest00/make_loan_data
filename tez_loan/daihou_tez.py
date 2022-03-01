@@ -88,9 +88,9 @@ def payout_mock_apply(loanNo,custNo):
 def re_payment_apply(loanNo):
     sql1="select RECEIVE_AMT from fin_ad_dtl where LOAN_NO='"+loanNo+"';"
     amt=DataBase(tez_db).get_one(sql1)
-    transAmt=amt[0]
-    if transAmt is None:
-        print("应收表待收金额为空，不去还款申请，回调")
+    receiveAmt=amt[0]
+    if receiveAmt is None:
+        print("应收表待收金额为空，不去还款申请")
     else:
         sql="select CUST_NO,REPAY_DATE from lo_loan_dtl where LOAN_NO='"+loanNo+"';"
         custNox=DataBase(tez_db).get_one(sql)
@@ -101,7 +101,7 @@ def re_payment_apply(loanNo):
               "custNo": custNo,
               "instNum": 1,
               "repayDate": Repay_Date,
-              "transAmt": float(transAmt),
+              "transAmt": float(receiveAmt),
               "custName": "wangshang",
               "advance": "10000000",
               "isDefer": "10000000"}
@@ -134,10 +134,11 @@ def glopay_webhook_repay(mchOrderNo,payOrderId,orderAmount):
     r=requests.post(host_pay+"/api/trade/globpay/webhook/repay",data=data,headers=head_pay_f,verify=False)
     print(r.content)
 #申请还款，还款回调，结清
-def glopay_apply_repay(loanNo):
-    data=re_payment_apply(loanNo)
-    glopay_webhook_repay(data[0],data[1],data[2])
+def glopay_apply_repay(loanNo,orderAmount):
+    data=re_payment_apply(loanNo)  #申请还款，只能按照应收金额来申请，回调的还款金额可以不等于应收
+    glopay_webhook_repay(data[0],data[1],orderAmount)
 
 if __name__ == '__main__':
-    #globpay_webhook_payout('L3012202158181832433061756928')
-    glopay_apply_repay('L3012202168182138484482539520')
+    globpay_webhook_payout('L3012202288186586107090075648')
+    #glopay_apply_repay('L3012202288186540442486079488','1000')
+    #glopay_webhook_repay('r2022022300100630013521923','ZF1496400015142608898','2000')

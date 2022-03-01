@@ -2,7 +2,7 @@ import json
 import requests
 from make_loan_data.database.dataBase_india import *
 from make_loan_data.data.var_india import *
-from make_loan_data.cashTm.daiqian_cashTM import *
+from make_loan_data.cashTm.daiqian_cashTm import *
 
 
 def check_api(r):

@@ -164,7 +164,7 @@ def withdraw(registNo,custNo,loanNo,headt,headw):
 
 
 if __name__ == '__main__':
-    i=['1234567890'
+    i=['9207650013'
     ]
     for i in i:
         compute_code(i)

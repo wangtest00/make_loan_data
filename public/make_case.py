@@ -50,4 +50,4 @@ def make_case(path):
     WriteExcel().write_Excel_Xls_Append(case_list)
 
 if __name__ == '__main__':
-    make_case('C:\\Users\\wangshuang\\Desktop\\LanaDigital测试方案(0910)\\授信产品-测试分析0910-副本.xmind')
+    make_case('C:\\Users\\wangshuang\\Downloads\\Tez_Loan-测试分析.xmind')

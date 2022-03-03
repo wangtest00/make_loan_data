@@ -33,7 +33,7 @@ def compute_code(m):
 def login_code(registNo):
     code=compute_code(registNo)
     data={"appName":"TezLoan","appNo":"301","appType":"10090001","code":code,"gaid":"04b0a543-4f1e-45b8-9e1b-1f99be85ceaa",
-          "ipAddr":"","latitude":"","longitude":"","osVersion":"11","phoneType":"lenovo","registNo":registNo,"versionNo":"1.0.0"}
+          "ipAddr":"","latitude":"","longitude":"","osVersion":"11","phoneType":"lenovo","registNo":registNo,"versionNo":"1.0.1"}
     r=requests.post(host_api+"/api/cust/login",data=json.dumps(data),headers=head_api,verify=False)
     c=r.json()
     print(c)

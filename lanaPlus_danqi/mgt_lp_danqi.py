@@ -81,7 +81,7 @@ def pl_shenpi():
     pl_approve(loan_No_List)
 
 if __name__ == '__main__':
-    # for i in range(3):
-    #     pl_shenpi()
+    for i in range(3):
+        pl_shenpi()
     #approve('L2012108188116218565239939072')
-    approve("L2012202108180317329738104832")
+    #approve("L2012202108180317329738104832")

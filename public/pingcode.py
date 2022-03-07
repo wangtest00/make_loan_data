@@ -5,7 +5,7 @@ header={'Accept':'application/json, text/plain, */*',
 'Accept-Encoding': 'gzip, deflate, br',
 'Accept-Language': 'zh-CN,zh;q=0.9',
 'Connection': 'keep-alive',
-'Cookie': 'sensorsdata2015jssdkcross=%7B%22distinct_id%22%3A%227e718045a98b455486aa2babbcd584d7%22%2C%22first_id%22%3A%2217a8939be7c144-0ff6ddee0a3fa5-d7e1739-1327104-17a8939be7df0f%22%2C%22props%22%3A%7B%22%24latest_traffic_source_type%22%3A%22%E7%9B%B4%E6%8E%A5%E6%B5%81%E9%87%8F%22%2C%22%24latest_search_keyword%22%3A%22%E6%9C%AA%E5%8F%96%E5%88%B0%E5%80%BC_%E7%9B%B4%E6%8E%A5%E6%89%93%E5%BC%80%22%2C%22%24latest_referrer%22%3A%22%22%7D%2C%22%24device_id%22%3A%2217a8939be7c144-0ff6ddee0a3fa5-d7e1739-1327104-17a8939be7df0f%22%7D; wt_aid=b45abac3-dc71-4cca-b876-1e31728ed3ed; sensorsdata2015jssdkcross=%7B%22distinct_id%22%3A%227e718045a98b455486aa2babbcd584d7%22%2C%22first_id%22%3A%2217a8939be7c144-0ff6ddee0a3fa5-d7e1739-1327104-17a8939be7df0f%22%2C%22props%22%3A%7B%22%24latest_traffic_source_type%22%3A%22%E7%9B%B4%E6%8E%A5%E6%B5%81%E9%87%8F%22%2C%22%24latest_search_keyword%22%3A%22%E6%9C%AA%E5%8F%96%E5%88%B0%E5%80%BC_%E7%9B%B4%E6%8E%A5%E6%89%93%E5%BC%80%22%2C%22%24latest_referrer%22%3A%22%22%7D%2C%22%24device_id%22%3A%2217a8939be7c144-0ff6ddee0a3fa5-d7e1739-1327104-17a8939be7df0f%22%7D; s-5f34cf9b8552f79ad949d273=ba93b40437a54e51b45fc7ebf8f037d4',
+'Cookie': 'sensorsdata2015jssdkcross={"distinct_id":"7e718045a98b455486aa2babbcd584d7","first_id":"17a8939be7c144-0ff6ddee0a3fa5-d7e1739-1327104-17a8939be7df0f","props":{"$latest_traffic_source_type":"直接流量","$latest_search_keyword":"未取到值_直接打开","$latest_referrer":""},"$device_id":"17a8939be7c144-0ff6ddee0a3fa5-d7e1739-1327104-17a8939be7df0f"}; sensorsdata2015jssdkcross={"distinct_id":"7e718045a98b455486aa2babbcd584d7","first_id":"17a8939be7c144-0ff6ddee0a3fa5-d7e1739-1327104-17a8939be7df0f","props":{"$latest_traffic_source_type":"直接流量","$latest_search_keyword":"未取到值_直接打开","$latest_referrer":""},"$device_id":"17a8939be7c144-0ff6ddee0a3fa5-d7e1739-1327104-17a8939be7df0f"}; AGL_USER_ID=92001a88-3e24-4cf0-9396-e45360b355ca; s-5f34cf9b8552f79ad949d273=184ad67e799c402983147eb29c620efe; wt_aid=10f28833-5965-4465-900a-58aeb6f0fc61',
 'Host': 'quantstack.pingcode.com',
 'Referer': 'https://quantstack.pingcode.com/workspace/dashboards/5ff2f731afa9fe001738acd9',
 'sec-ch-ua': '"Chromium";v="92", " Not A;Brand";v="99", "Google Chrome";v="92"',
@@ -61,6 +61,7 @@ def get_notifications():
 def get_work_item(version_id):
     r=requests.get('https://quantstack.pingcode.com/api/agile/projects/5f34d1a73fa4b651a03b4a48/scrum/release/work-item/related-work-items?'
                    'version_id='+version_id+'&sort_by=type&sort_type=1&t=1634897835071 HTTP/1.1',headers=header)
+    print(r.content)
     t=r.json()
     t=t['data']['value']
     sum=[]
@@ -81,5 +82,5 @@ def get_work_item(version_id):
                 pass
     #print(sum)
 if __name__ == '__main__':
-    get_work_item('61b1b7a065c5b4c07c4d6b19')    #version_id
+    get_work_item('6204c9e1eeb701ff8d1f5d38')    #version_id
     #get_notifications()

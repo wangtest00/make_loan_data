@@ -1,20 +1,23 @@
 from make_loan_data.tez_loan.daiqian_tez import *
 from make_loan_data.tez_loan.mgt_tez import *
 from make_loan_data.tez_loan.daihou_tez import *
-from make_loan_data.data.var_tez_loan import *
 from make_loan_data.tez_loan.heads_tez import *
 from make_loan_data.database.dataBase_tez import *
+from make_loan_data.data.var_tez_loan import *
 
+#目前需求：非黑非白的客户进件直接拒绝，且不进审批池
 def first_apply():
     update_Batch_Log()
     registNo=str(random.randint(8000000000,9999999999)) #10位随机数
+    sql="INSERT INTO `cu_white_list_dtl`(`ID`, `WHITE_LIST_TYPE`, `WHITE_LIST_VALUE`, `APP_NO`, `RISK_SCORE`, `USEABLE`, `VALID_START_DATE`, `VALID_END_DATE`, `ORIGIN`, `DESCRIPTION`, `REMARK`, `INST_TIME`, `INST_USER_NO`, `UPDT_TIME`, `UPDT_USER_NO`) VALUES ('"+registNo+"', '10140001', '"+registNo+"', '301', '10003', '10000001', '20220208', '20220508', '"+registNo+"', NULL, NULL, '2022-02-08 11:13:25', 'wangs2@quantditech.com', '2022-02-15 16:01:30', 'wangs2@quantditech.com');"
+    DataBase(tez_db).executeUpdateSql(sql)
     custNo=login_code(registNo)
     headt=head_token(custNo[0])
     custNo=custNo[1]
     custNo=cert_auth(registNo,custNo,headt)
     auth(registNo,custNo,headt)
     update_kyc_auth(registNo,custNo)
-    loanNo=loan(registNo,custNo,headt)
+    loanNo=loan(registNo,custNo,headt)  #第一次申请后会被拒，因为无评级和评分
     lunXunDaiQian(loanNo)
     DataBase(tez_db).call_many_proc()
     time.sleep(3)
@@ -28,7 +31,9 @@ def first_apply():
     custNo2=login_code(registNo)
     headt=head_token(custNo2[0])
     headw=head_token_w(custNo2[0])
+    custNo=cert_auth(registNo,custNo,headt)
     auth(registNo,custNo,headt)
+    update_kyc_auth(registNo,custNo)
     loanNo=loan(registNo,custNo,headt)
     bank_auth(custNo,headt)
     update_appr_user_stat()

@@ -12,6 +12,8 @@ sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="gb18030")
 def first_apply():
     update_Batch_Log()
     registNo=str(random.randint(8000000000,9999999999)) #10位随机数
+    sql="INSERT INTO `cu_white_list_dtl`(`ID`, `WHITE_LIST_TYPE`, `WHITE_LIST_VALUE`, `APP_NO`, `RISK_SCORE`, `USEABLE`, `VALID_START_DATE`, `VALID_END_DATE`, `ORIGIN`, `DESCRIPTION`, `REMARK`, `INST_TIME`, `INST_USER_NO`, `UPDT_TIME`, `UPDT_USER_NO`) VALUES ('"+registNo+"', '10140001', '"+registNo+"', '301', '10003', '10000001', '20220208', '20220508', '"+registNo+"', NULL, NULL, '2022-02-08 11:13:25', 'wangs2@quantditech.com', '2022-02-15 16:01:30', 'wangs2@quantditech.com');"
+    DataBase(tez_db).executeUpdateSql(sql)
     custNo=login_code(registNo)
     headt=head_token(custNo[0])
     custNo=custNo[1]

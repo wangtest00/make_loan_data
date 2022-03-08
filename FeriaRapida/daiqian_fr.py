@@ -1,6 +1,6 @@
 
 
-from make_loan_data.feriaRapida.mex_mgt_fr import *
+from make_loan_data.feriaRapida.mgt_fr import *
 from make_loan_data.public.check_api import *
 from make_loan_data.database.dataBase import *
 import random,datetime,string

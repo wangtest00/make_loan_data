@@ -195,7 +195,7 @@ def update_batch_log():
         print("当前服务器日期为:",date_time[0])
         print("当期系统跑批业务日期为:",BUSI_DATE[0],"无需修改批量日期")
     else:
-        sql3="update sys_batch_log set BUSI_DATE='"+yudate+"' where BUSI_DATE='"+BUSI_DATE[0]+"';"
+        sql3="update sys_batch_log set BUSI_DATE='"+yudate+"',BATCH_STAT='10490002',IS_PROD_SEL='10000001' where BUSI_DATE='"+BUSI_DATE[0]+"';"
         DataBase(which_db).executeUpdateSql(sql3)
     DataBase(which_db).closeDB()
 #获取所有账单日

@@ -34,11 +34,11 @@ def first_apply_sheipihou(loan_no,registNo,custNo,headt):
     #停在【通过】状态，用户待提现
     w=withdraw(registNo,custNo,loan_no,headt)  #app页面点击提现
     DataBase(which_db).closeDB()
-    if w==1:
-        gaishu(loan_no)
-    else:
-        pass
-    DataBase(which_db).closeDB()
+    # if w==1:
+    #     gaishu(loan_no)
+    # else:
+    #     pass
+    # DataBase(which_db).closeDB()
 def auto_test():
     registNo=str(random.randint(8000000000,9999999999)) #10位随机数作为手机号
     first_apply(registNo)

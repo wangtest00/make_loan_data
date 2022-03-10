@@ -1,9 +1,11 @@
-import json
+import json,time
 import requests
-
 from make_loan_data.database.dataBase_india import *
 from make_loan_data.public.check_api import *
 
+t=str(time.time()*1000000)[:10]
+head_pay_for_razorpay={"Host":"test-pay.quantstack.in","Connection":"keep-alive","Content-Length":"116","Postman-Token":"68cc47f6-8c1f-4ebd-a929-b1ae10b7dd19",
+                "User-Agent":"PostmanRuntime/7.28.2","Accept":"*/*","Content-Type":"application/json","Accept-Encoding":"gzip, deflate, br","X-Razorpay-Event-Id":"HDSG"+t}
 
 @hulue_error()
 def payout_mock_apply(loanNo,custNo):
@@ -44,7 +46,7 @@ def bank_open_annon_event(virtual_account_number,amount):
     r=requests.post(host_pay+"/api/trade/bank_open/repay_webhook",data=json.dumps(data),headers=head_pay,verify=False)
     t=r.json()
     print(t)
-#cashFree还款模拟回调
+#cashFree还款模拟回调，注意：记得先要申请还款
 def cashFree_annon_event(loanNo):
     sql="select TRAN_ORDER_NO from pay_tran_dtl where LOAN_NO='"+loanNo+"' and TRAN_USE='10330002' and TRAN_CHAN_NAME='cashFree支付服务商';"
     tran_order_no=DataBase(inter_db).get_one(sql)
@@ -52,6 +54,141 @@ def cashFree_annon_event(loanNo):
     r=requests.post(host_pay+"/api/trade/cashFree/annon/event/"+tran_order_no,headers=head_pay,verify=False)
     t=r.json()
     print(t)
+#razorpay还款模拟回调，注意：记得先要申请还款
+def razorpay_annon_event_callback(loanNo,amount):
+    sql="select TRAN_ORDER_NO from pay_tran_dtl where LOAN_NO='"+loanNo+"' and TRAN_USE='10330002' and TRAN_CHAN_NAME='razorpayx';"
+    tran_order_no=DataBase(inter_db).get_one(sql)
+    tran_order_no=tran_order_no[0]
+    data={"entity": "",
+          "account_id": "",
+          "event": "order.paid",
+          "created_at": 0,
+          "contains": [
+            ""
+          ],"payload": {
+            "payment": {
+              "entity": {
+                "id": "",
+                "entity": "",
+                "amount":float(amount)*100,
+                "currency": "",
+                "status": "captured",
+                "order_id": tran_order_no,
+                "invoice_id": "",
+                "international": False,
+                "method": "",
+                "amount_refunded": 0,
+                "refund_status": "",
+                "captured": False,
+                "description": "",
+                "card_id": "",
+                "card": {
+                  "id": "",
+                  "entity": "",
+                  "name": "",
+                  "last4": "",
+                  "network": "",
+                  "type": "",
+                  "issuer": "",
+                  "international": False,
+                  "emi": False
+                },
+                "bank": "",
+                "wallet": "",
+                "vpa": "",
+                "emi": {
+                  "issuer": "",
+                  "rate": "",
+                  "duration": ""
+                },
+                "email": "",
+                "contact": "",
+                "fee": 0,
+                "tax": 0,
+                "error_code": "",
+                "error_description": "",
+                "created_at": 0,
+                "notes": {}
+              }
+            },
+            "order": {
+              "entity": {
+                "id": "",
+                "entity": "",
+                "amount": 0,
+                "amount_paid": 0,
+                "amount_due": 0,
+                "currency": "",
+                "receipt": "",
+                "offer_id": "",
+                "status": "",
+                "attempts": 0,
+                "created_at": 0,
+                "notes": {}
+              }
+            },
+            "refund": {
+              "entity": {
+                "id": "",
+                "entity": "",
+                "amount": 0,
+                "currency": "",
+                "payment_id": "",
+                "notes": {},
+                "receipt": "",
+                "acquirer_data": {
+                  "arn": {},
+                  "rrn": "",
+                  "upi_transaction_id": ""
+                },
+                "created_at": 0
+              }
+            },
+            "transfer": {
+              "entity": {
+                "id": "",
+                "entity": "",
+                "source": "",
+                "recipient": "",
+                "amount": 0,
+                "currency": "",
+                "amount_reversed": 0,
+                "notes": {
+                  "map": {}
+                },
+                "fees": 0,
+                "tax": 0,
+                "on_hold": "",
+                "on_hold_until": 0,
+                "recipient_settlement_id": "",
+                "created_at": 0,
+                "linked_account_notes": [
+                  ""
+                ],
+                "processed_at": 0
+              }
+            },
+            "settlement": {
+              "entity": {
+                "id": "",
+                "entity": "",
+                "amount": 0,
+                "status": "",
+                "fees": 0,
+                "tax": 0,
+                "utr": "",
+                "created_at": 0
+              }
+            }
+          }
+        }
+    r=requests.post(host_pay+"/api/trade/razorpay/annon/event/callback",data=json.dumps(data),headers=head_pay_for_razorpay,verify=False)
+    print(r.url)
+    t=r.json()
+    print(t)
+
+
 if __name__ == '__main__':
     #payout_mock_apply('L1022108318120871775139594240','C1022108318120871626262773760')
-    cashFree_annon_event('L1022203098189733357668728832')
+    #cashFree_annon_event('L1022203098189733357668728832')
+    razorpay_annon_event_callback('L1022203088189357773805518848','4')

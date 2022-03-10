@@ -1,6 +1,7 @@
-from make_loan_data.cashTm.daihou import *
+from make_loan_data.cashTm.daihou_cashTm import *
 from make_loan_data.cashTm.mgt_cashTm import *
-
+from make_loan_data.cashTm.daiqian_cashTm import *
+from make_loan_data.data.var_india import *
 
 def first_apply():
     update_Batch_Log()
@@ -14,11 +15,11 @@ def first_apply():
     lunXunDaiQian(loanNo)
     DataBase(inter_db).call_many_proc()
     time.sleep(3)
-    sql2="update manage_need_loan.cu_cust_dtl set RISK_LEVEL='AA',risk_score='"+india_prodNo+"' where cust_no='"+custNo+"';"
+    sql2="update cu_cust_dtl set RISK_LEVEL='AA',risk_score='"+prodNo+"' where cust_no='"+custNo+"';"
     DataBase(inter_db).executeUpdateSql(sql2)
-    sql3="update manage_need_loan.lo_loan_dtl set BEFORE_STAT='10260007' where LOAN_NO='"+loanNo+"';"
+    sql3="update lo_loan_dtl set BEFORE_STAT='10260007' where LOAN_NO='"+loanNo+"';"
     DataBase(inter_db).executeUpdateSql(sql3)
-    sql4="update manage_need_loan.lo_loan_cust_rel set risk_level='AA',risk_score='"+india_prodNo+"' where LOAN_NO='"+loanNo+"';"
+    sql4="update lo_loan_cust_rel set risk_level='AA',risk_score='"+prodNo+"' where LOAN_NO='"+loanNo+"';"
     DataBase(inter_db).executeUpdateSql(sql4)
     time.sleep(5)
     token=login_code(registNo)
@@ -26,16 +27,17 @@ def first_apply():
     headw=head_token_w(token)
     auth(registNo,custNo,headt)
     loanNo=loan(registNo,custNo,headt)
-    bank_auth(custNo,headt)
+    bank_no=bank_auth(custNo,headt)
     update_appr_user_stat()
     DataBase(inter_db).call_many_proc()
     DataBase(inter_db).call_many_proc()
     approve(loanNo)
-    sql5="update manage_need_loan.lo_loan_cust_rel set risk_level='AA',risk_score='"+india_prodNo+"' where LOAN_NO='"+loanNo+"';"
+    sql5="update lo_loan_cust_rel set risk_level='AA',risk_score='"+prodNo+"' where LOAN_NO='"+loanNo+"';"
     DataBase(inter_db).executeUpdateSql(sql5)
     DataBase(inter_db).call_many_proc()
-    withdraw(registNo,custNo,loanNo,headt,headw)
-    time.sleep(5)
+    payout_for_razorpay(custNo,bank_no)
+    withdraw_mock(registNo,custNo,loanNo,headt,headw)
+    time.sleep(3)
     chaXun_Stat(loanNo)
 
 def chaXunDaiQian(loanNo):
@@ -55,5 +57,5 @@ def lunXunDaiQian(loanNo):
 
 
 if __name__ == '__main__':
-    for i in range(1):
+    for i in range(2):
         first_apply()

@@ -3,7 +3,7 @@ import random
 import string
 from make_loan_data.database.dataBase_india import *
 from make_loan_data.data.var_india import *
-from make_loan_data.cashTm.daihou import *
+from make_loan_data.cashTm.daihou_cashTm import *
 
 
 def check_api(r):
@@ -30,7 +30,7 @@ def compute_code(m):
     return x
 def head_token(token):
     head={"user-agent": "Dart/2.12 (dart:io)","x-user-language": "en","accept-encoding": "gzip","content-length": "0","host": "test-appa.quantstack.in",
-          "content-type": "application/json;charset=utf-8","version_no":"2.6.3","app_type":"10090001",
+          "content-type": "application/json;charset=utf-8","version_no":"2.6.5","app_type":"10090001",
         "x-app-type": "10090001","app_no": "102","x-auth-token":'Bearer '+str(token),"Cookie":"JSESSIONID=d17x0ET9jFp5BBK_qidExJqVs5THhstLnVk2eMEH" }
     return head
 def head_token_f(token):
@@ -48,7 +48,7 @@ def login_code(registNo):
     code=compute_code(registNo)
     data={"appName":"CashTM","appNo":"102","appType":"10090001","code":code,"gaid":"12303937-ccde-46ee-a455-5146d36344dd","ipAddr":"192.168.20.223","osVersion":"10","phoneType":"HUAWEI",
           "registNo":registNo,"utmCampaign":"","utmContent":"","utmMedium":"","utmSource":"","utmTerm":"","versionNo":"2.6.3"}
-    r=requests.post(india_api+"/api/cust_info/cust/login?lang=en",data=json.dumps(data),headers=head_api,verify=False)
+    r=requests.post(host_api+"/api/cust_info/cust/login?lang=en",data=json.dumps(data),headers=head_api,verify=False)
     c=r.json()
     print(c)
     if c!=0:
@@ -64,7 +64,7 @@ def cert_auth(registNo,headt):
     num=str(random.randint(1000,9999))
     data={"appName":"CashTM","appNo":"102","birthDay":"1999-05-06","certNo":num+"4566"+num,"custFirstName":"wang","custLastName":"shuang","custMiddleName":"mmmm","education":"10190006",
           "marriage":"10050001","panNo":""+st+num+"W","registNo":registNo,"sex":"10030001","useEmail":"sdfghhhj@gmail.com","useLang":"90000001"}
-    r=requests.post(india_api+'/api/cust_india/cert/cert_auth?lang=en',data=json.dumps(data),headers=headt,verify=False)
+    r=requests.post(host_api+'/api/cust_india/cert/cert_auth?lang=en',data=json.dumps(data),headers=headt,verify=False)
     t=r.json()
     print(t)
     if t!=0:
@@ -75,24 +75,24 @@ def cert_auth(registNo,headt):
 def auth(registNo,custNo,headt):
     #第3个页面-家庭地址
     data1={"address":"wwsdddxx","county":"10010002","custNo":custNo,"postCode":"123456","residenceType":"10840005","state":"10010000"}
-    r1=requests.post(india_api+'/api/cust_india/cert/save_address?lang=en',data=json.dumps(data1),headers=headt,verify=False)
+    r1=requests.post(host_api+'/api/cust_india/cert/save_address?lang=en',data=json.dumps(data1),headers=headt,verify=False)
     print(r1.json())
     #第4个页面-工作认证1
     data2={"appNo":"102","certType":"WORK","custNo":custNo,"registNo":registNo}
-    r2=requests.post(india_api+'/api/cust_india/query/single_cust_auth?lang=en',data=json.dumps(data2),headers=headt,verify=False)
+    r2=requests.post(host_api+'/api/cust_india/query/single_cust_auth?lang=en',data=json.dumps(data2),headers=headt,verify=False)
     print(r2.json())
     #第4个页面-工作认证2
     data3={"custNo":custNo,"employeeStatus":"10850002","monSalary":"10870009"}
-    r3=requests.post(india_api+'/api/cust_india/work/auth?lang=en',data=json.dumps(data3),headers=headt,verify=False)
+    r3=requests.post(host_api+'/api/cust_india/work/auth?lang=en',data=json.dumps(data3),headers=headt,verify=False)
     print(r3.json())
     #第5个页面-联系人认证
     data4=[{"contactName":"wang","custNo":custNo,"phoneNo":"6666677777","relation":"10110001"},{"contactName":"ye","custNo":custNo,"phoneNo":"7555566666","relation":"10110006"}]
-    r4=requests.post(india_api+'/api/cust_india/contact/auth?lang=en',data=json.dumps(data4),headers=headt,verify=False)
+    r4=requests.post(host_api+'/api/cust_india/contact/auth?lang=en',data=json.dumps(data4),headers=headt,verify=False)
     print(r4.json())
 #申请提现
 def loan(registNo,custNo,headt):
     data={"appNo":"102","custNo":custNo,"registNo":registNo}
-    r=requests.post(india_api+'/api/loan_india/start?lang=en',data=json.dumps(data),headers=headt,verify=False)
+    r=requests.post(host_api+'/api/loan_india/start?lang=en',data=json.dumps(data),headers=headt,verify=False)
     t=r.json()
     print(t)
     return t['loanNo']
@@ -118,10 +118,10 @@ def update_kyc_auth(registNo,custNo):
 #绑定银行卡，需要把银行卡号改成明显错的，环境怕放出真实的钱
 def bank_auth(custNo,headt):
     bank_acct_no=str(random.randint(10000000,99999999))
-   # bank_acct_no='5555555555'
     data={"bankAcctName":"wangmmmmshuang","bankAcctNo":bank_acct_no,"custNo":custNo,"ifscCode":"SBIN0001537"}
-    r=requests.post(india_api+'/api/cust_india/bank/bank_auth?lang=en',data=json.dumps(data),headers=headt,verify=False)
+    r=requests.post(host_api+'/api/cust_india/bank/bank_auth?lang=en',data=json.dumps(data),headers=headt,verify=False)
     print("绑卡认证接口响应=",r.json())
+    return bank_acct_no
 
 #当前时间的前一天=跑批业务日期，才能正常申请借款
 def update_Batch_Log():
@@ -135,13 +135,13 @@ def update_Batch_Log():
         print("当前服务器日期为:",date_time[0])
         print("当期系统跑批业务日期为:",BUSI_DATE[0],"无需修改批量日期")
     else:
-        sql3="update sys_batch_log set BUSI_DATE='"+yudate+"' where BUSI_DATE='"+BUSI_DATE[0]+"';"
+        sql3="update sys_batch_log set BUSI_DATE='"+yudate+"',BATCH_STAT='10490002',IS_PROD_SEL='10000001' where BUSI_DATE='"+BUSI_DATE[0]+"';"
         DataBase(inter_db).executeUpdateSql(sql3)
     DataBase(inter_db).closeDB()
 
 def trial_instalment(loanNo,headt):
     data={"loanNo":loanNo}
-    r=requests.post(india_api+"/api/loan_info/trial/instalment?lang=en",data=data,headers=headt,verify=False)
+    r=requests.post(host_api+"/api/loan_info/trial/instalment?lang=en",data=data,headers=headt,verify=False)
     t=r.json()
     #print(t)
     list=[]
@@ -156,18 +156,43 @@ def trial_instalment(loanNo,headt):
         print("试算接口未获取到数据")
         return 0
 
-def withdraw(registNo,custNo,loanNo,headt,headw):
+def withdraw_mock(registNo,custNo,loanNo,headt,headw):
     trial_list=trial_instalment(loanNo,headw)
     if trial_list==0:
         print("未获取到期数和贷款金额,不调提现接口")
     else:
         instNum=trial_list[0]
         loanAmt=trial_list[1]
-        data={"custNo":custNo,"instNum":instNum,"loanAmt":loanAmt,"loanNo":loanNo,"prodNo":india_prodNo}
-        r=requests.post(india_api+"/api/trade/fin/less/withdraw?lang=en",data=json.dumps(data),headers=headt,verify=False)
+        data={"custNo":custNo,"instNum":instNum,"loanAmt":loanAmt,"loanNo":loanNo,"prodNo":prodNo}
+        r=requests.post(host_api+"/api/trade/fin/less/withdraw?lang=en",data=json.dumps(data),headers=headt,verify=False)
         print("暂时忽略该报错Unbound bank card,响应=",r.json())
         payout_mock_apply(loanNo,custNo)#提现mock接口
 
+def payout_for_razorpay(cust_no,bank_no):
+    #注意卡号需要与cu_cust_bank_card_dtl表中卡号保持一致
+    t=str(time.time()*1000000)[:15]
+    inst_time=str(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+    sql='''INSERT INTO `pay_cust_found_info`(`ID`, `CUST_NO`, `APP_NO`, `MERCHANT_NO`, `FUND_ACCOUNT_ID`, `CONTACT_ID`, `CUST_NAME`, `BANK_NAME`, `IFSC`, `BANK_NO`, `REMARK`, `INST_TIME`, `INST_USER_NO`, `UPDT_TIME`, `UPDT_USER_NO`)
+VALUES ("'''+t+'''", "'''+cust_no+'''", '102', 'CashTmRazorpayTest', "'''+cust_no+'''", NULL, 'wang test api', 'shuang', 'HDFC0003740', "'''+bank_no+'''", NULL, "'''+inst_time+'''", "'''+cust_no+'''", NULL, NULL);'''
+    DataBase(inter_db).executeUpdateSql(sql)
+
+#测试前，需要检查app信息支付渠道配置是否已配置razorpay，or, bankopen,or,cashfree
+#登录后，api调支付去申请还款,需要检查pay_tran_dtl表数据及状态
+def trade_fin_repay(loanNo):
+    sql='''select b.REGIST_NO,b.CUST_NO,a.REPAY_DATE,a.RECEIVE_AMT from fin_ad_dtl a left join lo_loan_cust_rel b on a.LOAN_NO=b.loan_no
+where a.LOAN_NO="'''+loanNo+'''" ;'''
+    repay_list=DataBase(inter_db).get_one(sql)
+    print(repay_list)
+    token=login_code(repay_list[0])
+    headt=head_token(token)
+    data={"advance":"10000000","custNo":repay_list[1],"loanNo":loanNo,"repayDate":repay_list[2],"repayInstNum":1,
+          "tranAppType":"10090001","transAmt":str(repay_list[3])}
+    r=requests.post(host_api+"/api/trade/fin/repay?lang=en",data=json.dumps(data),headers=headt,verify=False)
+    t=r.json()
+    print(t)
+
 if __name__ == '__main__':
-    registNo='8239717365'
-    token=login_code(registNo)
+    # registNo='8378994636'
+    # token=login_code(registNo)
+    # headt=head_token(token)
+    trade_fin_repay('L1022203088189357773805518848')

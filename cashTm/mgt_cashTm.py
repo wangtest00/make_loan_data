@@ -1,7 +1,7 @@
 import json
 import requests
 from make_loan_data.database.dataBase_india import *
-from make_loan_data.data.var_india import *
+from make_loan_data.data.var_cashTm import *
 from make_loan_data.cashTm.daiqian_cashTm import *
 
 

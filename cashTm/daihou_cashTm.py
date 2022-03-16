@@ -24,7 +24,7 @@ def chaXun_Stat(loanNo):
         print("贷前状态已变更为:【已提现】",before_stat[0],loanNo)
     else:
         print("贷前状态未变更,查询到状态=",before_stat[0],loanNo)
-#bankopen-还款模拟回调
+#bankopen-还款模拟回调，注意：记得先要申请还款,创建bankopen账户,调api,trade_fin_repay函数
 def bank_open_annon_event(virtual_account_number,amount):
     '''bankopen-还款模拟回调'''
     data={"event_source":"virtual_account_payment",
@@ -46,7 +46,7 @@ def bank_open_annon_event(virtual_account_number,amount):
     r=requests.post(host_pay+"/api/trade/bank_open/repay_webhook",data=json.dumps(data),headers=head_pay,verify=False)
     t=r.json()
     print(t)
-#cashFree还款模拟回调，注意：记得先要申请还款
+#cashFree还款模拟回调，注意：记得先要申请还款，调api,trade_fin_repay函数
 def cashFree_annon_event(loanNo):
     sql="select TRAN_ORDER_NO from pay_tran_dtl where LOAN_NO='"+loanNo+"' and TRAN_USE='10330002' and TRAN_CHAN_NAME='cashFree支付服务商';"
     tran_order_no=DataBase(inter_db).get_one(sql)
@@ -54,7 +54,7 @@ def cashFree_annon_event(loanNo):
     r=requests.post(host_pay+"/api/trade/cashFree/annon/event/"+tran_order_no,headers=head_pay,verify=False)
     t=r.json()
     print(t)
-#razorpay还款模拟回调，注意：记得先要申请还款
+#razorpay还款模拟回调，注意：记得先要申请还款，调api,trade_fin_repay函数
 def razorpay_annon_event_callback(loanNo,amount):
     sql="select TRAN_ORDER_NO from pay_tran_dtl where LOAN_NO='"+loanNo+"' and TRAN_USE='10330002' and TRAN_CHAN_NAME='razorpayx';"
     tran_order_no=DataBase(inter_db).get_one(sql)
@@ -189,6 +189,6 @@ def razorpay_annon_event_callback(loanNo,amount):
 
 
 if __name__ == '__main__':
-    #payout_mock_apply('L1022108318120871775139594240','C1022108318120871626262773760')
+    payout_mock_apply('L1022203118190515132384870400','C1022203118190515003183529984')
     #cashFree_annon_event('L1022203098189733357668728832')
-    razorpay_annon_event_callback('L1022203088189357773805518848','4')
+    #razorpay_annon_event_callback('L1022203088189357773805518848','4')

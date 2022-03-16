@@ -1,7 +1,7 @@
 from make_loan_data.cashTm.daihou_cashTm import *
 from make_loan_data.cashTm.mgt_cashTm import *
 from make_loan_data.cashTm.daiqian_cashTm import *
-from make_loan_data.data.var_india import *
+from make_loan_data.data.var_cashTm import *
 
 def first_apply():
     update_Batch_Log()

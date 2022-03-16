@@ -22,7 +22,7 @@ def create_assist_date(datestart=None, dateend=None):
         datestart += datetime.timedelta(days=+1)
         # 日期转字符串存入列表
         date_list.append(datestart.strftime('%Y%m%d'))
-    #print(date_list)
+    print(date_list)
     return date_list
 
 if __name__ == '__main__':

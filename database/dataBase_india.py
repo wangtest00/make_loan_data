@@ -5,7 +5,7 @@ Created on 2018-11-26
 '''
 import time
 import pymysql
-from make_loan_data.data.var_india import *
+from make_loan_data.data.var_cashTm import *
 from make_loan_data.public.date_calculate import *
 
 class DataBase():

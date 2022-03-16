@@ -2,7 +2,7 @@ import datetime
 import random
 import string
 from make_loan_data.database.dataBase_india import *
-from make_loan_data.data.var_india import *
+from make_loan_data.data.var_cashTm import *
 from make_loan_data.cashTm.daihou_cashTm import *
 
 
@@ -176,7 +176,7 @@ def payout_for_razorpay(cust_no,bank_no):
 VALUES ("'''+t+'''", "'''+cust_no+'''", '102', 'CashTmRazorpayTest', "'''+cust_no+'''", NULL, 'wang test api', 'shuang', 'HDFC0003740', "'''+bank_no+'''", NULL, "'''+inst_time+'''", "'''+cust_no+'''", NULL, NULL);'''
     DataBase(inter_db).executeUpdateSql(sql)
 
-#测试前，需要检查app信息支付渠道配置是否已配置razorpay，or, bankopen,or,cashfree
+#测试前，需要检查app信息支付渠道配置是否已配置razorpay、bankopen、cashfree
 #登录后，api调支付去申请还款,需要检查pay_tran_dtl表数据及状态
 def trade_fin_repay(loanNo):
     sql='''select b.REGIST_NO,b.CUST_NO,a.REPAY_DATE,a.RECEIVE_AMT from fin_ad_dtl a left join lo_loan_cust_rel b on a.LOAN_NO=b.loan_no
@@ -191,8 +191,82 @@ where a.LOAN_NO="'''+loanNo+'''" ;'''
     t=r.json()
     print(t)
 
+t=str(time.time()*1000000)[:10]
+head_pay_for_razorpayx={"Host":"test-pay.quantstack.in","Connection":"keep-alive","Content-Length":"116","Postman-Token":"68cc47f6-8c1f-4ebd-a929-b1ae10b7dd19",
+                "User-Agent":"PostmanRuntime/7.28.2","Accept":"*/*","Content-Type":"application/json","Accept-Encoding":"gzip, deflate, br","X-Razorpay-Event-Id":"PAYOUT"+t,"X-Razorpay-Signature":"123456"}
+
+
+#razorpayx放款模拟回调，注意：记得先要申请放款,测试环境不验证签名
+def razorpayx_annon_event_callback(loanNo,amount):
+    sql="select TRAN_ORDER_NO from pay_tran_dtl where LOAN_NO='"+loanNo+"' and TRAN_USE='10330001' and TRAN_CHAN_NAME='razorpayx';"
+    tran_order_no=DataBase(inter_db).get_one(sql)
+    tran_order_no=tran_order_no[0]
+    data={"entity": "",
+  "account_id": "",
+  "event": "payout.processed",
+  "created_at": 0,
+  "contains": [
+    ""
+  ],
+  "payload": {
+    "payout": {
+      "entity": {
+        "id": tran_order_no,
+        "entity": "",
+        "account_number": "",
+        "fund_account_id": "",
+        "amount": float(amount)*100,
+        "currency": "",
+        "credit": 0,
+        "debit": 0,
+        "balance": 0,
+        "notes": {},
+        "fees": 0,
+        "tax": 0,
+        "status": "",
+        "purpose": "",
+        "utr": "",
+        "mode": "",
+        "reference_id": {},
+        "narration": "",
+        "batch_id": {},
+        "failure_reason": "",
+        "created_at": 0
+      }
+    },
+    "transaction": {
+      "entity": {
+        "id": "",
+        "entity": "",
+        "account_number": "",
+        "amount": 0,
+        "currency": "",
+        "credit": 0,
+        "debit": 0,
+        "balance": 0,
+        "source": {
+          "id": "",
+          "entity": "",
+          "fund_account_id": "",
+          "amount": 0,
+          "notes": {},
+          "fees": 0,
+          "tax": 0,
+          "status": "",
+          "utr": "",
+          "mode": "",
+          "created_at": 0
+        }
+      }
+    }
+  }
+}
+    r=requests.post(host_pay+"/api/trade/razorpay_x/annon/event/callback",data=json.dumps(data),headers=head_pay_for_razorpayx,verify=False)
+    t=r.json()
+    print(t)
+
 if __name__ == '__main__':
     # registNo='8378994636'
     # token=login_code(registNo)
     # headt=head_token(token)
-    trade_fin_repay('L1022203088189357773805518848')
+    razorpayx_annon_event_callback('L1022203118190554326415114240','7')

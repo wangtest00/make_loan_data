@@ -8,7 +8,7 @@ from make_loan_data.lanaPlus_duoqi.mgt_lp_duoqi import *
 #改编码方便jenkins运行
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="gb18030")
 
-filepath=os.environ('amount')
+filepath=os.environ['amount']
 
 #注册,认证，提交多种信息申请贷款到达待审批状态
 def first_apply(registNo):
@@ -49,4 +49,4 @@ def auto_test(amount):
 
 
 if __name__ == '__main__':
-    auto_test(filepath)
+    auto_test('1')

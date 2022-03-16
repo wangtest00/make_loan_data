@@ -42,7 +42,8 @@ def first_apply_sheipihou(loan_no,registNo,custNo,headt):
         pass
     DataBase(which_db).closeDB()
 def auto_test(amount):
-    for i in range(len(amount)):
+    amount=int(amount)
+    for i in range(amount):
         registNo=str(random.randint(8000000000,9999999999)) #10位随机数作为手机号
         first_apply(registNo)
 

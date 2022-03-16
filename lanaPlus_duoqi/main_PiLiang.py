@@ -49,4 +49,4 @@ def auto_test(amount):
 
 
 if __name__ == '__main__':
-    auto_test('1')
+    auto_test(filepath)

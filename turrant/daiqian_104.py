@@ -4,6 +4,7 @@ import string,requests,json
 from make_loan_data.database.dataBase_india import *
 from make_loan_data.data.var_Turrant import *
 from make_loan_data.turrant.daihou_104 import *
+from make_loan_data.turrant.loan_info_latest import *
 
 def check_api(r):
     if r.status_code==200:
@@ -155,7 +156,7 @@ def trial_instalment(loanNo,headt):
         return 0
 
 def withdraw_mock(registNo,custNo,loanNo,headt,headw):
-    trial_list=trial_instalment(loanNo,headw)
+    trial_list=loan_info_latest(registNo,headt)
     if trial_list==0:
         print("未获取到期数和贷款金额,不调提现接口")
     else:

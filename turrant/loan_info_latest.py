@@ -37,16 +37,16 @@ class MultipartFormData(object):
         return args_str
 
 def loan_info_latest(registNo,headf):
-    data={"registNo":registNo,"appNo":app_no}
-    mh = MultipartFormData().format(data=data, headers=headf)
+    #data={"registNo":registNo,"appNo":app_no}
+    #mh = MultipartFormData().format(data=data, headers=headf)
     #print(mh)
-    r=requests.post(host_api+"/api/v2/user/loan/latest/",data=mh,headers=headf)
-    print(r.json())
+    r=requests.get(host_api+"/api/v2/user/loan/latest/"+registNo,headers=headf)
+    #print(r.json())
     t=r.json()
     loan_info_list=[]
-    if t['instNum'] is not None:
-        instNum=str(t['instNum'])
-        loanAmt=str(t['loanAmt'])+'0'
+    if t['data']['loanInfoData']['instNum'] is not None:
+        instNum=str(t['data']['loanInfoData']['instNum'])
+        loanAmt=str(t['data']['loanInfoData']['loanAmount'])
         loan_info_list.append(instNum)
         loan_info_list.append(loanAmt)
         print(loan_info_list)
@@ -56,7 +56,7 @@ def loan_info_latest(registNo,headf):
         return 0
 
 if __name__ == '__main__':
-    token=login_code('8015416171')
-    headf=head_token_f(token)
-    loan_info_latest('8015416171',headf)
+    token=login_code('9441600481')
+    headt=head_token(token)
+    loan_info_latest('9441600481',headt)
     print('666666666666666')

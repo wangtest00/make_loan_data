@@ -1,7 +1,7 @@
-from make_loan_data.lanaPlus_danqi.daiqian_lp_danqi import *
+from lanaPlus_danqi.daiqian_lp_danqi import *
 import requests,json
-from make_loan_data.database.dataBase import *
-from make_loan_data.data.var_mex_lp_danqi import *
+from database.dataBase import *
+from data.var_mex_lp_danqi import *
 
 def check_api(r):
     try:

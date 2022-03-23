@@ -1,6 +1,6 @@
 from concurrent.futures import ThreadPoolExecutor  # 线程池执行器
-from make_loan_data.lanaPlus_danqi.first_apply_lp_danqi import *
-import threading
+from lanaPlus_danqi.first_apply_lp_danqi import *
+import threading,datetime
 
 
 def all_daiqian(x):

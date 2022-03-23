@@ -1,4 +1,4 @@
-from make_loan_data.data.var_mex_lp_danqi import *
+from data.var_mex_lp_danqi import *
 
 def head_token(token):
     head={"user-agent": "Dart/2.12 (dart:io)","x-user-language": "es","accept-encoding": "gzip","content-length": "0","host_api": "test-api.quantx.mx","x-app-name": "LanaPlus","content-type": "application/json",

@@ -1,7 +1,7 @@
 import datetime
 
-from make_loan_data.lanaPlus_danqi.daihou_lp_danqi import *
-from make_loan_data.lanaPlus_danqi.gaishu_lp_danqi import *
+from lanaPlus_danqi.daihou_lp_danqi import *
+from lanaPlus_danqi.gaishu_lp_danqi import *
 
 randnum=str(random.randint(10000000,99999999))
 #插入允许展期的记录

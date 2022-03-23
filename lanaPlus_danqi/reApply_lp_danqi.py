@@ -1,5 +1,5 @@
-from make_loan_data.lanaPlus_danqi.daihou_lp_danqi import *
-from make_loan_data.lanaPlus_danqi.gaishu_lp_danqi import *
+from lanaPlus_danqi.daihou_lp_danqi import *
+from lanaPlus_danqi.gaishu_lp_danqi import *
 
 
 #改编码方便jenkins运行

@@ -1,5 +1,5 @@
 import requests,json
-from make_loan_data.data.var_mex_lp_danqi import *
+from data.var_mex_lp_danqi import *
 #催收接口
 #数据上传
 def upload():

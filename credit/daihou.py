@@ -1,11 +1,9 @@
 import random
-
 import json
 import requests
-
 from database.credit_database import *
-from make_loan_data.credit.daiqian import *
-from make_loan_data.data.var_mex_credit import *
+from credit.daiqian import *
+from data.var_mex_credit import *
 
 
 #模拟银行回调接口-模拟还款stp（只需修改卡号cuentaBeneficiario和金额monto）

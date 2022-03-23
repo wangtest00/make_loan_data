@@ -6,7 +6,7 @@ Created on 2021-10-12
 import time
 import pymysql
 from data.var_mex_credit import *
-from make_loan_data.public.date_calculate import *
+from public.date_calculate import *
 
 class DataBase():
     def __init__(self,witchdb):

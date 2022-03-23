@@ -1,9 +1,9 @@
 import random,string
 import requests
-from make_loan_data.database.credit_database import *
-from make_loan_data.credit.heads import *
-from make_loan_data.credit.mex_mgt import *
-from make_loan_data.public.check_api import *
+from database.credit_database import *
+from credit.heads import *
+from credit.mex_mgt import *
+from public.check_api import *
 
 
 #改编码方便jenkins运行

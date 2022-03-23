@@ -1,5 +1,5 @@
 from itertools import product
-from make_loan_data.public.writeExcel import *
+from public.writeExcel import *
 
 
 def quan_zuhe(fenzi_name,loop_val):

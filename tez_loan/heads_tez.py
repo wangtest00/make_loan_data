@@ -1,4 +1,4 @@
-from make_loan_data.data.var_tez_loan import *
+from data.var_tez_loan import *
 
 def head_token(token):
     head={"user-agent": "Dart/2.12 (dart:io)","x-user-language": "en","accept-encoding": "gzip","content-length": "0","host": host_api[8:],

@@ -1,5 +1,5 @@
 import requests,json
-from make_loan_data.cashTm.daiqian_cashTm import *
+from cashTm.daiqian_cashTm import *
 
 
 # multipart/form-data表单格式请求接口

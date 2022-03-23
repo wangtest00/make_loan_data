@@ -1,7 +1,7 @@
 import io
 import sys
-from make_loan_data.turrant.daihou_104 import *
-from make_loan_data.turrant.mgt_104 import *
+from turrant.daihou_104 import *
+from turrant.mgt_104 import *
 
 #改编码方便jenkins运行
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="gb18030")

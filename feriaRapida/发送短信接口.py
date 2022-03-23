@@ -1,7 +1,7 @@
 import json
 import random
 import requests
-from data.var_mex import *
+from data.var_mex_lp_danqi import *
 #注意可能会发送真实短信出去
 
 def check_api(r):

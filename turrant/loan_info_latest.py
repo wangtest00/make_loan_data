@@ -1,5 +1,5 @@
 import requests,json
-from make_loan_data.turrant.daiqian_104 import *
+from turrant.daiqian_104 import *
 
 
 # multipart/form-data表单格式请求接口

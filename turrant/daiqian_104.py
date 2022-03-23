@@ -1,10 +1,10 @@
 import datetime
 import random
 import string,requests,json
-from make_loan_data.database.dataBase_india import *
-from make_loan_data.data.var_Turrant import *
-from make_loan_data.turrant.daihou_104 import *
-from make_loan_data.turrant.loan_info_latest import *
+from database.dataBase_india import *
+from data.var_Turrant import *
+from turrant.daihou_104 import *
+from turrant.loan_info_latest import *
 
 def check_api(r):
     if r.status_code==200:

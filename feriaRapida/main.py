@@ -1,9 +1,9 @@
 import io
 import sys
-from make_loan_data.feriaRapida.daihou_fr import *
-from make_loan_data.feriaRapida.gaishu_fr import *
-from make_loan_data.feriaRapida.daiqian_fr import *
-from make_loan_data.feriaRapida.mgt_fr import *
+from feriaRapida.daihou_fr import *
+from feriaRapida.gaishu_fr import *
+from feriaRapida.daiqian_fr import *
+from feriaRapida.mgt_fr import *
 #改编码方便jenkins运行
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="gb18030")
 

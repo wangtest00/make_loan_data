@@ -1,5 +1,5 @@
 from concurrent.futures import ThreadPoolExecutor  # 线程池执行器
-from make_loan_data.lanaPlus_duoqi.first_apply_lp_duoqi import *
+from lanaPlus_duoqi.first_apply_lp_duoqi import *
 import threading
 
 

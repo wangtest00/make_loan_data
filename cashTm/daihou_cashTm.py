@@ -1,7 +1,7 @@
 import json,time
 import requests
-from make_loan_data.database.dataBase_india import *
-from make_loan_data.public.check_api import *
+from database.dataBase_india import *
+from public.check_api import *
 
 t=str(time.time()*1000000)[:10]
 head_pay_for_razorpay={"Host":"test-pay.quantstack.in","Connection":"keep-alive","Content-Length":"116","Postman-Token":"68cc47f6-8c1f-4ebd-a929-b1ae10b7dd19",

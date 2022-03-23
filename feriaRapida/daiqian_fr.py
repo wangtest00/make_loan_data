@@ -1,11 +1,9 @@
-
-
-from make_loan_data.feriaRapida.mgt_fr import *
-from make_loan_data.public.check_api import *
-from make_loan_data.database.dataBase import *
+from feriaRapida.mgt_fr import *
+from public.check_api import *
+from database.dataBase import *
 import random,datetime,string
-from make_loan_data.feriaRapida.heads_fr import *
-from make_loan_data.data.var_mex_fr import *
+from feriaRapida.heads_fr import *
+from data.var_mex_fr import *
 #改编码方便jenkins运行
 #sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="gb18030")
 

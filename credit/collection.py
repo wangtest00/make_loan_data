@@ -1,4 +1,4 @@
-from make_loan_data.data.var_mex_credit import *
+from data.var_mex_credit import *
 import requests,json,time
 
 

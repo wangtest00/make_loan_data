@@ -1,7 +1,7 @@
-from make_loan_data.turrant.daihou_104 import *
-from make_loan_data.turrant.mgt_104 import *
-from make_loan_data.turrant.daiqian_104 import *
-from make_loan_data.data.var_Turrant import *
+from turrant.daihou_104 import *
+from turrant.mgt_104 import *
+from turrant.daiqian_104 import *
+from data.var_Turrant import *
 
 def first_apply():
     update_Batch_Log()

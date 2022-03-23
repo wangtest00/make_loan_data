@@ -1,7 +1,8 @@
 import io
 import sys
-from make_loan_data.cashTm.daihou_cashTm import *
-from make_loan_data.cashTm.mgt_cashTm import *
+from cashTm.daiqian_cashTm import *
+from cashTm.daihou_cashTm import *
+from cashTm.mgt_cashTm import *
 
 #改编码方便jenkins运行
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="gb18030")

@@ -1,5 +1,5 @@
 import requests,json
-from make_loan_data.tez_loan.daiqian_tez import *
+from tez_loan.daiqian_tez import *
 
 
 # multipart/form-data表单格式请求接口

@@ -1,7 +1,7 @@
-from make_loan_data.data.var_mex_lp_duoqi import *
-from make_loan_data.lanaPlus_duoqi.heads_lp_duoqi import *
-from make_loan_data.lanaPlus_duoqi.mgt_lp_duoqi import *
-from make_loan_data.public.check_api import *
+from data.var_mex_lp_duoqi import *
+from lanaPlus_duoqi.heads_lp_duoqi import *
+from lanaPlus_duoqi.mgt_lp_duoqi import *
+from public.check_api import *
 import random,datetime,string
 
 #改编码方便jenkins运行

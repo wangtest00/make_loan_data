@@ -1,9 +1,9 @@
 import random
 import string
-from make_loan_data.tez_loan.heads_tez import *
-from make_loan_data.database.dataBase_tez import *
-from make_loan_data.data.var_tez_loan import *
-from make_loan_data.tez_loan.daihou_tez import *
+from tez_loan.heads_tez import *
+from database.dataBase_tez import *
+from data.var_tez_loan import *
+from tez_loan.daihou_tez import *
 
 
 def check_api(r):

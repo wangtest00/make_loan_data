@@ -1,5 +1,5 @@
 import requests,json
-from make_loan_data.data.var_tez_loan import *
+from data.var_tez_loan import *
 #催收接口
 #数据上传
 def upload():

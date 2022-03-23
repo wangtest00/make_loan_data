@@ -1,7 +1,7 @@
-from make_loan_data.feriaRapida.daiqian_fr import *
+from feriaRapida.daiqian_fr import *
 import requests,json
-from make_loan_data.database.dataBase import *
-from make_loan_data.data.var_mex_fr import *
+from database.dataBase import *
+from data.var_mex_fr import *
 
 def check_api(r):
     try:

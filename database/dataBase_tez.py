@@ -4,8 +4,8 @@ Created on 2018-11-26
 @author: 王爽
 '''
 import pymysql
-from make_loan_data.data.var_tez_loan import *
-from make_loan_data.public.date_calculate import *
+from data.var_tez_loan import *
+from public.date_calculate import *
 
 class DataBase():
     def __init__(self,witchdb):

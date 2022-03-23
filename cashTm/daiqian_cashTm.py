@@ -1,9 +1,9 @@
 import datetime
 import random
 import string
-from make_loan_data.database.dataBase_india import *
-from make_loan_data.data.var_cashTm import *
-from make_loan_data.cashTm.daihou_cashTm import *
+from database.dataBase_india import *
+from data.var_cashTm import *
+from cashTm.daihou_cashTm import *
 
 
 def check_api(r):

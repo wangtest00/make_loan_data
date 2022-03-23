@@ -1,8 +1,8 @@
 import json
 import requests
-from make_loan_data.database.dataBase_india import *
-from make_loan_data.data.var_Turrant import *
-from make_loan_data.turrant.daiqian_104 import *
+from database.dataBase_india import *
+from data.var_Turrant import *
+from turrant.daiqian_104 import *
 
 
 def check_api(r):

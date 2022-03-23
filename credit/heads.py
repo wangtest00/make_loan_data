@@ -1,4 +1,4 @@
-from make_loan_data.data.var_mex_credit import *
+from data.var_mex_credit import *
 
 def head_token(token):
     head={"user-agent": "Dart/2.12 (dart:io)","x-user-language": "es","accept-encoding": "gzip","content-length": "0","host_api": host_api[8:],"x-app-name": "LanaDigital","content-type": "application/json",

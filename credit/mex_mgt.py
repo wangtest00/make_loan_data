@@ -1,5 +1,5 @@
-from make_loan_data.credit.daiqian import *
-from make_loan_data.data.var_mex_credit import *
+from credit.daiqian import *
+from data.var_mex_credit import *
 import requests,json
 
 

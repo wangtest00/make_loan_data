@@ -1,8 +1,8 @@
 import json
 import requests
-from make_loan_data.database.dataBase_tez import *
-from make_loan_data.data.var_tez_loan import *
-from make_loan_data.public.check_api import *
+from database.dataBase_tez import *
+from data.var_tez_loan import *
+from public.check_api import *
 
 
 #放款-模拟回调

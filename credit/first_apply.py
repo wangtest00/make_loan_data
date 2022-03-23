@@ -1,8 +1,8 @@
 import string,requests,json,datetime,random
-from make_loan_data.data.var_mex_credit import *
-from make_loan_data.credit.heads import *
-from make_loan_data.credit.daiqian import *
-from make_loan_data.credit.daihou import *
+from data.var_mex_credit import *
+from credit.heads import *
+from credit.daiqian import *
+from credit.daihou import *
 import io,sys
 #改编码方便jenkins运行
 #sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="gb18030")

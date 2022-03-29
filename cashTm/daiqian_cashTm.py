@@ -31,22 +31,22 @@ def compute_code(m):
 def head_token(token):
     head={"user-agent": "Dart/2.12 (dart:io)","x-user-language": "en","accept-encoding": "gzip","content-length": "0","host": "test-appa.quantstack.in",
           "content-type": "application/json;charset=utf-8","version_no":"2.6.5","app_type":"10090001",
-        "x-app-type": "10090001","app_no": "102","x-auth-token":'Bearer '+str(token),"Cookie":"JSESSIONID=d17x0ET9jFp5BBK_qidExJqVs5THhstLnVk2eMEH" }
+        "x-app-type": "10090001","app_no": appNo,"x-auth-token":'Bearer '+str(token),"Cookie":"JSESSIONID=d17x0ET9jFp5BBK_qidExJqVs5THhstLnVk2eMEH" }
     return head
 def head_token_f(token):
     head={"user-agent":"Dart/2.12 (dart:io)","Accept-Language":"en","accept-encoding":"gzip","content-length":"277","host":"test-appa.quantstack.in",
           "content-type":"multipart/form-data; boundary=89795e05-6272-4b47-a620-b40b5a0ebcdc","version_no":"2.6.3","app_type":"10090001",
-          "app_no":"102","x-auth-token":'Bearer '+str(token),"Cookie":"JSESSIONID=ffUdZQ5pBRFudhsBmGLidri4nNB7GRSE4BieOKlY" }
+          "app_no":appNo,"x-auth-token":'Bearer '+str(token),"Cookie":"JSESSIONID=ffUdZQ5pBRFudhsBmGLidri4nNB7GRSE4BieOKlY" }
     return head
 def head_token_w(token):
     head={"user-agent":"Mozilla/5.0 (Linux; U; Android 10; en; LIO-AL00 Build/HUAWEILIO-AL00) AppleWebKit/533.1 (KHTML, like Gecko) Version/5.0 Mobile Safari/533.1",
           "Accept-Language":"en","accept-encoding":"gzip","content-length":"277","host":"test-appa.quantstack.in",
           "content-type":"application/x-www-form-urlencoded","version_no":"2.6.3","app_type":"10090001",
-          "app_no":"102","x-auth-token":'Bearer '+str(token),"Cookie":"JSESSIONID=ffUdZQ5pBRFudhsBmGLidri4nNB7GRSE4BieOKlY" }
+          "app_no":appNo,"x-auth-token":'Bearer '+str(token),"Cookie":"JSESSIONID=ffUdZQ5pBRFudhsBmGLidri4nNB7GRSE4BieOKlY" }
     return head
 def login_code(registNo):
     code=compute_code(registNo)
-    data={"appName":"CashTM","appNo":"102","appType":"10090001","code":code,"gaid":"12303937-ccde-46ee-a455-5146d36344dd","ipAddr":"192.168.20.223","osVersion":"10","phoneType":"HUAWEI",
+    data={"appName":appName,"appNo":appNo,"appType":"10090001","code":code,"gaid":"12303937-ccde-46ee-a455-5146d36344dd","ipAddr":"192.168.20.223","osVersion":"10","phoneType":"HUAWEI",
           "registNo":registNo,"utmCampaign":"","utmContent":"","utmMedium":"","utmSource":"","utmTerm":"","versionNo":"2.6.3"}
     r=requests.post(host_api+"/api/cust_info/cust/login?lang=en",data=json.dumps(data),headers=head_api,verify=False)
     c=r.json()
@@ -62,7 +62,7 @@ def cert_auth(registNo,headt):
     for j in range(5):  #生成5个随机英文大写字母
         st+=random.choice(string.ascii_uppercase)
     num=str(random.randint(1000,9999))
-    data={"appName":"CashTM","appNo":"102","birthDay":"1999-05-06","certNo":num+"4566"+num,"custFirstName":"wang","custLastName":"shuang","custMiddleName":"mmmm","education":"10190006",
+    data={"appName":appName,"appNo":appNo,"birthDay":"1999-05-06","certNo":num+"4566"+num,"custFirstName":"wang","custLastName":"shuang","custMiddleName":"mmmm","education":"10190006",
           "marriage":"10050001","panNo":""+st+num+"W","registNo":registNo,"sex":"10030001","useEmail":"sdfghhhj@gmail.com","useLang":"90000001"}
     r=requests.post(host_api+'/api/cust_india/cert/cert_auth?lang=en',data=json.dumps(data),headers=headt,verify=False)
     t=r.json()
@@ -78,7 +78,7 @@ def auth(registNo,custNo,headt):
     r1=requests.post(host_api+'/api/cust_india/cert/save_address?lang=en',data=json.dumps(data1),headers=headt,verify=False)
     print(r1.json())
     #第4个页面-工作认证1
-    data2={"appNo":"102","certType":"WORK","custNo":custNo,"registNo":registNo}
+    data2={"appNo":appNo,"certType":"WORK","custNo":custNo,"registNo":registNo}
     r2=requests.post(host_api+'/api/cust_india/query/single_cust_auth?lang=en',data=json.dumps(data2),headers=headt,verify=False)
     print(r2.json())
     #第4个页面-工作认证2
@@ -91,7 +91,7 @@ def auth(registNo,custNo,headt):
     print(r4.json())
 #申请提现
 def loan(registNo,custNo,headt):
-    data={"appNo":"102","custNo":custNo,"registNo":registNo}
+    data={"appNo":appNo,"custNo":custNo,"registNo":registNo}
     r=requests.post(host_api+'/api/loan_india/start?lang=en',data=json.dumps(data),headers=headt,verify=False)
     t=r.json()
     print(t)
@@ -173,7 +173,7 @@ def payout_for_razorpay(cust_no,bank_no):
     t=str(time.time()*1000000)[:15]
     inst_time=str(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
     sql='''INSERT INTO `pay_cust_found_info`(`ID`, `CUST_NO`, `APP_NO`, `MERCHANT_NO`, `FUND_ACCOUNT_ID`, `CONTACT_ID`, `CUST_NAME`, `BANK_NAME`, `IFSC`, `BANK_NO`, `REMARK`, `INST_TIME`, `INST_USER_NO`, `UPDT_TIME`, `UPDT_USER_NO`)
-VALUES ("'''+t+'''", "'''+cust_no+'''", '102', 'CashTmRazorpayTest', "'''+cust_no+'''", NULL, 'wang test api', 'shuang', 'HDFC0003740', "'''+bank_no+'''", NULL, "'''+inst_time+'''", "'''+cust_no+'''", NULL, NULL);'''
+VALUES ("'''+t+'''", "'''+cust_no+'''", "'''+appNo+'''", 'CashTmRazorpayTest', "'''+cust_no+'''", NULL, 'wang test api', 'shuang', 'HDFC0003740', "'''+bank_no+'''", NULL, "'''+inst_time+'''", "'''+cust_no+'''", NULL, NULL);'''
     DataBase(inter_db).executeUpdateSql(sql)
 
 #测试前，需要检查app信息支付渠道配置是否已配置razorpay、bankopen、cashfree

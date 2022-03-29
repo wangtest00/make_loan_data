@@ -23,12 +23,12 @@ def getRepayDateList_stp(registNo,loanNo,headt):
     print("当前最近一期未还repayDate=",repayDate)
     repayList=repay(custNo,loanNo,repayDate,headt)
                  #还款账号       金额
-    stp_repayment(repayList[1],repayList[0])  #单期足额还款STP
-    stat=cx_beforeStat_afterStat(loanNo)
-    if stat==('10260005','10270005'):
-        print("贷后状态已结清",loanNo,stat)
-    else:
-        print("贷后状态未结清",loanNo,stat)
+    # stp_repayment(repayList[1],repayList[0])  #单期足额还款STP
+    # stat=cx_beforeStat_afterStat(loanNo)
+    # if stat==('10260005','10270005'):
+    #     print("贷后状态已结清",loanNo,stat)
+    # else:
+    #     print("贷后状态未结清",loanNo,stat)
 
 
 def oxxo_repay(amount,loanNo):
@@ -119,6 +119,9 @@ def oxxo_repay(amount,loanNo):
     print(r.json())
 
 if __name__ == '__main__':
-    stp_repayment('646180244001072290','120')
-    #getRepayDateList_stp('8639812802','L2012112168159706926905753600')
-    #oxxo_repay('600','L2012201068167628603820015616')
+    #stp_repayment('646180244001072290','120')
+	registNo='9709958711'
+	token = login_pwd(registNo)
+	headt = head_token(token)
+	loanNo='L2012203278196607617402077184_01'
+	getRepayDateList_stp(registNo, loanNo, headt)

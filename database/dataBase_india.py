@@ -88,4 +88,4 @@ class DataBase():
                 #time.sleep(1)
         self.closeDB()
 if __name__ == '__main__':
-    DataBase(inter_db).call_daily_important_batch('20220308','20220309')
+    DataBase(inter_db).call_daily_important_batch('20220328','20220328')

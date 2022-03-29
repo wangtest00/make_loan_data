@@ -43,27 +43,29 @@ def auto_test():
     first_apply(registNo)
 #指定手机号，跑后续流程
 def bu_ding(registNo):
+    update_pwd(registNo)
     token=login_pwd(registNo)
     headt=head_token(token)
     sql="select CUST_NO from cu_cust_reg_dtl where REGIST_NO='"+registNo+"';"
     custNo=DataBase(which_db).get_one(sql)
     custNo=custNo[0]
-    loan_no="L2012112068156388076948750336"
+    loan_no="L2012203278196605433373458432"
     if loan_no is None:
         DataBase(which_db).closeDB()
     else:
         bank_auth(custNo,headt)
-        update_appr_user_stat()
-        DataBase(which_db).call_4_proc()
-        approve(loan_no)  #分配审批人员并审批通过
+        # update_appr_user_stat()
+        # DataBase(which_db).call_4_proc()
+        # approve(loan_no)  #分配审批人员并审批通过
         insert_risk(loan_no)
         w=withdraw(registNo,custNo,loan_no,headt)
-        # if w==1:
-        #     gaishu(loan_no)
-        # else:
-        #     pass
-        # DataBase(which_db).closeDB()
+        if w==1:
+            gaishu(loan_no)
+        else:
+            pass
+        DataBase(which_db).closeDB()
 
 if __name__ == '__main__':
-    for i in range(1):
-        auto_test()
+    # for i in range(1):
+    #     auto_test()
+    bu_ding('8576910623')

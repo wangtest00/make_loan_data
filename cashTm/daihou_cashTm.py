@@ -12,7 +12,7 @@ def payout_mock_apply(loanNo,custNo):
     data={
     "loanNo": loanNo,
     "custNo": custNo,
-    "appNo": "102"
+    "appNo": appNo
 }
     r=requests.post(host_pay+"/api/fin/payout/mock/apply",data=json.dumps(data),headers=head_pay,verify=False)
     print("调提现mock接口，暂时忽略报错",r.json())
@@ -186,6 +186,7 @@ def razorpay_annon_event_callback(loanNo,amount):
     print(r.url)
     t=r.json()
     print(t)
+
 
 
 if __name__ == '__main__':

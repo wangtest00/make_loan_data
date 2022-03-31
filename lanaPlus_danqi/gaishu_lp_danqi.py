@@ -28,19 +28,19 @@ def gaishu(loan_no):
 def stp_payout(loan_no,folioOrigen):
     data={"causaDevolucion": { "code": 16,"msg": "Tipo de operación errónea"},"empresa": "ASSERTIVE","estado": { "code": "0000", "msg": "canll"},"folioOrigen": folioOrigen,"id":int(randnum)}
     print(data)
-    # r=requests.post("https://test-pay.quantx.mx/api/trade/stp_payout/annon/event/webhook",data=json.dumps(data),headers=head_pay,verify=False)
-    # t=r.json()
-    # print(t)
-    # if t['errorCode']==0:
-    #     print("执行墨西哥模拟提现接口成功",loan_no)
-    # else:
-    #     print("执行墨西哥模拟提现接口失败",loan_no)
-    # sql="select before_stat from lo_loan_dtl where loan_no='"+loan_no+"';"
-    # before_stat=DataBase(which_db).get_one(sql)
-    # if before_stat[0]=='10260005':
-    #     print("贷前状态已变更为:【已提现】",loan_no)
-    # else:
-    #     print("贷前状态未变更,查询到状态=",before_stat[0])
+    r=requests.post("https://test-pay.quantx.mx/api/trade/stp_payout/annon/event/webhook",data=json.dumps(data),headers=head_pay,verify=False)
+    t=r.json()
+    print(t)
+    if t['errorCode']==0:
+        print("执行墨西哥模拟提现接口成功",loan_no)
+    else:
+        print("执行墨西哥模拟提现接口失败",loan_no)
+    sql="select before_stat from lo_loan_dtl where loan_no='"+loan_no+"';"
+    before_stat=DataBase(which_db).get_one(sql)
+    if before_stat[0]=='10260005':
+        print("贷前状态已变更为:【已提现】",loan_no)
+    else:
+        print("贷前状态未变更,查询到状态=",before_stat[0])
 
 #5.借据贷前状态=“待匹配产品”，贷款与客户基本关系表' 需要手动插数risk_level AA和risk_score 20120701(印度)，25002400或26002401（墨西哥）（调度系统跑批识别出来，分配对应产品）
 def insert_risk(loan_no):

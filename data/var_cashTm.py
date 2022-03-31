@@ -1,14 +1,15 @@
-__all__=['host_api','host_action','host_mgt','head_api','head_mgt','CONFIGS','prodNo','inter_db','head_pay','host_pay','appNo','appName']
+__all__=['host_api','host_action','host_mgt','head_api','head_mgt','host_coll','CONFIGS','prodNo','inter_db','head_pay','host_pay','appNo','appName']
 
 inter_db='manage_need_loan'
 prodNo='5'
-appNo='102'
+appNo='104'
 applist={'104':'Turrant','102':'CashTM'}
 appName=applist[appNo][0]
 host_api="https://test-appa.quantstack.in"
 host_pay="https://test-pay.quantstack.in"
 host_action="https://test-action.quantstack.in"
 host_mgt="https://test-mgt.quantstack.in"
+host_coll="https://test-collection.quantstack.in"
 head_api={"user-agent": "Dart/2.12 (dart:io)","x-user-language": "es","x-auth-token": "Bearer" ,"accept-encoding": "gzip","content-length": "63","host": "test-appa.quantstack.in",
           "x-app-name": appName,"content-type": "application/json",
         "x-app-type": "10090001","x-app-version": "116","x-app-no": appNo }

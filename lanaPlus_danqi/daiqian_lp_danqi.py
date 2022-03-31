@@ -113,7 +113,7 @@ def auth_review_contact(custNo,headt):
 def auth_app_grab_data(registNo,custNo,headt):
     imei='a2eff92b-86cb-6666-a66c-84ae322f3adc'
     #设备信息
-    data4={"appNo":appNo,"phoneNo":registNo,"dataType":"11090003","pageGet":"10000001","recordTime":"1621332187810","grabData":{"ipAddress":"2409:8162:a46:5405:1:0:107f:acec%20","ipResolveCit":"2409:8162:a46:5405:1:0:107f:acec%20",
+    data4={"appNo":appNo,"phoneNo":registNo,"dataType":"11090003","pageGet":"10000001","recordTime":"1621332187810","grabData":{"ipAddress":"192.188.99.99","ipResolveCit":"2409:8162:a46:5405:1:0:107f:acec%20",
     "ipResolveCom":"2409:8162:a46:5405:1:0:107f:acec%20","deviceId":"a2eff92b-86cb-4614-a66c-84ae322f3adcA2:B4:74:63:FB:40LIO-AL00","imei":imei,"mac":"A2:B4:74:63:FB:40","phoneNo":registNo,"recordBehavior":"抓取设备数据","recordTime":"1621332187810","userId":custNo,"mobileBrand":"HUAWEI","mobileModel":"LIO-AL00","systemVersion":"10","otherInfo":"274b98eb5c8aed06"},"custNo":custNo}
     #联系人
     data5={"appNo":appNo,"phoneNo":registNo,"dataType":"11090002","pageGet":"10000001","recordTime":"1621332187811","grabData":{"data":

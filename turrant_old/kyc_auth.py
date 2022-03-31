@@ -1,10 +1,10 @@
-import requests,json
-from turrant.daiqian_tur import *
+# multipart/form-data
+import requests
+from cashTm.daiqian_cashTm import *
 
-
-# multipart/form-data表单格式请求接口
 class MultipartFormData(object):
     """multipart/form-data格式转化"""
+
     @staticmethod
     def format(data, boundary="----WebKitFormBoundary7MA4YWxkTrZu0gW", headers={}):
         """
@@ -27,6 +27,7 @@ class MultipartFormData(object):
         jion_str = '--{}\r\nContent-Disposition: form-data; name="{}"\r\n\r\n{}\r\n'
         end_str = "--{}--".format(boundary)
         args_str = ""
+
         if not isinstance(data, dict):
             raise "multipart/form-data参数错误，data参数应为dict类型"
         for key, value in data.items():
@@ -36,27 +37,27 @@ class MultipartFormData(object):
         args_str = args_str.replace("\'", "\"")
         return args_str
 
-def loan_info_latest(registNo,headf):
-    data={"registNo":registNo,"appNo":'102'}
-    mh = MultipartFormData().format(data=data, headers=headf)
-    #print(mh)
-    r=requests.post(india_api+"/api/loan_info/latest?lang=en",data=mh,headers=headf)
-    print(r.json())
-    t=r.json()
-    loan_info_list=[]
-    if t['instNum'] is not None:
-        instNum=str(t['instNum'])
-        loanAmt=str(t['loanAmt'])+'0'
-        loan_info_list.append(instNum)
-        loan_info_list.append(loanAmt)
-        print(loan_info_list)
-        return loan_info_list
-    else:
-        print("最近一笔贷款接口获取到：贷款期数为空,不继续执行了")
-        return 0
+headers = {
+        'content-type': "multipart/form-data; boundary=89795e05-6272-4b47-a620-b40b5a0ebcdc",
+        'cache-control': "no-cache",
+    }
+data = {
+    "custNo":"C1022201258174182555088781312",
+    "kycType":"10070015",
+    "fileSource":'10080001',
+    "kycImg":1,
+    }
 
-if __name__ == '__main__':
-    token=login_code('8015416171')
-    headf=head_token_f(token)
-    loan_info_latest('8015416171',headf)
-    print('666666666666666')
+#mh = MultipartFormData.format(data=data, headers=headers)
+#print(mh)
+
+
+def kyc_auth(custNo,headt):
+    files={'kycImg':('zheng_main.jpg',open(r'D:\pic\zheng_main.jpg', 'rb'),'image/jpeg'),'custNo':(None,custNo),'kycType':(None,'10070015'),'fileSource':(None,'10080001') }
+    r=requests.post("https://test-appa.quantstack.in/api/cust_india/kyc/auth?lang=en",files=files,headers=headt,verify=False)
+    print(r.json())
+
+registNo='8383834444'
+token=login_code(registNo)
+headt=head_token_f(token)
+kyc_auth('C1022201258174182555088781312',headt)

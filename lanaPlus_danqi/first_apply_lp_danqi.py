@@ -20,14 +20,14 @@ def first_apply(registNo):
     update_kyc_auth(registNo,custNo)
     update_batch_log()
     loan_no=apply_loan(custNo,headt)
-    if loan_no is None:
-        DataBase(which_db).closeDB()
-    else:
-        bank_auth(custNo,headt)
-        update_appr_user_stat()
-        DataBase(which_db).call_4_proc()
-        approve(loan_no)
-        first_apply_sheipihou(loan_no,registNo,custNo,headt)
+    # if loan_no is None:
+    #     DataBase(which_db).closeDB()
+    # else:
+    #     bank_auth(custNo,headt)
+    #     update_appr_user_stat()
+    #     DataBase(which_db).call_4_proc()
+    #     approve(loan_no)
+    #     first_apply_sheipihou(loan_no,registNo,custNo,headt)
 
 def first_apply_sheipihou(loan_no,registNo,custNo,headt):
     insert_risk(loan_no)#匹配产品

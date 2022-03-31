@@ -9,5 +9,5 @@ head={"Host": "test-collection.quantstack.in","Connection": "keep-alive","Conten
 #印度自动减免需求：发起减免申请
 for i in range(10):
     data={"channelNo":"C9123001","caseNo":"C91230012105178082577547846418432","loanNo":"L1022105178082466693932056576","cluePersonName":"you  go","subjectName":"Late Fee","ovduDay":1,"waiverAmt":0.01,"reason":"2222"+str(i)}
-    r=requests.post('http://test-collection.quantstack.in/api/ovdu/case/waiver/apply?lang=zh',data=json.dumps(data),headers=head)
+    r=requests.post('https://test-collection.quantstack.in/api/ovdu/case/waiver/apply?lang=zh',data=json.dumps(data),headers=head)
     print(r.json())

@@ -1,10 +1,10 @@
 import datetime
 import random
-import string,requests,json
+import string
 from database.dataBase_india import *
-from data.var_Turrant import *
-from turrant.daihou_104 import *
-from turrant.loan_info_latest import *
+from data.var_tur import *
+from turrant.daihou_tur import *
+
 
 def check_api(r):
     if r.status_code==200:
@@ -30,28 +30,29 @@ def compute_code(m):
     return x
 def head_token(token):
     head={"user-agent": "Dart/2.12 (dart:io)","x-user-language": "en","accept-encoding": "gzip","content-length": "0","host": "test-appa.quantstack.in",
-          "content-type": "application/json;charset=utf-8","version_no":"1.0.0","app_type":"10090001",
-        "x-app-type": "10090001","app_no":app_no,"x-auth-token":'Bearer '+str(token),"Cookie":"JSESSIONID=d17x0ET9jFp5BBK_qidExJqVs5THhstLnVk2eMEH" }
+          "content-type": "application/json;charset=utf-8","version_no":"2.6.5","app_type":"10090001",
+        "x-app-type": "10090001","app_no": appNo,"x-auth-token":'Bearer '+str(token),"Cookie":"JSESSIONID=d17x0ET9jFp5BBK_qidExJqVs5THhstLnVk2eMEH" }
     return head
 def head_token_f(token):
     head={"user-agent":"Dart/2.12 (dart:io)","Accept-Language":"en","accept-encoding":"gzip","content-length":"277","host":"test-appa.quantstack.in",
-          "content-type":"multipart/form-data; boundary=89795e05-6272-4b47-a620-b40b5a0ebcdc","version_no":"1.0.0","app_type":"10090001",
-          "app_no":app_no,"x-auth-token":'Bearer '+str(token),"Cookie":"JSESSIONID=ffUdZQ5pBRFudhsBmGLidri4nNB7GRSE4BieOKlY" }
+          "content-type":"multipart/form-data; boundary=89795e05-6272-4b47-a620-b40b5a0ebcdc","version_no":"2.6.3","app_type":"10090001",
+          "app_no":appNo,"x-auth-token":'Bearer '+str(token),"Cookie":"JSESSIONID=ffUdZQ5pBRFudhsBmGLidri4nNB7GRSE4BieOKlY" }
     return head
 def head_token_w(token):
     head={"user-agent":"Mozilla/5.0 (Linux; U; Android 10; en; LIO-AL00 Build/HUAWEILIO-AL00) AppleWebKit/533.1 (KHTML, like Gecko) Version/5.0 Mobile Safari/533.1",
           "Accept-Language":"en","accept-encoding":"gzip","content-length":"277","host":"test-appa.quantstack.in",
-          "content-type":"application/x-www-form-urlencoded","version_no":"1.0.0","app_type":"10090001",
-          "app_no":app_no,"x-auth-token":'Bearer '+str(token),"Cookie":"JSESSIONID=ffUdZQ5pBRFudhsBmGLidri4nNB7GRSE4BieOKlY" }
+          "content-type":"application/x-www-form-urlencoded","version_no":"2.6.3","app_type":"10090001",
+          "app_no":appNo,"x-auth-token":'Bearer '+str(token),"Cookie":"JSESSIONID=ffUdZQ5pBRFudhsBmGLidri4nNB7GRSE4BieOKlY" }
     return head
 def login_code(registNo):
     code=compute_code(registNo)
-    data={"registNo":registNo,"code":code,"gaid":"12303937-ccde-46ee-a455-5146d36344dd"}
-    r=requests.post(host_api+"/api/v2/user/login",data=json.dumps(data),headers=head_api,verify=False)
+    data={"appName":appName,"appNo":appNo,"appType":"10090001","code":code,"gaid":"12303937-ccde-46ee-a455-5146d36344dd","ipAddr":"192.168.20.223","osVersion":"10","phoneType":"HUAWEI",
+          "registNo":registNo,"utmCampaign":"","utmContent":"","utmMedium":"","utmSource":"","utmTerm":"","versionNo":"2.6.3"}
+    r=requests.post(host_api+"/api/cust_info/cust/login?lang=en",data=json.dumps(data),headers=head_api,verify=False)
     c=r.json()
     print(c)
     if c!=0:
-        token=c['data']['token']
+        token=c['token']
         return token
     else:
         return 0
@@ -61,40 +62,40 @@ def cert_auth(registNo,headt):
     for j in range(5):  #生成5个随机英文大写字母
         st+=random.choice(string.ascii_uppercase)
     num=str(random.randint(1000,9999))
-    data={"appName":"Turrant","appNo":app_no,"birthDayTimestamp":890118480000,"certNo":num+"4566"+num,"custFirstName":"wang","custLastName":"shuang","custMiddleName":"mmmm","education":"10190006",
-          "marriage":"10050001","panNo":""+st+num+"W","phoneNo":registNo,"sex":"10030001","useEmail":"sdfghhhj@gmail.com","useLang":"90000001"}
-    r=requests.post(host_api+'/api/v2/user/auth/cert',data=json.dumps(data),headers=headt,verify=False)
+    data={"appName":appName,"appNo":appNo,"birthDay":"1999-05-06","certNo":num+"4566"+num,"custFirstName":"wang","custLastName":"shuang","custMiddleName":"mmmm","education":"10190006",
+          "marriage":"10050001","panNo":""+st+num+"W","registNo":registNo,"sex":"10030001","useEmail":"sdfghhhj@gmail.com","useLang":"90000001"}
+    r=requests.post(host_api+'/api/cust_india/cert/cert_auth?lang=en',data=json.dumps(data),headers=headt,verify=False)
     t=r.json()
     print(t)
     if t!=0:
-        m=t['data']
+        m=json.loads(t['message'])#字符串转字典
         return m['custNo']
     else:
         pass
 def auth(registNo,custNo,headt):
     #第3个页面-家庭地址
-    data1={"address":"wwsdddxx","county":"10010002","custNo":custNo,"postCode":"100000","residenceType":"10840005","state":"10000001"}
-    r1=requests.post(host_api+'/api/v2/user/auth/address',data=json.dumps(data1),headers=headt,verify=False)
+    data1={"address":"wwsdddxx","county":"10010002","custNo":custNo,"postCode":"123456","residenceType":"10840005","state":"10010000"}
+    r1=requests.post(host_api+'/api/cust_india/cert/save_address?lang=en',data=json.dumps(data1),headers=headt,verify=False)
     print(r1.json())
-    # #第4个页面-工作认证1
-    # data2={"appNo":app_no,"certType":"WORK","custNo":custNo,"registNo":registNo}
-    # r2=requests.post(host_api+'/api/cust_india/query/single_cust_auth?lang=en',data=json.dumps(data2),headers=headt,verify=False)
-    # print(r2.json())
-    # #第4个页面-工作认证2
-    # data3={"custNo":custNo,"employeeStatus":"10850002","monSalary":"10870009"}
-    # r3=requests.post(host_api+'/api/cust_india/work/auth?lang=en',data=json.dumps(data3),headers=headt,verify=False)
-    # print(r3.json())
-    #第4个页面-联系人认证
-    data4={"contacts":[{"contactName":"bdhdh😜😝g？","phoneNo":"55458979","relation":"10110002"},{"contactName":"aaa😚😚fgh;$$,(gsvxbnx)","phoneNo":"2435584868","relation":"10110003"}],"custNo":custNo}
-    r4=requests.post(host_api+'/api/v2/user/auth/contact/other',data=json.dumps(data4),headers=headt,verify=False)
+    #第4个页面-工作认证1
+    data2={"appNo":appNo,"certType":"WORK","custNo":custNo,"registNo":registNo}
+    r2=requests.post(host_api+'/api/cust_india/query/single_cust_auth?lang=en',data=json.dumps(data2),headers=headt,verify=False)
+    print(r2.json())
+    #第4个页面-工作认证2
+    data3={"custNo":custNo,"employeeStatus":"10850002","monSalary":"10870009"}
+    r3=requests.post(host_api+'/api/cust_india/work/auth?lang=en',data=json.dumps(data3),headers=headt,verify=False)
+    print(r3.json())
+    #第5个页面-联系人认证
+    data4=[{"contactName":"wang","custNo":custNo,"phoneNo":"6666677777","relation":"10110001"},{"contactName":"ye","custNo":custNo,"phoneNo":"7555566666","relation":"10110006"}]
+    r4=requests.post(host_api+'/api/cust_india/contact/auth?lang=en',data=json.dumps(data4),headers=headt,verify=False)
     print(r4.json())
 #申请提现
 def loan(registNo,custNo,headt):
-    data={"custNo":custNo,"registNo":registNo}
-    r=requests.post(host_api+'/api/v2/user/loan/apply',data=json.dumps(data),headers=headt,verify=False)
+    data={"appNo":appNo,"custNo":custNo,"registNo":registNo}
+    r=requests.post(host_api+'/api/loan_india/start?lang=en',data=json.dumps(data),headers=headt,verify=False)
     t=r.json()
     print(t)
-    return t['data']['loanNo']
+    return t['loanNo']
 
 #更新kyc认证状态及其值
 def update_kyc_auth(registNo,custNo):
@@ -106,10 +107,10 @@ def update_kyc_auth(registNo,custNo):
     inst_time=str(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
     sql="update cu_cust_auth_dtl set KYC_AUTH='1' WHERE CUST_NO='"+custNo+"';"  #客户认证信息明细表kyc认证状态
     DataBase(inter_db).executeUpdateSql(sql)
-    sql2="INSERT INTO `manage_need_loan`.`cu_cust_file_dtl`(`ID`, `REGIST_NO`, `CUST_NO`, `APP_NO`, `BUSI_TYPE`, `SAVE_ATT_NAME`, `UPLOAD_ATT_NAME`, `ATT_TYPE`, `ATT_FILE`, `ATT_SIZE`, `PH_PATH`, `IN_PATH`, `REMARK`, `INST_TIME`, `INST_USER_NO`, `UPDT_TIME`, `UPDT_USER_NO`) VALUES ('"+t+'b88f206222e0'+tnum1+"', '"+registNo+"', '"+custNo+"', '104', '10070015', '100700151627276671905.jpg', '100700151627276671905.jpg', '10080001', '.jpg', '918911', '102/20210726/"+registNo+"/', 'https://qt-fpdl-app.s3.ap-south-1.amazonaws.com/102/20210726/"+registNo+"/100700151627276671905.jpg', NULL, '"+inst_time+"', 'sys', NULL, NULL);"
-    sql3="INSERT INTO `manage_need_loan`.`cu_cust_file_dtl`(`ID`, `REGIST_NO`, `CUST_NO`, `APP_NO`, `BUSI_TYPE`, `SAVE_ATT_NAME`, `UPLOAD_ATT_NAME`, `ATT_TYPE`, `ATT_FILE`, `ATT_SIZE`, `PH_PATH`, `IN_PATH`, `REMARK`, `INST_TIME`, `INST_USER_NO`, `UPDT_TIME`, `UPDT_USER_NO`) VALUES ('"+t+'b88f206222e0'+tnum2+"', '"+registNo+"', '"+custNo+"', '104', '10070016', '100700161627276676407.jpg', '100700161627276676407.jpg', '10080001', '.jpg', '581306', '102/20210726/"+registNo+"/', 'https://qt-fpdl-app.s3.ap-south-1.amazonaws.com/102/20210726/"+registNo+"/100700161627276676407.jpg', NULL, '"+inst_time+"', 'sys', NULL, NULL);"
-    sql4="INSERT INTO `manage_need_loan`.`cu_cust_file_dtl`(`ID`, `REGIST_NO`, `CUST_NO`, `APP_NO`, `BUSI_TYPE`, `SAVE_ATT_NAME`, `UPLOAD_ATT_NAME`, `ATT_TYPE`, `ATT_FILE`, `ATT_SIZE`, `PH_PATH`, `IN_PATH`, `REMARK`, `INST_TIME`, `INST_USER_NO`, `UPDT_TIME`, `UPDT_USER_NO`) VALUES ('"+t+'b88f206222e0'+tnum3+"', '"+registNo+"', '"+custNo+"', '104', '10070017', '100700171627276682497.jpg', '100700171627276682497.jpg', '10080001', '.jpg', '569745', '102/20210726/"+registNo+"/', 'https://qt-fpdl-app.s3.ap-south-1.amazonaws.com/102/20210726/"+registNo+"/100700171627276682497.jpg', NULL, '"+inst_time+"', 'sys', NULL, NULL);"
-    sql5="INSERT INTO `manage_need_loan`.`cu_cust_file_dtl`(`ID`, `REGIST_NO`, `CUST_NO`, `APP_NO`, `BUSI_TYPE`, `SAVE_ATT_NAME`, `UPLOAD_ATT_NAME`, `ATT_TYPE`, `ATT_FILE`, `ATT_SIZE`, `PH_PATH`, `IN_PATH`, `REMARK`, `INST_TIME`, `INST_USER_NO`, `UPDT_TIME`, `UPDT_USER_NO`) VALUES ('"+t+'b88f206222e0'+tnum4+"', '"+registNo+"', '"+custNo+"', '104', '10070004', '100700041627276687389.jpg', '100700041627276687389.jpg', '10080001', '.jpg', '575899', '102/20210726/"+registNo+"/', 'https://qt-fpdl-app.s3.ap-south-1.amazonaws.com/102/20210726/"+registNo+"/100700041627276687389.jpg', NULL, '"+inst_time+"', 'sys', NULL, NULL);"
+    sql2="INSERT INTO `manage_need_loan`.`cu_cust_file_dtl`(`ID`, `REGIST_NO`, `CUST_NO`, `APP_NO`, `BUSI_TYPE`, `SAVE_ATT_NAME`, `UPLOAD_ATT_NAME`, `ATT_TYPE`, `ATT_FILE`, `ATT_SIZE`, `PH_PATH`, `IN_PATH`, `REMARK`, `INST_TIME`, `INST_USER_NO`, `UPDT_TIME`, `UPDT_USER_NO`) VALUES ('"+t+'b88f206222e0'+tnum1+"', '"+registNo+"', '"+custNo+"', '102', '10070015', '100700151627276671905.jpg', '100700151627276671905.jpg', '10080001', '.jpg', '918911', '102/20210726/"+registNo+"/', 'https://qt-fpdl-app.s3.ap-south-1.amazonaws.com/102/20210726/"+registNo+"/100700151627276671905.jpg', NULL, '"+inst_time+"', 'sys', NULL, NULL);"
+    sql3="INSERT INTO `manage_need_loan`.`cu_cust_file_dtl`(`ID`, `REGIST_NO`, `CUST_NO`, `APP_NO`, `BUSI_TYPE`, `SAVE_ATT_NAME`, `UPLOAD_ATT_NAME`, `ATT_TYPE`, `ATT_FILE`, `ATT_SIZE`, `PH_PATH`, `IN_PATH`, `REMARK`, `INST_TIME`, `INST_USER_NO`, `UPDT_TIME`, `UPDT_USER_NO`) VALUES ('"+t+'b88f206222e0'+tnum2+"', '"+registNo+"', '"+custNo+"', '102', '10070016', '100700161627276676407.jpg', '100700161627276676407.jpg', '10080001', '.jpg', '581306', '102/20210726/"+registNo+"/', 'https://qt-fpdl-app.s3.ap-south-1.amazonaws.com/102/20210726/"+registNo+"/100700161627276676407.jpg', NULL, '"+inst_time+"', 'sys', NULL, NULL);"
+    sql4="INSERT INTO `manage_need_loan`.`cu_cust_file_dtl`(`ID`, `REGIST_NO`, `CUST_NO`, `APP_NO`, `BUSI_TYPE`, `SAVE_ATT_NAME`, `UPLOAD_ATT_NAME`, `ATT_TYPE`, `ATT_FILE`, `ATT_SIZE`, `PH_PATH`, `IN_PATH`, `REMARK`, `INST_TIME`, `INST_USER_NO`, `UPDT_TIME`, `UPDT_USER_NO`) VALUES ('"+t+'b88f206222e0'+tnum3+"', '"+registNo+"', '"+custNo+"', '102', '10070017', '100700171627276682497.jpg', '100700171627276682497.jpg', '10080001', '.jpg', '569745', '102/20210726/"+registNo+"/', 'https://qt-fpdl-app.s3.ap-south-1.amazonaws.com/102/20210726/"+registNo+"/100700171627276682497.jpg', NULL, '"+inst_time+"', 'sys', NULL, NULL);"
+    sql5="INSERT INTO `manage_need_loan`.`cu_cust_file_dtl`(`ID`, `REGIST_NO`, `CUST_NO`, `APP_NO`, `BUSI_TYPE`, `SAVE_ATT_NAME`, `UPLOAD_ATT_NAME`, `ATT_TYPE`, `ATT_FILE`, `ATT_SIZE`, `PH_PATH`, `IN_PATH`, `REMARK`, `INST_TIME`, `INST_USER_NO`, `UPDT_TIME`, `UPDT_USER_NO`) VALUES ('"+t+'b88f206222e0'+tnum4+"', '"+registNo+"', '"+custNo+"', '102', '10070004', '100700041627276687389.jpg', '100700041627276687389.jpg', '10080001', '.jpg', '575899', '102/20210726/"+registNo+"/', 'https://qt-fpdl-app.s3.ap-south-1.amazonaws.com/102/20210726/"+registNo+"/100700041627276687389.jpg', NULL, '"+inst_time+"', 'sys', NULL, NULL);"
     DataBase(inter_db).executeUpdateSql(sql2)
     DataBase(inter_db).executeUpdateSql(sql3)
     DataBase(inter_db).executeUpdateSql(sql4)
@@ -118,7 +119,7 @@ def update_kyc_auth(registNo,custNo):
 def bank_auth(custNo,headt):
     bank_acct_no=str(random.randint(10000000,99999999))
     data={"bankAcctName":"wangmmmmshuang","bankAcctNo":bank_acct_no,"custNo":custNo,"ifscCode":"SBIN0001537"}
-    r=requests.post(host_api+'/api/v2/user/auth/bank',data=json.dumps(data),headers=headt,verify=False)
+    r=requests.post(host_api+'/api/cust_india/bank/bank_auth?lang=en',data=json.dumps(data),headers=headt,verify=False)
     print("绑卡认证接口响应=",r.json())
     return bank_acct_no
 
@@ -156,14 +157,14 @@ def trial_instalment(loanNo,headt):
         return 0
 
 def withdraw_mock(registNo,custNo,loanNo,headt,headw):
-    trial_list=loan_info_latest(registNo,headt)
+    trial_list=trial_instalment(loanNo,headw)
     if trial_list==0:
         print("未获取到期数和贷款金额,不调提现接口")
     else:
         instNum=trial_list[0]
         loanAmt=trial_list[1]
         data={"custNo":custNo,"instNum":instNum,"loanAmt":loanAmt,"loanNo":loanNo,"prodNo":prodNo}
-        r=requests.post(host_api+"/api/v2/payment/withdraw",data=json.dumps(data),headers=headt,verify=False)
+        r=requests.post(host_api+"/api/trade/fin/less/withdraw?lang=en",data=json.dumps(data),headers=headt,verify=False)
         print("暂时忽略该报错Unbound bank card,响应=",r.json())
         payout_mock_apply(loanNo,custNo)#提现mock接口
 
@@ -172,7 +173,7 @@ def payout_for_razorpay(cust_no,bank_no):
     t=str(time.time()*1000000)[:15]
     inst_time=str(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
     sql='''INSERT INTO `pay_cust_found_info`(`ID`, `CUST_NO`, `APP_NO`, `MERCHANT_NO`, `FUND_ACCOUNT_ID`, `CONTACT_ID`, `CUST_NAME`, `BANK_NAME`, `IFSC`, `BANK_NO`, `REMARK`, `INST_TIME`, `INST_USER_NO`, `UPDT_TIME`, `UPDT_USER_NO`)
-VALUES ("'''+t+'''", "'''+cust_no+'''", '102', 'CashTmRazorpayTest', "'''+cust_no+'''", NULL, 'wang test api', 'shuang', 'HDFC0003740', "'''+bank_no+'''", NULL, "'''+inst_time+'''", "'''+cust_no+'''", NULL, NULL);'''
+VALUES ("'''+t+'''", "'''+cust_no+'''", "'''+appNo+'''", 'CashTmRazorpayTest', "'''+cust_no+'''", NULL, 'wang test api', 'shuang', 'HDFC0003740', "'''+bank_no+'''", NULL, "'''+inst_time+'''", "'''+cust_no+'''", NULL, NULL);'''
     DataBase(inter_db).executeUpdateSql(sql)
 
 #测试前，需要检查app信息支付渠道配置是否已配置razorpay、bankopen、cashfree
@@ -268,7 +269,4 @@ if __name__ == '__main__':
     # registNo='8378994636'
     # token=login_code(registNo)
     # headt=head_token(token)
-    registNo='8080111222'
-    token=login_code(registNo)
-    headt=head_token(token)
-    cert_auth(registNo,headt)
+    razorpayx_annon_event_callback('L1022203118190554326415114240','7')

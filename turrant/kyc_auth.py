@@ -1,6 +1,6 @@
 # multipart/form-data
 import requests
-from cashTm.daiqian_cashTm import *
+from turrant.daiqian_tur import *
 
 class MultipartFormData(object):
     """multipart/form-data格式转化"""

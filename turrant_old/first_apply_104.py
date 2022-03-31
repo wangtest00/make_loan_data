@@ -1,11 +1,7 @@
-import io
-import sys
-from cashTm.daiqian_cashTm import *
-from cashTm.daihou_cashTm import *
-from cashTm.mgt_cashTm import *
-
-#改编码方便jenkins运行
-sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="gb18030")
+from turrant_old.daihou_104 import *
+from turrant_old.mgt_104 import *
+from turrant_old.daiqian_104 import *
+from data.var_Turrant import *
 
 def first_apply():
     update_Batch_Log()
@@ -19,11 +15,11 @@ def first_apply():
     lunXunDaiQian(loanNo)
     DataBase(inter_db).call_many_proc()
     time.sleep(3)
-    sql2="update manage_need_loan.cu_cust_dtl set RISK_LEVEL='AA',risk_score='"+prodNo+"' where cust_no='"+custNo+"';"
+    sql2="update cu_cust_dtl set RISK_LEVEL='AA',risk_score='"+prodNo+"' where cust_no='"+custNo+"';"
     DataBase(inter_db).executeUpdateSql(sql2)
-    sql3="update manage_need_loan.lo_loan_dtl set BEFORE_STAT='10260007' where LOAN_NO='"+loanNo+"';"
+    sql3="update lo_loan_dtl set BEFORE_STAT='10260007' where LOAN_NO='"+loanNo+"';"
     DataBase(inter_db).executeUpdateSql(sql3)
-    sql4="update manage_need_loan.lo_loan_cust_rel set risk_level='AA',risk_score='"+prodNo+"' where LOAN_NO='"+loanNo+"';"
+    sql4="update lo_loan_cust_rel set risk_level='AA',risk_score='"+prodNo+"' where LOAN_NO='"+loanNo+"';"
     DataBase(inter_db).executeUpdateSql(sql4)
     time.sleep(5)
     token=login_code(registNo)
@@ -36,11 +32,12 @@ def first_apply():
     DataBase(inter_db).call_many_proc()
     DataBase(inter_db).call_many_proc()
     approve(loanNo)
-    sql5="update manage_need_loan.lo_loan_cust_rel set risk_level='AA',risk_score='"+prodNo+"' where LOAN_NO='"+loanNo+"';"
+    sql5="update lo_loan_cust_rel set risk_level='AA',risk_score='"+prodNo+"' where LOAN_NO='"+loanNo+"';"
     DataBase(inter_db).executeUpdateSql(sql5)
     DataBase(inter_db).call_many_proc()
     payout_for_razorpay(custNo,bank_no)
     withdraw_mock(registNo,custNo,loanNo,headt,headw)
+    time.sleep(3)
     chaXun_Stat(loanNo)
 
 def chaXunDaiQian(loanNo):

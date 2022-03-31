@@ -1,8 +1,8 @@
 import json
 import requests
 from database.dataBase_india import *
-from data.var_Turrant import *
-from turrant.daiqian_104 import *
+from data.var_cashTm import *
+from cashTm.daiqian_cashTm import *
 
 
 def check_api(r):
@@ -91,4 +91,4 @@ def pl_shenpi():
 
 if __name__ == '__main__':
     # approve('L1022107268107956427100848128')
-    pl_shenpi()
+    login_mgt()

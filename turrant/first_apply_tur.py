@@ -1,7 +1,8 @@
-from turrant.daihou_104 import *
-from turrant.mgt_104 import *
-from turrant.daiqian_104 import *
-from data.var_Turrant import *
+from data.var_tur import *
+from turrant.daihou_tur import *
+from turrant.daiqian_tur import *
+from database.dataBase_india import *
+from turrant.mgt_tur import *
 
 def first_apply():
     update_Batch_Log()

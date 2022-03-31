@@ -2,9 +2,8 @@ import datetime
 import random
 import string
 from database.dataBase_tur import *
-from data.var_tur import *
 from turrant.daihou_tur import *
-
+from data.var_tur import *
 
 def check_api(r):
     if r.status_code==200:
@@ -30,18 +29,18 @@ def compute_code(m):
     return x
 def head_token(token):
     head={"user-agent": "Dart/2.12 (dart:io)","x-user-language": "en","accept-encoding": "gzip","content-length": "0","host": "test-appa.quantstack.in",
-          "content-type": "application/json;charset=utf-8","version_no":"2.6.5","app_type":"10090001",
+          "content-type": "application/json;charset=utf-8","version_no":"1.0.0","app_type":"10090001",
         "x-app-type": "10090001","app_no": appNo,"x-auth-token":'Bearer '+str(token),"Cookie":"JSESSIONID=d17x0ET9jFp5BBK_qidExJqVs5THhstLnVk2eMEH" }
     return head
 def head_token_f(token):
     head={"user-agent":"Dart/2.12 (dart:io)","Accept-Language":"en","accept-encoding":"gzip","content-length":"277","host":"test-appa.quantstack.in",
-          "content-type":"multipart/form-data; boundary=89795e05-6272-4b47-a620-b40b5a0ebcdc","version_no":"2.6.3","app_type":"10090001",
+          "content-type":"multipart/form-data; boundary=89795e05-6272-4b47-a620-b40b5a0ebcdc","version_no":"1.0.0","app_type":"10090001",
           "app_no":appNo,"x-auth-token":'Bearer '+str(token),"Cookie":"JSESSIONID=ffUdZQ5pBRFudhsBmGLidri4nNB7GRSE4BieOKlY" }
     return head
 def head_token_w(token):
     head={"user-agent":"Mozilla/5.0 (Linux; U; Android 10; en; LIO-AL00 Build/HUAWEILIO-AL00) AppleWebKit/533.1 (KHTML, like Gecko) Version/5.0 Mobile Safari/533.1",
           "Accept-Language":"en","accept-encoding":"gzip","content-length":"277","host":"test-appa.quantstack.in",
-          "content-type":"application/x-www-form-urlencoded","version_no":"2.6.3","app_type":"10090001",
+          "content-type":"application/x-www-form-urlencoded","version_no":"1.0.0","app_type":"10090001",
           "app_no":appNo,"x-auth-token":'Bearer '+str(token),"Cookie":"JSESSIONID=ffUdZQ5pBRFudhsBmGLidri4nNB7GRSE4BieOKlY" }
     return head
 def login_code(registNo):

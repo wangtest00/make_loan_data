@@ -1,8 +1,8 @@
 import json
 import requests
-from database.dataBase_india import *
-from data.var_cashTm import *
-from cashTm.daiqian_cashTm import *
+from database.dataBase_tur import *
+from data.var_tur import *
+from turrant.daiqian_tur import *
 
 
 def check_api(r):

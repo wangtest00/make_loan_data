@@ -2,7 +2,6 @@ from turrant.daihou_tur import *
 from turrant.daiqian_tur import *
 from database.dataBase_tur import *
 from turrant.mgt_tur import *
-from data.var_tur import *
 
 def first_apply():
     update_Batch_Log()

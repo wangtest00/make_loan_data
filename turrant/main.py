@@ -1,8 +1,10 @@
 import io
 import sys
-from cashTm.daiqian_cashTm import *
-from cashTm.daihou_cashTm import *
-from cashTm.mgt_cashTm import *
+from turrant.daihou_tur import *
+from turrant.daiqian_tur import *
+from database.dataBase_tur import *
+from turrant.mgt_tur import *
+from data.var_tur import *
 
 #改编码方便jenkins运行
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="gb18030")

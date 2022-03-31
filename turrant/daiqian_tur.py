@@ -1,7 +1,7 @@
 import datetime
 import random
 import string
-from database.dataBase_india import *
+from database.dataBase_tur import *
 from data.var_tur import *
 from turrant.daihou_tur import *
 

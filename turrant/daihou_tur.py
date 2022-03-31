@@ -1,6 +1,6 @@
 import json,time
 import requests
-from database.dataBase_india import *
+from database.dataBase_tur import *
 from public.check_api import *
 
 t=str(time.time()*1000000)[:10]

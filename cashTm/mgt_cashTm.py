@@ -91,4 +91,4 @@ def pl_shenpi():
 
 if __name__ == '__main__':
     # approve('L1022107268107956427100848128')
-    login_mgt()
+    pl_shenpi()

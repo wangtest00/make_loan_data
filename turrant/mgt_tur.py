@@ -23,7 +23,7 @@ def check_api(r):
         return 0
 #登录mgt,返回ssid值
 def login_mgt():
-    data={"loginName":"wangs@whalekun.com","password":"jk@123"}
+    data={"loginName":"wangs2@whalekun.com","password":"jk@123"}
     r=requests.post(host_mgt+'/api/login/auth?lang=en&lang=zh',data=json.dumps(data),headers=head_mgt,verify=False)
     check_api(r)
     for item in r.cookies:
@@ -91,4 +91,4 @@ def pl_shenpi():
 
 if __name__ == '__main__':
     # approve('L1022107268107956427100848128')
-    login_mgt()
+    pl_shenpi()

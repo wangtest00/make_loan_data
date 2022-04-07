@@ -35,10 +35,10 @@ def first_apply():
     sql5="update lo_loan_cust_rel set risk_level='AA',risk_score='"+prodNo+"' where LOAN_NO='"+loanNo+"';"
     DataBase(inter_db).executeUpdateSql(sql5)
     DataBase(inter_db).call_many_proc()
-    payout_for_razorpay(custNo,bank_no)
-    withdraw_mock(registNo,custNo,loanNo,headt,headw)
-    time.sleep(3)
-    chaXun_Stat(loanNo)
+    # payout_for_razorpay(custNo,bank_no)
+    # withdraw_mock(registNo,custNo,loanNo,headt,headw)
+    # time.sleep(3)
+    # chaXun_Stat(loanNo)
 
 def chaXunDaiQian(loanNo):
     sql1="select BEFORE_STAT from manage_need_loan.lo_loan_dtl where LOAN_NO='"+loanNo+"';"

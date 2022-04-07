@@ -187,9 +187,19 @@ def razorpay_annon_event_callback(loanNo,amount):
     t=r.json()
     print(t)
 
-
+def payout_apply(loanNo,custNo):
+    data = {
+        "loanNo": loanNo,
+        "custNo": custNo,
+        "appNo": "102",
+        "accType": "12010001"
+    }
+    r=requests.post("http://192.168.20.245:8083/api/fin/payout/apply",data=json.dumps(data),headers=head_pay_tmp)
+    t=r.json()
+    print(t)
 
 if __name__ == '__main__':
-    payout_mock_apply('L1022203118190515132384870400','C1022203118190515003183529984')
+    #payout_mock_apply('L1022203118190515132384870400','C1022203118190515003183529984')
     #cashFree_annon_event('L1022203098189733357668728832')
-    #razorpay_annon_event_callback('L1022203088189357773805518848','4')
+    #bank_open_annon_event('363636300062850024','11')
+    payout_apply('L1042203318197808999085834240', 'C1042203318197808595446988800')

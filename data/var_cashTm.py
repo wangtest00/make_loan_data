@@ -1,4 +1,4 @@
-__all__=['host_api','host_action','host_mgt','head_api','head_mgt','host_coll','CONFIGS','prodNo','inter_db','head_pay','host_pay','appNo','appName']
+__all__=['host_api','host_action','host_mgt','head_api','head_mgt','head_pay_tmp','host_coll','CONFIGS','prodNo','inter_db','head_pay','host_pay','appNo','appName']
 
 inter_db='manage_need_loan'
 prodNo='5'
@@ -20,5 +20,6 @@ head_mgt={"Host": "test-mgt.quantstack.in","Connection": "keep-alive","Content-L
 
 head_pay={"Host":"test-pay.quantstack.in","Connection":"keep-alive","Content-Length":"116","Postman-Token":"68cc47f6-8c1f-4ebd-a929-b1ae10b7dd19",
                 "User-Agent":"PostmanRuntime/7.28.2","Accept":"*/*","Content-Type":"application/json","Accept-Encoding":"gzip, deflate, br"}
-
+head_pay_tmp={"Host":"192.168.20.245","Connection":"keep-alive","Content-Length":"116","Postman-Token":"68cc47f6-8c1f-4ebd-a929-b1ae10b7dd19",
+                "User-Agent":"PostmanRuntime/7.28.2","Accept":"*/*","Content-Type":"application/json","Accept-Encoding":"gzip, deflate, br"}
 CONFIGS = {'manage_need_loan': {'host':'172.31.25.83','port':3306, 'user': 'cs_wangs','password': 'cs_wangs!qw####','database': 'manage_need_loan'}}

@@ -191,6 +191,10 @@ where a.LOAN_NO="'''+loanNo+'''" ;'''
     t=r.json()
     print(t)
 
+
+
+
+
 t=str(time.time()*1000000)[:10]
 head_pay_for_razorpayx={"Host":"test-pay.quantstack.in","Connection":"keep-alive","Content-Length":"116","Postman-Token":"68cc47f6-8c1f-4ebd-a929-b1ae10b7dd19",
                 "User-Agent":"PostmanRuntime/7.28.2","Accept":"*/*","Content-Type":"application/json","Accept-Encoding":"gzip, deflate, br","X-Razorpay-Event-Id":"PAYOUT"+t,"X-Razorpay-Signature":"123456"}
@@ -269,4 +273,9 @@ if __name__ == '__main__':
     # registNo='8378994636'
     # token=login_code(registNo)
     # headt=head_token(token)
-    razorpayx_annon_event_callback('L1022203118190554326415114240','7')
+    #razorpayx_annon_event_callback('L1022203118190554326415114240','7')
+    registNo ='6796365486'
+    token = login_code(registNo)
+    headt = head_token(token)
+    custNo='C1042203318197808595446988800'
+    bank_auth(custNo,headt)

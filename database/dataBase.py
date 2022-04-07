@@ -54,7 +54,7 @@ class DataBase():
             print ("调用存储过程成功:",procName)
             #self.closeDB()
         except Exception as e:
-            print("调用存储过程异常：",e)
+            print("调用存储过程异常：",e,procName)
             return 0
     def call_many_proc(self):
         proc=['proc_apr_loan_prod_sel','proc_apr_appr_all_user','proc_apr_appr_allocation_control','proc_apr_appr_allo_user_deal']
@@ -72,7 +72,7 @@ class DataBase():
             print ("调用存储过程成功:",procName,date)
             #self.closeDB()
         except Exception as e:
-            print("调用存储过程异常：",e)
+            print("调用存储过程异常：",e,procName)
             return 0
     #调用存储过程，执行日终批量，从日期1跑到日期2
     def call_daily_important_batch(self,date1,date2):

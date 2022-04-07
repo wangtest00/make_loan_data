@@ -12,8 +12,10 @@ def payout_mock_apply(loanNo,custNo):
     data={
     "loanNo": loanNo,
     "custNo": custNo,
-    "appNo": appNo
+    "appNo": appNo,
+    "accType": "12010001"   #12010001=银行卡，12010002=PayTm Wallet
 }
+    print(data)
     r=requests.post(host_pay+"/api/fin/payout/mock/apply",data=json.dumps(data),headers=head_pay,verify=False)
     print("调提现mock接口，暂时忽略报错",r.json())
 

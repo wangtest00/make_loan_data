@@ -3,10 +3,12 @@
 Created on 2018-11-26
 @author: 王爽
 '''
-import time
+import time,os
 import pymysql
 from data.var_cashTm import *
 from public.date_calculate import *
+start_date=os.environ['start_date']
+end_date=os.environ['end_date']
 
 class DataBase():
     def __init__(self,witchdb):
@@ -89,5 +91,5 @@ class DataBase():
         self.closeDB()
 
 if __name__ == '__main__':
-    #DataBase(inter_db).call_daily_important_batch('20220330','20220401')
-    DataBase(inter_db).call_4_proc()
+    DataBase(inter_db).call_daily_important_batch(start_date,end_date)
+    #DataBase(inter_db).call_4_proc()

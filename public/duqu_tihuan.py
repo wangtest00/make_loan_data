@@ -15,17 +15,17 @@ def replacetext(search_text, replace_text,path):
         f.truncate()
     # 返回“文本已替换”字符串
     print("文本已替换")
-
+workspacename="lp_fr_app_test_beifen"
 # 调用replacetext函数并打印返回的语句
-replacetext("D:/Project", "/home/wangshuang/Downloads","/var/lib/jenkins/workspace/lanaplus_app_test/pubspec.yaml")
-replacetext("F:/QUANT", "/home/wangshuang/Downloads/QUANT","/var/lib/jenkins/workspace/lanaplus_app_test/pubspec.yaml")
+replacetext("D:/Project", "/home/wangshuang/Downloads","/var/lib/jenkins/workspace/"+workspacename+"/pubspec.yaml")
+replacetext("F:/QUANT", "/home/wangshuang/Downloads/QUANT","/var/lib/jenkins/workspace/"+workspacename+"/pubspec.yaml")
 
-replacetext("D:/Project", "/home/wangshuang/Downloads/QUANT","/var/lib/jenkins/workspace/lanaplus_app_test/android/key.properties")
-replacetext("F:/QUANT", "/home/wangshuang/Downloads/QUANT","/var/lib/jenkins/workspace/lanaplus_app_test/android/key.properties")
+replacetext("D:/Project", "/home/wangshuang/Downloads/QUANT","/var/lib/jenkins/workspace/"+workspacename+"/android/key.properties")
+replacetext("F:/QUANT", "/home/wangshuang/Downloads/QUANT","/var/lib/jenkins/workspace/"+workspacename+"/android/key.properties")
 
-os.system('rm /var/lib/jenkins/workspace/lanaplus_app_test/lib/lana_config.dart')
-os.system('cp /home/wangshuang/Downloads/QUANT/lana_config.dart /var/lib/jenkins/workspace/lanaplus_app_test/lib/')
+os.system('rm /var/lib/jenkins/workspace/'+workspacename+'/lib/lana_config.dart')
+os.system('cp /home/wangshuang/Downloads/QUANT/lana_config.dart /var/lib/jenkins/workspace/'+workspacename+'/lib/')
 print("tihuan success for lana_config.dart")
-os.system('rm /var/lib/jenkins/workspace/lanaplus_app_test/pubspec.lock')
-os.system('cp /home/wangshuang/Downloads/QUANT/pubspec.lock /var/lib/jenkins/workspace/lanaplus_app_test/')
+os.system('rm /var/lib/jenkins/workspace/'+workspacename+'/pubspec.lock')
+os.system('cp /home/wangshuang/Downloads/QUANT/pubspec.lock /var/lib/jenkins/workspace/'+workspacename+'/')
 print("tihuan success for pubspec.lock")

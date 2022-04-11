@@ -1,4 +1,4 @@
-from pyecharts import Bar,Pie
+from pyecharts import Bar
 fruits = ['贷前“通过”','贷前“待提现”','正常贷款','逾期贷款','展期结清贷款','已结清贷款']
 sales =[25,16,78,17108,65,44425]
 bar = Bar('水果销售情况')

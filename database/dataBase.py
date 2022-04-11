@@ -3,10 +3,12 @@
 Created on 2018-11-26
 @author: 王爽
 '''
-import time
+import time,os
 import pymysql
 from data.var_mex_lp_duoqi import *
 from public.date_calculate import *
+start_date=os.environ['start_date']
+end_date=os.environ['end_date']
 
 class DataBase():
     def __init__(self,witchdb):
@@ -76,17 +78,20 @@ class DataBase():
             return 0
     #调用存储过程，执行日终批量，从日期1跑到日期2
     def call_daily_important_batch(self,date1,date2):
-        sql="delete from sys_batch_log;"      #先清空batch_log
-        DataBase(which_db).executeUpdateSql(sql)
-        proc=['proc_sys_batch_log_start','proc_dc_flow_dtl','proc_fin_ad_reduce','proc_dc_flow_dtl_settle','proc_fin_ad_ovdu','proc_fin_ad_detail_dtl','proc_fin_ad_dtl','proc_lo_ovdu_dtl','proc_sys_batch_log_end']
+        proc=['proc_sys_batch_log_start','proc_fin_ad_ovdu','proc_fin_ad_detail_dtl','proc_fin_ad_dtl','proc_lo_ovdu_dtl','proc_sys_batch_log_end']
         date=create_assist_date(date1,date2)
         print(date)
-        for j in range(len(date)):
-            for i in range(len(proc)):
-                self.call_proc_args(proc[i],date[j])
-                #time.sleep(1)
-        self.closeDB()
+        if date==0:
+            pass
+        else:
+            sql = "delete from sys_batch_log;"  # 先清空batch_log
+            DataBase(which_db).executeUpdateSql(sql)
+            for j in range(len(date)):
+                for i in range(len(proc)):
+                    self.call_proc_args(proc[i],date[j])
+                    #time.sleep(1)
+            self.closeDB()
 #loanAmt='{0:f}'.format(t[0])#decimal转字符串
 
 if __name__ == '__main__':
-    DataBase('mex_pdl_loan').call_many_proc()
+    DataBase('mex_pdl_loan').call_daily_important_batch(start_date,end_date)

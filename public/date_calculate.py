@@ -17,13 +17,19 @@ def create_assist_date(datestart=None, dateend=None):
     dateend = datetime.datetime.strptime(dateend, '%Y%m%d')
     date_list = []
     date_list.append(datestart.strftime('%Y%m%d'))
-    while datestart < dateend:
+    if datestart < dateend:
         # 日期叠加一天
         datestart += datetime.timedelta(days=+1)
         # 日期转字符串存入列表
         date_list.append(datestart.strftime('%Y%m%d'))
-    #print(date_list)
-    return date_list
+        #print(date_list)
+        return date_list
+    elif datestart==dateend:
+        #print(date_list)
+        return date_list
+    else:
+        print('开始日期不能大于结束日期，不运行批量')
+        return 0
 
 if __name__ == '__main__':
-    create_assist_date('20211026','20211026')
+    create_assist_date('20211022','20211022')

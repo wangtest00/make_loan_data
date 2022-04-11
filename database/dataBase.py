@@ -3,12 +3,11 @@
 Created on 2018-11-26
 @author: 王爽
 '''
-import time,os
+import time
 import pymysql
 from data.var_mex_lp_duoqi import *
 from public.date_calculate import *
-start_date=os.environ['start_date']
-end_date=os.environ['end_date']
+
 
 class DataBase():
     def __init__(self,witchdb):
@@ -94,4 +93,4 @@ class DataBase():
 #loanAmt='{0:f}'.format(t[0])#decimal转字符串
 
 if __name__ == '__main__':
-    DataBase('mex_pdl_loan').call_daily_important_batch(start_date,end_date)
+    DataBase('mex_pdl_loan').call_daily_important_batch('20220411','20220411')

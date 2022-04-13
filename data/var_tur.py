@@ -6,6 +6,7 @@ appNo='104'
 applist={'104':'Turrant','102':'CashTM'}
 appName=applist[appNo][0]
 host_api="https://test-appa.quantstack.in"
+#host_api="http://192.168.20.193:8082"
 host_pay="https://test-pay.quantstack.in"
 host_action="https://test-action.quantstack.in"
 host_mgt="https://test-mgt.quantstack.in"

@@ -114,13 +114,30 @@ def update_kyc_auth(registNo,custNo):
     DataBase(inter_db).executeUpdateSql(sql3)
     DataBase(inter_db).executeUpdateSql(sql4)
     DataBase(inter_db).executeUpdateSql(sql5)
-#绑定银行卡，需要把银行卡号改成明显错的，环境怕放出真实的钱
-def bank_auth(custNo,headt):
-    bank_acct_no=str(random.randint(10000000,99999999))
-    data={"bankAcctName":"wangmmmmshuang","bankAcctNo":bank_acct_no,"custNo":custNo,"ifscCode":"SBIN0001537"}
+#绑定银行卡，需要把银行卡号改成明显错的，环境怕放出真实的钱，写入cu_cust_beneficiary_account表
+def bank_auth(custNo,headt):                            #Back_Account-12010001, （PayTm Wallet-12010002）
+    bank_acct_no=str(random.randint(100000,999999))
+    data={"bankAcctName":"wangmmmmshuang","bankAcctNo":bank_acct_no,"custNo":custNo,"ifscCode":"SBIN0001537","accType":"12010001","pageCode":"12000001"}
     r=requests.post(host_api+'/api/cust_india/bank/bank_auth?lang=en',data=json.dumps(data),headers=headt,verify=False)
     print("绑卡认证接口响应=",r.json())
+    data2={"custNo":custNo,"bankAcctNo":bank_acct_no,"bankAcctName":"wangmmmmshuang","accType":"12010001","ifscCode":"SBIN0001537","pageCode":"12000001","reBankAcctNo":bank_acct_no}
+    r2=requests.post(host_api+'/api/cust_india/bank/checkBankCard?lang=en',data=json.dumps(data2),headers=headt,verify=False)
+    print("校验银行卡接口响应=",r2.json())
     return bank_acct_no
+def bank_auth2(custNo,headt):                            #PayTm Wallet-12010002（Back_Account-12010001）
+    bank_acct_no=str(random.randint(10000000,99999999))
+    data={"bankAcctName":"wangmmmmshuang","bankAcctNo":bank_acct_no,"custNo":custNo,"accType":"12010002","pageCode":"12000001"}
+    r=requests.post(host_api+'/api/cust_india/bank/bank_auth?lang=en',data=json.dumps(data),headers=headt,verify=False)
+    print("绑卡认证接口响应=",r.json())
+    data2={"custNo":custNo,"bankAcctNo":bank_acct_no,"bankAcctName":"wangmmmmshuang","accType":"12010002","pageCode":"12000001"}
+    r2=requests.post(host_api+'/api/cust_india/bank/checkBankCard?lang=en',data=json.dumps(data2),headers=headt,verify=False)
+    print("校验银行卡接口响应=",r2.json())
+    return bank_acct_no
+#受益人账户接口
+def beneficiary_account(custNo):
+    data={"appNo":appNo,"custNo":custNo,"pageCode":"12000001"}  #受益账户配置-12000001
+    r=requests.post(host_api+"/api/compile/cust_beneficiary_account?lang=en",data=json.dumps(data),headers=headt,verify=False)
+    print('受益人账户接口响应=',r.json())
 
 #当前时间的前一天=跑批业务日期，才能正常申请借款
 def update_Batch_Log():
@@ -164,8 +181,8 @@ def withdraw_mock(registNo,custNo,loanNo,headt,headw):
         loanAmt=trial_list[1]
         data={"custNo":custNo,"instNum":instNum,"loanAmt":loanAmt,"loanNo":loanNo,"prodNo":prodNo}
         r=requests.post(host_api+"/api/trade/fin/less/withdraw?lang=en",data=json.dumps(data),headers=headt,verify=False)
-        print("暂时忽略该报错Unbound bank card,响应=",r.json())
-        payout_mock_apply(loanNo,custNo)#提现mock接口
+        print("api申请放款接口响应=",r.json())
+        #payout_mock_apply(loanNo,custNo)#提现mock接口
 
 def payout_for_razorpay(cust_no,bank_no):
     #注意卡号需要与cu_cust_bank_card_dtl表中卡号保持一致
@@ -268,4 +285,11 @@ if __name__ == '__main__':
     # registNo='8378994636'
     # token=login_code(registNo)
     # headt=head_token(token)
-    razorpayx_annon_event_callback('L1022203118190554326415114240','7')
+    registNo = '9350828365'
+    token = login_code(registNo)
+    headt = head_token(token)
+    headw = head_token_w(token)
+    custNo = 'C1042204078200344522597793792'
+    loanNo = 'L1042204078200344663480270848'
+    #bank_auth(custNo, headt)
+    withdraw_mock(registNo, custNo, loanNo, headt, headw)

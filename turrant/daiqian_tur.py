@@ -129,9 +129,10 @@ def bank_auth(custNo,headt):                            #Back_Account-12010001, 
     r2=requests.post(host_api+'/api/cust_india/bank/checkBankCard?lang=en',data=json.dumps(data2),headers=headt,verify=False)
     print("校验银行卡接口响应=",r2.json())
     return bank_acct_no
-def bank_auth_paytm(registNo,custNo,headt):                            #PayTm Wallet-12010002（Back_Account-12010001）
-    bank_acct_no=str(random.randint(10000000,99999999))
-    #bank_acct_no=registNo  #测试环境，卡号77777777，目前能请求通三方
+def bank_auth_paytm(custNo,headt):                            #PayTm Wallet-12010002（Back_Account-12010001）
+    sql="DELETE from cu_cust_beneficiary_account where BENEFICIARY_NO='7777777777';"
+    DataBase(inter_db).executeUpdateSql(sql)
+    bank_acct_no='7777777777'  #测试环境，卡号77777777，目前能请求通三方
     data={"bankAcctName":"wangmmmmshuang","bankAcctNo":bank_acct_no,"custNo":custNo,"accType":"12010002","pageCode":"12000001"}
     r=requests.post(host_api+'/api/cust_india/bank/bank_auth?lang=en',data=json.dumps(data),headers=headt,verify=False)
     print("绑卡认证接口响应=",r.json())
@@ -178,14 +179,14 @@ def trial_instalment(loanNo,headt):
         print("试算接口未获取到数据")
         return 0
 
-def withdraw_mock(custNo,loanNo,headt,headw):
+def withdraw_mock(custNo,loanNo,headt,headw,accType):
     trial_list=trial_instalment(loanNo,headw)
     if trial_list==0:
         print("未获取到期数和贷款金额,不调提现接口")
     else:
         instNum=trial_list[0]
         loanAmt=trial_list[1]
-        data={"custNo":custNo,"instNum":instNum,"loanAmt":loanAmt,"loanNo":loanNo,"prodNo":prodNo,"accType":"12010002"}
+        data={"custNo":custNo,"instNum":instNum,"loanAmt":loanAmt,"loanNo":loanNo,"prodNo":prodNo,"accType":accType}
         r=requests.post(host_api+"/api/trade/fin/less/withdraw?lang=en",data=json.dumps(data),headers=headt,verify=False)
         print("api申请放款接口响应=",r.json())
         #payout_mock_apply(loanNo,custNo)#提现mock接口
@@ -289,16 +290,27 @@ def razorpayx_annon_event_callback(loanNo,amount):
     t=r.json()
     print(t)
 
+def apply_test():
+    data={
+  "loanNo": "L1042204148202833679647703040",
+  "custNo": "C1042204148202833536873594880",
+  "appNo": "104",
+  "accType": "12010002"
+}
+    r=requests.post('http://192.168.20.244:8083/api/fin/payout/apply',data=json.dumps(data),headers=head_pay,verify=False)
+    print(r.json())
+
 if __name__ == '__main__':
     # registNo='8378994636'
     # token=login_code(registNo)
     # headt=head_token(token)
-    registNo = '7777777777'
-    token = login_code(registNo)
-    headt = head_token(token)
-    headw = head_token_w(token)
-    custNo = 'C1042204148202776992861585408'
-    loanNo = 'L1042204148202777135467921408'
-    #bank_auth(custNo, headt)
-    #payout_for_razorpay(custNo, '123123')
-    withdraw_mock( custNo, loanNo, headt, headw)
+    # registNo = '7777777777'
+    # token = login_code(registNo)
+    # headt = head_token(token)
+    # headw = head_token_w(token)
+    # custNo = 'C1042204148202776992861585408'
+    # loanNo = 'L1042204148202777135467921408'
+    # #bank_auth(custNo, headt)
+    # #payout_for_razorpay(custNo, '123123')
+    # withdraw_mock( custNo, loanNo, headt, headw,'12010002')
+    apply_test()

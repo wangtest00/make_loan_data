@@ -188,9 +188,43 @@ def razorpay_annon_event_callback(loanNo,amount):
     t=r.json()
     print(t)
 
-
+def paytm_payout_webhook(loanNo):
+    sql="select ACT_TRAN_AMT,TRAN_FLOW_NO from pay_tran_dtl where LOAN_NO='"+loanNo+"' and TRAN_USE='10330001' and tran_stat='10220001';"
+    sum=DataBase(inter_db).get_one(sql)
+    print(sum)
+    orderId=sum[1]
+    amount=float(sum[0])
+    data={
+    "result": {
+        "amount": str(amount),
+        "beneficiaryIfsc": None,
+        "beneficiaryName": "wangmmmmshuang",
+        "cachedTime": None,
+        "commissionAmount": "0.00",
+        "createdOn": "13-04-2022 08:05:09",
+        "isCachedData": None,
+        "mid": "NARAIN39025689320637",
+        "nextRetryTime": "13-04-2022 08:10:13",
+        "orderId": orderId,
+        "paytmOrderId": "202204130805096939615920",
+        "processedOn": "13-04-2022 08:05:13",
+        "remitterName": "NARAINSONS INVESTMENTS FINANCE AND CONSULTANCY",
+        "retryCount": None,
+        "reversalReason": None,
+        "rrn": "39885896709",
+        "scheduleOn": None,
+        "tax": "0.00"
+    },
+    "status": "SUCCESS",
+    "statusCode": "DE_001",
+    "statusMessage": "Successful disbursal to Wallet is done"
+}
+    print(data)
+    # r=requests.post(host_pay+"/api/trade/paytm/payout_webhook",data=json.dumps(data),headers=head_pay,verify=False)
+    # print(r.json())
 
 if __name__ == '__main__':
-    payout_mock_apply('L1022203118190515132384870400','C1022203118190515003183529984')
+    #payout_mock_apply('L1022203118190515132384870400','C1022203118190515003183529984')
     #cashFree_annon_event('L1022203098189733357668728832')
     #razorpay_annon_event_callback('L1022203088189357773805518848','4')
+    paytm_payout_webhook('L1042204148202827354154926080')

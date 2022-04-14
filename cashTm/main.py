@@ -6,7 +6,10 @@ from cashTm.mgt_cashTm import *
 
 #改编码方便jenkins运行
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="gb18030")
+from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
+# 禁用安全请求警告
+requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 def first_apply():
     update_Batch_Log()
     registNo=str(random.randint(8000000000,9999999999)) #10位随机数

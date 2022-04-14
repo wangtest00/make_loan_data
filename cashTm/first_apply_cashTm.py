@@ -2,7 +2,10 @@ from cashTm.daihou_cashTm import *
 from cashTm.mgt_cashTm import *
 from cashTm.daiqian_cashTm import *
 from data.var_cashTm import *
+from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
+# 禁用安全请求警告
+requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 def first_apply():
     update_Batch_Log()
     registNo=str(random.randint(8000000000,9999999999)) #10位随机数

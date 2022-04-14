@@ -4,7 +4,10 @@ import string
 from database.dataBase_tur import *
 from turrant.daihou_tur import *
 from data.var_tur import *
+from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
+# 禁用安全请求警告
+requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 def check_api(r):
     if r.status_code==200:
         t=r.json()
@@ -116,16 +119,19 @@ def update_kyc_auth(registNo,custNo):
     DataBase(inter_db).executeUpdateSql(sql5)
 #绑定银行卡，需要把银行卡号改成明显错的，环境怕放出真实的钱，写入cu_cust_beneficiary_account表
 def bank_auth(custNo,headt):                            #Back_Account-12010001, （PayTm Wallet-12010002）
-    bank_acct_no=str(random.randint(100000,999999))
+    bank_acct_no=str(random.randint(100000000,999999999))
     data={"bankAcctName":"wangmmmmshuang","bankAcctNo":bank_acct_no,"custNo":custNo,"ifscCode":"SBIN0001537","accType":"12010001","pageCode":"12000001"}
+    print(data)
     r=requests.post(host_api+'/api/cust_india/bank/bank_auth?lang=en',data=json.dumps(data),headers=headt,verify=False)
     print("绑卡认证接口响应=",r.json())
     data2={"custNo":custNo,"bankAcctNo":bank_acct_no,"bankAcctName":"wangmmmmshuang","accType":"12010001","ifscCode":"SBIN0001537","pageCode":"12000001","reBankAcctNo":bank_acct_no}
+    print(data2)
     r2=requests.post(host_api+'/api/cust_india/bank/checkBankCard?lang=en',data=json.dumps(data2),headers=headt,verify=False)
     print("校验银行卡接口响应=",r2.json())
     return bank_acct_no
-def bank_auth2(custNo,headt):                            #PayTm Wallet-12010002（Back_Account-12010001）
+def bank_auth_paytm(registNo,custNo,headt):                            #PayTm Wallet-12010002（Back_Account-12010001）
     bank_acct_no=str(random.randint(10000000,99999999))
+    #bank_acct_no=registNo  #测试环境，卡号77777777，目前能请求通三方
     data={"bankAcctName":"wangmmmmshuang","bankAcctNo":bank_acct_no,"custNo":custNo,"accType":"12010002","pageCode":"12000001"}
     r=requests.post(host_api+'/api/cust_india/bank/bank_auth?lang=en',data=json.dumps(data),headers=headt,verify=False)
     print("绑卡认证接口响应=",r.json())
@@ -172,24 +178,26 @@ def trial_instalment(loanNo,headt):
         print("试算接口未获取到数据")
         return 0
 
-def withdraw_mock(registNo,custNo,loanNo,headt,headw):
+def withdraw_mock(custNo,loanNo,headt,headw):
     trial_list=trial_instalment(loanNo,headw)
     if trial_list==0:
         print("未获取到期数和贷款金额,不调提现接口")
     else:
         instNum=trial_list[0]
         loanAmt=trial_list[1]
-        data={"custNo":custNo,"instNum":instNum,"loanAmt":loanAmt,"loanNo":loanNo,"prodNo":prodNo}
+        data={"custNo":custNo,"instNum":instNum,"loanAmt":loanAmt,"loanNo":loanNo,"prodNo":prodNo,"accType":"12010002"}
         r=requests.post(host_api+"/api/trade/fin/less/withdraw?lang=en",data=json.dumps(data),headers=headt,verify=False)
         print("api申请放款接口响应=",r.json())
         #payout_mock_apply(loanNo,custNo)#提现mock接口
 
 def payout_for_razorpay(cust_no,bank_no):
+    sql1="DELETE  from pay_cust_found_info where CUST_NO='"+cust_no+"';"
+    DataBase(inter_db).executeUpdateSql(sql1)
     #注意卡号需要与cu_cust_bank_card_dtl表中卡号保持一致
     t=str(time.time()*1000000)[:15]
     inst_time=str(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
     sql='''INSERT INTO `pay_cust_found_info`(`ID`, `CUST_NO`, `APP_NO`, `MERCHANT_NO`, `FUND_ACCOUNT_ID`, `CONTACT_ID`, `CUST_NAME`, `BANK_NAME`, `IFSC`, `BANK_NO`, `REMARK`, `INST_TIME`, `INST_USER_NO`, `UPDT_TIME`, `UPDT_USER_NO`)
-VALUES ("'''+t+'''", "'''+cust_no+'''", "'''+appNo+'''", 'CashTmRazorpayTest', "'''+cust_no+'''", NULL, 'wang test api', 'shuang', 'HDFC0003740', "'''+bank_no+'''", NULL, "'''+inst_time+'''", "'''+cust_no+'''", NULL, NULL);'''
+VALUES ("'''+t+'''", "'''+cust_no+'''", "'''+appNo+'''", "'''+appName+'''RazorpayTest_Payout", "'''+cust_no+'''", NULL, 'wang test api', 'shuang', 'HDFC0003740', "'''+bank_no+'''", NULL, "'''+inst_time+'''", "'''+cust_no+'''", NULL, NULL);'''
     DataBase(inter_db).executeUpdateSql(sql)
 
 #测试前，需要检查app信息支付渠道配置是否已配置razorpay、bankopen、cashfree
@@ -209,7 +217,7 @@ where a.LOAN_NO="'''+loanNo+'''" ;'''
 
 t=str(time.time()*1000000)[:10]
 head_pay_for_razorpayx={"Host":"test-pay.quantstack.in","Connection":"keep-alive","Content-Length":"116","Postman-Token":"68cc47f6-8c1f-4ebd-a929-b1ae10b7dd19",
-                "User-Agent":"PostmanRuntime/7.28.2","Accept":"*/*","Content-Type":"application/json","Accept-Encoding":"gzip, deflate, br","X-Razorpay-Event-Id":"PAYOUT"+t,"X-Razorpay-Signature":"123456"}
+"User-Agent":"PostmanRuntime/7.28.2","Accept":"*/*","Content-Type":"application/json","Accept-Encoding":"gzip, deflate, br","X-Razorpay-Event-Id":"PAYOUT"+t,"X-Razorpay-Signature":"123456"}
 
 
 #razorpayx放款模拟回调，注意：记得先要申请放款,测试环境不验证签名
@@ -285,11 +293,12 @@ if __name__ == '__main__':
     # registNo='8378994636'
     # token=login_code(registNo)
     # headt=head_token(token)
-    registNo = '9350828365'
+    registNo = '7777777777'
     token = login_code(registNo)
     headt = head_token(token)
     headw = head_token_w(token)
-    custNo = 'C1042204078200344522597793792'
-    loanNo = 'L1042204078200344663480270848'
+    custNo = 'C1042204148202776992861585408'
+    loanNo = 'L1042204148202777135467921408'
     #bank_auth(custNo, headt)
-    withdraw_mock(registNo, custNo, loanNo, headt, headw)
+    #payout_for_razorpay(custNo, '123123')
+    withdraw_mock( custNo, loanNo, headt, headw)

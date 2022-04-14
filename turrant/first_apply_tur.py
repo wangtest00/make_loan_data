@@ -2,6 +2,10 @@ from turrant.daihou_tur import *
 from turrant.daiqian_tur import *
 from database.dataBase_tur import *
 from turrant.mgt_tur import *
+from requests.packages.urllib3.exceptions import InsecureRequestWarning
+
+# 禁用安全请求警告
+requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 def first_apply():
     update_Batch_Log()
@@ -27,7 +31,7 @@ def first_apply():
     headw=head_token_w(token)
     auth(registNo,custNo,headt)
     loanNo=loan(registNo,custNo,headt)
-    bank_no=bank_auth(custNo,headt)
+    bank_no=bank_auth_paytm(registNo,custNo,headt)
     update_appr_user_stat()
     DataBase(inter_db).call_many_proc()
     DataBase(inter_db).call_many_proc()
@@ -36,9 +40,9 @@ def first_apply():
     DataBase(inter_db).executeUpdateSql(sql5)
     DataBase(inter_db).call_many_proc()
     payout_for_razorpay(custNo,bank_no)
-    withdraw_mock(registNo,custNo,loanNo,headt,headw)
-    # time.sleep(3)
-    # chaXun_Stat(loanNo)
+    withdraw_mock(custNo,loanNo,headt,headw)
+    time.sleep(3)
+    chaXun_Stat(loanNo)
 
 def chaXunDaiQian(loanNo):
     sql1="select BEFORE_STAT from manage_need_loan.lo_loan_dtl where LOAN_NO='"+loanNo+"';"

@@ -5,7 +5,10 @@ from turrant.daiqian_tur import *
 from database.dataBase_tur import *
 from turrant.mgt_tur import *
 from data.var_tur import *
+from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
+# 禁用安全请求警告
+requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 #改编码方便jenkins运行
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="gb18030")
 

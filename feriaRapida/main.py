@@ -6,7 +6,10 @@ from feriaRapida.daiqian_fr import *
 from feriaRapida.mgt_fr import *
 #改编码方便jenkins运行
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="gb18030")
+from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
+# 禁用安全请求警告
+requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 #注册,认证，提交多种信息申请贷款
 def first_apply(registNo):
     update_pwd(registNo)

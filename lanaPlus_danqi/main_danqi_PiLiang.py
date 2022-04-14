@@ -6,6 +6,10 @@ from lanaPlus_danqi.gaishu_lp_danqi import *
 from lanaPlus_danqi.daiqian_lp_danqi import *
 from lanaPlus_danqi.mgt_lp_danqi import *
 from data.var_mex_lp_danqi import *
+from requests.packages.urllib3.exceptions import InsecureRequestWarning
+
+# 禁用安全请求警告
+requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 #改编码方便jenkins运行
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="gb18030")
 filepath=os.environ['amount']

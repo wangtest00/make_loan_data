@@ -4,6 +4,10 @@ from feriaRapida.daihou_fr import *
 from feriaRapida.gaishu_fr import *
 from feriaRapida.daiqian_fr import *
 from feriaRapida.mgt_fr import *
+from requests.packages.urllib3.exceptions import InsecureRequestWarning
+
+# 禁用安全请求警告
+requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 #改编码方便jenkins运行
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="gb18030")
 filepath=os.environ['amount']

@@ -78,7 +78,7 @@ class DataBase():
     #调用存储过程，执行日终批量，从日期1跑到日期2
     def call_daily_important_batch(self,date1,date2):
         proc=['proc_sys_batch_log_start','proc_fin_ad_ovdu','proc_fin_ad_detail_dtl','proc_fin_ad_dtl','proc_lo_ovdu_dtl','proc_sys_batch_log_end']
-        date=create_assist_date(date1,date2)
+        date=get_date_list(date1,date2)
         print('运行日终目标日期=',date)
         if date==0:
             pass

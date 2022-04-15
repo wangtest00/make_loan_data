@@ -51,4 +51,4 @@ def create_assist_date(datestart=None, dateend=None):
         return 0
 
 if __name__ == '__main__':
-    get_date_list('20220415','20220422')
+    get_date_list('20220415','20220415')

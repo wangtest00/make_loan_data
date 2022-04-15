@@ -90,5 +90,5 @@ class DataBase():
         self.closeDB()
 
 if __name__ == '__main__':
-    DataBase(inter_db).call_daily_important_batch('20220411','20220411')
+    DataBase(inter_db).call_daily_important_batch('20220415','20220422')
     #DataBase(inter_db).call_4_proc()

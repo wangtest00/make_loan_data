@@ -13,7 +13,7 @@ def payout_mock_apply(loanNo,custNo):
     "loanNo": loanNo,
     "custNo": custNo,
     "appNo": appNo,
-    "accType": "12010001"  # 12010001=银行卡，12010002=PayTm Wallet
+    "accType": "12010002"  # 12010001=银行卡，12010002=PayTm Wallet
 }
     r=requests.post(host_pay+"/api/fin/payout/mock/apply",data=json.dumps(data),headers=head_pay,verify=False)
     print("调提现mock接口，暂时忽略报错",r.json())
@@ -187,44 +187,59 @@ def razorpay_annon_event_callback(loanNo,amount):
     print(r.url)
     t=r.json()
     print(t)
-
-def paytm_payout_webhook(loanNo):
-    sql="select ACT_TRAN_AMT,TRAN_FLOW_NO from pay_tran_dtl where LOAN_NO='"+loanNo+"' and TRAN_USE='10330001' and tran_stat='10220001';"
-    sum=DataBase(inter_db).get_one(sql)
-    print(sum)
-    orderId=sum[1]
-    amount=float(sum[0])
+#还款申请
+def re_payment_apply(loanNo,transAmt):
+    sql="select CUST_NO,REPAY_DATE from lo_loan_dtl where LOAN_NO='"+loanNo+"';"
+    m=DataBase(inter_db).get_one(sql)
+    custNo=m[0]
+    repayDate=m[1]
     data={
-    "result": {
-        "amount": str(amount),
-        "beneficiaryIfsc": None,
-        "beneficiaryName": "wangmmmmshuang",
-        "cachedTime": None,
-        "commissionAmount": "0.00",
-        "createdOn": "13-04-2022 08:05:09",
-        "isCachedData": None,
-        "mid": "NARAIN39025689320637",
-        "nextRetryTime": "13-04-2022 08:10:13",
-        "orderId": orderId,
-        "paytmOrderId": "202204130805096939615920",
-        "processedOn": "13-04-2022 08:05:13",
-        "remitterName": "NARAINSONS INVESTMENTS FINANCE AND CONSULTANCY",
-        "retryCount": None,
-        "reversalReason": None,
-        "rrn": "39885896709",
-        "scheduleOn": None,
-        "tax": "0.00"
-    },
-    "status": "SUCCESS",
-    "statusCode": "DE_001",
-    "statusMessage": "Successful disbursal to Wallet is done"
+      "appNo": appNo,
+      "loanNo": loanNo,
+      "custNo": custNo,
+      "instNum": 1,
+      "repayDate": repayDate,
+      "transAmt": transAmt,
+      "custName": "wang mmmm shuang",
+      "advance": "10000000",
+      "isDefer": "10000000"
 }
-    print(data)
-    # r=requests.post(host_pay+"/api/trade/paytm/payout_webhook",data=json.dumps(data),headers=head_pay,verify=False)
-    # print(r.json())
+    r=requests.post(host_pay+"/api/fin/re_payment/apply",data=json.dumps(data),headers=head_lixiang,verify=False)
+    print(r.json())
+#还款模拟回调
+def paytm_repay_webhook(loanNo,txnamount):
+    sql = "select TRAN_FLOW_NO from pay_tran_dtl where LOAN_NO='" + loanNo + "' and TRAN_USE='10330002';"
+    tranFlowNo = DataBase(inter_db).get_one(sql)
+    tranFlowNo=tranFlowNo[0]
+    print(tranFlowNo)
+    data={
+    "CURRENCY": "INR",
+    "LINKDESCRIPTION": "Test Payment",
+    "PAYMENTEMAILID": "ashurajput@icloud.com",
+    "PAYMENTMOBILENUMBER": "9205994333",
+    "GATEWAYNAME": "WALLET",
+    "RESPMSG": "Txn Success",
+    "BANKNAME": "WALLET",
+    "PAYMENTMODE": "PPI",
+    "CUSTID": "530484232",
+    "MID": "NARAIN16906673626335",
+    "MERC_UNQ_REF": "LI_472228308",
+    "RESPCODE": "01",
+    "TXNID": "20220413111212800110168193234977400",
+    "TXNAMOUNT": txnamount,
+    "ORDERID": tranFlowNo,
+    "STATUS": "TXN_SUCCESS",
+    "BANKTXNID": t,
+    "TXNDATETIME": "2022-04-13 12:50:21.0",
+    "TXNDATE": "2022-04-13",
+    "MERCHANTLINKREFERENCEID": "81787160baf911ecb9389078412e4d89"
+}
+    print(data)                                                                  #表单格式提交
+    r = requests.post(host_pay+"/api/trade/paytm/repay_webhook", data=data,verify=False)
+    print(r.json())
 
 if __name__ == '__main__':
     #payout_mock_apply('L1022203118190515132384870400','C1022203118190515003183529984')
     #cashFree_annon_event('L1022203098189733357668728832')
     #razorpay_annon_event_callback('L1022203088189357773805518848','4')
-    paytm_payout_webhook('L1042204148202827354154926080')
+    paytm_repay_webhook('L1042204148202844580362780672', '5070')

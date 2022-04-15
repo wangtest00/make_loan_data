@@ -40,9 +40,10 @@ def first_apply():
     DataBase(inter_db).executeUpdateSql(sql5)
     DataBase(inter_db).call_many_proc()
     payout_for_razorpay(custNo,bank_no)
-    withdraw_mock(custNo,loanNo,headt,headw,'12010002')
-    # time.sleep(3)
-    # chaXun_Stat(loanNo)
+    withdraw(custNo,loanNo,headt,headw,'12010002')
+    paytm_payout_webhook(loanNo)
+    time.sleep(3)
+    chaXun_Stat(loanNo)
 
 def chaXunDaiQian(loanNo):
     sql1="select BEFORE_STAT from manage_need_loan.lo_loan_dtl where LOAN_NO='"+loanNo+"';"
@@ -61,5 +62,5 @@ def lunXunDaiQian(loanNo):
 
 
 if __name__ == '__main__':
-    for i in range(1):
+    for i in range(10):
         first_apply()

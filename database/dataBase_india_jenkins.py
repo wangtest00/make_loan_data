@@ -82,7 +82,7 @@ class DataBase():
         sql="delete from sys_batch_log;"      #先清空batch_log
         DataBase(inter_db).executeUpdateSql(sql)
         proc=['proc_sys_batch_log_start','proc_dc_flow_dtl','proc_fin_ad_reduce','proc_dc_flow_dtl_settle','proc_fin_ad_ovdu','proc_fin_ad_detail_dtl','proc_fin_ad_dtl','proc_lo_ovdu_dtl','proc_sys_batch_log_end']
-        date=create_assist_date(date1,date2)
+        date=get_date_list(date1,date2)
         print(date)
         for j in range(len(date)):
             for i in range(len(proc)):

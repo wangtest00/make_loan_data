@@ -5,6 +5,7 @@ from database.dataBase_tur import *
 from turrant.daihou_tur import *
 from data.var_tur import *
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
+t0=str(time.time()*1000000)
 
 # 禁用安全请求警告
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
@@ -133,15 +134,16 @@ def bank_auth_paytm(custNo,headt):                            #PayTm Wallet-1201
     sql="DELETE from cu_cust_beneficiary_account where BENEFICIARY_NO='7777777777';"
     DataBase(inter_db).executeUpdateSql(sql)
     bank_acct_no='7777777777'  #测试环境，卡号77777777，目前能请求通三方
-    data={"bankAcctName":"wangmmmmshuang","bankAcctNo":bank_acct_no,"custNo":custNo,"accType":"12010002","pageCode":"12000001"}
+    data={"bankAcctName":"wangmmmmshuang","bankAcctNo":bank_acct_no,"custNo":custNo,"accType":"12010002","pageCode":"12000001","repeatBankAcctNo":bank_acct_no}
+    print(data)
     r=requests.post(host_api+'/api/cust_india/bank/bank_auth?lang=en',data=json.dumps(data),headers=headt,verify=False)
     print("绑卡认证接口响应=",r.json())
-    data2={"custNo":custNo,"bankAcctNo":bank_acct_no,"bankAcctName":"wangmmmmshuang","accType":"12010002","pageCode":"12000001"}
+    data2={"custNo":custNo,"bankAcctNo":bank_acct_no,"bankAcctName":"wangmmmmshuang","accType":"12010002","pageCode":"12000001","repeatBankAcctNo":bank_acct_no}
     r2=requests.post(host_api+'/api/cust_india/bank/checkBankCard?lang=en',data=json.dumps(data2),headers=headt,verify=False)
     print("校验银行卡接口响应=",r2.json())
     return bank_acct_no
 #受益人账户接口
-def beneficiary_account(custNo):
+def beneficiary_account(custNo,headt):
     data={"appNo":appNo,"custNo":custNo,"pageCode":"12000001"}  #受益账户配置-12000001
     r=requests.post(host_api+"/api/compile/cust_beneficiary_account?lang=en",data=json.dumps(data),headers=headt,verify=False)
     print('受益人账户接口响应=',r.json())
@@ -179,17 +181,19 @@ def trial_instalment(loanNo,headt):
         print("试算接口未获取到数据")
         return 0
 
-def withdraw_mock(custNo,loanNo,headt,headw,accType):
+def withdraw(custNo,loanNo,headt,headw,accType):
     trial_list=trial_instalment(loanNo,headw)
     if trial_list==0:
         print("未获取到期数和贷款金额,不调提现接口")
     else:
+        sql = "delete from pay_tran_dtl where IN_ACCT_NO='7777777777';"  # 支付要查重复
+        DataBase(inter_db).executeUpdateSql(sql)
         instNum=trial_list[0]
         loanAmt=trial_list[1]
         data={"custNo":custNo,"instNum":instNum,"loanAmt":loanAmt,"loanNo":loanNo,"prodNo":prodNo,"accType":accType}
         r=requests.post(host_api+"/api/trade/fin/less/withdraw?lang=en",data=json.dumps(data),headers=headt,verify=False)
         print("api申请放款接口响应=",r.json())
-        #payout_mock_apply(loanNo,custNo)#提现mock接口
+
 
 def payout_for_razorpay(cust_no,bank_no):
     sql1="DELETE  from pay_cust_found_info where CUST_NO='"+cust_no+"';"
@@ -210,8 +214,7 @@ where a.LOAN_NO="'''+loanNo+'''" ;'''
     print(repay_list)
     token=login_code(repay_list[0])
     headt=head_token(token)
-    data={"advance":"10000000","custNo":repay_list[1],"loanNo":loanNo,"repayDate":repay_list[2],"repayInstNum":1,
-          "tranAppType":"10090001","transAmt":str(repay_list[3])}
+    data={"advance":"10000000","custNo":repay_list[1],"loanNo":loanNo,"repayDate":repay_list[2],"repayInstNum":1,"tranAppType":"10090001","transAmt":str(repay_list[3])}
     r=requests.post(host_api+"/api/trade/fin/repay?lang=en",data=json.dumps(data),headers=headt,verify=False)
     t=r.json()
     print(t)
@@ -289,28 +292,66 @@ def razorpayx_annon_event_callback(loanNo,amount):
     r=requests.post(host_pay+"/api/trade/razorpay_x/annon/event/callback",data=json.dumps(data),headers=head_pay_for_razorpayx,verify=False)
     t=r.json()
     print(t)
-
-def apply_test():
+#放款申请
+def payout_apply_test(loanNo):
+    sql = "select CUST_NO,REPAY_DATE from lo_loan_dtl where LOAN_NO='"+loanNo+"';"
+    m = DataBase(inter_db).get_one(sql)
+    custNo = m[0]
     data={
-  "loanNo": "L1042204148202833679647703040",
-  "custNo": "C1042204148202833536873594880",
-  "appNo": "104",
-  "accType": "12010002"
+      "loanNo": loanNo,
+      "custNo": custNo,
+      "appNo": appNo,
+      "accType": "12010002"}  #注意这里暂时写死为paytm类型
+    r=requests.post(host_pay+'/api/fin/payout/apply',data=json.dumps(data),headers=head_lixiang,verify=False)
+    print(r.json())
+#放款模拟回调
+def paytm_payout_webhook(loanNo):
+    sql="select ACT_TRAN_AMT,TRAN_FLOW_NO from pay_tran_dtl where LOAN_NO='"+loanNo+"' and TRAN_USE='10330001' and (tran_stat='10220004' or tran_stat='10220001');"
+    sum=DataBase(inter_db).get_one(sql)
+    print(sum)
+    orderId=sum[1]
+    amount=float(sum[0])
+    data={
+    "result": {
+        "amount": str(amount),
+        "beneficiaryIfsc": None,
+        "beneficiaryName": "wangmmmmshuang",
+        "cachedTime": None,
+        "commissionAmount": "0.00",
+        "createdOn": "13-04-2022 08:05:09",
+        "isCachedData": None,
+        "mid": "NARAIN39025689320637",
+        "nextRetryTime": "13-04-2022 08:10:13",
+        "orderId": orderId,
+        "paytmOrderId": t0,
+        "processedOn": "13-04-2022 08:05:13",
+        "remitterName": "NARAINSONS INVESTMENTS FINANCE AND CONSULTANCY",
+        "retryCount": None,
+        "reversalReason": None,
+        "rrn": "39885896709",
+        "scheduleOn": None,
+        "tax": "0.00"
+    },
+    "status": "SUCCESS",
+    "statusCode": "DE_001",
+    "statusMessage": "Successful disbursal to Wallet is done"
 }
-    r=requests.post('http://192.168.20.244:8083/api/fin/payout/apply',data=json.dumps(data),headers=head_pay,verify=False)
+    print(data)
+    r=requests.post(host_pay+"/api/trade/paytm/payout_webhook",data=json.dumps(data),headers=head_pay,verify=False)
     print(r.json())
 
 if __name__ == '__main__':
     # registNo='8378994636'
     # token=login_code(registNo)
     # headt=head_token(token)
-    # registNo = '7777777777'
-    # token = login_code(registNo)
-    # headt = head_token(token)
-    # headw = head_token_w(token)
-    # custNo = 'C1042204148202776992861585408'
-    # loanNo = 'L1042204148202777135467921408'
-    # #bank_auth(custNo, headt)
+    registNo = '9337832552'
+    token = login_code(registNo)
+    headt = head_token(token)
+    headw = head_token_w(token)
+    custNo = 'C1042204148202920784197517312'
+    loanNo = 'L1042204148202777135467921408'
+    bank_auth_paytm(custNo, headt)
     # #payout_for_razorpay(custNo, '123123')
     # withdraw_mock( custNo, loanNo, headt, headw,'12010002')
-    apply_test()
+    #payout_apply_test()
+    #paytm_payout_webhook('L1042204148202914420238778368')

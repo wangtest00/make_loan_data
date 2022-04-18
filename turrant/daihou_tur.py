@@ -204,11 +204,11 @@ def re_payment_apply(loanNo,transAmt):
       "advance": "10000000",
       "isDefer": "10000000"
 }
-    r=requests.post(host_pay+"/api/fin/re_payment/apply",data=json.dumps(data),headers=head_lixiang,verify=False)
+    r=requests.post(host_pay+"/api/fin/re_payment/apply",data=json.dumps(data),headers=head_pay,verify=False)
     print(r.json())
 #还款模拟回调
 def paytm_repay_webhook(loanNo,txnamount):
-    sql = "select TRAN_FLOW_NO from pay_tran_dtl where LOAN_NO='" + loanNo + "' and TRAN_USE='10330002';"
+    sql = "select TRAN_FLOW_NO from pay_tran_dtl where LOAN_NO='"+loanNo+"' and TRAN_USE='10330002';"
     tranFlowNo = DataBase(inter_db).get_one(sql)
     tranFlowNo=tranFlowNo[0]
     print(tranFlowNo)
@@ -242,4 +242,7 @@ if __name__ == '__main__':
     #payout_mock_apply('L1022203118190515132384870400','C1022203118190515003183529984')
     #cashFree_annon_event('L1022203098189733357668728832')
     #razorpay_annon_event_callback('L1022203088189357773805518848','4')
-    paytm_repay_webhook('L1042204148202844580362780672', '5070')
+    loanNo='L1042204148202932998371475456'
+    amount='12'
+    re_payment_apply(loanNo, amount)
+    paytm_repay_webhook(loanNo, amount)

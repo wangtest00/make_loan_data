@@ -2,6 +2,10 @@ import json,time
 import requests
 from database.dataBase_tur import *
 from public.check_api import *
+from requests.packages.urllib3.exceptions import InsecureRequestWarning
+
+# 禁用安全请求警告
+requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 t=str(time.time()*1000000)[:10]
 head_pay_for_razorpay={"Host":"test-pay.quantstack.in","Connection":"keep-alive","Content-Length":"116","Postman-Token":"68cc47f6-8c1f-4ebd-a929-b1ae10b7dd19",
@@ -208,10 +212,11 @@ def re_payment_apply(loanNo,transAmt):
     print(r.json())
 #还款模拟回调
 def paytm_repay_webhook(loanNo,txnamount):
-    sql = "select TRAN_FLOW_NO from pay_tran_dtl where LOAN_NO='"+loanNo+"' and TRAN_USE='10330002';"
-    tranFlowNo = DataBase(inter_db).get_one(sql)
-    tranFlowNo=tranFlowNo[0]
-    print(tranFlowNo)
+    sql = "select TRAN_FLOW_NO,TRAN_ORDER_NO from pay_tran_dtl where LOAN_NO='"+loanNo+"' and TRAN_USE='10330002' and tran_stat='10220000';"
+    sum2 = DataBase(inter_db).get_one(sql)
+    tranFlowNo=sum2[0]
+    tranorderno=sum2[1]
+    print(sum2)
     data={
     "CURRENCY": "INR",
     "LINKDESCRIPTION": "Test Payment",
@@ -223,7 +228,7 @@ def paytm_repay_webhook(loanNo,txnamount):
     "PAYMENTMODE": "PPI",
     "CUSTID": "530484232",
     "MID": "NARAIN16906673626335",
-    "MERC_UNQ_REF": "LI_472228308",
+    "MERC_UNQ_REF": "LI_"+tranorderno,
     "RESPCODE": "01",
     "TXNID": "20220413111212800110168193234977400",
     "TXNAMOUNT": txnamount,
@@ -237,12 +242,20 @@ def paytm_repay_webhook(loanNo,txnamount):
     print(data)                                                                  #表单格式提交
     r = requests.post(host_pay+"/api/trade/paytm/repay_webhook", data=data,verify=False)
     print(r.json())
+#处理还款中的订单为失效
+def handle_repay():
+    r=requests.post(host_pay+"/api/common/handle/re_pay?isAll=false&count=5000&minutes=5&loanNo=",verify=False)
+    #r=requests.post("http://192.168.20.244:8083/api/common/handle/re_pay?isAll=false&count=5000&minutes=5&loanNo=",verify=False)
+    print("处理还款中的订单为失效接口响应=",r.json())
+
 
 if __name__ == '__main__':
     #payout_mock_apply('L1022203118190515132384870400','C1022203118190515003183529984')
     #cashFree_annon_event('L1022203098189733357668728832')
     #razorpay_annon_event_callback('L1022203088189357773805518848','4')
-    loanNo='L1042204148202932998371475456'
-    amount='12'
-    re_payment_apply(loanNo, amount)
+    loanNo='L1042204198204641397010268160'
+    #loanNo=['L1042204198204641683506397184','L1042204198204641397010268160','L1042204198204641110522527744','L1042204198204640821933441024','L1042204198204640535462477824']
+    amount = '11'
+    #re_payment_apply(loanNo, amount)
     paytm_repay_webhook(loanNo, amount)
+    #handle_repay()

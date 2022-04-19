@@ -7,7 +7,7 @@ import time
 import pymysql
 from data.var_cashTm import *
 from public.date_calculate import *
-
+from turrant.daihou_tur import *
 
 class DataBase():
     def __init__(self,witchdb):
@@ -82,13 +82,16 @@ class DataBase():
         DataBase(inter_db).executeUpdateSql(sql)
         proc=['proc_sys_batch_log_start','proc_dc_flow_dtl','proc_fin_ad_reduce','proc_dc_flow_dtl_settle','proc_fin_ad_ovdu','proc_fin_ad_detail_dtl','proc_fin_ad_dtl','proc_lo_ovdu_dtl','proc_sys_batch_log_end']
         date=get_date_list(date1,date2)
-        print(date)
+        #print(date)
         for j in range(len(date)):
             for i in range(len(proc)):
-                self.call_proc_args(proc[i],date[j])
-                #time.sleep(1)
+                if i ==1:
+                    handle_repay()
+                else:
+                    self.call_proc_args(proc[i],date[j])
+                pass
         self.closeDB()
 
 if __name__ == '__main__':
-    DataBase(inter_db).call_daily_important_batch('20220415','20220416')
+    DataBase(inter_db).call_daily_important_batch('20220418','20220418')
     #DataBase(inter_db).call_4_proc()

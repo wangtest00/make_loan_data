@@ -14,38 +14,40 @@ sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="gb18030")
 
 def first_apply():
     update_Batch_Log()
-    registNo=str(random.randint(8000000000,9999999999)) #10位随机数
-    token=login_code(registNo)
-    headt=head_token(token)
-    custNo=cert_auth(registNo,headt)
-    auth(registNo,custNo,headt)
-    update_kyc_auth(registNo,custNo)
-    loanNo=loan(registNo,custNo,headt)
+    registNo = str(random.randint(8000000000, 9999999999))  # 10位随机数
+    token = login_code(registNo)
+    headt = head_token(token)
+    custNo = cert_auth(registNo, headt)
+    auth(registNo, custNo, headt)
+    update_kyc_auth(registNo, custNo)
+    loanNo = loan(registNo, custNo, headt)
     lunXunDaiQian(loanNo)
     DataBase(inter_db).call_many_proc()
     time.sleep(3)
-    sql2="update manage_need_loan.cu_cust_dtl set RISK_LEVEL='AA',risk_score='"+prodNo+"' where cust_no='"+custNo+"';"
+    sql2 = "update cu_cust_dtl set RISK_LEVEL='AA',risk_score='" + prodNo + "' where cust_no='" + custNo + "';"
     DataBase(inter_db).executeUpdateSql(sql2)
-    sql3="update manage_need_loan.lo_loan_dtl set BEFORE_STAT='10260007' where LOAN_NO='"+loanNo+"';"
+    sql3 = "update lo_loan_dtl set BEFORE_STAT='10260007' where LOAN_NO='" + loanNo + "';"
     DataBase(inter_db).executeUpdateSql(sql3)
-    sql4="update manage_need_loan.lo_loan_cust_rel set risk_level='AA',risk_score='"+prodNo+"' where LOAN_NO='"+loanNo+"';"
+    sql4 = "update lo_loan_cust_rel set risk_level='AA',risk_score='" + prodNo + "' where LOAN_NO='" + loanNo + "';"
     DataBase(inter_db).executeUpdateSql(sql4)
     time.sleep(5)
-    token=login_code(registNo)
-    headt=head_token(token)
-    headw=head_token_w(token)
-    auth(registNo,custNo,headt)
-    loanNo=loan(registNo,custNo,headt)
-    bank_no=bank_auth(custNo,headt)
+    token = login_code(registNo)
+    headt = head_token(token)
+    headw = head_token_w(token)
+    auth(registNo, custNo, headt)
+    loanNo = loan(registNo, custNo, headt)
+    bank_no = bank_auth_paytm(custNo, headt)
     update_appr_user_stat()
     DataBase(inter_db).call_many_proc()
     DataBase(inter_db).call_many_proc()
     approve(loanNo)
-    sql5="update manage_need_loan.lo_loan_cust_rel set risk_level='AA',risk_score='"+prodNo+"' where LOAN_NO='"+loanNo+"';"
+    sql5 = "update lo_loan_cust_rel set risk_level='AA',risk_score='" + prodNo + "' where LOAN_NO='" + loanNo + "';"
     DataBase(inter_db).executeUpdateSql(sql5)
     DataBase(inter_db).call_many_proc()
     payout_for_razorpay(custNo,bank_no)
-    withdraw_mock(registNo,custNo,loanNo,headt,headw)
+    withdraw(custNo,loanNo,headt,headw,'12010002')
+    paytm_payout_webhook(loanNo)
+    time.sleep(3)
     chaXun_Stat(loanNo)
 
 def chaXunDaiQian(loanNo):

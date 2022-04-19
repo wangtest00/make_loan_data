@@ -130,7 +130,8 @@ def bank_auth(custNo,headt):                            #Back_Account-12010001, 
     r2=requests.post(host_api+'/api/cust_india/bank/checkBankCard?lang=en',data=json.dumps(data2),headers=headt,verify=False)
     print("校验银行卡接口响应=",r2.json())
     return bank_acct_no
-test_phoneNo='9205994333'
+
+test_phoneNo='77777777'
 def bank_auth_paytm(custNo,headt):                            #PayTm Wallet-12010002（Back_Account-12010001）
     sql="DELETE from cu_cust_beneficiary_account where BENEFICIARY_NO='"+test_phoneNo+"';"
     DataBase(inter_db).executeUpdateSql(sql)
@@ -307,7 +308,7 @@ def payout_apply_test(loanNo):
     print(r.json())
 #放款模拟回调
 def paytm_payout_webhook(loanNo):
-    sql="select ACT_TRAN_AMT,TRAN_FLOW_NO from pay_tran_dtl where LOAN_NO='"+loanNo+"' and TRAN_USE='10330001' and (tran_stat='10220004' or tran_stat='10220001');"
+    sql="select ACT_TRAN_AMT,TRAN_FLOW_NO from pay_tran_dtl where LOAN_NO='"+loanNo+"' and TRAN_USE='10330001' and (tran_stat='10220004' or tran_stat='10220001' or tran_stat='10220003');"
     sum=DataBase(inter_db).get_one(sql)
     orderId=sum[1]
     amount=float(sum[0])
@@ -344,14 +345,14 @@ if __name__ == '__main__':
     # registNo='8378994636'
     # token=login_code(registNo)
     # headt=head_token(token)
-    registNo = '9795227928'
-    #token = login_code(registNo)
+    registNo = '9337832552'
+    # token = login_code(registNo)
     # headt = head_token(token)
     # headw = head_token_w(token)
-    #custNo = 'C1042204158203201862753779712'
-    #loanNo = 'L1042204158203202023789887488'
+    custNo = 'C1042204148202920784197517312'
+    loanNo = 'L1042204148202920925646225408'
     #bank_auth_paytm(custNo, headt)
     # #payout_for_razorpay(custNo, '123123')
     #withdraw( custNo, loanNo, headt, headw,'12010002')
-    payout_apply_test('L1042204158203255911347847168')
-    #paytm_payout_webhook('L1042204158203205809019224064')
+    #payout_apply_test('L1042204158203142570617012224')
+    paytm_payout_webhook('L1042204158203255911347847168')

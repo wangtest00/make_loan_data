@@ -131,11 +131,11 @@ def bank_auth(custNo,headt):                            #Back_Account-12010001, 
     print("校验银行卡接口响应=",r2.json())
     return bank_acct_no
 
-test_phoneNo='77777777'
+test_phoneNo='7777777777'
 def bank_auth_paytm(custNo,headt):                            #PayTm Wallet-12010002（Back_Account-12010001）
     sql="DELETE from cu_cust_beneficiary_account where BENEFICIARY_NO='"+test_phoneNo+"';"
     DataBase(inter_db).executeUpdateSql(sql)
-    bank_acct_no=test_phoneNo  #测试环境，卡号77777777，目前能请求通三方,生产环境使用手机号和账户名：9205994333、Ashish rajput
+    bank_acct_no=test_phoneNo  #测试环境，卡号7777777777，目前能请求通三方,生产环境使用手机号和账户名：9205994333、Ashish rajput
     data={"bankAcctName":"Ashish rajput","bankAcctNo":bank_acct_no,"custNo":custNo,"accType":"12010002","pageCode":"12000001","repeatBankAcctNo":bank_acct_no}
     print(data)
     r=requests.post(host_api+'/api/cust_india/bank/bank_auth?lang=en',data=json.dumps(data),headers=headt,verify=False)

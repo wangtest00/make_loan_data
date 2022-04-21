@@ -7,6 +7,7 @@ applist={'104':'Turrant','102':'CashTM'}
 appName=applist[appNo][0]
 host_api="https://test-appa.quantstack.in"
 host_pay="https://test-pay.quantstack.in"
+#host_pay="http://192.168.20.246:8083"
 host_action="https://test-action.quantstack.in"
 host_mgt="https://test-mgt.quantstack.in"
 host_coll="https://test-collection.quantstack.in"
@@ -20,6 +21,6 @@ head_mgt={"Host": "test-mgt.quantstack.in","Connection": "keep-alive","Content-L
 
 head_pay={"Host":"test-pay.quantstack.in","Connection":"keep-alive","Content-Length":"116","Postman-Token":"68cc47f6-8c1f-4ebd-a929-b1ae10b7dd19",
                 "User-Agent":"PostmanRuntime/7.28.2","Accept":"*/*","Content-Type":"application/json","Accept-Encoding":"gzip, deflate, br"}
-head_pay_tmp={"Host":"192.168.20.245","Connection":"keep-alive","Content-Length":"116","Postman-Token":"68cc47f6-8c1f-4ebd-a929-b1ae10b7dd19",
+head_pay_tmp={"Host":"192.168.20.246","Connection":"keep-alive","Content-Length":"116","Postman-Token":"68cc47f6-8c1f-4ebd-a929-b1ae10b7dd19",
                 "User-Agent":"PostmanRuntime/7.28.2","Accept":"*/*","Content-Type":"application/json","Accept-Encoding":"gzip, deflate, br"}
 CONFIGS = {'manage_need_loan': {'host':'172.31.25.83','port':3306, 'user': 'cs_wangs','password': 'cs_wangs!qw####','database': 'manage_need_loan'}}

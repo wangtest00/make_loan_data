@@ -39,7 +39,7 @@ def first_apply():
     DataBase(inter_db).executeUpdateSql(sql5)
     DataBase(inter_db).call_many_proc()
     payout_for_razorpay(custNo,bank_no)
-    withdraw_mock(registNo,custNo,loanNo,headt,headw)
+    withdraw_mock(custNo,loanNo,headt,headw)
     time.sleep(3)
     chaXun_Stat(loanNo)
 

@@ -11,6 +11,7 @@ def first_apply():
     update_Batch_Log()
     registNo=str(random.randint(8000000000,9999999999)) #10位随机数
     token=login_code(registNo)
+    insert_white_list(registNo)   #插入白名单数据。目前非黑非白，进件代码会拒件
     headt=head_token(token)
     custNo=cert_auth(registNo,headt)
     auth(registNo,custNo,headt)
@@ -41,9 +42,9 @@ def first_apply():
     DataBase(inter_db).call_many_proc()
     payout_for_razorpay(custNo,bank_no)
     withdraw(custNo,loanNo,headt,headw,'12010002')
-    paytm_payout_webhook(loanNo)
-    time.sleep(3)
-    chaXun_Stat(loanNo)
+    # paytm_payout_webhook(loanNo)
+    # time.sleep(3)
+    # chaXun_Stat(loanNo)
 
 def chaXunDaiQian(loanNo):
     sql1="select BEFORE_STAT from manage_need_loan.lo_loan_dtl where LOAN_NO='"+loanNo+"';"

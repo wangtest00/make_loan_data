@@ -121,12 +121,14 @@ def update_kyc_auth(registNo,custNo):
 #绑定银行卡，需要把银行卡号改成明显错的，环境怕放出真实的钱，写入cu_cust_beneficiary_account表
 def bank_auth(custNo,headt):                            #Back_Account-12010001, （PayTm Wallet-12010002）
     bank_acct_no=str(random.randint(100000000,999999999))
-    data={"bankAcctName":"wangmmmmshuang","bankAcctNo":bank_acct_no,"custNo":custNo,"ifscCode":"SBIN0001537","accType":"12010001","pageCode":"12000001"}
+    data={"bankAcctName":"wangmmmmshuang","bankAcctNo":bank_acct_no,"custNo":custNo,"ifscCode":"SBIN0001537","accType":"12010001","pageCode":"12000001","repeatBankAcctNo":bank_acct_no}
+    print(data)
     r=requests.post(host_api+'/api/cust_india/bank/bank_auth?lang=en',data=json.dumps(data),headers=headt,verify=False)
     print("绑卡认证接口响应=",r.json())
     data2={"custNo":custNo,"bankAcctNo":bank_acct_no,"bankAcctName":"wangmmmmshuang","accType":"12010001","ifscCode":"SBIN0001537","pageCode":"12000001","reBankAcctNo":bank_acct_no}
-    r2=requests.post(host_api+'/api/cust_india/bank/checkBankCard?lang=en',data=json.dumps(data2),headers=headt,verify=False)
-    print("校验银行卡接口响应=",r2.json())
+    # print(data2)
+    # r2=requests.post(host_api+'/api/cust_india/bank/checkBankCard?lang=en',data=json.dumps(data2),headers=headt,verify=False)
+    # print("校验银行卡接口响应=",r2.json())
     return bank_acct_no
 
 test_phoneNo='7777777777'
@@ -301,7 +303,7 @@ def payout_apply_test(loanNo):
       "loanNo": loanNo,
       "custNo": custNo,
       "appNo": appNo,
-      "accType": "12010002"}  #注意这里暂时写死为paytm类型
+      "accType": "12010001"}  #注意这里暂时写死为paytm类型
     r=requests.post(host_pay+'/api/fin/payout/apply',data=json.dumps(data),headers=head_pay,verify=False)
     print(r.json())
 #放款模拟回调
@@ -339,18 +341,27 @@ def paytm_payout_webhook(loanNo):
     r=requests.post(host_pay+"/api/trade/paytm/payout_webhook",data=json.dumps(data),headers=head_pay,verify=False)
     print(r.json())
 
+def insert_white_list(registNo):
+    t =str(time.time() * 1000000)[:15]
+    inst_time = str(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+    sql='''INSERT INTO `manage_need_loan`.`cu_white_list_dtl`(`ID`, `WHITE_LIST_TYPE`, `WHITE_LIST_VALUE`, `APP_NO`, `RISK_SCORE`, `USEABLE`, `VALID_START_DATE`, `VALID_END_DATE`, `ORIGIN`, `DESCRIPTION`, `REMARK`, `INST_TIME`, `INST_USER_NO`, `UPDT_TIME`, `UPDT_USER_NO`) 
+    VALUES ("'''+t0[:-2]+'''", '10140001', "'''+registNo+'''", "'''+appNo+'''", "'''+prodNo+'''", '10000001', '20220415', '20220715', 'auto_test', NULL, NULL, "'''+inst_time+'''", 'wangs@whalekun.com', "'''+inst_time+'''", 'wangs@whalekun.com');'''
+    DataBase(inter_db).executeUpdateSql(sql)
+
 if __name__ == '__main__':
     # registNo='8378994636'
     # token=login_code(registNo)
     # headt=head_token(token)
-    registNo = '9337832552'
-    # token = login_code(registNo)
-    # headt = head_token(token)
+    registNo = '8215602929'
+    token = login_code(registNo)
+    headt = head_token(token)
     # headw = head_token_w(token)
-    custNo = 'C1042204148202920784197517312'
-    loanNo = 'L1042204148202920925646225408'
+    custNo = 'C1042204258206759260848324608'
+    loanNo = 'L1042204258206759386941685760'
     #bank_auth_paytm(custNo, headt)
     # #payout_for_razorpay(custNo, '123123')
     #withdraw( custNo, loanNo, headt, headw,'12010002')
     #payout_apply_test('L1042204158203142570617012224')
-    paytm_payout_webhook('L1042204158203255911347847168')
+    #paytm_payout_webhook('L1042204158203255911347847168')
+    bank_auth(custNo, headt)
+    #payout_apply_test(loanNo)

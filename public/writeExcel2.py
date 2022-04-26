@@ -87,7 +87,7 @@ if __name__ == '__main__':
               ["Jones", "女", "34", "上海", "产品经理"],
               ["Cat", "女", "56", "上海", "教师"],]
     #每次要创建一个新的xls文件，新的表单
-    x=WriteExcel().read_Excel_Xls("C:\\Users\\wangshuang\\Desktop\\全排列组合 - 副本.xls")
+    x=WriteExcel().read_Excel_Xls("C:\\Users\\root\\Desktop\\全排列组合.xls")
     m=[]
     for i in range(len(x)):
         #print(x[i][0],type(x[i][0]))

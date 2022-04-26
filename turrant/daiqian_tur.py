@@ -118,18 +118,32 @@ def update_kyc_auth(registNo,custNo):
     DataBase(inter_db).executeUpdateSql(sql3)
     DataBase(inter_db).executeUpdateSql(sql4)
     DataBase(inter_db).executeUpdateSql(sql5)
-#绑定银行卡，需要把银行卡号改成明显错的，环境怕放出真实的钱，写入cu_cust_beneficiary_account表
+#绑定银行卡，需要把银行卡号改成明显错的，环境怕放出真实的钱，写入cu_cust_beneficiary_account表     Razorpay渠道绑卡会掉创建资金账户接口https://test-pay.quantstack.in/api/trade/cust/create/contact/fund_account
 def bank_auth(custNo,headt):                            #Back_Account-12010001, （PayTm Wallet-12010002）
-    bank_acct_no=str(random.randint(100000000,999999999))
-    data={"bankAcctName":"wangmmmmshuang","bankAcctNo":bank_acct_no,"custNo":custNo,"ifscCode":"SBIN0001537","accType":"12010001","pageCode":"12000001","repeatBankAcctNo":bank_acct_no}
+    #bank_acct_no=str(random.randint(100000000,999999999))
+    bank_acct_no='53110884994'
+    data={"bankAcctName":"ashish rajput","bankAcctNo":bank_acct_no,"custNo":custNo,"ifscCode":"SCBL0036024","accType":"12010001","pageCode":"12000001","repeatBankAcctNo":bank_acct_no}
     print(data)
     r=requests.post(host_api+'/api/cust_india/bank/bank_auth?lang=en',data=json.dumps(data),headers=headt,verify=False)
     print("绑卡认证接口响应=",r.json())
-    data2={"custNo":custNo,"bankAcctNo":bank_acct_no,"bankAcctName":"wangmmmmshuang","accType":"12010001","ifscCode":"SBIN0001537","pageCode":"12000001","reBankAcctNo":bank_acct_no}
+    data2={"custNo":custNo,"bankAcctNo":bank_acct_no,"bankAcctName":"ashish rajput","accType":"12010001","ifscCode":"SCBL0036024","pageCode":"12000001","reBankAcctNo":bank_acct_no}
     # print(data2)
     # r2=requests.post(host_api+'/api/cust_india/bank/checkBankCard?lang=en',data=json.dumps(data2),headers=headt,verify=False)
     # print("校验银行卡接口响应=",r2.json())
     return bank_acct_no
+def create_contact_fund_account():
+    #data={ "appNo":appNo,'bankAcctName': 'ashish rajput', 'bankNo': '53110884994', 'custNo': 'C1042204268207123079311327232', 'ifscCode': 'SCBL0036024', 'accType': '12010001', 'pageCode': '12000001', 'repeatBankAcctNo': '53110884994', "address": "123"}
+    data={
+      "appNo": appNo,
+      "custNo": "C1042204268207123079311327232",
+      "phoneNo": "9054856632",
+      "acctNo": "53110884994",
+      "acctName": "ashish rajput",
+      "ifscCode": "SCBL0036024",
+      "address": "123456"
+}
+    r = requests.post(host_pay +'/api/trade/cust/create/contact/fund_account',data=json.dumps(data),headers=head_lixiang,verify=False)
+    print(r.json())
 
 test_phoneNo='7777777777'
 def bank_auth_paytm(custNo,headt):                            #PayTm Wallet-12010002（Back_Account-12010001）
@@ -217,6 +231,7 @@ where a.LOAN_NO="'''+loanNo+'''" ;'''
     token=login_code(repay_list[0])
     headt=head_token(token)
     data={"advance":"10000000","custNo":repay_list[1],"loanNo":loanNo,"repayDate":repay_list[2],"repayInstNum":1,"tranAppType":"10090001","transAmt":str(repay_list[3])}
+    print(data)
     r=requests.post(host_api+"/api/trade/fin/repay?lang=en",data=json.dumps(data),headers=headt,verify=False)
     t=r.json()
     print(t)
@@ -349,19 +364,18 @@ def insert_white_list(registNo):
     DataBase(inter_db).executeUpdateSql(sql)
 
 if __name__ == '__main__':
-    # registNo='8378994636'
-    # token=login_code(registNo)
-    # headt=head_token(token)
-    registNo = '8215602929'
-    token = login_code(registNo)
-    headt = head_token(token)
+    # registNo = '9054856632'
+    # token = login_code(registNo)
+    # headt = head_token(token)
     # headw = head_token_w(token)
-    custNo = 'C1042204258206759260848324608'
-    loanNo = 'L1042204258206759386941685760'
-    #bank_auth_paytm(custNo, headt)
-    # #payout_for_razorpay(custNo, '123123')
-    #withdraw( custNo, loanNo, headt, headw,'12010002')
+    # custNo = 'C1042204268207123079311327232'
+    # loanNo = 'L1042204268207123218088263680'
+    # bank_auth(custNo, headt)
+    # # #payout_for_razorpay(custNo, '123123')
+    create_contact_fund_account()
+    #withdraw( custNo, loanNo, headt, headw,'12010001')
+    #trade_fin_repay(loanNo)
     #payout_apply_test('L1042204158203142570617012224')
     #paytm_payout_webhook('L1042204158203255911347847168')
-    bank_auth(custNo, headt)
+    #bank_auth(custNo, headt)
     #payout_apply_test(loanNo)

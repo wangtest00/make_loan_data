@@ -32,16 +32,27 @@ def first_apply():
     headw=head_token_w(token)
     auth(registNo,custNo,headt)
     loanNo=loan(registNo,custNo,headt)
-    bank_no=bank_auth_paytm(custNo,headt)
-    update_appr_user_stat()
-    DataBase(inter_db).call_many_proc()
-    DataBase(inter_db).call_many_proc()
-    approve(loanNo)
-    sql5="update lo_loan_cust_rel set risk_level='AA',risk_score='"+prodNo+"' where LOAN_NO='"+loanNo+"';"
-    DataBase(inter_db).executeUpdateSql(sql5)
-    DataBase(inter_db).call_many_proc()
-    payout_for_razorpay(custNo,bank_no)
-    withdraw(custNo,loanNo,headt,headw,'12010002')
+    accType='12010001'  #类型选择绑银行卡，申请提现类型为银行卡
+    if accType=='12010001':
+        bank_no=bank_auth(custNo,headt)
+        update_appr_user_stat()
+        DataBase(inter_db).call_many_proc()
+        DataBase(inter_db).call_many_proc()
+        approve(loanNo)
+        sql5="update lo_loan_cust_rel set risk_level='AA',risk_score='"+prodNo+"' where LOAN_NO='"+loanNo+"';"
+        DataBase(inter_db).executeUpdateSql(sql5)
+        DataBase(inter_db).call_many_proc()
+        withdraw(custNo,loanNo,headt,headw,accType)
+    else:
+        bank_no = bank_auth_paytm(custNo, headt)
+        update_appr_user_stat()
+        DataBase(inter_db).call_many_proc()
+        DataBase(inter_db).call_many_proc()
+        approve(loanNo)
+        sql5 = "update lo_loan_cust_rel set risk_level='AA',risk_score='" + prodNo + "' where LOAN_NO='" + loanNo + "';"
+        DataBase(inter_db).executeUpdateSql(sql5)
+        DataBase(inter_db).call_many_proc()
+        withdraw(custNo, loanNo, headt, headw, '12010002')  #申请类型paytm
     # paytm_payout_webhook(loanNo)
     # time.sleep(3)
     # chaXun_Stat(loanNo)

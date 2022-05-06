@@ -1,14 +1,14 @@
 __all__=['host_api','host_action','host_mgt','head_api','head_mgt','head_lixiang','host_coll','CONFIGS','prodNo','inter_db','head_pay','host_pay','appNo','appName']
 
 inter_db='manage_need_loan'
-prodNo='4'#duoqi50121401
+prodNo='5'#duoqi50121401
 appNo='104'
 applist={'104':'Turrant','102':'CashTM'}
 appName=applist[appNo]
 host_api="https://test-appa.quantstack.in"
 #host_api="http://192.168.20.193:8082"
-#host_pay="https://test-pay.quantstack.in"
-host_pay="http://192.168.20.246:8083"
+host_pay="https://test-pay.quantstack.in"
+#host_pay="http://192.168.20.246:8083"
 host_action="https://test-action.quantstack.in"
 host_mgt="https://test-mgt.quantstack.in"
 host_coll="https://test-collection.quantstack.in"

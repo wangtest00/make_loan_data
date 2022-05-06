@@ -9,6 +9,21 @@ t0=str(time.time()*1000000)
 
 # 禁用安全请求警告
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+
+def chaXunDaiQian(loanNo):
+    sql1="select BEFORE_STAT from manage_need_loan.lo_loan_dtl where LOAN_NO='"+loanNo+"';"
+    before_stat=DataBase(inter_db).get_one(sql1)
+    before_stat=before_stat[0]
+    return before_stat
+def lunXunDaiQian(loanNo):
+    for t in range(1):
+        before_stat=chaXunDaiQian(loanNo)
+        if before_stat=='10260006':
+            break
+        else:
+            time.sleep(3)
+            print("贷前状态未变更为拒绝")
+            continue
 def check_api(r):
     if r.status_code==200:
         t=r.json()
@@ -65,7 +80,7 @@ def cert_auth(registNo,headt):
     for j in range(5):  #生成5个随机英文大写字母
         st+=random.choice(string.ascii_uppercase)
     num=str(random.randint(1000,9999))
-    data={"appName":appName,"appNo":appNo,"birthDay":"1999-05-06","certNo":num+"4566"+num,"custFirstName":"wang","custLastName":"shuang","custMiddleName":"mmmm","education":"10190006",
+    data={"appName":appName,"appNo":appNo,"birthDay":"1999-05-06","certNo":num+"4567"+num,"custFirstName":"wang","custLastName":"shuang","custMiddleName":"mmmm","education":"10190006",
           "marriage":"10050001","panNo":""+st+num+"W","registNo":registNo,"sex":"10030001","useEmail":"sdfghhhj@gmail.com","useLang":"90000001"}
     r=requests.post(host_api+'/api/cust_india/cert/cert_auth?lang=en',data=json.dumps(data),headers=headt,verify=False)
     t=r.json()
@@ -318,8 +333,8 @@ def payout_apply_test(loanNo):
       "loanNo": loanNo,
       "custNo": custNo,
       "appNo": appNo,
-      "accType": "12010001"}  #注意这里暂时写死为paytm类型
-    r=requests.post(host_pay+'/api/fin/payout/apply',data=json.dumps(data),headers=head_pay,verify=False)
+      "accType": "12010001"}  #注意这里区分类型，银行卡或paytm
+    r=requests.post(host_pay+'/api/fin/payout/apply',data=json.dumps(data),headers=head_lixiang,verify=False)
     print(r.json())
 #放款模拟回调
 def paytm_payout_webhook(loanNo):
@@ -364,18 +379,17 @@ def insert_white_list(registNo):
     DataBase(inter_db).executeUpdateSql(sql)
 
 if __name__ == '__main__':
-    # registNo = '9054856632'
+    registNo = '9054856632'
     # token = login_code(registNo)
     # headt = head_token(token)
     # headw = head_token_w(token)
     # custNo = 'C1042204268207123079311327232'
     # loanNo = 'L1042204268207123218088263680'
-    # bank_auth(custNo, headt)
+    #bank_auth(custNo, headt)
     # # #payout_for_razorpay(custNo, '123123')
-    create_contact_fund_account()
+    #create_contact_fund_account()
     #withdraw( custNo, loanNo, headt, headw,'12010001')
     #trade_fin_repay(loanNo)
-    #payout_apply_test('L1042204158203142570617012224')
+    payout_apply_test('L1042204268207185277689724928')
     #paytm_payout_webhook('L1042204158203255911347847168')
     #bank_auth(custNo, headt)
-    #payout_apply_test(loanNo)

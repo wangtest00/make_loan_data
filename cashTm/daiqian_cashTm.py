@@ -119,14 +119,14 @@ def update_kyc_auth(registNo,custNo):
     DataBase(inter_db).executeUpdateSql(sql5)
 #绑定银行卡，需要把银行卡号改成明显错的，环境怕放出真实的钱，写入cu_cust_beneficiary_account表
 def bank_auth(custNo,headt):                            #Back_Account-12010001, （PayTm Wallet-12010002）
-    #bank_acct_no=str(random.randint(100000000,999999999))
-    bank_acct_no='3333333333'
+    bank_acct_no=str(random.randint(100000000,999999999))
+    #bank_acct_no='3333333333'
     data={"bankAcctName":"wangmmmmshuang","bankAcctNo":bank_acct_no,"custNo":custNo,"ifscCode":"ABHY0065203"}
     r=requests.post(host_api+'/api/cust_india/bank/bank_auth?lang=en',data=json.dumps(data),headers=headt,verify=False)
     print("绑卡认证接口响应=",r.json())
-    data2={"custNo":custNo,"bankAcctNo":bank_acct_no,"bankAcctName":"wangmmmmshuang","ifscCode":"ABHY0065203","reBankAcctNo":bank_acct_no}
-    r2=requests.post(host_api+'/api/cust_india/bank/checkBankCard?lang=en',data=json.dumps(data2),headers=headt,verify=False)
-    print("校验银行卡接口响应=",r2.json())
+    # data2={"custNo":custNo,"bankAcctNo":bank_acct_no,"bankAcctName":"wangmmmmshuang","ifscCode":"ABHY0065203","reBankAcctNo":bank_acct_no}
+    # r2=requests.post(host_api+'/api/cust_india/bank/checkBankCard?lang=en',data=json.dumps(data2),headers=headt,verify=False)
+    # print("校验银行卡接口响应=",r2.json())
     return bank_acct_no
 
 #当前时间的前一天=跑批业务日期，才能正常申请借款

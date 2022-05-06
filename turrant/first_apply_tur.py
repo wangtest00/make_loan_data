@@ -42,7 +42,7 @@ def first_apply():
         sql5="update lo_loan_cust_rel set risk_level='AA',risk_score='"+prodNo+"' where LOAN_NO='"+loanNo+"';"
         DataBase(inter_db).executeUpdateSql(sql5)
         DataBase(inter_db).call_many_proc()
-        withdraw(custNo,loanNo,headt,headw,accType)
+        #withdraw(custNo,loanNo,headt,headw,accType)
     else:
         bank_no = bank_auth_paytm(custNo, headt)
         update_appr_user_stat()
@@ -57,22 +57,9 @@ def first_apply():
     # time.sleep(3)
     # chaXun_Stat(loanNo)
 
-def chaXunDaiQian(loanNo):
-    sql1="select BEFORE_STAT from manage_need_loan.lo_loan_dtl where LOAN_NO='"+loanNo+"';"
-    before_stat=DataBase(inter_db).get_one(sql1)
-    before_stat=before_stat[0]
-    return before_stat
-def lunXunDaiQian(loanNo):
-    for t in range(1):
-        before_stat=chaXunDaiQian(loanNo)
-        if before_stat=='10260006':
-            break
-        else:
-            time.sleep(3)
-            print("贷前状态未变更为拒绝")
-            continue
+
 
 
 if __name__ == '__main__':
-    for i in range(1):
+    for i in range(10):
         first_apply()

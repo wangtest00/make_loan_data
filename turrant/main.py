@@ -40,17 +40,13 @@ def first_apply_bank():
     auth(registNo,custNo,headt)
     loanNo=loan(registNo,custNo,headt)
     bank_no=bank_auth(custNo,headt)
-    update_appr_user_stat()
-    DataBase(inter_db).call_many_proc()
-    DataBase(inter_db).call_many_proc()
-    approve(loanNo)
     sql5="update lo_loan_cust_rel set risk_level='AA',risk_score='"+prodNo+"' where LOAN_NO='"+loanNo+"';"
     DataBase(inter_db).executeUpdateSql(sql5)
     DataBase(inter_db).call_many_proc()
     withdraw(custNo,loanNo,headt,headw,'12010001')#类型选择绑银行卡，申请提现类型为银行卡
     pay_chan_service=cx_pay_chan_service()
     if pay_chan_service=='TurrantRazorpayTest':
-        razorpayx_annon_event_callback(loanNo,amount)
+        razorpayx_annon_event_callback(loanNo)
     else:
         print("当前产品的支付渠道=",pay_chan_service)
     time.sleep(3)
@@ -99,15 +95,12 @@ def first_apply_paytm():
     auth(registNo,custNo,headt)
     loanNo=loan(registNo,custNo,headt)
     bank_no = bank_auth_paytm(custNo, headt)
-    update_appr_user_stat()
-    DataBase(inter_db).call_many_proc()
-    DataBase(inter_db).call_many_proc()
-    approve(loanNo)
     sql5 = "update lo_loan_cust_rel set risk_level='AA',risk_score='" + prodNo + "' where LOAN_NO='" + loanNo + "';"
     DataBase(inter_db).executeUpdateSql(sql5)
     DataBase(inter_db).call_many_proc()
     withdraw(custNo, loanNo, headt, headw, '12010002')  #申请类型paytm
     paytm_payout_webhook(loanNo)
+    payout_mock_apply(loanNo, custNo, '12010002')
     time.sleep(3)
     chaXun_Stat(loanNo)
 

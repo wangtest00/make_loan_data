@@ -33,7 +33,7 @@ def first_apply(registNo):
 
 def first_apply_sheipihou(loan_no, registNo, custNo, headt):
     insert_risk(loan_no)  # 匹配产品
-    # 停在【通过】状态，用户待提现
+    #停在【通过】状态，用户待提现
     w = withdraw(registNo, custNo, loan_no, headt)  # app页面点击提现
     if w == 1:
         gaishu(loan_no)
@@ -55,23 +55,23 @@ def bu_ding(registNo):
     sql = "select CUST_NO from cu_cust_reg_dtl where REGIST_NO='" + registNo + "';"
     custNo = DataBase(which_db).get_one(sql)
     custNo = custNo[0]
-    loan_no = "L2012203278196605433373458432"
+    loan_no = "L2012205068210881804052398080"
     if loan_no is None:
         DataBase(which_db).closeDB()
     else:
         bank_auth(custNo, headt)
-        # update_appr_user_stat()
-        # DataBase(which_db).call_4_proc()
-        # approve(loan_no)  #分配审批人员并审批通过
+        update_appr_user_stat()
+        DataBase(which_db).call_4_proc()
+        approve(loan_no)  #分配审批人员并审批通过
         insert_risk(loan_no)
-        w = withdraw(registNo, custNo, loan_no, headt)
-        if w == 1:
-            gaishu(loan_no)
-        else:
-            pass
-        DataBase(which_db).closeDB()
+        # w = withdraw(registNo, custNo, loan_no, headt)
+        # if w == 1:
+        #     gaishu(loan_no)
+        # else:
+        #     pass
+        # DataBase(which_db).closeDB()
 
 
 if __name__ == '__main__':
     for i in range(1):
-        auto_test()
+        bu_ding('8989111111')

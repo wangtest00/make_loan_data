@@ -16,7 +16,7 @@ def get_date_list(start_date, end_date):
     while start_date < end_date:
         start_date += datetime.timedelta(days=1)
         date_list.append(start_date.strftime('%Y%m%d'))
-    print(date_list)
+    #print(date_list)
     return date_list
 
 # 获取指定日期间隔内的日期列表

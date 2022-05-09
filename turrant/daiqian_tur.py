@@ -335,7 +335,7 @@ def payout_apply_test(loanNo):
     r=requests.post(host_pay+'/api/fin/payout/apply',data=json.dumps(data),headers=head_lixiang,verify=False)
     print(r.json())
 #放款模拟回调
-def paytm_payout_webhook(loanNo):
+def paytm_payout_webhook(loanNo,status):
     sql="select ACT_TRAN_AMT,TRAN_FLOW_NO from pay_tran_dtl where LOAN_NO='"+loanNo+"' and TRAN_USE='10330001' and (tran_stat='10220004' or tran_stat='10220001' or tran_stat='10220003');"
     sum=DataBase(inter_db).get_one(sql)
     orderId=sum[1]
@@ -361,7 +361,8 @@ def paytm_payout_webhook(loanNo):
         "scheduleOn": None,
         "tax": "0.00"
     },
-    "status": "SUCCESS",
+    "status": status,
+    #"status": "FAILURE",#模拟提现失败
     "statusCode": "DE_001",
     "statusMessage": "Successful disbursal to Wallet is done"
 }
@@ -396,6 +397,6 @@ if __name__ == '__main__':
     #withdraw( custNo, loanNo, headt, headw,'12010001')
     #trade_fin_repay(loanNo)
     #payout_apply_test('L1042204268207185277689724928')
-    #paytm_payout_webhook('L1042204158203255911347847168')
+    paytm_payout_webhook('L1042205098211884102132105216')
     #bank_auth(custNo, headt)
-    cx_pay_chan_service()
+    #cx_pay_chan_service()

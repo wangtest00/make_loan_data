@@ -99,8 +99,7 @@ def first_apply_paytm():
     DataBase(inter_db).executeUpdateSql(sql5)
     DataBase(inter_db).call_many_proc()
     withdraw(custNo, loanNo, headt, headw, '12010002')  #申请类型paytm
-    paytm_payout_webhook(loanNo)
-    payout_mock_apply(loanNo, custNo, '12010002')
+    paytm_payout_webhook(loanNo,'SUCCESS')  #模拟提现成功，SUCCESS或失败，FAILURE
     time.sleep(3)
     chaXun_Stat(loanNo)
 

@@ -74,4 +74,4 @@ def bu_ding(registNo):
 
 if __name__ == '__main__':
     for i in range(1):
-        bu_ding('8989111111')
+        auto_test()

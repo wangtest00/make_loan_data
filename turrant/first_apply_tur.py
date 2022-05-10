@@ -71,8 +71,8 @@ def first_apply_paytm():
     sql="UPDATE sys_app_info set PAY_CHAN_SERVICE='TurrantPaytmTest' where app_no='"+appNo+"';"
     DataBase(inter_db).executeUpdateSql(sql)
     update_Batch_Log()
-    #registNo=str(random.randint(8000000000,9999999999)) #10位随机数
-    registNo='9999189008'
+    registNo=str(random.randint(8000000000,9999999999)) #10位随机数
+    #registNo='9999189008'
     token=login_code(registNo)
     insert_white_list(registNo)   #插入白名单数据。目前非黑非白，进件代码会拒件
     headt=head_token(token)

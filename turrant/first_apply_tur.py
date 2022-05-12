@@ -6,6 +6,7 @@ from database.dataBase_tur import *
 from turrant.mgt_tur import *
 from data.var_tur import *
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
+from risk.risk import *
 
 # 禁用安全请求警告
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
@@ -18,7 +19,7 @@ def first_apply_bank():
     update_Batch_Log()
     registNo=str(random.randint(8000000000,9999999999)) #10位随机数
     token=login_code(registNo)
-    insert_white_list(registNo)   #插入白名单数据。目前非黑非白，进件代码会拒件
+    insert_white_list(registNo)   #插入白名单数据。目前只有白名单用户才能进入风控走人审，其余一律拒绝
     headt=head_token(token)
     custNo=cert_auth(registNo,headt)
     auth(registNo,custNo,headt)
@@ -42,30 +43,20 @@ def first_apply_bank():
     bank_no=bank_auth(custNo,headt)
     sql5="update lo_loan_cust_rel set risk_level='AA',risk_score='"+prodNo+"' where LOAN_NO='"+loanNo+"';"
     DataBase(inter_db).executeUpdateSql(sql5)
-    DataBase(inter_db).call_many_proc()
+    india_thirdservice()     #调风控定时任务
+    time.sleep(30)
+    DataBase(inter_db).call_4_proc()  #分单去审批
+    pl_shenpi()
+    DataBase(inter_db).call_many_proc()  # 产品匹配
     withdraw(custNo,loanNo,headt,headw,'12010001')#类型选择绑银行卡，申请提现类型为银行卡
     pay_chan_service=cx_pay_chan_service()
     if pay_chan_service=='TurrantRazorpayTest':
         razorpayx_annon_event_callback(loanNo)
     else:
-        print("当前产品的支付渠道=",pay_chan_service)
+        print("当前产品的支付渠道=",pay_chan_service,"暂不模拟回调")
     time.sleep(3)
     chaXun_Stat(loanNo)
 
-def chaXunDaiQian(loanNo):
-    sql1="select BEFORE_STAT from manage_need_loan.lo_loan_dtl where LOAN_NO='"+loanNo+"';"
-    before_stat=DataBase(inter_db).get_one(sql1)
-    before_stat=before_stat[0]
-    return before_stat
-def lunXunDaiQian(loanNo):
-    for t in range(1):
-        before_stat=chaXunDaiQian(loanNo)
-        if before_stat=='10260006':
-            break
-        else:
-            time.sleep(3)
-            print("贷前状态未变更为拒绝")
-            continue
 
 def first_apply_paytm():
     sql="UPDATE sys_app_info set PAY_CHAN_SERVICE='TurrantPaytmTest' where app_no='"+appNo+"';"
@@ -74,7 +65,7 @@ def first_apply_paytm():
     registNo=str(random.randint(8000000000,9999999999)) #10位随机数
     #registNo='9999189008'
     token=login_code(registNo)
-    insert_white_list(registNo)   #插入白名单数据。目前非黑非白，进件代码会拒件
+    insert_white_list(registNo)   #插入白名单数据。目前只有白名单用户才能进入风控走人审，其余一律拒绝
     headt=head_token(token)
     custNo=cert_auth(registNo,headt)
     auth(registNo,custNo,headt)
@@ -98,7 +89,11 @@ def first_apply_paytm():
     bank_no = bank_auth_paytm(custNo, headt)
     sql5 = "update lo_loan_cust_rel set risk_level='AA',risk_score='" + prodNo + "' where LOAN_NO='" + loanNo + "';"
     DataBase(inter_db).executeUpdateSql(sql5)
-    DataBase(inter_db).call_many_proc()
+    india_thirdservice()    #调风控定时任务
+    time.sleep(30)
+    DataBase(inter_db).call_4_proc()   #分单
+    pl_shenpi()
+    DataBase(inter_db).call_many_proc() #产品匹配
     withdraw(custNo, loanNo, headt, headw, '12010002')  #申请类型paytm
     paytm_payout_webhook(loanNo,'SUCCESS')  #模拟提现成功，SUCCESS或失败，FAILURE
     time.sleep(3)

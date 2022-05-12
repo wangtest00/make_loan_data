@@ -2,7 +2,7 @@ import pymysql
 import requests,json
 from data.var_mex_lp_duoqi import *
 from database.dataBase import *
-
+#生成下载地址
 def pre_sign_url(objectKey):
     data={
     "bucketName":"test-mex-pdl", #生产环境需要改成生产桶名
@@ -14,7 +14,7 @@ def pre_sign_url(objectKey):
     downloadUrl=t['data']['downloadUrl']
     #print(downloadUrl)
     return downloadUrl
-
+#文件下载地址
 def downloadUrl(cust_no):
     applist=[]
     urllist=[]
@@ -37,12 +37,14 @@ def downloadUrl(cust_no):
     print(urllist)    #数据有错需要检查url是否能正常下载json文件
     return urllist
 
+#调用对外风控接口测试,暂时屏蔽签名20220511
 def openapi_service_risk_score(url):
-    header={"x-access-key-id":"HQLNTJFY7WO9WB+3MCD1",  #商户key，暂时写死
-            "x-request-time": "202204119T101123+0800", #获得该值，需要去调SignMain类main方法，python暂时不调jar包
-            "x-signature":"ca24dc8bc0b0d6f283aaad4e717e9a61394307fabd691222d9263b08989e43b8"}#获得该值，需要去调SignMain类main方法，python暂时不调jar包
-    data={    "params": {
-					"applyTm": "2022-04-25 21:50:51",
+    head={"Content-Type":"application/json",
+		  "x-access-key-id":"HQLNTJFY7WO9WB+3MCD1",  #商户key，暂时写死
+          "x-request-time": "202205131T014805-0500", #获得该值，需要去调SignMain类main方法，python暂时不调jar包
+          "x-signature":"34e4415c7db28567968680566b2aa7ba83e159557645f4f9b83e362fc0170084",}#获得该值，需要去调SignMain类main方法，python暂时不调jar包
+    data={"params":
+		{           "applyTm": "2022-05-11 01:26:14",
 					"appNo": "W101",    #目前该商户写死W101
 					"appList": url[1],
 					"basicInfo": {
@@ -58,46 +60,48 @@ def openapi_service_risk_score(url):
 					"contactRelation2": "2",
 					"gender": "0",
 					   },
-					"custType": "0",
-					"custNo": "C2012203308197711149362511872",
+					"custType": "1",
+					"custNo": "C2012205108212268995555033088",
 					"contacts":url[0],
 					"device": {
-					"androidID": "df2b52a027dfa675",
-					"appVersion": "1.0.0",
-					"gaid": "2258bf96-8d7d-4830-b242-3fa0ba8a8ee2",
-					"imei": "81e56989-8979-49a9-a93c-36c19ef8e9c7",
-					"ipAddress": "10.206.39.92",
-					"longitude": "-100.4070277",
-					"latitude": "25.4070277",
-					"mobileBrand": "Huawei",
-					"mobileModel": "Huawei P40 Pro",
-					"oSVersion": "10"},
+						"androidID": "df2b52a027dfa675",
+						"appVersion": "1.0.0",
+						"gaid": "2258bf96-8d7d-4830-b242-3fa0ba8a8ee2",
+						"imei": "81e56989-8979-49a9-a93c-36c19ef8e9c7",
+						"ipAddress": "10.206.39.92",
+						"longitude": "-100.4070277",
+						"latitude": "25.4070277",
+						"mobileBrand": "Huawei",
+						"mobileModel": "Huawei P40 Pro",
+						"oSVersion": "10"},
 					"historyLoan": {
-					"cuTotOvduTms": "1",
-					"firstDisbrLoan": "L2012204288207969151659212800",
-					"lastSettleLoan": "L2012203308197711259718844416",
-					"lastApplyTime": "2021-01-02 21:50:51",
-					"lastDisbrTime": "2021-01-02 21:50:51",
-					"lastDueDate": "2021-01-02",
-					"lastSettleTime": "2021-01-02 21:50:51",
-					"lastProdNo": "373007072000",
-					"lastApprAmt": 2200.00,
-					"lastPrinAmt": 2000.00,
-					"lastDisbrAmt": 1400.00,
-					"lastLoanRank": "3",
-					"lastOvduDays": "-2"
+						"cuTotOvduTms": "0",
+						"firstDisbrLoan": "L2012205108212269092724473856",
+						"lastSettleLoan": "L2012205108212269092724473856",
+						"lastApplyTime": "2022-05-10 02:29:02",
+						"lastDisbrTime": "2022-05-10 02:29:40",
+						"lastDueDate": "2022-05-17",
+						"lastSettleTime": "2022-05-10 02:29:50",
+						"lastProdNo": "28080070200",
+						"lastApprAmt": 1500.00,
+						"lastPrinAmt": 1500.00,
+						"lastDisbrAmt": 1500.00,
+						"lastLoanRank": "1",
+						"lastOvduDays": "0"
 					        },
-					"loanNo": "L2012204288207969151659212800",
+					"loanNo": "L2012205118212615679862571008",
 					"msg":url[2],
-					"phoneNo": "7491564079"
+					"phoneNo": "8278085774"
 					    },
-					"serviceProdNo": "WK122300_666_Reloan_OwnRules"#决策产品名
-					}
-    r=requests.post('http://k8s-test1mex-elbtestm-2844e16dc9-384f1fecec492805.elb.us-west-1.amazonaws.com:8080/openapi/service/risk_score',data=json.dumps(data),header=header)
+		"serviceProdNo": "WK122300_666_Reloan_OwnRules"#决策产品名
+		}
+    print(data)
+    r=requests.post('http://k8s-test1mex-elbtestm-2844e16dc9-384f1fecec492805.elb.us-west-1.amazonaws.com:8080/openapi/service/risk_score',data=json.dumps(data),headers=head)
    #生产地址
     #r=requests.post('http://54.176.19.126:8182/openapi/service/risk_score',data=json.dumps(data),header=header)
     print(r.json())
 
 if __name__ == '__main__':
     #pre_sign_url('201/20220408/5553331111/11090004_1649397208286.json')
-    downloadUrl('C2012204288208221576399880192')
+    url=downloadUrl('C2012205108212268995555033088')
+    openapi_service_risk_score(url)

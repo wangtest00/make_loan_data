@@ -76,11 +76,12 @@ def pl_shenpi():
     head=head_mgt_2()
     r=requests.get(host_mgt+'/api/approve/distribution/list?pageSize=10&pageNum=1&lang=zh',headers=head,verify=False)
     t=r.json()
+    print(t)
     t=t['list']
     loan_No_List=[]
     for i in range(len(t)):
         if t[i]['apprStat']=='10200003':
-            if t[i]['apprUserNo']=='wangs2@whalekun.com' or t[i]['apprUserNo']=='yanglt@whalekun.com' or t[i]['apprUserNo']=='liull@whalekun.com':
+            if t[i]['apprUserNo']=='wangs2@whalekun.com' or t[i]['apprUserNo']=='wangs2@whalekun.com' or t[i]['apprUserNo']=='lijiahui':
                 print(t[i]['loanNo'])
                 loan_no=t[i]['loanNo']
                 loan_No_List.append(loan_no)

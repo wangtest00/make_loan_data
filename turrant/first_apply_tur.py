@@ -46,7 +46,7 @@ def first_apply_bank():
     india_thirdservice()     #调风控定时任务
     time.sleep(30)
     DataBase(inter_db).call_4_proc()  #分单去审批
-    pl_shenpi()
+    approve(loanNo)
     DataBase(inter_db).call_many_proc()  # 产品匹配
     withdraw(custNo,loanNo,headt,headw,'12010001')#类型选择绑银行卡，申请提现类型为银行卡
     pay_chan_service=cx_pay_chan_service()
@@ -92,7 +92,7 @@ def first_apply_paytm():
     india_thirdservice()    #调风控定时任务
     time.sleep(30)
     DataBase(inter_db).call_4_proc()   #分单
-    pl_shenpi()
+    approve(loanNo)
     DataBase(inter_db).call_many_proc() #产品匹配
     withdraw(custNo, loanNo, headt, headw, '12010002')  #申请类型paytm
     paytm_payout_webhook(loanNo,'SUCCESS')  #模拟提现成功，SUCCESS或失败，FAILURE
@@ -101,5 +101,5 @@ def first_apply_paytm():
 
 if __name__ == '__main__':
     for i in range(1):
-        #first_apply_bank()
-        first_apply_paytm()
+        first_apply_bank()
+        #first_apply_paytm()

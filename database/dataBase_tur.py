@@ -61,9 +61,9 @@ class DataBase():
         for proc in proc:
             self.call_proc(proc)
         self.closeDB()
-    def call_4_proc(self):
+    def call_4_proc(self,whichdb):
         for i in range(2):
-            DataBase('manage_need_loan').call_many_proc()
+            DataBase(whichdb).call_many_proc()
             time.sleep(1)
     def call_proc_args(self,procName,date):
         try:

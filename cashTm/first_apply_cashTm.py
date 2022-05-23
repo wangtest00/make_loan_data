@@ -31,14 +31,17 @@ def first_apply():
     auth(registNo,custNo,headt)
     loanNo=loan(registNo,custNo,headt)
     bank_no=bank_auth(custNo,headt)
-    # india_thirdservice()
+    DataBase(inter_db).call_4_proc(inter_db)
+    time.sleep(10)
+    approve(loanNo)
+    #india_thirdservice()
     # time.sleep(30)
     sql5="update lo_loan_cust_rel set risk_level='AA',risk_score='"+prodNo+"' where LOAN_NO='"+loanNo+"';"
     DataBase(inter_db).executeUpdateSql(sql5)
     DataBase(inter_db).call_many_proc()
     withdraw_mock(custNo,loanNo,headt,headw)
-    # time.sleep(3)
-    # chaXun_Stat(loanNo)
+    time.sleep(3)
+    chaXun_Stat(loanNo)
 
 
 if __name__ == '__main__':

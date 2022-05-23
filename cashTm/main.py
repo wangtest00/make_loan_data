@@ -36,29 +36,13 @@ def first_apply():
     loanNo=loan(registNo,custNo,headt)
     bank_no=bank_auth(custNo,headt)
     update_appr_user_stat()
-    DataBase(inter_db).call_many_proc()
-    DataBase(inter_db).call_many_proc()
+    DataBase(inter_db).call_4_proc(inter_db)
     approve(loanNo)
     sql5="update manage_need_loan.lo_loan_cust_rel set risk_level='AA',risk_score='"+prodNo+"' where LOAN_NO='"+loanNo+"';"
     DataBase(inter_db).executeUpdateSql(sql5)
     DataBase(inter_db).call_many_proc()
     withdraw_mock(custNo,loanNo,headt,headw)
     chaXun_Stat(loanNo)
-
-def chaXunDaiQian(loanNo):
-    sql1="select BEFORE_STAT from manage_need_loan.lo_loan_dtl where LOAN_NO='"+loanNo+"';"
-    before_stat=DataBase(inter_db).get_one(sql1)
-    before_stat=before_stat[0]
-    return before_stat
-def lunXunDaiQian(loanNo):
-    for t in range(1):
-        before_stat=chaXunDaiQian(loanNo)
-        if before_stat=='10260006':
-            break
-        else:
-            time.sleep(3)
-            print("贷前状态未变更为拒绝")
-            continue
 
 
 if __name__ == '__main__':

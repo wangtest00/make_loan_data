@@ -62,9 +62,9 @@ class DataBase():
         for proc in proc:
             self.call_proc(proc)
         self.closeDB()
-    def call_4_proc(self):
+    def call_4_proc(self,witchdb):
         for i in range(2):
-            DataBase('manage_need_loan').call_many_proc()
+            DataBase(witchdb).call_many_proc()
             time.sleep(1)
     def call_proc_args(self,procName,date):
         try:
@@ -93,5 +93,5 @@ class DataBase():
         self.closeDB()
 
 if __name__ == '__main__':
-    DataBase(inter_db).call_daily_important_batch('20220517','20220525')
-    #DataBase(inter_db).call_4_proc()
+    #DataBase(inter_db).call_daily_important_batch('20220517','20220525')
+    DataBase(inter_db).call_4_proc(inter_db)

@@ -44,7 +44,7 @@ def first_apply_bank():
     DataBase(inter_db).executeUpdateSql(sql5)
     india_thirdservice()     #调风控定时任务
     time.sleep(30)
-    DataBase(inter_db).call_4_proc()  #分单去审批
+    DataBase(inter_db).call_4_proc(inter_db)  #分单去审批
     approve(loanNo)
     DataBase(inter_db).call_many_proc()  # 产品匹配
     withdraw(custNo,loanNo,headt,headw,'12010001')#类型选择绑银行卡，申请提现类型为银行卡
@@ -90,7 +90,7 @@ def first_apply_paytm():
     DataBase(inter_db).executeUpdateSql(sql5)
     india_thirdservice()    #调风控定时任务
     time.sleep(30)
-    DataBase(inter_db).call_4_proc()   #分单
+    DataBase(inter_db).call_4_proc(inter_db)   #分单
     approve(loanNo)
     DataBase(inter_db).call_many_proc() #产品匹配
     withdraw(custNo, loanNo, headt, headw, '12010002')  #申请类型paytm

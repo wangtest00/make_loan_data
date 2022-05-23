@@ -3,7 +3,7 @@ from cashTm.mgt_cashTm import *
 from cashTm.daiqian_cashTm import *
 from data.var_cashTm import *
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
-
+from risk.risk import *
 # 禁用安全请求警告
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 def first_apply():
@@ -31,31 +31,14 @@ def first_apply():
     auth(registNo,custNo,headt)
     loanNo=loan(registNo,custNo,headt)
     bank_no=bank_auth(custNo,headt)
-    update_appr_user_stat()
-    DataBase(inter_db).call_many_proc()
-    DataBase(inter_db).call_many_proc()
-    approve(loanNo)
+    # india_thirdservice()
+    # time.sleep(30)
     sql5="update lo_loan_cust_rel set risk_level='AA',risk_score='"+prodNo+"' where LOAN_NO='"+loanNo+"';"
     DataBase(inter_db).executeUpdateSql(sql5)
     DataBase(inter_db).call_many_proc()
     withdraw_mock(custNo,loanNo,headt,headw)
-    time.sleep(3)
-    chaXun_Stat(loanNo)
-
-def chaXunDaiQian(loanNo):
-    sql1="select BEFORE_STAT from manage_need_loan.lo_loan_dtl where LOAN_NO='"+loanNo+"';"
-    before_stat=DataBase(inter_db).get_one(sql1)
-    before_stat=before_stat[0]
-    return before_stat
-def lunXunDaiQian(loanNo):
-    for t in range(1):
-        before_stat=chaXunDaiQian(loanNo)
-        if before_stat=='10260006':
-            break
-        else:
-            time.sleep(3)
-            print("贷前状态未变更为拒绝")
-            continue
+    # time.sleep(3)
+    # chaXun_Stat(loanNo)
 
 
 if __name__ == '__main__':

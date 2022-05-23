@@ -93,5 +93,5 @@ class DataBase():
 #loanAmt='{0:f}'.format(t[0])#decimal转字符串
 
 if __name__ == '__main__':
-    DataBase('mex_pdl_loan').call_daily_important_batch('20220517','20220517')
+    DataBase('mex_pdl_loan').call_daily_important_batch('20220707','20220707')
     #DataBase('mex_pdl_loan').call_4_proc()

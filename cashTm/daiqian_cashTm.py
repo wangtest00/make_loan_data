@@ -20,7 +20,20 @@ def check_api(r):
     else:
         print("环境可能不稳定，接口返回=",r.content)
         return 0
-
+def chaXunDaiQian(loanNo):
+    sql1="select BEFORE_STAT from manage_need_loan.lo_loan_dtl where LOAN_NO='"+loanNo+"';"
+    before_stat=DataBase(inter_db).get_one(sql1)
+    before_stat=before_stat[0]
+    return before_stat
+def lunXunDaiQian(loanNo):
+    for t in range(1):
+        before_stat=chaXunDaiQian(loanNo)
+        if before_stat=='10260006':
+            break
+        else:
+            time.sleep(3)
+            print("贷前状态未变更为拒绝")
+            continue
 #短信验证码，默认手机号后4位单个+5后取个位数，在逆序排列。注意非中国手机号
 def compute_code(m):
     m=m[-4:]
@@ -64,7 +77,7 @@ def cert_auth(registNo,headt):
     for j in range(5):  #生成5个随机英文大写字母
         st+=random.choice(string.ascii_uppercase)
     num=str(random.randint(1000,9999))
-    data={"appName":appName,"appNo":appNo,"birthDay":"1999-05-06","certNo":num+"4566"+num,"custFirstName":"wang","custLastName":"shuang","custMiddleName":"mmmm","education":"10190006",
+    data={"appName":appName,"appNo":appNo,"birthDay":"1991-05-06","certNo":num+"4566"+num,"custFirstName":"wang","custLastName":"shuang","custMiddleName":"mmmm","education":"10190006",
           "marriage":"10050001","panNo":""+st+num+"W","registNo":registNo,"sex":"10030001","useEmail":"sdfghhhj@gmail.com","useLang":"90000001"}
     r=requests.post(host_api+'/api/cust_india/cert/cert_auth?lang=en',data=json.dumps(data),headers=headt,verify=False)
     t=r.json()
@@ -172,7 +185,7 @@ def withdraw_mock(custNo,loanNo,headt,headw):
         data={"custNo":custNo,"instNum":instNum,"loanAmt":loanAmt,"loanNo":loanNo,"prodNo":prodNo}
         r=requests.post(host_api+"/api/trade/fin/less/withdraw?lang=en",data=json.dumps(data),headers=headt,verify=False)
         print("暂时忽略该报错Unbound bank card,响应=",r.json())
-        #payout_mock_apply(loanNo,custNo)#提现mock接口
+        payout_mock_apply(loanNo,custNo)#提现mock接口
 
 def payout_for_razorpay(cust_no,bank_no):
     #注意卡号需要与cu_cust_bank_card_dtl表中卡号保持一致

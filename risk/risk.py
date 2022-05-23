@@ -5,4 +5,4 @@ def india_thirdservice():
     print('调风控接口响应=',r.json())
 
 if __name__ == '__main__':
-    thirdservice()
+    india_thirdservice()

@@ -74,6 +74,7 @@ def head_mgt_2():
 #批量分配及审批
 def pl_shenpi():
     head=head_mgt_2()
+    DataBase(inter_db).call_4_proc(inter_db)
     r=requests.get(host_mgt+'/api/approve/distribution/list?pageSize=10&pageNum=1&lang=zh',headers=head,verify=False)
     t=r.json()
     print(t)

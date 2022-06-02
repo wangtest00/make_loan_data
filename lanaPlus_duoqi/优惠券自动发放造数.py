@@ -1,7 +1,7 @@
 from data.var_mex_lp_duoqi import *
 from lanaPlus_duoqi.gaishu_lp_duoqi import *
 from lanaPlus_duoqi.heads_lp_duoqi import *
-from lanaPlus_duoqi.mgt_lp_duoqi import *
+from lanaPlus_duoqi.mgt_Duoqi import *
 
 
 #改编码方便jenkins运行

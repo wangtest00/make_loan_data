@@ -1,31 +1,17 @@
-from feriaRapida.daiQian import *
+from lanaPlus_danqi.daiQian import *
 import requests,json
 from database.dataBase import *
-from data.var_mex_fr import *
+from data.var_mex_lp_danqi import *
+from public.check_api import *
 
-def check_api(r):
-    try:
-        if r.status_code==200:
-            t=r.json()
-            if t['errorCode']==0:
-                print("校验正确，接口返回=",t)
-                return t
-            else:
-                print("校验错误，接口返回=",t)
-                return 0
-        else:
-            print("环境可能不稳定，接口返回=",r.content)
-            return 0
-    except Exception as e:
-        print("捕获到异常：",e)
-        return 0
 #登录mgt,返回ssid值
 def login_mgt():
     data={"loginName":shenpiren[appNo][0],"password":"jk@123"}
     r=requests.post(host_mgt+'/api/login/auth?lang=en&lang=zh',data=json.dumps(data),headers=head_mgt,verify=False)
     check_api(r)
     for item in r.cookies:
-        print(item.name,item.value)
+        #print(item.name,item.value)
+        pass
     return item.value
 
 #注意：审批人员平均推单存储过程，只对空闲在线的审批人推单
@@ -81,6 +67,6 @@ def pl_shenpi():
     pl_approve(loan_No_List)
 
 if __name__ == '__main__':
-    for i in range(3):
+    for i in range(1):
         pl_shenpi()
-    #approve('L2012108188116218565239939072')
+    #approve("L2012202108180317329738104832")

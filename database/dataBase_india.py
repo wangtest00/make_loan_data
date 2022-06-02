@@ -3,11 +3,9 @@
 Created on 2018-11-26
 @author: 王爽
 '''
-import time
-import pymysql
+import pymysql,time
 from data.var_cashTm import *
 from public.date_calculate import *
-from turrant.daihou_tur import *
 
 class DataBase():
     def __init__(self,witchdb):
@@ -43,7 +41,7 @@ class DataBase():
             self.cur.execute(sql)
             self.connect.commit()
             print ("更新表字段成功",sql)
-            self.closeDB()
+            #self.closeDB()
         except Exception as e:
             print("更新异常：",e)
             return 0
@@ -61,11 +59,11 @@ class DataBase():
         proc=['proc_apr_loan_prod_sel','proc_apr_appr_all_user','proc_apr_appr_allocation','proc_apr_appr_allo_user_deal']
         for proc in proc:
             self.call_proc(proc)
-        self.closeDB()
-    def call_4_proc(self,witchdb):
+        #self.closeDB()
+    def call_4_proc(self):
         for i in range(2):
-            DataBase(witchdb).call_many_proc()
-            time.sleep(1)
+            self.call_many_proc()
+        self.closeDB()
     def call_proc_args(self,procName,date):
         try:
             self.cur.callproc(procName,args=(date,"@o_stat"))
@@ -82,16 +80,12 @@ class DataBase():
         DataBase(inter_db).executeUpdateSql(sql)
         proc=['proc_sys_batch_log_start','proc_dc_flow_dtl','proc_fin_ad_reduce','proc_dc_flow_dtl_settle','proc_fin_ad_ovdu','proc_fin_ad_detail_dtl','proc_fin_ad_dtl','proc_lo_ovdu_dtl','proc_sys_batch_log_end']
         date=get_date_list(date1,date2)
-        #print(date)
+        print(date)
         for j in range(len(date)):
             for i in range(len(proc)):
-                if i ==1:
-                    handle_repay()
-                else:
-                    self.call_proc_args(proc[i],date[j])
-                pass
+                self.call_proc_args(proc[i],date[j])
+                #time.sleep(1)
         self.closeDB()
-
 if __name__ == '__main__':
-    #DataBase(inter_db).call_daily_important_batch('20220517','20220525')
-    DataBase(inter_db).call_4_proc(inter_db)
+    #DataBase(inter_db).call_daily_important_batch('20220509','20220515')
+    DataBase(inter_db).call_4_proc()

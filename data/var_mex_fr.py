@@ -1,4 +1,4 @@
-__all__=['host_api','host_action','host_mgt','head_api','host_pay','host_coll','head_mgt','head_pay','CONFIGS','prodNo','which_db','appNo','shenpiren']
+#__all__=['host_api','host_action','host_mgt','head_api','host_pay','host_coll','head_mgt','head_pay','CONFIGS','prodNo','which_db','appNo','shenpiren']
 
 appNo='202'    #当前产品号，测试201用多期，马甲包只支持单期无积分和优惠券,25002400
 shenpiren={
@@ -7,6 +7,7 @@ shenpiren={
 which_db=shenpiren[appNo][3]   #数据库库名
 prodNo=shenpiren[appNo][2]     #产品编号
 host_mgt=shenpiren[appNo][1]   #MGT域名
+app_type='10090001'
 host_api="https://test-api.quantx.mx"        #APP
 host_action="https://test-action.quantx.mx"  #埋点
 host_pay="https://test-pay.quantx.mx"        #支付

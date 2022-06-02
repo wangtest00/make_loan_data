@@ -10,7 +10,7 @@ from risk.risk import *
 # 禁用安全请求警告
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 #改编码方便jenkins运行
-sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="gb18030")
+#sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="gb18030")
 '''
 目前只有白名单和非黑非白用户才能进入风控走人审，其余一律拒绝
 '''

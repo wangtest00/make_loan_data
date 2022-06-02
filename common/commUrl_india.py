@@ -1,0 +1,17 @@
+loginUrl="/api/cust_info/cust/login?lang=en"
+certAuthUrl='/api/cust_india/cert/cert_auth?lang=en'
+addressUrl='/api/cust_india/cert/save_address?lang=en'
+singleAuthUrl='/api/cust_india/query/single_cust_auth?lang=en'
+workAuthUrl='/api/cust_india/work/auth?lang=en'
+contactAuthUrl='/api/cust_india/contact/auth?lang=en'
+withdrawUrl='/api/loan_india/start?lang=en'
+bankAuthUrl='/api/cust_india/bank/bank_auth?lang=en'
+checkBankUrl='/api/cust_india/bank/checkBankCard?lang=en'
+fundAccountUrl='/api/trade/cust/create/contact/fund_account'
+beneficiaryAccountUrl="/api/compile/cust_beneficiary_account?lang=en"
+instalmentUrl="/api/loan_info/trial/instalment?lang=en"
+confirmWithdrawUrl="/api/trade/fin/less/withdraw?lang=en"
+raorpayCallbackUrl="/api/trade/razorpay_x/annon/event/callback"
+repayUrl="/api/trade/fin/repay?lang=en"
+paytmWebhookUrl="/api/trade/paytm/payout_webhook"
+mgtLoginUrl="/api/login/auth?lang=en&lang=zh"

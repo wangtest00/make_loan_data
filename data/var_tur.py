@@ -1,10 +1,12 @@
-__all__=['host_api','host_action','host_mgt','head_api','head_mgt','head_lixiang','host_coll','CONFIGS','prodNo','inter_db','head_pay','host_pay','appNo','appName']
+import time
+#__all__=['host_api','host_action','host_mgt','head_api','head_mgt','head_lixiang','host_coll','CONFIGS','prodNo','inter_db','head_pay','host_pay','appNo','appName','mgtuser']
 
-inter_db='manage_need_loan'
-prodNo='20150801'#duoqi50121401
 appNo='104'
-applist={'104':'Turrant','102':'CashTM'}
-appName=applist[appNo]
+applist={'104':['Turrant','wangs2@whalekun.com','20150801','manage_need_loan'],'102':'CashTM'}
+appName=applist[appNo][0]
+mgtuser=applist[appNo][1]
+prodNo=applist[appNo][2]
+inter_db=applist[appNo][3]
 host_api="https://test-appa.quantstack.in"
 #host_api="http://192.168.20.193:8082"
 host_pay="https://test-pay.quantstack.in"
@@ -24,3 +26,10 @@ head_pay={"Host":"test-pay.quantstack.in","Connection":"keep-alive","Content-Len
 head_lixiang={"Host":"192.168.20.246","Connection":"keep-alive","Content-Length":"116","Postman-Token":"68cc47f6-8c1f-4ebd-a929-b1ae10b7dd19",
                 "User-Agent":"PostmanRuntime/7.28.2","Accept":"*/*","Content-Type":"application/json","Accept-Encoding":"gzip, deflate, br"}
 CONFIGS = {'manage_need_loan': {'host':'172.31.25.83','port':3306, 'user': 'cs_wangs','password': 'cs_wangs!qw####','database': 'manage_need_loan'}}
+
+t = str(time.time() * 1000000)[:10]
+head_pay_for_razorpayx = {"Host": "test-pay.quantstack.in", "Connection": "keep-alive", "Content-Length": "116",
+                          "Postman-Token": "68cc47f6-8c1f-4ebd-a929-b1ae10b7dd19",
+                          "User-Agent": "PostmanRuntime/7.28.2", "Accept": "*/*", "Content-Type": "application/json",
+                          "Accept-Encoding": "gzip, deflate, br", "X-Razorpay-Event-Id": "PAYOUT" + t,
+                          "X-Razorpay-Signature": "123456"}

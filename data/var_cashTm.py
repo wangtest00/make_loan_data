@@ -1,7 +1,7 @@
 __all__=['host_api','host_action','host_mgt','head_api','head_mgt','head_pay_tmp','host_coll','CONFIGS','prodNo','inter_db','head_pay','host_pay','appNo','appName']
 
 inter_db='manage_need_loan'
-prodNo='5'
+prodNo='4'
 appNo='102'
 applist={'104':'Turrant','102':'CashTM'}
 appName=applist[appNo][0]

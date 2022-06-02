@@ -1,9 +1,9 @@
 import io,os,sys
-from feriaRapida.daiHou import *
-from feriaRapida.gaiShu_mex import *
-from feriaRapida.daiQian import *
-from feriaRapida.mgt_fr import *
-from data.var_mex_fr import *
+from lanaPlus_danqi.daiHou import *
+from lanaPlus_danqi.gaiShu_mex import *
+from lanaPlus_danqi.daiQian import *
+from lanaPlus_danqi.mgt_Danqi import *
+from data.var_mex_lp_danqi import *
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
 # 禁用安全请求警告
@@ -11,10 +11,9 @@ requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 #改编码方便jenkins运行
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="gb18030")
 filepath=os.environ['amount']
-
 # 注册,认证，提交多种信息申请贷款到达待审批状态
 def first_apply(registNo):
-    daiQian=DaiQian_Fr()
+    daiQian=DaiQian_Danqi()
     daiQian.update_batch_log()
     code=compute_code(registNo)
     token=daiQian.login_code(registNo,code)
@@ -37,7 +36,7 @@ def first_apply(registNo):
         sheiPiHou(loan_no, registNo, custNo, headt)
 
 def sheiPiHou(loanNo, registNo, custNo, headt):
-    daiQian = DaiQian_Fr()
+    daiQian = DaiQian_Danqi()
     MockData().insert_risk(loanNo)  # 匹配产品
     #停在【通过】状态，用户待提现
     w = daiQian.withdraw(registNo, custNo, loanNo, headt)  # app页面点击提现
@@ -46,8 +45,6 @@ def sheiPiHou(loanNo, registNo, custNo, headt):
     else:
         pass
     DataBase(which_db).closeDB()
-
-
 def auto_test(amount):
     amount=int(amount)
     for i in range(amount):

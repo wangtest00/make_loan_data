@@ -1,16 +1,17 @@
-import io,os,sys
 from feriaRapida.daiHou import *
 from feriaRapida.gaiShu_mex import *
 from feriaRapida.daiQian import *
 from feriaRapida.mgt_fr import *
 from data.var_mex_fr import *
+from common.calculate import *
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
 # 禁用安全请求警告
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
-#改编码方便jenkins运行
-sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="gb18030")
-filepath=os.environ['amount']
+
+# import io,sys
+# 改编码方便jenkins运行
+# sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="gb18030")
 
 # 注册,认证，提交多种信息申请贷款到达待审批状态
 def first_apply(registNo):
@@ -47,13 +48,11 @@ def sheiPiHou(loanNo, registNo, custNo, headt):
         pass
     DataBase(which_db).closeDB()
 
-
-def auto_test(amount):
-    amount=int(amount)
-    for i in range(amount):
-        registNo=str(random.randint(8000000000,9999999999)) #10位随机数作为手机号
-        first_apply(registNo)
+def auto_test():
+    registNo = str(random.randint(8000000000, 9999999999))
+    first_apply(registNo)
 
 
 if __name__ == '__main__':
-    auto_test(filepath)
+    for i in range(1):
+        auto_test()

@@ -1,8 +1,8 @@
-from feriaRapida.daiHou import *
-from feriaRapida.gaiShu_mex import *
-from feriaRapida.daiQian import *
-from feriaRapida.mgt_Danqi import *
-from data.var_mex_fr import *
+from lanaPlus_danqi.daiHou import *
+from lanaPlus_danqi.gaiShu_mex import *
+from lanaPlus_danqi.daiQian import *
+from lanaPlus_danqi.mgt_Danqi import *
+from data.var_mex_lp_danqi import *
 from common.calculate import *
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
@@ -15,7 +15,7 @@ sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="gb18030")
 
 # 注册,认证，提交多种信息申请贷款到达待审批状态
 def first_apply(registNo):
-    daiQian=DaiQian_Fr()
+    daiQian=DaiQian_Danqi()
     daiQian.update_batch_log()
     code=compute_code(registNo)
     token=daiQian.login_code(registNo,code)
@@ -38,7 +38,7 @@ def first_apply(registNo):
         sheiPiHou(loan_no, registNo, custNo, headt)
 
 def sheiPiHou(loanNo, registNo, custNo, headt):
-    daiQian = DaiQian_Fr()
+    daiQian = DaiQian_Danqi()
     MockData().insert_risk(loanNo)  # 匹配产品
     #停在【通过】状态，用户待提现
     w = daiQian.withdraw(registNo, custNo, loanNo, headt)  # app页面点击提现
@@ -54,7 +54,7 @@ def auto_test():
         first_apply(registNo)
 
 def make_tongguo():
-    daiQian = DaiQian_Fr()
+    daiQian = DaiQian_Danqi()
     daiQian.update_batch_log()
     registNo=str(random.randint(8000000000,9999999999)) #10位随机数作为手机号
     code=compute_code(registNo)
@@ -77,7 +77,7 @@ def make_tongguo():
         MockData().insert_risk(loanNo)
 
 def apply_jieqing():
-    daiQian = DaiQian_Fr()
+    daiQian = DaiQian_Danqi()
     daiHou=DaiHou()
     daiQian.update_batch_log()
     registNo=str(random.randint(8000000000,9999999999)) #10位随机数作为手机号

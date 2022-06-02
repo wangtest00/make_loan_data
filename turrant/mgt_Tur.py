@@ -1,33 +1,15 @@
-import json
-import requests
-from database.dataBase_india import *
-from data.var_cashTm import *
-from cashTm.daiQian import *
+import json,requests
+from database.dataBase_tur import *
+from data.var_tur import *
+from turrant.daiQian import *
+from public.check_api import *
 
-mgtuser="wangs@whalekun.com"
-def check_api(r):
-    try:
-        if r.status_code==200:
-            t=r.json()
-            if t['errorCode']==0:
-                print("校验成功，接口返回=",t)
-                return t
-            else:
-                print("校验失败，接口返回=",t)
-                return 0
-        else:
-            print("环境可能不稳定，接口返回=",r.content)
-            return 0
-    except Exception as e:
-        print("捕获到异常：",e)
-        return 0
 #登录mgt,返回ssid值
 def login_mgt():
     data={"loginName":mgtuser,"password":"jk@123"}
-    r=requests.post(host_mgt+'/api/login/auth?lang=en&lang=zh',data=json.dumps(data),headers=head_mgt,verify=False)
+    r=requests.post(host_mgt+mgtLoginUrl,data=json.dumps(data),headers=head_mgt,verify=False)
     check_api(r)
     for item in r.cookies:
-        #print(item.name,item.value)
         pass
     return item.value
 
@@ -36,7 +18,7 @@ def login_mgt():
 def update_appr_user_stat():
     sql="update sys_user_info set APPR_USER_STAT='10460001',ON_LINE='10000001',IS_USE='10000001'  where user_no='"+mgtuser+"';"
     DataBase(inter_db).executeUpdateSql(sql)
-#分配审批人员及审批通过
+#分配审批人员及审批通过-递归函数
 def approve(loan_no):
     head=head_mgt_c()
     data1={"loanNos":[loan_no],"targetUserNo":mgtuser}
@@ -44,25 +26,26 @@ def approve(loan_no):
     check_api(r1)
     data2={"loanNo":loan_no,"decisionReason":"10280020","apprRemark":"test","approveResultType":"PASS"}
     r2=requests.post(host_mgt+'/api/approve/handle/approve?lang=zh',data=json.dumps(data2),headers=head,verify=False)#2.审批通过
+    check_api(r2)
     t2=r2.json()
-    print(t2)
-    print(type(t2['errorCode']))
-    if t2['errorCode'] != 0:
+    if t2['errorCode']!=0:
         print("开始调用分单审批存储过程")
         DataBase(inter_db).call_4_proc()
         return approve(loan_no)
     else:
         pass
 #批量分配审批人员及审批通过
-def pl_approve(loan_no):
+def pl_approve(loanNo):
     head=head_mgt_c()
-    data1={"loanNos":loan_no,"targetUserNo":"wangs@whalekun.com"}
-    r=requests.post(host_mgt+'/api/approve/distribution/case?lang=zh',data=json.dumps(data1),headers=head,verify=False)  #1.分配审批人员
-    check_api(r)
-    for loan_no in loan_no:
-        data2={"loanNo":loan_no,"decisionReason":"10280038","apprRemark":"测试通过","riskLevel":"DEFAULT","riskScore":"0","approveResultType":"PASS"}
-        r=requests.post(host_mgt+'/api/approve/handle/approve?lang=zh',data=json.dumps(data2),headers=head,verify=False)#2.审批通过
-        check_api(r)
+    for loanNo in loanNo:
+        data1 = {"loanNos": [loanNo], "targetUserNo": mgtuser}
+        #1.分配审批人员
+        r1 = requests.post(host_mgt + '/api/approve/distribution/case?lang=zh', data=json.dumps(data1), headers=head,verify=False)
+        check_api(r1)
+        data2={"loanNo":loanNo,"decisionReason":"10280038","apprRemark":"测试通过","riskLevel":"DEFAULT","riskScore":"0","approveResultType":"PASS"}
+        #2.审批通过
+        r2=requests.post(host_mgt+'/api/approve/handle/approve?lang=zh',data=json.dumps(data2),headers=head,verify=False)
+        check_api(r2)
 #组装header+用户登录cookie
 def head_mgt_c():
     ssid=login_mgt()
@@ -89,15 +72,15 @@ def pl_shenpi():
     loan_No_List=[]
     for i in range(len(t)):
         if t[i]['apprStat']=='10200003':
-            if t[i]['apprUserNo']=='wangs@whalekun.com' or t[i]['apprUserNo']=='lijiahui' or t[i]['apprUserNo']=='liull@whalekun.com':
-                print(t[i]['loanNo'])
+            if t[i]['apprUserNo']=='wangs2@whalekun.com' or t[i]['apprUserNo']=='liull@quantditech.com' or t[i]['apprUserNo']=='lijiahui' or t[i]['apprUserNo']=='wangs@whalekun.com':
                 loan_no=t[i]['loanNo']
                 loan_No_List.append(loan_no)
     if len(loan_No_List)==0:
         print("无需审批")
     else:
+        print(loan_No_List)
         pl_approve(loan_No_List)
 
 if __name__ == '__main__':
-    approve('L1022206028220543163555840000')
-    #pl_shenpi()
+    #approve('L1042206028220528284115599360')
+    pl_shenpi()

@@ -1,7 +1,7 @@
-from feriaRapida.daiQian import *
+from lanaPlus_duoqi.daiQian import *
 import requests,json
 from database.dataBase import *
-from data.var_mex_fr import *
+from data.var_mex_lp_duoqi import *
 
 def check_api(r):
     try:
@@ -25,7 +25,8 @@ def login_mgt():
     r=requests.post(host_mgt+'/api/login/auth?lang=en&lang=zh',data=json.dumps(data),headers=head_mgt,verify=False)
     check_api(r)
     for item in r.cookies:
-        print(item.name,item.value)
+        #print(item.name,item.value)
+        pass
     return item.value
 
 #注意：审批人员平均推单存储过程，只对空闲在线的审批人推单
@@ -84,3 +85,4 @@ if __name__ == '__main__':
     for i in range(3):
         pl_shenpi()
     #approve('L2012108188116218565239939072')
+    #login_mgt()

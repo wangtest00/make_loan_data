@@ -4,7 +4,7 @@ from lanaPlus_duoqi.daihou_lp_duoqi import *
 from lanaPlus_duoqi.daiqian_lp_duoqi import *
 from lanaPlus_duoqi.gaishu_lp_duoqi import *
 from data.var_mex_lp_duoqi import *
-from lanaPlus_duoqi.mgt_lp_duoqi import *
+from lanaPlus_duoqi.mgt_Duoqi import *
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
 # 禁用安全请求警告

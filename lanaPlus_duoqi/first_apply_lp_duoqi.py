@@ -33,16 +33,18 @@ def first_apply(registNo):
 
 def first_apply_sheipihou(loan_no,registNo,custNo,headt):
     insert_risk(loan_no)#匹配产品
-    #停在【通过】状态，用户待提现
+    # 停在【通过】状态，用户待提现
     w=withdraw(registNo,custNo,loan_no,headt)  #app页面点击提现
     if w==1:
         gaishu(loan_no)
     else:
         pass
     DataBase(which_db).closeDB()
+
 def auto_test():
     registNo=str(random.randint(8000000000,9999999999)) #10位随机数作为手机号
     first_apply(registNo)
+
 #指定手机号，跑后续流程
 def bu_ding(registNo):
     token=login_pwd(registNo)

@@ -60,17 +60,15 @@ class DataBase():
         proc=['proc_apr_loan_prod_sel','proc_apr_appr_all_user','proc_apr_appr_allocation','proc_apr_appr_allo_user_deal']
         for proc in proc:
             self.call_proc(proc)
-        self.closeDB()
-    def call_4_proc(self,whichdb):
+    def call_4_proc(self):
         for i in range(2):
-            DataBase(whichdb).call_many_proc()
+            self.call_many_proc()
             time.sleep(1)
     def call_proc_args(self,procName,date):
         try:
             self.cur.callproc(procName,args=(date,"@o_stat"))
             self.connect.commit()
             print ("调用存储过程成功:",procName,date)
-            #self.closeDB()
         except Exception as e:
             print("调用存储过程异常：",e)
             return 0
@@ -88,4 +86,5 @@ class DataBase():
                 #time.sleep(1)
         self.closeDB()
 if __name__ == '__main__':
-    DataBase(inter_db).call_daily_important_batch('20220509','20220515')
+    #DataBase(inter_db).call_daily_important_batch('20220509','20220515')
+    DataBase(inter_db).call_4_proc()

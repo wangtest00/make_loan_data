@@ -4,7 +4,7 @@ from database.dataBase_tur import *
 from data.var_tur import *
 from turrant.daiqian_tur import *
 
-mgtuser="wangs2@whalekun.com"
+mgtuser="lijiahui"
 def check_api(r):
     try:
         if r.status_code==200:
@@ -23,11 +23,11 @@ def check_api(r):
         return 0
 #登录mgt,返回ssid值
 def login_mgt():
-    data={"loginName":mgtuser,"password":"jk@123"}
+    data={"loginName":mgtuser,"password":"275201ljh"}
     r=requests.post(host_mgt+'/api/login/auth?lang=en&lang=zh',data=json.dumps(data),headers=head_mgt,verify=False)
     check_api(r)
     for item in r.cookies:
-        print(item.name,item.value)
+        pass
     return item.value
 
 #注意：审批人员平均推单存储过程，只对空闲在线的审批人推单
@@ -74,10 +74,9 @@ def head_mgt_2():
 #批量分配及审批
 def pl_shenpi():
     head=head_mgt_2()
-    DataBase(inter_db).call_4_proc(inter_db)
+    DataBase(inter_db).call_4_proc()
     r=requests.get(host_mgt+'/api/approve/distribution/list?pageSize=10&pageNum=1&lang=zh',headers=head,verify=False)
     t=r.json()
-    print(t)
     t=t['list']
     loan_No_List=[]
     for i in range(len(t)):

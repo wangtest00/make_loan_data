@@ -90,7 +90,8 @@ def first_apply_paytm():
     sql5 = "update lo_loan_cust_rel set risk_level='AA',risk_score='" + prodNo + "' where LOAN_NO='" + loanNo + "';"
     DataBase(inter_db).executeUpdateSql(sql5)
     india_thirdservice()    #调风控定时任务
-    time.sleep(30)
+    time.sleep(5)
+    update_appr_user_stat()
     DataBase(inter_db).call_4_proc()   #分单
     approve(loanNo)
     DataBase(inter_db).call_many_proc() #产品匹配
@@ -101,5 +102,5 @@ def first_apply_paytm():
 
 if __name__ == '__main__':
     for i in range(1):
-        first_apply_bank()
-        #first_apply_paytm()
+        # first_apply_bank()
+        first_apply_paytm()

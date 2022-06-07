@@ -28,18 +28,18 @@ def first_apply(registNo):
         update_appr_user_stat()
         DataBase(which_db).call_4_proc()
         approve(loan_no)
-        first_apply_sheipihou(loan_no, registNo, custNo, headt)
+        # first_apply_sheipihou(loan_no, registNo, custNo, headt)
 
 
-def first_apply_sheipihou(loan_no, registNo, custNo, headt):
-    insert_risk(loan_no)  # 匹配产品
-    #停在【通过】状态，用户待提现
-    w = withdraw(registNo, custNo, loan_no, headt)  # app页面点击提现
-    if w == 1:
-        gaishu(loan_no)
-    else:
-        pass
-    DataBase(which_db).closeDB()
+# def first_apply_sheipihou(loan_no, registNo, custNo, headt):
+#     insert_risk(loan_no)  # 匹配产品
+    # 停在【通过】状态，用户待提现
+    # w = withdraw(registNo, custNo, loan_no, headt)  # app页面点击提现
+    # if w == 1:
+    #     gaishu(loan_no)
+    # else:
+    #     pass
+    # DataBase(which_db).closeDB()
 
 
 def auto_test():

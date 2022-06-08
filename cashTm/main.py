@@ -1,7 +1,7 @@
 import sys,io
 from cashTm.daiHou_CashTm import *
 from cashTm.daiQian import *
-from database.dataBase_india import *
+from database.dataBase_cashTm import *
 from cashTm.mgt_cashTm import *
 from data.var_cashTm import *
 from requests.packages.urllib3.exceptions import InsecureRequestWarning

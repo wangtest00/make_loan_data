@@ -1,6 +1,6 @@
 from lanaPlus_danqi.daiQian import *
 import requests,json
-from database.dataBase import *
+from database.dataBase_mex import *
 from data.var_mex_lp_danqi import *
 from public.check_api import *
 

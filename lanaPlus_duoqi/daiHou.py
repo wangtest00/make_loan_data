@@ -1,5 +1,5 @@
 import random
-from database.dataBase import *
+from database.dataBase_mex import *
 from lanaPlus_duoqi.daiQian import *
 
 class DaiHou():

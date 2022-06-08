@@ -11,7 +11,7 @@ app_type=shenpiren[appNo][7]   #app类型：IOS=10090002   Android=10090001
 host_api="https://test-api.quantx.mx"        #APP
 host_action="https://test-action.quantx.mx"  #埋点
 host_pay="https://test-pay.quantx.mx"        #支付
-host_coll="https://test-coll.quantx.mx"      #催收
+host_coll="test-collection.lanaplus.mx"      #催收
 head_api={"user-agent": "Dart/2.10 (dart:io)","x-user-language": "es","x-auth-token": "Bearer" ,"accept-encoding": "gzip","content-length": "63","host":"test-api.quantx.mx","x-app-name": shenpiren[appNo][4],
           "content-type": "application/json","x-app-type": app_type,"x-app-version": "116","x-app-no": appNo }
 

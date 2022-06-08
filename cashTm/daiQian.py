@@ -1,5 +1,5 @@
 import datetime,random,string
-from database.dataBase_india import *
+from database.dataBase_cashTm import *
 from cashTm.daiHou_CashTm import *
 from data.var_cashTm import *
 from common.api_Request import *
@@ -96,8 +96,9 @@ class DaiQian_CashTm(ApiTest):
     #申请提现
     def loan(self,registNo,custNo,headt):
         data={"appNo":appNo,"custNo":custNo,"registNo":registNo}
-        t=ApiTest.api_Request(self,'post',host_api+withdrawUrl,ApiTest.change_type(self,data),headt)
-        return t['loanNo']
+        print(data)
+        # t=ApiTest.api_Request(self,'post',host_api+withdrawUrl,ApiTest.change_type(self,data),headt)
+        # return t['loanNo']
     #更新kyc认证状态及其值
     def update_kyc_auth(self,registNo,custNo):
         t=str(time.time()*1000000)[:15]

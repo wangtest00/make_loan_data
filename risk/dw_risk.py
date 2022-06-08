@@ -1,7 +1,7 @@
 import pymysql
 import requests,json
 from data.var_mex_lp_duoqi import *
-from database.dataBase import *
+from database.dataBase_mex import *
 #生成下载地址
 def pre_sign_url(objectKey):
     data={

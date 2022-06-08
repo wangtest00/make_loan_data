@@ -1,6 +1,6 @@
 from lanaPlus_danqi.daiQian import *
 import random,datetime
-from database.dataBase import *
+from database.dataBase_mex import *
 from data.var_mex_lp_danqi import *
 
 randnum=str(random.randint(10000000,99999999)) #8位随机数

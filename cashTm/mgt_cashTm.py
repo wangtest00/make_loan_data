@@ -1,6 +1,6 @@
 import json
 import requests
-from database.dataBase_india import *
+from database.dataBase_cashTm import *
 from data.var_cashTm import *
 from cashTm.daiQian import *
 

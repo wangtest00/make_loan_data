@@ -1,6 +1,6 @@
 import datetime
 
-from database.dataBase import *
+from database.dataBase_mex import *
 
 
 #检查放款成功，贷后状态为“正常”的贷款数据

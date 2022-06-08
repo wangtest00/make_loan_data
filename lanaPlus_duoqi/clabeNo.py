@@ -1,4 +1,4 @@
-from database.dataBase import *
+from database.dataBase_mex import *
 
 quanzhi=[]
 for j in range(6):

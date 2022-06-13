@@ -1,5 +1,5 @@
-__all__ = ['host_api', 'host_action', 'host_mgt', 'head_api', 'host_pay', 'host_coll', 'head_mgt', 'head_pay',
-           'configs', 'prodNo', 'which_db', 'appNo', 'shenpiren', 'app_type']
+# __all__ = ['host_api', 'host_action', 'host_mgt', 'head_api', 'host_pay', 'host_coll', 'head_mgt', 'head_pay',
+#            'configs', 'prodNo', 'which_db', 'appNo', 'shenpiren', 'app_type']
 
 appNo = '201'  # 当前产品号，测试201用多期，马甲包只支持单期无积分和优惠券
 shenpiren = {  # GAID                           app版本号

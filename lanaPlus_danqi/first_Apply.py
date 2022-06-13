@@ -46,7 +46,7 @@ def sheiPiHou(loanNo, registNo, custNo, headt):
         MockData().gaishu(loanNo)
     else:
         pass
-    DataBase(which_db).closeDB()
+    DataBase(configs).closeDB()
 
 def auto_test():
     registNo = str(random.randint(8000000000, 9999999999))

@@ -15,16 +15,7 @@ host_coll="https://test-collection.lanaplus.mx"   #催收
 host_coll_data="https://test-nx.quantx.mx"
 host_msg="https://test-msg.quantx.mx"             #消息
 host_target="https://test-target.quantx.mx"       #指标app-01
-host_duanlian="https://t.liy.mx"
-host_asset="https://test-asset.quantx.mx"
-host_cms="https://test-cms.quantx.mx"
-host_nx="https://test-nx.quantx.mx"
-host_risk_data="https://test-risk-data.quantx.mx"
-host_risk_interface="https://test-risk-interface.quantx.mx"
-host_risk_process="https://test-risk-process.quantx.mx"
-host_risk="https://test-risk.quantx.mx"
-host_timer="https://test-timer.quantx.mx"
-host_payment="https://test-digital-payment.quantx.mx"
+
 
 head_api={"user-agent": "Dart/2.10 (dart:io)","x-user-language": "es","x-auth-token": "Bearer" ,"accept-encoding": "gzip","content-length": "63","host":"test-api.quantx.mx","x-app-name": shenpiren[appNo][4],
           "content-type": "application/json","x-app-type": app_type,"x-app-version": "116","x-app-no": appNo }

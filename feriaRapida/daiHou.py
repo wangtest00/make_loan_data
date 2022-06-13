@@ -15,7 +15,7 @@ class DaiHou():
 	def getRepayDateList_stp(self,registNo,loanNo,headt):
 		daiQian=DaiQian_Fr()
 		sql="select CUST_NO from cu_cust_reg_dtl where REGIST_NO='"+registNo+"';"
-		custNo=DataBase(which_db).get_one(sql)
+		custNo=DataBase(configs).get_one(sql)
 		custNo=custNo[0]
 		getRepayDate_List=daiQian.getRepayDateList(registNo,headt)
 		repayDate=getRepayDate_List[0]  #获取最近一期未还的账单日
@@ -37,7 +37,7 @@ class DaiHou():
 			   2.返回响应结果不是errCode=1，具体还款结果可查：回款查询，pay_tran_dtl和fin_tran_repay_dtl表'''
 		#查询预计交易金额，交易流水号，入账账号，条件：OXXO渠道+实际交易金额为空
 		sql="select SHD_TRAN_AMT,tran_order_no,in_acct_no from pay_tran_dtl t where LOAN_NO='"+loanNo+"' and TRAN_CHAN_NAME ='Conekta_Payment_LanaPlusProd' and ACT_TRAN_AMT is null;"
-		three_list=DataBase(which_db).get_one(sql)
+		three_list=DataBase(configs).get_one(sql)
 		print(three_list)
 		data={"data": {"object": {
 				"livemode": False,

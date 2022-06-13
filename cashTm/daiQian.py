@@ -40,7 +40,7 @@ class DaiQian_CashTm(ApiTest):
     def head_token(self,token):
         head={"user-agent": "Dart/2.12 (dart:io)","x-user-language": "en","accept-encoding": "gzip","content-length": "0","host": "test-appa.quantstack.in",
               "content-type": "application/json;charset=utf-8","version_no":"2.6.3","app_type":"10090001",
-            "x-app-type": "10090001","app_no": appNo,"x-auth-token":'Bearer-6677'+str(token),"Cookie":"JSESSIONID=d17x0ET9jFp5BBK_qidExJqVs5THhstLnVk2eMEH" }
+            "x-app-type": "10090001","app_no": appNo,"x-auth-token":'Bearer '+str(token),"Cookie":"JSESSIONID=d17x0ET9jFp5BBK_qidExJqVs5THhstLnVk2eMEH" }
         return head
     def head_token_f(self,token):
         head={"user-agent":"Dart/2.12 (dart:io)","Accept-Language":"en","accept-encoding":"gzip","content-length":"277","host":"test-appa.quantstack.in",

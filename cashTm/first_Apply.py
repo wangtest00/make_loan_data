@@ -62,11 +62,5 @@ def first_apply_bank():
 
 
 if __name__ == '__main__':
-    # for i in range(1):
-    #     first_apply_bank()
-    daiQian = DaiQian_CashTm()
-    registNo = '8989850000'  # 10位随机数
-    token = daiQian.login_code(registNo)
-    headt = daiQian.head_token(token)
-    for i in range(10000):
-        custNo = daiQian.cert_auth(registNo, headt)
+    for i in range(1):
+        first_apply_bank()

@@ -75,11 +75,11 @@ class DaiQian_CashTm(ApiTest):
                 "marriage": "10050001", "panNo": "" + st + num + "W", "registNo": registNo, "sex": "10030001",
                 "useEmail": "sdfghhhj@gmail.com", "useLang": "90000001"}
         res=ApiTest.api_Request(self,'post',host_api+certAuthUrl,ApiTest.change_type(self,data),headt)
-        # if res!=0:
-        #     m=json.loads(res['message'])#字符串转字典
-        #     return m['custNo']
-        # else:
-        #     pass
+        if res!=0:
+            m=json.loads(res['message'])#字符串转字典
+            return m['custNo']
+        else:
+            pass
     def auth(self,registNo,custNo,headt):
         #第3个页面-家庭地址
         data1={"address":"wwsdddxx","county":"10010002","custNo":custNo,"postCode":"123456","residenceType":"10840005","state":"10010000"}

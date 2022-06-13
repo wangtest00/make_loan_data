@@ -1,8 +1,9 @@
 import json,time
 import requests
-from database.dataBase_tur import *
+from database.dataBase_india import *
 from public.check_api import *
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
+from data.var_tur import *
 
 # 禁用安全请求警告
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
@@ -25,7 +26,7 @@ class DaiHou_tur():
 
     def chaXun_Stat(self,loanNo):
         sql="select before_stat from lo_loan_dtl where loan_no='"+loanNo+"';"
-        before_stat=DataBase(inter_db).get_one(sql)
+        before_stat=DataBase(configs).get_one(sql)
         if before_stat[0]=='10260005':
             print("贷前状态已变更为:【已提现】",before_stat[0],loanNo)
         else:
@@ -55,7 +56,7 @@ class DaiHou_tur():
     #cashFree还款模拟回调，注意：记得先要申请还款，调api,trade_fin_repay函数
     def cashFree_annon_event(self,loanNo):
         sql="select TRAN_ORDER_NO from pay_tran_dtl where LOAN_NO='"+loanNo+"' and TRAN_USE='10330002' and TRAN_CHAN_NAME='cashFree支付服务商';"
-        tran_order_no=DataBase(inter_db).get_one(sql)
+        tran_order_no=DataBase(configs).get_one(sql)
         tran_order_no=tran_order_no[0]
         r=requests.post(host_pay+"/api/trade/cashFree/annon/event/"+tran_order_no,headers=head_pay,verify=False)
         t=r.json()
@@ -63,7 +64,7 @@ class DaiHou_tur():
     #razorpay还款模拟回调，注意：记得先要申请还款，调api,trade_fin_repay函数
     def razorpay_annon_event_callback(self,loanNo,amount):
         sql="select TRAN_ORDER_NO from pay_tran_dtl where LOAN_NO='"+loanNo+"' and TRAN_USE='10330002' and TRAN_CHAN_NAME='razorpayx';"
-        tran_order_no=DataBase(inter_db).get_one(sql)
+        tran_order_no=DataBase(configs).get_one(sql)
         tran_order_no=tran_order_no[0]
         data={"entity": "",
               "account_id": "",
@@ -195,7 +196,7 @@ class DaiHou_tur():
     #还款申请
     def re_payment_apply(self,loanNo,transAmt):
         sql="select CUST_NO,REPAY_DATE from lo_loan_dtl where LOAN_NO='"+loanNo+"';"
-        m=DataBase(inter_db).get_one(sql)
+        m=DataBase(configs).get_one(sql)
         custNo=m[0]
         repayDate=m[1]
         data={
@@ -214,7 +215,7 @@ class DaiHou_tur():
     #还款模拟回调
     def paytm_repay_webhook(self,loanNo,txnamount):
         sql = "select TRAN_FLOW_NO,TRAN_ORDER_NO from pay_tran_dtl where LOAN_NO='"+loanNo+"' and TRAN_USE='10330002' and tran_stat='10220000';"
-        sum2 = DataBase(inter_db).get_one(sql)
+        sum2 = DataBase(configs).get_one(sql)
         tranFlowNo=sum2[0]
         tranorderno=sum2[1]
         print(sum2)

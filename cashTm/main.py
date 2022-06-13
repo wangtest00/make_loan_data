@@ -1,7 +1,7 @@
 import sys,io
-from cashTm.daiHou_CashTm import *
+from cashTm.daiHou import *
 from cashTm.daiQian import *
-from database.dataBase_cashTm import *
+from database.dataBase_india import *
 from cashTm.mgt_cashTm import *
 from data.var_cashTm import *
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
@@ -17,7 +17,7 @@ sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="gb18030")
 def first_apply_bank():
     daiQian = DaiQian_CashTm()
     sql = "UPDATE sys_app_info set PAY_CHAN_SERVICE='CashTmBankOpenTest' where app_no='"+appNo+"';"
-    DataBase(inter_db).executeUpdateSql(sql)
+    DataBase(configs).executeUpdateSql(sql)
     daiQian.update_Batch_Log()
     registNo=str(random.randint(8000000000,9999999999)) #10位随机数
     token=daiQian.login_code(registNo)
@@ -28,14 +28,14 @@ def first_apply_bank():
     daiQian.update_kyc_auth(registNo,custNo)
     loanNo=daiQian.loan(registNo,custNo,headt)
     daiQian.lunXunDaiQian(loanNo)
-    DataBase(inter_db).call_many_proc()
+    DataBase(configs).call_many_proc()
     time.sleep(3)
     sql2="update cu_cust_dtl set RISK_LEVEL='AA',risk_score='"+prodNo+"' where cust_no='"+custNo+"';"
-    DataBase(inter_db).executeUpdateSql(sql2)
+    DataBase(configs).executeUpdateSql(sql2)
     sql3="update lo_loan_dtl set BEFORE_STAT='10260007' where LOAN_NO='"+loanNo+"';"
-    DataBase(inter_db).executeUpdateSql(sql3)
+    DataBase(configs).executeUpdateSql(sql3)
     sql4="update lo_loan_cust_rel set risk_level='AA',risk_score='"+prodNo+"' where LOAN_NO='"+loanNo+"';"
-    DataBase(inter_db).executeUpdateSql(sql4)
+    DataBase(configs).executeUpdateSql(sql4)
     time.sleep(5)
     token=daiQian.login_code(registNo)
     headt=daiQian.head_token(token)
@@ -44,13 +44,13 @@ def first_apply_bank():
     loanNo=daiQian.loan(registNo,custNo,headt)
     bank_no=daiQian.bank_auth(custNo,headt)
     sql5="update lo_loan_cust_rel set risk_level='AA',risk_score='"+prodNo+"' where LOAN_NO='"+loanNo+"';"
-    DataBase(inter_db).executeUpdateSql(sql5)
+    DataBase(configs).executeUpdateSql(sql5)
     # india_thirdservice()     #调风控定时任务
     # time.sleep(5)
     # update_appr_user_stat()           #更新审批人为上线状态
     # DataBase(inter_db).call_4_proc()  #分单去审批
     # approve(loanNo)
-    DataBase(inter_db).call_many_proc()  # 产品匹配
+    DataBase(configs).call_many_proc()  # 产品匹配
     daiQian.withdraw(custNo,loanNo,headt,headw,'12010001')#类型选择绑银行卡，申请提现类型为银行卡
     pay_chan_service=daiQian.cx_pay_chan_service()
     if pay_chan_service=='TurrantRazorpayTest':

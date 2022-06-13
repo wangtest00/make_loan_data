@@ -4,6 +4,7 @@ from data.var_mex_lp_danqi import *
 import random,datetime,string
 from common.commUrl_mex import *
 from common.api_Request import *
+from database.dataBase_mex import *
 
 class ApiTest(Api_Request):
     def __init__(self):
@@ -133,13 +134,13 @@ class DaiQian_Danqi(ApiTest):
         tnum3=str(random.randrange(10000,99999))
         inst_time=str(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
         sql1="update cu_cust_auth_dtl set KYC_AUTH='1' WHERE CUST_NO='"+custNo+"';"  #客户认证信息明细表kyc认证状态
-        DataBase(which_db).executeUpdateSql(sql1)
+        DataBase(configs).executeUpdateSql(sql1)
         sql2="INSERT INTO `mex_pdl_loan`.`cu_cust_file_dtl`(`ID`, `REGIST_NO`, `CUST_NO`, `APP_NO`, `BUSI_TYPE`, `SAVE_ATT_NAME`, `UPLOAD_ATT_NAME`, `ATT_TYPE`, `ATT_FILE`, `ATT_SIZE`, `PH_PATH`, `IN_PATH`, `REMARK`, `INST_TIME`, `INST_USER_NO`, `UPDT_TIME`, `UPDT_USER_NO`) VALUES ('"+t+'b88f206222e0'+tnum1+"', '"+registNo+"', '"+custNo+"','"+appNo+"', '10070001', '100700011632400318577.jpg', '100700011632400318577.jpg', NULL, '.jpg', '677710', '"+appNo+"/20210923/4567891230/', NULL, NULL, '"+inst_time+"', 'sys', NULL, NULL);"
         sql3="INSERT INTO `mex_pdl_loan`.`cu_cust_file_dtl`(`ID`, `REGIST_NO`, `CUST_NO`, `APP_NO`, `BUSI_TYPE`, `SAVE_ATT_NAME`, `UPLOAD_ATT_NAME`, `ATT_TYPE`, `ATT_FILE`, `ATT_SIZE`, `PH_PATH`, `IN_PATH`, `REMARK`, `INST_TIME`, `INST_USER_NO`, `UPDT_TIME`, `UPDT_USER_NO`) VALUES ('"+t+'b88f206222e0'+tnum2+"', '"+registNo+"', '"+custNo+"','"+appNo+"', '10070002', '100700021632400319381.jpg', '100700021632400319381.jpg', NULL, '.jpg', '704805',  '"+appNo+"/20210923/4567891230/', NULL, NULL, '"+inst_time+"', 'sys', NULL, NULL);"
         sql4="INSERT INTO `mex_pdl_loan`.`cu_cust_file_dtl`(`ID`, `REGIST_NO`, `CUST_NO`, `APP_NO`, `BUSI_TYPE`, `SAVE_ATT_NAME`, `UPLOAD_ATT_NAME`, `ATT_TYPE`, `ATT_FILE`, `ATT_SIZE`, `PH_PATH`, `IN_PATH`, `REMARK`, `INST_TIME`, `INST_USER_NO`, `UPDT_TIME`, `UPDT_USER_NO`) VALUES ('"+t+'b88f206222e0'+tnum3+"', '"+registNo+"', '"+custNo+"','"+appNo+"', '10070004', '100700041632400322001.jpg', '100700041632400322001.jpg', NULL, '.jpg', '206389',  '"+appNo+"/20210923/4567891230/', NULL, NULL, '"+inst_time+"', 'sys', NULL, NULL);"
-        DataBase(which_db).executeUpdateSql(sql2)
-        DataBase(which_db).executeUpdateSql(sql3)
-        DataBase(which_db).executeUpdateSql(sql4)
+        DataBase(configs).executeUpdateSql(sql2)
+        DataBase(configs).executeUpdateSql(sql3)
+        DataBase(configs).executeUpdateSql(sql4)
     #绑定银行卡，需要把银行卡号改成明显错的，环境怕放出真实的钱
     def bank_auth(self,custNo,headt):
         bank_acct_no=str(random.randint(100000,999999))
@@ -147,7 +148,7 @@ class DaiQian_Danqi(ApiTest):
         r=ApiTest.api_Request(self,'post',host_api+bankAuthUrl,ApiTest.change_type(self,data18),headt)
         time.sleep(1)                                         #改为6位随机数
         sql="update cu_cust_bank_card_dtl set BANK_ACCT_NO='"+bank_acct_no+"' where CUST_NO='"+custNo+"';"#修改成随机卡号，避免触发绑卡被拒:同一张银行卡不能被超过2个人绑定并放款成功
-        DataBase(which_db).executeUpdateSql(sql)
+        DataBase(configs).executeUpdateSql(sql)
     #提现接口-app点击提现按钮
     def withdraw(self,registNo,custNo,loanNo,headt):
         t=ApiTest.api_Request(self,'get',host_api+'/api/loan/latest/'+registNo,'',headt)#获取最近一笔贷款贷款金额，注意请求头content-length的值。The request body did not contain the specified number of bytes. Got 0, expected 63
@@ -164,18 +165,18 @@ class DaiQian_Danqi(ApiTest):
     #当前时间的前一天=跑批业务日期，才能正常申请借款
     def update_batch_log(self):
         sql='select now();'
-        date_time=DataBase(which_db).get_one(sql)
+        date_time=DataBase(configs).get_one(sql)
         day=str(date_time[0]+datetime.timedelta(days=-1))
         yudate=day[:4]+day[5:7]+day[8:10]
         sql2='select BUSI_DATE from sys_batch_log order by BUSI_DATE desc limit 1;'
-        BUSI_DATE=DataBase(which_db).get_one(sql2)
+        BUSI_DATE=DataBase(configs).get_one(sql2)
         if yudate==BUSI_DATE[0]:
             print("当前服务器日期为:",date_time[0])
             print("当期系统跑批业务日期为:",BUSI_DATE[0],"无需修改批量日期")
         else:
             sql3="update sys_batch_log set BUSI_DATE='"+yudate+"',BATCH_STAT='10490002',IS_PROD_SEL='10000001' where BUSI_DATE='"+BUSI_DATE[0]+"';"
-            DataBase(which_db).executeUpdateSql(sql3)
-        DataBase(which_db).closeDB()
+            DataBase(configs).executeUpdateSql(sql3)
+        DataBase(configs).closeDB()
     #获取所有账单日
     def getRepayDateList(self,registNo,headt):
         r=requests.get(host_api+'/api/loan/latest/'+registNo,headers=headt)#获取最近一笔贷款贷款金额，注意请求头content-length的值。The request body did not contain the specified number of bytes. Got 0, expected 63
@@ -208,7 +209,7 @@ class DaiQian_Danqi(ApiTest):
         else:
             pass
         sql="select CLABE_NO from fin_clabe_usable_dtl where CUST_NO='"+custNo+"';"
-        in_acct_no=DataBase(which_db).get_one(sql)
+        in_acct_no=DataBase(configs).get_one(sql)
         in_acct_no=in_acct_no[0]
         if in_acct_no==None:
             print("repay接口请求有错，未向pay_tran_dtl表写入还款账号等数据",in_acct_no)
@@ -226,7 +227,7 @@ class DaiQian_Danqi(ApiTest):
 
     def cx_beforeStat_afterStat(self,loanNo):
         sql='''select BEFORE_STAT,AFTER_STAT from lo_loan_dtl where LOAN_NO="'''+loanNo+'''";'''
-        stat=DataBase(which_db).get_one(sql)
+        stat=DataBase(configs).get_one(sql)
         return stat
 if __name__ == '__main__':
     daiQian = DaiQian_Danqi()

@@ -1,5 +1,7 @@
 from feriaRapida.daiqian_fr import *
 from feriaRapida.gaishu_fr import *
+from database.dataBase_mex import *
+from data.var_mex_fr import *
 
 #改编码方便jenkins运行
 #sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="gb18030")
@@ -8,7 +10,7 @@ from feriaRapida.gaishu_fr import *
 def reApply():
     custNo=get_CustNO()
     sql="select REGIST_NO from cu_cust_reg_dtl where CUST_NO='"+custNo+"';"
-    registNo=DataBase(which_db).get_one(sql)
+    registNo=DataBase(configs).get_one(sql)
     registNo=registNo[0]
     print(registNo)
     # registNo='8313621686'
@@ -19,7 +21,7 @@ def reApply():
     #在app申请贷款
     loanNo=apply_loan(custNo,headt)
     #分案
-    DataBase('mex_pdl_loan').call_4_proc()
+    DataBase(configs).call_4_proc()
     #审批
     approve(loanNo)
     #插入风险数据，完成匹配产品
@@ -43,7 +45,7 @@ HAVING count(1) =1
 where c.APP_NO="'''+appNo+'''" and d.USEABLE='10000001' and d.BANK_ACCT_NO is not null
 group by  b.cust_no
 HAVING loan_cnt=1 order by b.INST_TIME desc;'''
-    custNo=DataBase(which_db).get_one(sql)
+    custNo=DataBase(configs).get_one(sql)
     print(custNo[0])
     return custNo[0]
 if __name__ == '__main__':

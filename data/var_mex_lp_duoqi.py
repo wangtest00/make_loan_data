@@ -1,4 +1,4 @@
-__all__=['host_api','host_action','host_mgt','head_api','host_pay','host_coll','head_mgt','head_pay','CONFIGS','prodNo','which_db','appNo','shenpiren','app_type']
+#__all__=['host_api','host_action','host_mgt','head_api','host_pay','host_coll','head_mgt','head_pay','configs','prodNo','which_db','appNo','shenpiren','app_type']
 
 appNo='201'    #当前产品号，测试201用多期，马甲包FR只支持单期无积分和优惠券  28070110
 shenpiren={                                                                                            #GAID                           app版本号
@@ -11,7 +11,21 @@ app_type=shenpiren[appNo][7]   #app类型：IOS=10090002   Android=10090001
 host_api="https://test-api.quantx.mx"        #APP
 host_action="https://test-action.quantx.mx"  #埋点
 host_pay="https://test-pay.quantx.mx"        #支付
-host_coll="test-collection.lanaplus.mx"      #催收
+host_coll="https://test-collection.lanaplus.mx"   #催收
+host_coll_data="https://test-nx.quantx.mx"
+host_msg="https://test-msg.quantx.mx"             #消息
+host_target="https://test-target.quantx.mx"       #指标app-01
+host_duanlian="https://t.liy.mx"
+host_asset="https://test-asset.quantx.mx"
+host_cms="https://test-cms.quantx.mx"
+host_nx="https://test-nx.quantx.mx"
+host_risk_data="https://test-risk-data.quantx.mx"
+host_risk_interface="https://test-risk-interface.quantx.mx"
+host_risk_process="https://test-risk-process.quantx.mx"
+host_risk="https://test-risk.quantx.mx"
+host_timer="https://test-timer.quantx.mx"
+host_payment="https://test-digital-payment.quantx.mx"
+
 head_api={"user-agent": "Dart/2.10 (dart:io)","x-user-language": "es","x-auth-token": "Bearer" ,"accept-encoding": "gzip","content-length": "63","host":"test-api.quantx.mx","x-app-name": shenpiren[appNo][4],
           "content-type": "application/json","x-app-type": app_type,"x-app-version": "116","x-app-no": appNo }
 
@@ -26,7 +40,4 @@ head_pay={"Host": host_pay[8:],"Connection": "keep-alive","Content-Length": "55"
 "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36",
 "Content-Type": "application/json;charset=UTF-8","Origin": host_pay,"Sec-Fetch-Site": "same-origin","Sec-Fetch-Mode": "cors",
 "Sec-Fetch-Dest": "empty","Referer": host_pay,"Accept-Encoding": "gzip, deflate, br","Accept-Language": "zh-CN,zh;q=0.9","Cookie": "language=zh"}
-CONFIGS = {
-    'mex_pdl_loan': {'host':'192.168.0.60','port':3306, 'user': 'cs_wangs','password': 'cs_wangs!qw####','database': 'mex_pdl_loan'},
-    'manage_need_loan': {'host':'13.235.214.155','port':3306, 'user': 'cs_wangs','password': 'cs_wangs!qw####','database': 'manage_need_loan'}
-}
+configs={'host':'192.168.0.60','port':3306, 'user': 'cs_wangs','password': 'cs_wangs!qw####','database': 'mex_pdl_loan'}

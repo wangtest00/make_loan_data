@@ -1,7 +1,7 @@
 import sys,io
 from turrant.daiHou import *
 from turrant.daiQian import *
-from database.dataBase_tur import *
+from database.dataBase_india import *
 from turrant.mgt_Tur import *
 from data.var_tur import *
 from requests.packages.urllib3.exceptions import InsecureRequestWarning

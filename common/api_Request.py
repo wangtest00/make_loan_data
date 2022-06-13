@@ -41,7 +41,7 @@ class Api_Request(object):
             print('请求接口地址=',url,'checkApi响应=',t)
             return t
         else:
-            print("测试环境可能不稳定，接口返回=",response.content)
+            print("测试环境可能不稳定，接口返回=",url,response.content)
             return 0
 if __name__ == '__main__':
     data={'appName': 'Turrant', 'appNo': '104', 'appType': '10090001', 'code': '5555', 'gaid': '12303937-ccde-46ee-a455-5146d36344dd', 'ipAddr': '192.168.20.223', 'osVersion': '10', 'phoneType': 'HUAWEI', 'registNo': '8485840000', 'utmCampaign': '', 'utmContent': '', 'utmMedium': '', 'utmSource': '', 'utmTerm': '', 'versionNo': '1.0.0'}

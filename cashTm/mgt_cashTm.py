@@ -1,6 +1,6 @@
 import json
 import requests
-from database.dataBase_cashTm import *
+from database.dataBase_india import *
 from data.var_cashTm import *
 from cashTm.daiQian import *
 
@@ -35,7 +35,7 @@ def login_mgt():
 ##将审批人的审批状态为空闲： 空闲10460001   审批中10460002 离开10460003
 def update_appr_user_stat():
     sql="update sys_user_info set APPR_USER_STAT='10460001',ON_LINE='10000001',IS_USE='10000001'  where user_no='"+mgtuser+"';"
-    DataBase(inter_db).executeUpdateSql(sql)
+    DataBase(configs).executeUpdateSql(sql)
 #分配审批人员及审批通过
 def approve(loan_no):
     head=head_mgt_c()
@@ -49,7 +49,7 @@ def approve(loan_no):
     print(type(t2['errorCode']))
     if t2['errorCode'] != 0:
         print("开始调用分单审批存储过程")
-        DataBase(inter_db).call_4_proc()
+        DataBase(configs).call_4_proc()
         return approve(loan_no)
     else:
         pass

@@ -18,7 +18,7 @@ def login_mgt():
 ##将审批人的审批状态为空闲： 空闲10460001   审批中10460002 离开10460003
 def update_appr_user_stat():
     sql="update sys_user_info set APPR_USER_STAT='10460001',ON_LINE='10000001',IS_USE='10000001'  where user_no='"+shenpiren[appNo][0]+"';"
-    DataBase(which_db).executeUpdateSql(sql)
+    DataBase(configs).executeUpdateSql(sql)
 #分配审批人员及审批通过
 def approve(loan_no):
     head=head_mgt_c()

@@ -25,4 +25,4 @@ head_pay={"Host":host_pay[8:],"Connection":"keep-alive","Content-Length":"116","
 head_pay_f={"Host":host_pay[8:],"Connection":"keep-alive","Content-Length":"116","Postman-Token":"68cc47f6-8c1f-4ebd-a929-b1ae10b7dd19",
                 "User-Agent":"PostmanRuntime/7.28.2","Accept":"*/*","Accept-Encoding":"gzip, deflate, br"}
 
-CONFIGS = {'india_tez_loan': {'host':'172.21.0.244','port':3306, 'user': 'cs_wangs','password': 'cs_wangs!qw####','database': 'india_tez_loan'}}
+configs= {'host':'172.21.0.244','port':3306, 'user': 'cs_wangs','password': 'cs_wangs!qw####','database': 'india_tez_loan'}

@@ -5,17 +5,15 @@ Created on 2018-11-26
 '''
 import time
 import pymysql
-from data.var_mex_lp_duoqi import *
 from public.date_calculate import *
 
 
 class DataBase():
-    def __init__(self,witchdb):
-        self.connectDB(witchdb)
-    def connectDB(self,witchdb):
+    def __init__(self,configs):
+        self.connectDB(configs)
+    def connectDB(self,configs):
         try:
-            self.connect=pymysql.connect(user=CONFIGS[witchdb]['user'],password=CONFIGS[witchdb]['password'],host=CONFIGS[witchdb]['host'],
-                                         database=CONFIGS[witchdb]['database'],port=CONFIGS[witchdb]['port'], charset="utf8")
+            self.connect=pymysql.connect(user=configs['user'],password=configs['password'],host=configs['host'],database=configs['database'],port=configs['port'], charset="utf8")
             self.cur=self.connect.cursor()
         except pymysql.Error as e:
             print(e)
@@ -61,10 +59,10 @@ class DataBase():
         proc=['proc_apr_loan_prod_sel','proc_apr_appr_all_user','proc_apr_appr_allocation_control','proc_apr_appr_allo_user_deal']
         for proc in proc:
             self.call_proc(proc)
-        self.closeDB()
+
     def call_4_proc(self):
         for i in range(2):
-            DataBase('mex_pdl_loan').call_many_proc()
+            self.call_many_proc()
             time.sleep(1)
     def call_proc_args(self,procName,date):
         try:
@@ -84,7 +82,7 @@ class DataBase():
             pass
         else:
             sql = "delete from sys_batch_log;"  # 先清空batch_log
-            DataBase(which_db).executeUpdateSql(sql)
+            self.executeUpdateSql(sql)
             for j in range(len(date)):
                 for i in range(len(proc)):
                     self.call_proc_args(proc[i],date[j])
@@ -94,4 +92,5 @@ class DataBase():
 
 if __name__ == '__main__':
     #DataBase('mex_pdl_loan').call_daily_important_batch('20220521','20220521')
-    DataBase('mex_pdl_loan').call_4_proc()
+    configs={'host':'192.168.0.60','port':3306, 'user': 'cs_wangs','password': 'cs_wangs!qw####','database': 'mex_pdl_loan'}
+    DataBase(configs).call_4_proc()

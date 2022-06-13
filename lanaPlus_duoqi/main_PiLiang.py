@@ -2,7 +2,7 @@ import io,os
 import sys
 from lanaPlus_duoqi.daihou_lp_duoqi import *
 from lanaPlus_duoqi.daiqian_lp_duoqi import *
-from lanaPlus_duoqi.gaishu_lp_duoqi import *
+from lanaPlus_duoqi.gaiShu_mex import *
 from data.var_mex_lp_duoqi import *
 from lanaPlus_duoqi.mgt_Duoqi import *
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
@@ -28,11 +28,11 @@ def first_apply(registNo):
     update_batch_log()
     loan_no=apply_loan(custNo,headt)
     if loan_no is None:
-        DataBase(which_db).closeDB()
+        DataBase(configs).closeDB()
     else:
         bank_auth(custNo,headt)
         update_appr_user_stat()
-        DataBase(which_db).call_4_proc()
+        DataBase(configs).call_4_proc()
         approve(loan_no)
         first_apply_sheipihou(loan_no,registNo,custNo,headt)
 
@@ -44,7 +44,7 @@ def first_apply_sheipihou(loan_no,registNo,custNo,headt):
         gaishu(loan_no)
     else:
         pass
-    DataBase(which_db).closeDB()
+    DataBase(configs).closeDB()
 def auto_test(amount):
     amount=int(amount)
     for i in range(amount):

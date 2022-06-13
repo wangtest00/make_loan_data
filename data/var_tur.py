@@ -25,7 +25,7 @@ head_pay={"Host":"test-pay.quantstack.in","Connection":"keep-alive","Content-Len
                 "User-Agent":"PostmanRuntime/7.28.2","Accept":"*/*","Content-Type":"application/json","Accept-Encoding":"gzip, deflate, br"}
 head_lixiang={"Host":"192.168.20.246","Connection":"keep-alive","Content-Length":"116","Postman-Token":"68cc47f6-8c1f-4ebd-a929-b1ae10b7dd19",
                 "User-Agent":"PostmanRuntime/7.28.2","Accept":"*/*","Content-Type":"application/json","Accept-Encoding":"gzip, deflate, br"}
-CONFIGS = {'manage_need_loan': {'host':'172.31.25.83','port':3306, 'user': 'cs_wangs','password': 'cs_wangs!qw####','database': 'manage_need_loan'}}
+configs= {'host':'172.31.25.83','port':3306, 'user': 'cs_wangs','password': 'cs_wangs!qw####','database': 'manage_need_loan'}
 
 t = str(time.time() * 1000000)[:10]
 head_pay_for_razorpayx = {"Host": "test-pay.quantstack.in", "Connection": "keep-alive", "Content-Length": "116",

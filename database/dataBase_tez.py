@@ -4,16 +4,15 @@ Created on 2018-11-26
 @author: 王爽
 '''
 import pymysql
-from data.var_tez_loan import *
 from public.date_calculate import *
 
 class DataBase():
-    def __init__(self,witchdb):
-        self.connectDB(witchdb)
-    def connectDB(self,witchdb):
+    def __init__(self,configs):
+        self.connectDB(configs)
+    def connectDB(self,configs):
         try:
-            self.connect=pymysql.connect(user=CONFIGS[witchdb]['user'],password=CONFIGS[witchdb]['password'],host=CONFIGS[witchdb]['host'],
-                                         database=CONFIGS[witchdb]['database'],port=CONFIGS[witchdb]['port'], charset="utf8")
+            self.connect = pymysql.connect(user=configs['user'], password=configs['password'], host=configs['host'],
+                                           database=configs['database'], port=configs['port'], charset="utf8")
             self.cur=self.connect.cursor()
         except pymysql.Error as e:
             print(e)
@@ -72,7 +71,7 @@ class DataBase():
     #调用存储过程，执行日终批量，从日期1跑到日期2
     def call_daily_important_batch(self,date1,date2):
         sql="delete from sys_batch_log;"      #先清空batch_log
-        DataBase(tez_db).executeUpdateSql(sql)
+        self.executeUpdateSql(sql)
         proc=['proc_sys_batch_log_start','proc_dc_flow_dtl','proc_fin_ad_reduce','proc_dc_flow_dtl_settle','proc_fin_ad_ovdu','proc_fin_ad_detail_dtl','proc_fin_ad_dtl','proc_lo_ovdu_dtl','proc_sys_batch_log_end']
         date=get_date_list(date1,date2)
         print(date)
@@ -85,5 +84,5 @@ class DataBase():
 
 #loanAmt='{0:f}'.format(t[0])#decimal转字符串
 if __name__ == '__main__':
-    #DataBase(tez_db).call_many_proc()
+    DataBase(configs).call_many_proc()
     DataBase(tez_db).call_daily_important_batch('20220221','20220228')

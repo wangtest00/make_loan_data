@@ -1,10 +1,11 @@
 import io,os,sys
 from feriaRapida.daiHou import *
-from feriaRapida.gaiShu_mex import *
+from feriaRapida.gaiShu_fr import *
 from feriaRapida.daiQian import *
 from feriaRapida.mgt_fr import *
 from data.var_mex_fr import *
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
+from database.dataBase_mex import *
 
 # 禁用安全请求警告
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
@@ -28,11 +29,11 @@ def first_apply(registNo):
     daiQian.update_kyc_auth(registNo, custNo)
     loan_no = daiQian.apply_loan(custNo, headt)
     if loan_no is None:
-        DataBase(which_db).closeDB()
+        DataBase(configs).closeDB()
     else:
         daiQian.bank_auth(custNo, headt)
         update_appr_user_stat()
-        DataBase(which_db).call_4_proc()
+        DataBase(configs).call_4_proc()
         approve(loan_no)
         sheiPiHou(loan_no, registNo, custNo, headt)
 
@@ -45,7 +46,7 @@ def sheiPiHou(loanNo, registNo, custNo, headt):
         MockData().gaishu(loanNo)
     else:
         pass
-    DataBase(which_db).closeDB()
+    DataBase(configs).closeDB()
 
 
 def auto_test(amount):

@@ -1,7 +1,8 @@
 import json,time
 import requests
-from database.dataBase_cashTm import *
+from database.dataBase_india import *
 from public.check_api import *
+from data.var_cashTm import *
 
 t=str(time.time()*1000000)[:10]
 head_pay_for_razorpay={"Host":"test-pay.quantstack.in","Connection":"keep-alive","Content-Length":"116","Postman-Token":"68cc47f6-8c1f-4ebd-a929-b1ae10b7dd19",
@@ -21,7 +22,7 @@ class DaiHou_CashTm():
 
     def chaXun_Stat(self,loanNo):
         sql="select before_stat from lo_loan_dtl where loan_no='"+loanNo+"';"
-        before_stat=DataBase(inter_db).get_one(sql)
+        before_stat=DataBase(configs).get_one(sql)
         if before_stat[0]=='10260005':
             print("贷前状态已变更为:【已提现】",before_stat[0],loanNo)
         else:
@@ -51,7 +52,7 @@ class DaiHou_CashTm():
     #cashFree还款模拟回调，注意：记得先要申请还款，调api,trade_fin_repay函数
     def cashFree_annon_event(self,loanNo):
         sql="select TRAN_ORDER_NO from pay_tran_dtl where LOAN_NO='"+loanNo+"' and TRAN_USE='10330002' and TRAN_CHAN_NAME='cashFree支付服务商';"
-        tran_order_no=DataBase(inter_db).get_one(sql)
+        tran_order_no=DataBase(configs).get_one(sql)
         tran_order_no=tran_order_no[0]
         r=requests.post(host_pay+"/api/trade/cashFree/annon/event/"+tran_order_no,headers=head_pay,verify=False)
         t=r.json()
@@ -59,7 +60,7 @@ class DaiHou_CashTm():
     #razorpay还款模拟回调，注意：记得先要申请还款，调api,trade_fin_repay函数
     def razorpay_annon_event_callback(self,loanNo,amount):
         sql="select TRAN_ORDER_NO from pay_tran_dtl where LOAN_NO='"+loanNo+"' and TRAN_USE='10330002' and TRAN_CHAN_NAME='razorpayx';"
-        tran_order_no=DataBase(inter_db).get_one(sql)
+        tran_order_no=DataBase(configs).get_one(sql)
         tran_order_no=tran_order_no[0]
         data={"entity": "",
               "account_id": "",

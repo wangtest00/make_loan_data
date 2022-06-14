@@ -54,5 +54,5 @@ def auto_test():
 
 
 if __name__ == '__main__':
-    for i in range(1):
+    for i in range(10):
         auto_test()

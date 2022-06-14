@@ -41,7 +41,7 @@ class DataBase():
             self.cur.execute(sql)
             self.connect.commit()
             print ("更新表字段成功",sql)
-            self.closeDB()
+            #self.closeDB()
         except Exception as e:
             print("更新异常：",e)
             return 0
@@ -87,10 +87,10 @@ class DataBase():
                 for i in range(len(proc)):
                     self.call_proc_args(proc[i],date[j])
                     #time.sleep(1)
-            self.closeDB()
 #loanAmt='{0:f}'.format(t[0])#decimal转字符串
 
 if __name__ == '__main__':
     #DataBase('mex_pdl_loan').call_daily_important_batch('20220521','20220521')
     configs={'host':'192.168.0.60','port':3306, 'user': 'cs_wangs','password': 'cs_wangs!qw####','database': 'mex_pdl_loan'}
-    DataBase(configs).call_4_proc()
+    DataBase(configs).call_daily_important_batch('20220628','20220628')
+    DataBase(configs).closeDB()

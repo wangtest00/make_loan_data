@@ -22,6 +22,7 @@ host_test:
   host_risk: https://test-risk.quantx.mx
   host_timer: https://test-timer.quantx.mx
   host_payment: https://test-digital-payment.quantx.mx
+  url_health: /api/ext/health
 
 host_prod:
   host_api: https://api.quantx.mx
@@ -39,6 +40,7 @@ host_prod:
   host_msg: https://msg.quantx.mx
   host_target: https://target.quantx.mx
   host_duanlian: https://liy.mx
+  host_duanlianpeizhi: https://s.liy.mx
   host_asset: https://asset.quantx.mx
   host_cms: https://cms.quantx.mx
   host_risk_data: https://risk-data.quantx.mx
@@ -47,3 +49,4 @@ host_prod:
   host_risk: https://risk.quantx.mx
   host_timer: https://timer.quantx.mx
   host_payment: https://digital-payment.quantx.mx
+  url_health: /api/ext/health

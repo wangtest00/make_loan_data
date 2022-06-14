@@ -28,7 +28,7 @@ def approve(loan_no):
     data2={"loanNo":loan_no,"decisionReason":"10280038","apprRemark":"备注:测试通过","riskLevel":"AA","riskScore":prodNo,"approveResultType":"PASS"}
     r=requests.post(host_mgt+'/api/approve/handle/approve?lang=zh',data=json.dumps(data2),headers=head,verify=False)#2.审批通过
     check_api(r)
-#批量分配审批人员及审批通过
+#批量审批通过
 def pl_approve(loan_no):
     head=head_mgt_c()
     for loan_no in loan_no:
@@ -46,11 +46,8 @@ def head_mgt_c():
 def head_mgt_2():
     ssid=login_mgt()
     head2={"Host": host_mgt[8:],"Connection": "keep-alive","sec-ch-ua": '"Not A;Brand";v="99", "Chromium";v="90", "Google Chrome";v="90"',
-"Accept": "application/json, text/plain, */*",
-"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36",
-"Sec-Fetch-Site": "same-origin",
-"Sec-Fetch-Mode": "cors",
-"Sec-Fetch-Dest": "empty","Referer": host_mgt,"Accept-Encoding": "gzip, deflate, br",
+"Accept": "application/json, text/plain, */*","User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36",
+"Sec-Fetch-Site": "same-origin","Sec-Fetch-Mode": "cors","Sec-Fetch-Dest": "empty","Referer": host_mgt,"Accept-Encoding": "gzip, deflate, br",
 "Accept-Language": "zh-CN,zh;q=0.9","Cookie": "language=zh; ssid="+ssid+"; hasLogin=1"}
     return head2
 #批量审批自己手上的

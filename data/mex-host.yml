@@ -14,6 +14,7 @@ host_test:
   host_msg: https://test-msg.quantx.mx
   host_target: https://test-target.quantx.mx
   host_duanlian: https://t.liy.mx
+  host_duanlianpeizhi: https://ts.liy.mx
   host_asset: https://test-asset.quantx.mx
   host_cms: https://test-cms.quantx.mx
   host_risk_data: https://test-risk-data.quantx.mx

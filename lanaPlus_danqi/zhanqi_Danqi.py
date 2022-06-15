@@ -1,6 +1,7 @@
 import datetime
 from lanaPlus_danqi.daiHou import *
 from lanaPlus_danqi.gaiShu_mex import *
+from data.var_mex_lp_danqi import *
 
 randnum=str(random.randint(10000000,99999999))
 #插入允许展期的记录
@@ -8,7 +9,7 @@ def inst_lo_extension_log(loan_no,cust_no):
     inst_time=str(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
     sql='''INSERT INTO `mex_pdl_loan`.`lo_extension_log`(`ID`, `LOAN_NO`, `CUST_NO`, `OPER_TYPE`, `OPER_NAME`, `OPER_TIME`, `REMARK`, `INST_TIME`) VALUES
     ('bfd576b0fb2d11ebb44'''+randnum+'''', "'''+loan_no+'''", "'''+cust_no+'''", 'STAFF', 'wangshuang', "'''+inst_time+'''", NULL, "'''+inst_time+'''");'''
-    DataBase(which_db).executeUpdateSql(sql)
+    DataBase(configs).executeUpdateSql(sql)
 
 def zhanqi(cust_no):
     r1=requests.get(host_api+"/api/h5/anon/id/"+cust_no,verify=False)
@@ -63,7 +64,7 @@ def cx_for_zhanqi():
             GROUP BY  a.LOAN_NO
             HAVING count(c.LOAN_NO) = 1
             order by c.INST_TIME desc limit 1;'''
-    cust_no=DataBase(which_db).get_one(sql)
+    cust_no=DataBase(configs).get_one(sql)
     print(cust_no)
     return cust_no
 
@@ -71,23 +72,23 @@ def test_zhanqi():
     cust_no=cx_for_zhanqi()
     inst_lo_extension_log(cust_no[0],cust_no[1])
     data=zhanqi(cust_no[1])
-    stp_repayment(data[0],str(data[1]))
+    #stp_repayment(data[0],str(data[1]))
 
 def check_zhanqi(loan_no):
     sql='''select TRAN_STAT from pay_tran_dtl where LOAN_NO="'''+loan_no+'''" and TRAN_USE='10330005';'''   #展期还款-10330005
-    tran_stat=DataBase(which_db).get_one(sql)
+    tran_stat=DataBase(configs).get_one(sql)
     if tran_stat[0]=='10220002':
         print("pay_tran_dtl展期交易成功",loan_no)
     else:
         print("pay_tran_dtl展期交易失败",loan_no)
     sql2='''select AFTER_STAT from lo_loan_dtl where LOAN_NO="'''+loan_no+'''";'''
-    after_stat=DataBase(which_db).get_one(sql2)
+    after_stat=DataBase(configs).get_one(sql2)
     if after_stat[0]=='10270004':
         print("lo_loan_dtl展期结清成功",loan_no)
     else:
         print("lo_loan_dtl展期结清失败",loan_no)
     sql3='''select BEFORE_STAT,AFTER_STAT from lo_loan_dtl where LOAN_NO="'''+loan_no+'''_01";'''
-    stat=DataBase(which_db).get_one(sql3)
+    stat=DataBase(configs).get_one(sql3)
     if stat==('10260005', '10270002'):
         print("新贷款生成成功-状态正确",loan_no+"_01")
     else:

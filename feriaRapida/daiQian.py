@@ -196,7 +196,7 @@ class DaiQian_Fr(ApiTest):
                     pass
         else:
             return 0
-
+    #申请还款接口
     def repay(self,custNo,loanNo,repayDate,headt):                                                           #OXXO用CONEKTA
         data={"advance":"10000000","custNo":custNo,"defer":False,"loanNo":loanNo,"paymentMethod":"STP","repayDateList":[repayDate],"tranAppType":"Android"}
         m=ApiTest.api_Request(self,'post',host_api+repayUrl,ApiTest.change_type(self,data),headt)

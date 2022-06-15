@@ -92,5 +92,5 @@ class DataBase():
 if __name__ == '__main__':
     #DataBase('mex_pdl_loan').call_daily_important_batch('20220521','20220521')
     configs={'host':'192.168.0.60','port':3306, 'user': 'cs_wangs','password': 'cs_wangs!qw####','database': 'mex_pdl_loan'}
-    DataBase(configs).call_daily_important_batch('20220628','20220628')
+    DataBase(configs).call_daily_important_batch('20220621','20220621')
     DataBase(configs).closeDB()

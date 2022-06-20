@@ -31,7 +31,7 @@ def approve(loan_no):
     if t2['errorCode']!=0:
         print("开始调用分单审批存储过程")
         DataBase(configs).call_4_proc()
-        return approve(loan_no)
+        #return approve(loan_no)
     else:
         pass
 #批量分配审批人员及审批通过

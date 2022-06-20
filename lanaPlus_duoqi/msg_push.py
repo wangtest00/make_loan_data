@@ -12,11 +12,12 @@ def send_phone_code():
     print(randnum,r.json())
 
 def push_msg():
-    appNo='202'
+    appNo='201'
     header={"X-App-No": appNo,"X-App-Name": "LanaPlus","X-App-Version": "100","X-App-Type": "10090001","Content-Type": "application/json","User-Agent": "PostmanRuntime/7.28.0","Accept": "*/*","Postman-Token": "d4cecd3c-ef0d-497b-bb5c-83961855042c","Host": "test-api.quantx.mx","Accept-Encoding": "gzip, deflate, br","Connection": "keep-alive","Content-Length": "32"}
     data={
     "appNo": appNo,
-    "templateNo":"manual_check_push-La",
+    #"templateNo":"manual_check_push-La",#测试
+    "templateNo":"manual_check_push-LP",#生产
     "phoneList": [
         "9383893927"
     ]

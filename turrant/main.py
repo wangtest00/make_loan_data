@@ -49,8 +49,9 @@ def first_apply_bank():
     time.sleep(5)
     update_appr_user_stat()           #更新审批人为上线状态
     DataBase(configs).call_4_proc()  #分单去审批
+    DataBase(configs).call_4_proc()  # 分单去审批
     approve(loanNo)
-    DataBase(configs).call_many_proc()  # 产品匹配
+    DataBase(configs).call_proc('proc_apr_loan_prod_sel')  # 产品匹配
     daiQian.withdraw(custNo,loanNo,headt,headw,'12010001')#类型选择绑银行卡，申请提现类型为银行卡
     pay_chan_service=daiQian.cx_pay_chan_service()
     if pay_chan_service=='TurrantRazorpayTest':
@@ -96,7 +97,7 @@ def first_apply_paytm():
     time.sleep(3)
     update_appr_user_stat()            #更新审批人为上线状态
     DataBase(configs).call_4_proc()   #分单
-    time.sleep(3)
+    DataBase(configs).call_4_proc()  # 分单去审批
     approve(loanNo)
     DataBase(configs).call_proc('proc_apr_loan_prod_sel')      #产品匹配
     daiQian.withdraw(custNo, loanNo, headt, headw, '12010002')  #申请类型paytm

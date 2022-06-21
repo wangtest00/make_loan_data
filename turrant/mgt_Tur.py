@@ -28,12 +28,12 @@ def approve(loan_no):
     r2=requests.post(host_mgt+'/api/approve/handle/approve?lang=zh',data=json.dumps(data2),headers=head,verify=False)#2.审批通过
     check_api(r2)
     t2=r2.json()
-    if t2['errorCode']!=0:
-        print("开始调用分单审批存储过程")
-        DataBase(configs).call_4_proc()
-        #return approve(loan_no)
-    else:
-        pass
+    # if t2['errorCode']!=0:
+    #     print("开始调用分单审批存储过程")
+    #     DataBase(configs).call_4_proc()
+    #     #return approve(loan_no)
+    # else:
+    #     pass
 #批量分配审批人员及审批通过
 def pl_approve(loanNo):
     head=head_mgt_c()
@@ -83,4 +83,6 @@ def pl_shenpi():
 
 if __name__ == '__main__':
     #approve('L1042206028220528284115599360')
-    pl_shenpi()
+    for i in range(1):
+        DataBase(configs).call_4_proc()
+        pl_shenpi()

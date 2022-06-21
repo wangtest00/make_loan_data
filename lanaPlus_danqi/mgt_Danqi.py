@@ -6,7 +6,7 @@ from public.check_api import *
 
 #登录mgt,返回ssid值
 def login_mgt():
-    data={"loginName":shenpiren[appNo][0],"password":"jk@123"}
+    data={"loginName":shenpiren[appNo][0],"password":"jk@123123"}
     r=requests.post(host_mgt+'/api/login/auth?lang=en&lang=zh',data=json.dumps(data),headers=head_mgt,verify=False)
     check_api(r)
     for item in r.cookies:

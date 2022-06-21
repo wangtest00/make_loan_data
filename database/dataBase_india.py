@@ -62,7 +62,7 @@ class DataBase():
     def call_4_proc(self):
         for i in range(2):
             self.call_many_proc()
-        self.closeDB()
+        #self.closeDB()
     def call_proc_args(self,procName,date):
         try:
             self.cur.callproc(procName,args=(date,"@o_stat"))
@@ -88,4 +88,4 @@ class DataBase():
 if __name__ == '__main__':
     configs = {'host': '172.31.25.83', 'port': 3306, 'user': 'cs_wangs', 'password': 'cs_wangs!qw####','database': 'manage_need_loan'}
     #DataBase(configs).call_daily_important_batch('20220608','20220608')
-    DataBase(configs).call_4_proc()
+    DataBase(configs).call_proc('proc_apr_loan_prod_sel')

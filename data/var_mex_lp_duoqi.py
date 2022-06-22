@@ -32,3 +32,5 @@ head_pay={"Host": host_pay[8:],"Connection": "keep-alive","Content-Length": "55"
 "Content-Type": "application/json;charset=UTF-8","Origin": host_pay,"Sec-Fetch-Site": "same-origin","Sec-Fetch-Mode": "cors",
 "Sec-Fetch-Dest": "empty","Referer": host_pay,"Accept-Encoding": "gzip, deflate, br","Accept-Language": "zh-CN,zh;q=0.9","Cookie": "language=zh"}
 configs={'host':'192.168.0.60','port':3306, 'user': 'cs_wangs','password': 'cs_wangs!qw####','database': 'mex_pdl_loan'}
+mex_pdl_abolish={'host':'192.168.0.60','port':3306, 'user': 'cs_wangs','password': 'cs_wangs!qw####','database': 'mex_pdl_abolish'}
+mex_pdl_loan={'host':'192.168.0.60','port':3306, 'user': 'cs_wangs','password': 'cs_wangs!qw####','database': 'mex_pdl_loan'}

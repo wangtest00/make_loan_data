@@ -28,15 +28,15 @@ def first_apply(registNo):
     daiQian.auth_app_grab_data(registNo, custNo, headt)
     daiQian.auth_contact(custNo, headt)
     daiQian.update_kyc_auth(registNo, custNo)
-    loan_no = daiQian.apply_loan(custNo, headt)
-    if loan_no is None:
-        DataBase(configs).closeDB()
-    else:
-        daiQian.bank_auth(custNo, headt)
-        update_appr_user_stat()
-        DataBase(configs).call_4_proc()
-        approve(loan_no)
-        sheiPiHou(loan_no, registNo, custNo, headt)
+    # loan_no = daiQian.apply_loan(custNo, headt)
+    # if loan_no is None:
+    #     DataBase(configs).closeDB()
+    # else:
+    #     daiQian.bank_auth(custNo, headt)
+    #     update_appr_user_stat()
+    #     DataBase(configs).call_4_proc()
+    #     approve(loan_no)
+    #     sheiPiHou(loan_no, registNo, custNo, headt)
 
 def sheiPiHou(loanNo, registNo, custNo, headt):
     daiQian = DaiQian_Duoqi()
@@ -50,9 +50,10 @@ def sheiPiHou(loanNo, registNo, custNo, headt):
     DataBase(configs).closeDB()
 
 def auto_test():
-    registNo = str(random.randint(8000000000, 9999999999))
+    #registNo = str(random.randint(8000000000, 9999999999))
+    registNo = '7897897777'
     first_apply(registNo)
 
 if __name__ == '__main__':
-    for i in range(10):
+    for i in range(1):
         auto_test()

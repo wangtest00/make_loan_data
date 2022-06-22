@@ -3,10 +3,7 @@
 20190507
 注意，文件在本地打开的时候不能删除
 '''
-import datetime
-import os
-import xlrd
-import xlwt
+import datetime,os,xlrd,xlwt
 from xlutils.copy import copy
 
 
@@ -57,9 +54,7 @@ class WriteExcel(object):
         all_list=[m[i:i+ncols] for i in range(0,len(m),ncols)]   #按列数等分来拆分
         print("读取到原始数据=",all_list)
         return all_list
-    def write_Xls_Append(self, value):
-        book_name_xls=os.path.join(os.getcwd(),'生成的测试用例20210810.xls')
-        path=book_name_xls
+    def write_Xls_Append(self,path,value):
         index = len(value)  # 获取需要写入数据的行数
         workbook = xlrd.open_workbook(path)  # 打开工作簿
         sheets = workbook.sheet_names()  # 获取工作簿中的所有表格
@@ -81,5 +76,6 @@ if __name__ == '__main__':
     print(len(value1))
     for i in range(len(value1)):
         print(value1[i])
-    WriteExcel().write_Excel_Xls(value1)
-    #WriteExcel().write_Excel_Xls_Append(value1)
+    #WriteExcel().write_Excel_Xls(value1)
+    path=os.path.join(os.getcwd(),'迁移后查询结果.xls')
+    WriteExcel().write_Xls_Append(path,value1)

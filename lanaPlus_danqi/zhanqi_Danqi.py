@@ -96,5 +96,5 @@ def check_zhanqi(loan_no):
 
 
 if __name__ == '__main__':
-    test_zhanqi()
+    cx_for_zhanqi()
     #check_zhanqi("L2012112168159712308449443840")

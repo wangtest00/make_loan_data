@@ -2,7 +2,10 @@ from lanaPlus_duoqi.daiQian import *
 import requests,json
 from database.dataBase_mex import *
 from data.var_mex_lp_duoqi import *
+from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
+# 禁用安全请求警告
+requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 def check_api(r):
     try:
         if r.status_code==200:

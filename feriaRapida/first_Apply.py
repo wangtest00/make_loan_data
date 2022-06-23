@@ -49,7 +49,7 @@ def sheiPiHou(loanNo, registNo, custNo, headt):
     DataBase(configs).closeDB()
 
 def auto_test():
-    registNo = '8218744452'
+    registNo = '8866550000'
     first_apply(registNo)
 
 

@@ -51,7 +51,7 @@ def sheiPiHou(loanNo, registNo, custNo, headt):
 
 def auto_test():
     #registNo = str(random.randint(8000000000, 9999999999))
-    registNo = '7897897777'
+    registNo = '8866550000'
     first_apply(registNo)
 
 if __name__ == '__main__':

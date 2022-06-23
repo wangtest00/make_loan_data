@@ -66,7 +66,7 @@ class WriteExcel(object):
             for j in range(0, len(value[i])):
                 new_worksheet.write(i+rows_old, j, value[i][j])  # 追加写入数据，注意是从i+rows_old行开始写入
         new_workbook.save(path)  # 保存工作簿
-        print("xls格式表格【追加】写入数据成功！")
+        print("【追加】写入数据成功！")
 if __name__ == '__main__':
     value1 = [["张三", "男", "19", "杭州", "研发工程师"]]
     value2 = [["Tom", "男", "21", "西安", "测试工程师","123","456","789",'000'],

@@ -41,7 +41,6 @@ class DataBase():
             self.cur.execute(sql)
             self.connect.commit()
             print ("更新表字段成功",sql)
-            #self.closeDB()
         except Exception as e:
             print("更新异常：",e)
             return 0
@@ -77,7 +76,6 @@ class DataBase():
             self.cur.callproc(procName,args=(date,"@o_stat"))
             self.connect.commit()
             print ("调用存储过程成功:",procName,date)
-            #self.closeDB()
         except Exception as e:
             print("调用存储过程异常：",e,procName)
             return 0

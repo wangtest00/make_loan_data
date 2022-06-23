@@ -3,7 +3,10 @@ import requests,json
 from database.dataBase_mex import *
 from data.var_mex_lp_danqi import *
 from public.check_api import *
+from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
+# 禁用安全请求警告
+requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 #登录mgt,返回ssid值
 def login_mgt():
     data={"loginName":shenpiren[appNo][0],"password":"jk@123123"}

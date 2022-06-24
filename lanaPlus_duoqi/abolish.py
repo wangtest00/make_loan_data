@@ -252,4 +252,5 @@ def hebingtable(list1,list2,list3,list4):
     return data
 
 if __name__ == '__main__':
-    get_all()
+    #benfen_compare('7317806445','L2012206148224942438800883712')
+    benfen_compare_his('5412449999','')

@@ -2,7 +2,7 @@ import random
 import json
 import requests
 from database.credit_database import *
-from credit.daiqian import *
+from lanaDigital.daiqian import *
 from data.var_mex_credit import *
 
 
@@ -123,7 +123,7 @@ def oxxo_repay(amount,loanNo):
 
 #查询账单接口
 def get_repayment_bill(headt):
-    r=requests.get(host_api+"/api/credit/repayment/bill",headers=headt,verify=False)
+    r=requests.get(host_api+"/api/lanaDigital/repayment/bill",headers=headt,verify=False)
     t=r.json()
     billDetailList=t['data']['billDetailList']
     listjk=[]
@@ -138,7 +138,7 @@ def get_repayment_bill(headt):
 #申请还款接口-STP方式,返回卡号和还款金额
 def repayment_repay(datas,headt):
     data={"repaymentList":datas,"repaymentMethod":"STP"}
-    r=requests.post(host_api+"/api/credit/repayment/repay",data=json.dumps(data),headers=headt,verify=False)
+    r=requests.post(host_api+"/api/lanaDigital/repayment/repay",data=json.dumps(data),headers=headt,verify=False)
     check_api(r)
     t=r.json()
     st=[]

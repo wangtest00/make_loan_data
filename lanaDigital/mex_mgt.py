@@ -1,4 +1,4 @@
-from credit.daiqian import *
+from lanaDigital.daiqian import *
 from data.var_mex_credit import *
 import requests,json
 

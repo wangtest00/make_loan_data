@@ -1,8 +1,8 @@
 import random,string
 import requests
 from database.credit_database import *
-from credit.heads import *
-from credit.mex_mgt import *
+from lanaDigital.heads import *
+from lanaDigital.mex_mgt import *
 from public.check_api import *
 
 
@@ -182,7 +182,7 @@ def auth_bank(custNo,headt):
 
 #风控授信调度接口：api调风控，获得风控回调结果
 def risk_credit(headt):
-    r = requests.post(host_api+'/api/task/risk/credit',headers=headt,verify=False)
+    r = requests.post(host_api+'/api/task/risk/lanaDigital',headers=headt,verify=False)
     check_api(r)
     print("api调风控接口，获得风控回调结果")
 
@@ -227,16 +227,16 @@ def web_hook_payout_stp():
 #唤醒延迟放款
 def delay_payout_handler():
     for i in range(1):
-        r=requests.post(host_api+"/api/credit/payment/anon/delay_payout_handler",headers=head_api,verify=False)
+        r=requests.post(host_api+"/api/lanaDigital/payment/anon/delay_payout_handler",headers=head_api,verify=False)
         check_api(r)
         time.sleep(3)
 
 def payment_detail(headt):
-    r=requests.post(host_api+"/api/credit/payment/detail",headers=headt,verify=False)
+    r=requests.post(host_api+"/api/lanaDigital/payment/detail",headers=headt,verify=False)
     check_api(r)
 def payment(headt):
     data={"withdrawAmt":"500.0"}
-    r=requests.post(host_api+"/api/credit/payment",data=json.dumps(data),headers=headt,verify=False)
+    r=requests.post(host_api+"/api/lanaDigital/payment",data=json.dumps(data),headers=headt,verify=False)
     check_api(r)
 
 #检查放款成功

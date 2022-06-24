@@ -241,7 +241,7 @@ class DaiQian_CashTm(ApiTest):
             "fund_account_id": "",
             "amount": float(amount)*100,
             "currency": "",
-            "credit": 0,
+            "lanaDigital": 0,
             "debit": 0,
             "balance": 0,
             "notes": {},
@@ -265,7 +265,7 @@ class DaiQian_CashTm(ApiTest):
             "account_number": "",
             "amount": 0,
             "currency": "",
-            "credit": 0,
+            "lanaDigital": 0,
             "debit": 0,
             "balance": 0,
             "source": {

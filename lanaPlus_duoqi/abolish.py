@@ -83,55 +83,55 @@ def benfen_compare(registNo,loanNo):
     path1 = os.path.join(os.getcwd(), '迁移前备份数据.xls')
     path2 = os.path.join(os.getcwd(), '迁移后查询结果.xls')
     sql="select CUST_NO from cu_cust_reg_dtl where REGIST_NO='"+registNo+"' and APP_NO='201';"
-    custNo=DataBase(configs).get_one(sql)
+    custNo=DataBase(mex_pdl_abolish_prod).get_one(sql)
     custNo=custNo[0]
-    sql2="INSERT INTO `mex_pdl_loan`.`cu_account_cancellation_record`(`ID`, `APP_NO`, `PHONE_NO`, `REASON`, `CUST_NO`, `CUST_NAME`, `INST_TIME`, `INST_USER_NO`, `UPDT_TIME`, `UPDT_USER_NO`) VALUES ('"+registNo+'asdf'+registNo+"', '201', '"+registNo+"', 'wangtest', '"+custNo+"', 'AUTO SHUANG TEST', '2022-06-15 22:19:48', '"+custNo+"', NULL, NULL);"
-    DataBase(configs).executeUpdateSql(sql2) #插入注销记录表数据
+    # sql2="INSERT INTO `mex_pdl_loan`.`cu_account_cancellation_record`(`ID`, `APP_NO`, `PHONE_NO`, `REASON`, `CUST_NO`, `CUST_NAME`, `INST_TIME`, `INST_USER_NO`, `UPDT_TIME`, `UPDT_USER_NO`) VALUES ('"+registNo+'asdf'+registNo+"', '201', '"+registNo+"', 'wangtest', '"+custNo+"', 'AUTO SHUANG TEST', '2022-06-15 22:19:48', '"+custNo+"', NULL, NULL);"
+    # DataBase(configs).executeUpdateSql(sql2) #插入注销记录表数据
     tableName = get_TableName('CUST_NO', mex_pdl_abolish)
-    val1 = cx_Table(tableName, 'CUST_NO', custNo, mex_pdl_loan)
+    val1 = cx_Table(tableName, 'CUST_NO', custNo, mex_pdl_loan_prod)
     WriteExcel().write_Xls_Append(path1, val1)
     val2=get_forRegistNo(registNo, mex_pdl_loan)
     WriteExcel().write_Xls_Append(path1, val2)
     tableName3 = get_TableName('loan_no', mex_pdl_abolish)
-    val3 = cx_Table(tableName3, 'loan_no', loanNo, mex_pdl_loan)
+    val3 = cx_Table(tableName3, 'loan_no', loanNo, mex_pdl_loan_prod)
     WriteExcel().write_Xls_Append(path1, val3)
     tableName4=get_TableName('PHONE_NO', mex_pdl_abolish)
-    val4=cx_Table(tableName4, 'PHONE_NO', registNo, mex_pdl_loan)
+    val4=cx_Table(tableName4, 'PHONE_NO', registNo, mex_pdl_loan_prod)
     WriteExcel().write_Xls_Append(path1, val4)
     val5=lingSan(registNo,loanNo,mex_pdl_loan)
     WriteExcel().write_Xls_Append(path1, val5)
-    quanQianYi(registNo)#调全迁移存储过程
-    time.sleep(5)
-    val6 = cx_Table(tableName, 'CUST_NO', custNo, mex_pdl_abolish)
-    WriteExcel().write_Xls_Append(path2, val6)
-    val7 = get_forRegistNo(registNo, mex_pdl_abolish)
-    WriteExcel().write_Xls_Append(path2, val7)
-    val8 = cx_Table(tableName3,'loan_no', loanNo, mex_pdl_abolish)
-    WriteExcel().write_Xls_Append(path2, val8)
-    val9 = cx_Table(tableName4, 'PHONE_NO', registNo, mex_pdl_abolish)
-    WriteExcel().write_Xls_Append(path2, val9)
-    val10 = lingSan(registNo, loanNo, mex_pdl_abolish)
-    WriteExcel().write_Xls_Append(path2, val10)
-    if val1!=val6:
-        print("CUST_NO相关表数据迁移不等")
-    else:
-        print("CUST_NO相关表数据迁移相等")
-    if val2!=val7:
-        print("registNo相关表数据迁移不等")
-    else:
-        print("registNo相关表数据迁移相等")
-    if val3!=val8:
-        print("loan_no相关表数据迁移不等")
-    else:
-        print("loan_no相关表数据迁移相等")
-    if val4!=val9:
-        print("PHONE_NO相关表数据迁移不等")
-    else:
-        print("PHONE_NO相关表数据迁移相等")
-    if val5!=val10:
-        print("lingsan相关表数据迁移不等")
-    else:
-        print("lingsan相关表数据迁移相等")
+    # quanQianYi(registNo)#调全迁移存储过程
+    # time.sleep(5)
+    # val6 = cx_Table(tableName, 'CUST_NO', custNo, mex_pdl_abolish)
+    # WriteExcel().write_Xls_Append(path2, val6)
+    # val7 = get_forRegistNo(registNo, mex_pdl_abolish)
+    # WriteExcel().write_Xls_Append(path2, val7)
+    # val8 = cx_Table(tableName3,'loan_no', loanNo, mex_pdl_abolish)
+    # WriteExcel().write_Xls_Append(path2, val8)
+    # val9 = cx_Table(tableName4, 'PHONE_NO', registNo, mex_pdl_abolish)
+    # WriteExcel().write_Xls_Append(path2, val9)
+    # val10 = lingSan(registNo, loanNo, mex_pdl_abolish)
+    # WriteExcel().write_Xls_Append(path2, val10)
+    # if val1!=val6:
+    #     print("CUST_NO相关表数据迁移不等")
+    # else:
+    #     print("CUST_NO相关表数据迁移相等")
+    # if val2!=val7:
+    #     print("registNo相关表数据迁移不等")
+    # else:
+    #     print("registNo相关表数据迁移相等")
+    # if val3!=val8:
+    #     print("loan_no相关表数据迁移不等")
+    # else:
+    #     print("loan_no相关表数据迁移相等")
+    # if val4!=val9:
+    #     print("PHONE_NO相关表数据迁移不等")
+    # else:
+    #     print("PHONE_NO相关表数据迁移相等")
+    # if val5!=val10:
+    #     print("lingsan相关表数据迁移不等")
+    # else:
+    #     print("lingsan相关表数据迁移相等")
 
 def benfen_compare_his(registNo,loanNo):
     path1 = os.path.join(os.getcwd(), '迁移前备份数据.xls')
@@ -252,5 +252,5 @@ def hebingtable(list1,list2,list3,list4):
     return data
 
 if __name__ == '__main__':
-    #benfen_compare('7317806445','L2012206148224942438800883712')
-    benfen_compare_his('5412449999','')
+    benfen_compare('8584830000','L2012206248228599068545449984')
+    #benfen_compare_his('5412449999','')

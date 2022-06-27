@@ -28,15 +28,15 @@ def first_apply(registNo):
     daiQian.auth_app_grab_data(registNo, custNo, headt)
     daiQian.auth_contact(custNo, headt)
     daiQian.update_kyc_auth(registNo, custNo)
-    # loan_no = daiQian.apply_loan(custNo, headt)
-    # if loan_no is None:
-    #     DataBase(configs).closeDB()
-    # else:
-    #     daiQian.bank_auth(custNo, headt)
-    #     update_appr_user_stat()
-    #     DataBase(configs).call_4_proc()
-    #     approve(loan_no)
-    #     sheiPiHou(loan_no, registNo, custNo, headt)
+    loan_no = daiQian.apply_loan(custNo, headt)
+    if loan_no is None:
+        DataBase(configs).closeDB()
+    else:
+        daiQian.bank_auth(custNo, headt)
+        update_appr_user_stat()
+        DataBase(configs).call_4_proc()
+        approve(loan_no)
+        sheiPiHou(loan_no, registNo, custNo, headt)
 
 def sheiPiHou(loanNo, registNo, custNo, headt):
     daiQian = DaiQian_Duoqi()

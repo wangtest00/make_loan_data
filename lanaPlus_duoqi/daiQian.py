@@ -157,6 +157,7 @@ class DaiQian_Duoqi(ApiTest):
             loanAmt=t['data']['trailPaymentDetail'][0]['loanAmt']
             instNum=t['data']['trailPaymentDetail'][0]['instNum']
             data19 = {"custNo": custNo, "instNum": instNum, "loanAmt": loanAmt, "loanNo": loanNo, "prodNo": prodNo}
+            print(data19)
             r2=ApiTest.api_Request(self,'post',host_api+confirmWithdrawUrl,ApiTest.change_type(self,data19),headt)
             return 1
         else:

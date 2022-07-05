@@ -53,6 +53,8 @@ class WriteExcel(object):
                 m.append(str(t))
         all_list=[m[i:i+ncols] for i in range(0,len(m),ncols)]   #按列数等分来拆分
         print("读取到原始数据=",all_list)
+        for all_list in all_list:
+            print(all_list)
         return all_list
     def write_Xls_Append(self,path,value):
         index = len(value)  # 获取需要写入数据的行数
@@ -68,14 +70,15 @@ class WriteExcel(object):
         new_workbook.save(path)  # 保存工作簿
         print("【追加】写入数据成功！")
 if __name__ == '__main__':
-    value1 = [["张三", "男", "19", "杭州", "研发工程师"]]
-    value2 = [["Tom", "男", "21", "西安", "测试工程师","123","456","789",'000'],
-              ["Jones", "女", "34", "上海", "产品经理"],
-              ["Cat", "女", "56", "上海", "教师"],]
-    #每次要创建一个新的xls文件，新的表单
-    print(len(value1))
-    for i in range(len(value1)):
-        print(value1[i])
-    #WriteExcel().write_Excel_Xls(value1)
-    path=os.path.join(os.getcwd(),'迁移后查询结果.xls')
-    WriteExcel().write_Xls_Append(path,value1)
+    # value1 = [["张三", "男", "19", "杭州", "研发工程师"]]
+    # value2 = [["Tom", "男", "21", "西安", "测试工程师","123","456","789",'000'],
+    #           ["Jones", "女", "34", "上海", "产品经理"],
+    #           ["Cat", "女", "56", "上海", "教师"],]
+    # #每次要创建一个新的xls文件，新的表单
+    # print(len(value1))
+    # for i in range(len(value1)):
+    #     print(value1[i])
+    # #WriteExcel().write_Excel_Xls(value1)
+    # path=os.path.join(os.getcwd(),'迁移后查询结果.xls')
+    # WriteExcel().write_Xls_Append(path,value1)
+    WriteExcel().read_Excel_Xls('C:\\Users\\root\\Downloads\\Equifax_UAT_Test_Data_Retail.xls')

@@ -43,8 +43,36 @@ class MockData():
         sql="update lo_loan_cust_rel set risk_level='AA',risk_score='"+prodNo+"' where LOAN_NO='"+loanNo+"';"
         DataBase(configs).executeUpdateSql(sql)
         DataBase(configs).call_many_proc()
+    #新模拟回调20220704
+    def borrowingCallback(self,loanNo,transAmount):
+        sql1="update lo_loan_dtl set BEFORE_STAT='10260008' where LOAN_NO='"+loanNo+"';"
+        sql2="update lo_loan_payout_dtl set ORDER_STATUS='10420001' where LOAN_NO='"+loanNo+"';"
+        sql3="select ORDER_NO from lo_loan_payout_dtl where LOAN_NO='"+loanNo+"';"
+        DataBase(configs).executeUpdateSql(sql1)
+        DataBase(configs).executeUpdateSql(sql2)
+        orderNo=DataBase(configs).get_one(sql3)
+        orderNo=orderNo[0]
+        tran_time1 = str(datetime.datetime.now().strftime('%Y-%m-%d'))
+        tran_time2 = str(datetime.datetime.now().strftime('%H:%M:%S'))
+        tran_time=tran_time1+'T'+tran_time2+'.970'
+        utrNo = str(random.randint(100000, 999999))
+        data={"merchantPayNo": "0001",
+            "notes": "api",
+            "orderNo": orderNo,
+            "payProdNo": "0001",
+            "payTrackNo": orderNo,
+            "payUtrNo": utrNo,
+            "transAmount": transAmount,
+            "transStatus": "20020002",
+            "transStatusMsg": "Success",
+            "transTime": tran_time}
+        # print(json.dumps(data))
+        # r = requests.post(host_api +'/api/trade/fin/borrowingCallback', data=json.dumps(data), headers=head_api, verify=False)
+        # print(r.json())
+        # sql4="UPDATE lo_loan_payout_dtl set PAYEE_ACCOUNT_NO='012180015298591253000'  where PAYEE_ACCOUNT_NO='012180015298591253';"
+        # DataBase(configs).executeUpdateSql(sql4)
 
 if __name__ == '__main__':
-    MockData().gaishu('L2012205068210858853538136064')
+    MockData().borrowingCallback('L2012207048232238734360379392','1.00')
     #stp_payout('L2012110188138307996821422080','w2021101800143309100100360099')
     #insert_risk('L2022109268130350832635019264')

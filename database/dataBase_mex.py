@@ -95,7 +95,12 @@ class DataBase():
                     #time.sleep(1)
 #loanAmt='{0:f}'.format(t[0])#decimal转字符串
 
-#if __name__ == '__main__':
-    #DataBase('mex_pdl_loan').call_daily_important_batch('20220521','20220521')
-    #configs={'host':'192.168.0.60','port':3306, 'user': 'cs_wangs','password': 'cs_wangs!qw####','database': 'mex_pdl_loan'}
-    #DataBase(configs).call_proc_args('201','8615000000',procName='proc_pdl_table_backup_list')
+if __name__ == '__main__':
+    configs={'host':'192.168.0.60','port':3306, 'user': 'cs_wangs','password': 'cs_wangs!qw####','database': 'mex_pdl_loan'}
+    sql1="select CLABE_NO from fin_clabe_usable_dtl where USABLE='10000001' limit 1000;"
+    res=DataBase(configs).get_all(sql1)
+    print(res)
+    for res in res:
+        t = str(time.time() * 1000000)
+        sql2="INSERT INTO `mex_pdl_loan`.`cu_cust_repayment_account`(`ID`, `MERCHANT_PAY_NO`, `ASSIGN_ACCOUNT_NO`, `APP_PAY_NO`, `CUST_NO`, `USABLE`, `INST_TIME`, `INST_USER_NO`, `UPDATE_TIME`, `UPDATE_USER_NO`) VALUES ('"+t+"', 'merch_test_stp', '"+res[0]+"', 'merch_test_stp', '', '10000001', NULL, NULL, NULL, NULL);"
+        DataBase(configs).executeUpdateSql(sql2)

@@ -55,7 +55,7 @@ class DataBase():
             print("调用存储过程异常：",e)
             return 0
     def call_many_proc(self):
-        proc=['proc_apr_loan_prod_sel','proc_apr_appr_all_user','proc_apr_appr_allocation','proc_apr_appr_allo_user_deal']
+        proc=['proc_apr_loan_prod_sel','proc_apr_appr_all_user','proc_apr_appr_allocation_control','proc_apr_appr_allo_user_deal']
         for proc in proc:
             self.call_proc(proc)
         #self.closeDB()
@@ -88,4 +88,4 @@ class DataBase():
 if __name__ == '__main__':
     configs = {'host': '172.31.25.83', 'port': 3306, 'user': 'cs_wangs', 'password': 'cs_wangs!qw####','database': 'manage_need_loan'}
     #DataBase(configs).call_daily_important_batch('20220608','20220608')
-    DataBase(configs).call_proc('proc_apr_loan_prod_sel')
+    DataBase(configs).call_4_proc()

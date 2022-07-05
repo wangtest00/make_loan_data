@@ -42,11 +42,11 @@ def sheiPiHou(loanNo, registNo, custNo, headt):
     MockData().insert_risk(loanNo)  # 匹配产品
     #停在【通过】状态，用户待提现
     w = daiQian.withdraw(registNo, custNo, loanNo, headt)  # app页面点击提现
-    if w == 1:
-        MockData().gaishu(loanNo)
-    else:
-        pass
-    DataBase(configs).closeDB()
+    # if w == 1:
+    #     MockData().gaishu(loanNo)
+    # else:
+    #     pass
+    # DataBase(configs).closeDB()
 
 def auto_test():
     registNo = str(random.randint(8000000000, 9999999999))
@@ -54,5 +54,5 @@ def auto_test():
 
 
 if __name__ == '__main__':
-    for i in range(10):
+    for i in range(1):
         auto_test()

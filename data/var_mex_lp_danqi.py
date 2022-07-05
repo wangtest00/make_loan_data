@@ -3,8 +3,7 @@
 
 appNo = '201'  # 当前产品号，测试201用多期，马甲包只支持单期无积分和优惠券
 shenpiren = {  # GAID                           app版本号
-    '201': ['wangs_danqi@whalekun.com', 'https://test-mgt.lanaplus.mx', '25002400', 'mex_pdl_loan', 'LanaPlus',
-            'FC423D8F-BC7E-4430-BD97-66E903DANQI', '136', '10090001'],
+    '201': ['wangs_danqi@whalekun.com', 'https://test-mgt.lanaplus.mx', '12000070105', 'mex_pdl_loan', 'LanaPlus','FC423D8F-BC7E-4430-BD97-66E903DANQI', '136', '10090001'],
     '202': ['wangs@whalekun.com', 'https://test-mgt.feriarapida.mx', '25002400', 'mex_pdl_loan', 'FeriaRapida']}
 which_db = shenpiren[appNo][3]  # 数据库库名
 prodNo = shenpiren[appNo][2]  # 产品编号
@@ -20,4 +19,3 @@ head_mgt = {"Host": host_mgt[8:], "Connection": "keep-alive", "Content-Length": 
 head_pay = {"Host": host_pay[8:], "Connection": "keep-alive", "Content-Length": "55","sec-ch-ua": '"Not A;Brand";v="99", "Chromium";v="90", "Google Chrome";v="90"',"Accept": "application/json, text/plain, */*", "sec-ch-ua-mobile": "?0","User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36","Content-Type": "application/json;charset=UTF-8", "Origin": host_pay, "Sec-Fetch-Site": "same-origin","Sec-Fetch-Mode": "cors","Sec-Fetch-Dest": "empty", "Referer": host_pay, "Accept-Encoding": "gzip, deflate, br","Accept-Language": "zh-CN,zh;q=0.9", "Cookie": "language=zh"}
 
 configs= {'host': '192.168.0.60', 'port': 3306, 'user': 'cs_wangs', 'password': 'cs_wangs!qw####','database': 'mex_pdl_loan'}
-

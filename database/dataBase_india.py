@@ -87,5 +87,5 @@ class DataBase():
         self.closeDB()
 if __name__ == '__main__':
     configs = {'host': '172.31.25.83', 'port': 3306, 'user': 'cs_wangs', 'password': 'cs_wangs!qw####','database': 'manage_need_loan'}
-    #DataBase(configs).call_daily_important_batch('20220608','20220608')
-    DataBase(configs).call_4_proc()
+    DataBase(configs).call_daily_important_batch('20220704','20220704')
+    #DataBase(configs).call_4_proc()

@@ -54,7 +54,7 @@ def first_apply_bank():
     daiQian.withdraw(custNo,loanNo,headt,headw,'12010001')#类型选择绑银行卡，申请提现类型为银行卡
     pay_chan_service=daiQian.cx_pay_chan_service()
     if pay_chan_service=='TurrantRazorpayTest':
-        daiQian.razorpayx_annon_event_callback(loanNo)
+        DaiHou_CashTm().payout_mock_apply(loanNo,custNo)
     else:
         print("当前产品的支付渠道=",pay_chan_service,"暂不模拟回调")
     time.sleep(3)

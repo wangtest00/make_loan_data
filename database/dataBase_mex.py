@@ -97,10 +97,11 @@ class DataBase():
 
 if __name__ == '__main__':
     configs={'host':'192.168.0.60','port':3306, 'user': 'cs_wangs','password': 'cs_wangs!qw####','database': 'mex_pdl_loan'}
-    sql1="select CLABE_NO from fin_clabe_usable_dtl where USABLE='10000001' limit 1000;"
-    res=DataBase(configs).get_all(sql1)
-    print(res)
-    for res in res:
-        t = str(time.time() * 1000000)
-        sql2="INSERT INTO `mex_pdl_loan`.`cu_cust_repayment_account`(`ID`, `MERCHANT_PAY_NO`, `ASSIGN_ACCOUNT_NO`, `APP_PAY_NO`, `CUST_NO`, `USABLE`, `INST_TIME`, `INST_USER_NO`, `UPDATE_TIME`, `UPDATE_USER_NO`) VALUES ('"+t+"', 'merch_test_stp', '"+res[0]+"', 'merch_test_stp', '', '10000001', NULL, NULL, NULL, NULL);"
-        DataBase(configs).executeUpdateSql(sql2)
+    # sql1="select CLABE_NO from fin_clabe_usable_dtl where USABLE='10000001' limit 1000;"
+    # res=DataBase(configs).get_all(sql1)
+    # print(res)
+    # for res in res:
+    #     t = str(time.time() * 1000000)
+    #     sql2="INSERT INTO `mex_pay`.`merchant_assign_account_dtl`(`ID`, `MERCHANT_PAY_NO`, `PAY_PROD_NO`, `ASSIGN_ACCOUNT_NO`, `USEABLE`, `DESCRIPTION`, `REMARK`, `INST_TIME`, `INST_USER_NO`, `UPDATE_TIME`, `UPDATE_USER_NO`) VALUES ('"+t+"', 'merch_test_stp_refund', 'merch_test_stp_refund', '"+res[0]+"', '10000001', '测试', NULL, '2022-05-12 14:23:11', 'SYS', NULL, NULL);"
+    #     DataBase(configs).executeUpdateSql(sql2)
+    DataBase(configs).call_daily_important_batch('20220718','20220718')

@@ -107,5 +107,5 @@ def first_apply_paytm():
 
 if __name__ == '__main__':
     for i in range(1):
-        first_apply_bank()
-        #first_apply_paytm()
+        #first_apply_bank()
+        first_apply_paytm()

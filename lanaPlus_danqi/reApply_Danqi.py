@@ -30,7 +30,7 @@ def reApply():
     #app去待提现页面申请贷款
     daiQian.withdraw(registNo,custNo,loanNo,headt)
     #贷前状态变更为“待提现”后的后续改数操作，模拟到提现成功
-    MockData().gaishu(loanNo)
+    #MockData().gaishu(loanNo)
 #查询只借过一笔款且已结清的客户号
 def get_CustNO():
     sql='''select  b.cust_no,count(1) as loan_cnt from
@@ -50,5 +50,5 @@ HAVING loan_cnt=1 order by b.INST_TIME desc;'''
     print(sql)
     return custNo[0]
 if __name__ == '__main__':
-    #reApply()
-    get_CustNO()
+    reApply()
+   # get_CustNO()

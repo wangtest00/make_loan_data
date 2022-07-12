@@ -146,9 +146,9 @@ class DaiQian_Danqi(ApiTest):
         bank_acct_no=str(random.randint(100000,999999))  #012180015298591253    生产卡号
         data18 = {"bankCode": "10020008", "clabe": "012180015298591253", "custNo": custNo}
         r=ApiTest.api_Request(self,'post',host_api+bankAuthUrl,ApiTest.change_type(self,data18),headt)
-        # time.sleep(1)                                         #改为6位随机数
-        # sql="update cu_cust_bank_card_dtl set BANK_ACCT_NO='"+bank_acct_no+"' where CUST_NO='"+custNo+"';"#修改成随机卡号，避免触发绑卡被拒:同一张银行卡不能被超过2个人绑定并放款成功
-        # DataBase(configs).executeUpdateSql(sql)
+        time.sleep(1)                                         #改为6位随机数
+        sql="update cu_cust_bank_card_dtl set BANK_ACCT_NO='"+bank_acct_no+"' where CUST_NO='"+custNo+"';"#修改成随机卡号，避免触发绑卡被拒:同一张银行卡不能被超过2个人绑定并放款成功
+        DataBase(configs).executeUpdateSql(sql)
     #提现接口-app点击提现按钮
     def withdraw(self,registNo,custNo,loanNo,headt):
         t=ApiTest.api_Request(self,'get',host_api+'/api/loan/latest/'+registNo,'',headt)#获取最近一笔贷款贷款金额，注意请求头content-length的值。The request body did not contain the specified number of bytes. Got 0, expected 63

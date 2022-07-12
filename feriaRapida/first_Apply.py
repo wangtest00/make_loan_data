@@ -15,7 +15,7 @@ requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 # 注册,认证，提交多种信息申请贷款到达待审批状态
 def first_apply(registNo):
-    daiQian=DaiQian_Fr()
+    daiQian=DaiQian_Danqi()
     daiQian.update_batch_log()
     code=compute_code(registNo)
     token=daiQian.login_code(registNo,code)
@@ -38,12 +38,15 @@ def first_apply(registNo):
         sheiPiHou(loan_no, registNo, custNo, headt)
 
 def sheiPiHou(loanNo, registNo, custNo, headt):
-    daiQian = DaiQian_Fr()
+    daiQian = DaiQian_Danqi()
     MockData().insert_risk(loanNo)  # 匹配产品
     #停在【通过】状态，用户待提现
-    w = daiQian.withdraw(registNo, custNo, loanNo, headt)  # app页面点击提现
+    # sql="UPDATE sys_batch_log set BUSI_DATE='20220701';"
+    # DataBase(configs).executeUpdateSql(sql)              #构造放款重试数据
+    w = daiQian.withdraw(registNo, custNo, loanNo, headt)  #app页面点击提现
     if w == 1:
-        MockData().gaishu(loanNo)
+        MockData().borrowingCallback_Success(loanNo, '1.00','20020002')#模拟成功
+        #MockData().borrowingCallback(loanNo, '0', '20020003')#模拟失败
     else:
         pass
     DataBase(configs).closeDB()

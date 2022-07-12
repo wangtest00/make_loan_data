@@ -74,6 +74,6 @@ class MockData():
         print(r.json())
 
 if __name__ == '__main__':
-   # MockData().borrowingCallback('L2012207088233701434038878208', '0', '20020003')  #模拟放款失败回调
-    MockData().borrowingCallback_Success('L2012207088233704046616313856', '1.0', '20020002')  #模拟放款失败回调
+    MockData().borrowingCallback('L2012207128235126934523281408', '0', '20020003')  #模拟放款失败回调
+    #MockData().borrowingCallback_Success('L2012207128235124608362283008', '1.0', '20020002')  #模拟放款失败回调
     #insert_risk('L2022109268130350832635019264')

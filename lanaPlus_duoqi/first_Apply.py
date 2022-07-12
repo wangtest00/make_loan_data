@@ -42,9 +42,12 @@ def sheiPiHou(loanNo, registNo, custNo, headt):
     daiQian = DaiQian_Duoqi()
     MockData().insert_risk(loanNo)  # 匹配产品
     #停在【通过】状态，用户待提现
-    w = daiQian.withdraw(registNo, custNo, loanNo, headt)  # app页面点击提现
+    # sql="UPDATE sys_batch_log set BUSI_DATE='20220701';"
+    # DataBase(configs).executeUpdateSql(sql)              #构造放款重试数据
+    w = daiQian.withdraw(registNo, custNo, loanNo, headt)  #app页面点击提现
     if w == 1:
-        MockData().gaishu(loanNo)
+        MockData().borrowingCallback_Success(loanNo, '1500.00','20020002')#模拟成功
+        #MockData().borrowingCallback(loanNo, '0', '20020003')#模拟失败
     else:
         pass
     DataBase(configs).closeDB()
@@ -52,6 +55,7 @@ def sheiPiHou(loanNo, registNo, custNo, headt):
 def auto_test():
     registNo = str(random.randint(8000000000, 9999999999))
     first_apply(registNo)
+
 
 if __name__ == '__main__':
     for i in range(1):

@@ -1,4 +1,4 @@
-import random
+import random,requests
 from database.dataBase_mex import *
 from lanaPlus_danqi.daiQian import *
 from data.var_mex_lp_danqi import *
@@ -102,5 +102,4 @@ class DaiHou():
 		print(r.json())
 
 if __name__ == '__main__':
-    #stp_repayment('646180244001072290','120')
-	registNo='9709958711'
+    stp_repayment('646180244001072290','120')

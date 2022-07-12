@@ -43,9 +43,9 @@ def sheiPiHou(loanNo, registNo, custNo, headt):
     #停在【通过】状态，用户待提现
     # sql="UPDATE sys_batch_log set BUSI_DATE='20220701';"
     # DataBase(configs).executeUpdateSql(sql)              #构造放款重试数据
-    w = daiQian.withdraw(registNo, custNo, loanNo, headt)  #app页面点击提现
+    w = daiQian.withdraw(registNo, custNo, loanNo, headt)  #app页面点击确认提现
     if w == 1:
-        MockData().borrowingCallback_Success(loanNo, '1.00','20020002')#模拟成功
+        MockData().borrowingCallback_Success(loanNo, '1','20020002')#模拟成功
         #MockData().borrowingCallback(loanNo, '0', '20020003')#模拟失败
     else:
         pass
@@ -57,5 +57,5 @@ def auto_test():
 
 
 if __name__ == '__main__':
-    for i in range(5):
+    for i in range(1):
         auto_test()

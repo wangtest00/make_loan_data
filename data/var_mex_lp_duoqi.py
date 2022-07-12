@@ -17,20 +17,10 @@ host_msg="https://test-msg.quantx.mx"             #消息
 host_target="https://test-target.quantx.mx"       #指标app-01
 
 
-head_api={"user-agent": "Dart/2.10 (dart:io)","x-user-language": "es","x-auth-token": "Bearer" ,"accept-encoding": "gzip","content-length": "63","host":"test-api.quantx.mx","x-app-name": shenpiren[appNo][4],
-          "content-type": "application/json","x-app-type": app_type,"x-app-version": "116","x-app-no": appNo }
+head_api = {"user-agent": "Dart/2.12 (dart:io)", "x-user-language": "es", "x-auth-token": "Bearer","accept-encoding": "gzip", "content-length": "63", "host": "test-api.quantx.mx","x-app-name": shenpiren[appNo][4],"content-type": "application/json", "x-app-type": app_type, "x-app-version": shenpiren[appNo][6],"x-app-no": appNo}
+head_mgt = {"Host": host_mgt[8:], "Connection": "keep-alive", "Content-Length": "55","sec-ch-ua": '"Not A;Brand";v="99", "Chromium";v="90", "Google Chrome";v="90"',"Accept": "application/json, text/plain, */*", "sec-ch-ua-mobile": "?0","User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36","Content-Type": "application/json;charset=UTF-8", "Origin": host_mgt, "Sec-Fetch-Site": "same-origin","Sec-Fetch-Mode": "cors","Sec-Fetch-Dest": "empty", "Referer": host_mgt, "Accept-Encoding": "gzip, deflate, br","Accept-Language": "zh-CN,zh;q=0.9", "Cookie": "language=zh"}
+head_pay = {"Host": host_pay[8:], "Connection": "keep-alive", "Content-Length": "55","sec-ch-ua": '"Not A;Brand";v="99", "Chromium";v="90", "Google Chrome";v="90"',"Accept": "application/json, text/plain, */*", "sec-ch-ua-mobile": "?0","User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36","Content-Type": "application/json;charset=UTF-8", "Origin": host_pay, "Sec-Fetch-Site": "same-origin","Sec-Fetch-Mode": "cors","Sec-Fetch-Dest": "empty", "Referer": host_pay, "Accept-Encoding": "gzip, deflate, br","Accept-Language": "zh-CN,zh;q=0.9", "Cookie": "language=zh"}
 
-head_mgt={"Host": host_mgt[8:],"Connection": "keep-alive","Content-Length": "55",
-"sec-ch-ua": '"Not A;Brand";v="99", "Chromium";v="90", "Google Chrome";v="90"',"Accept": "application/json, text/plain, */*","sec-ch-ua-mobile": "?0",
-"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36",
-"Content-Type": "application/json;charset=UTF-8","Origin":host_mgt,"Sec-Fetch-Site": "same-origin","Sec-Fetch-Mode": "cors",
-"Sec-Fetch-Dest": "empty","Referer": host_mgt,"Accept-Encoding": "gzip, deflate, br",
-"Accept-Language": "zh-CN,zh;q=0.9","Cookie": "language=zh"}
-head_pay={"Host": host_pay[8:],"Connection": "keep-alive","Content-Length": "55",
-"sec-ch-ua": '"Not A;Brand";v="99", "Chromium";v="90", "Google Chrome";v="90"',"Accept": "application/json, text/plain, */*","sec-ch-ua-mobile": "?0",
-"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36",
-"Content-Type": "application/json;charset=UTF-8","Origin": host_pay,"Sec-Fetch-Site": "same-origin","Sec-Fetch-Mode": "cors",
-"Sec-Fetch-Dest": "empty","Referer": host_pay,"Accept-Encoding": "gzip, deflate, br","Accept-Language": "zh-CN,zh;q=0.9","Cookie": "language=zh"}
 configs={'host':'192.168.0.60','port':3306, 'user': 'cs_wangs','password': 'cs_wangs!qw####','database': 'mex_pdl_loan'}
 mex_pdl_abolish={'host':'192.168.0.60','port':3306, 'user': 'cs_wangs','password': 'cs_wangs!qw####','database': 'mex_pdl_abolish'}
 mex_pdl_abolish_prod={'host':'10.10.50.4','port':3306, 'user': 'cs_wangs','password': 'cs_wangs!qw####','database': 'mex_pdl_abolish'}

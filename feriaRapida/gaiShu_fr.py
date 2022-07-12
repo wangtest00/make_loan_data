@@ -44,6 +44,36 @@ class MockData():
         DataBase(configs).executeUpdateSql(sql)
         DataBase(configs).call_many_proc()
 
+    # 新模拟回调20220704     20020002放款成功  20020003放款失败,金额为0
+    def borrowingCallback(self, loanNo, transAmount, transStatus):
+        tran_time = str(time.time() * 1000000)[:13]
+        sql3 = "select ORDER_NO from lo_loan_payout_dtl where LOAN_NO='" + loanNo + "';"
+        orderNo = DataBase(configs).get_one(sql3)
+        orderNo = orderNo[0]
+        utrNo = str(random.randint(100000, 999999))
+        data = {"merchantPayNo": "0001",
+                "notes": "api",
+                "orderNo": orderNo,
+                "payProdNo": "0001",
+                "payTrackNo": orderNo,
+                "payUtrNo": utrNo,
+                "transAmount": transAmount,
+                "transStatus": transStatus,
+                "transStatusMsg": "Test-Success",
+                "transTime": tran_time}
+        r = requests.post(host_api + '/api/trade/fin/borrowingCallback', data=json.dumps(data), headers=head_api,
+                          verify=False)
+        print(r.json())
+
+    # 新模拟回调20220704     20020002放款成功  20020003放款失败,金额为0
+    def borrowingCallback_Success(self, loanNo, transAmount, transStatus):
+        sql1 = "update lo_loan_dtl set BEFORE_STAT='10260008' where LOAN_NO='" + loanNo + "';"
+        sql2 = "update lo_loan_payout_dtl set ORDER_STATUS='10420001',ORDER_ACT_AMT='" + transAmount + "' where LOAN_NO='" + loanNo + "';"
+        DataBase(configs).executeUpdateSql(sql1)
+        DataBase(configs).executeUpdateSql(sql2)
+        self.borrowingCallback(loanNo, transAmount, transStatus)
+        sql4 = "UPDATE lo_loan_payout_dtl set PAYEE_ACCOUNT_NO='012180015298591253000'  where PAYEE_ACCOUNT_NO='012180015298591253';"
+        DataBase(configs).executeUpdateSql(sql4)
 if __name__ == '__main__':
     MockData().gaishu('L2012205068210858853538136064')
     #stp_payout('L2012110188138307996821422080','w2021101800143309100100360099')

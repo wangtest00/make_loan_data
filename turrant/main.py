@@ -14,6 +14,7 @@ sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="gb18030")
 '''
 目前只有白名单和非黑非白用户才能进入风控走人审，其余一律拒绝
 '''
+
 def first_apply_bank():
     daiQian = DaiQian_Tur()
     sql = "UPDATE sys_app_info set PAY_CHAN_SERVICE='TurrantRazorpayTest' where app_no='"+appNo+"';"
@@ -67,7 +68,8 @@ def first_apply_paytm():
     sql="UPDATE sys_app_info set PAY_CHAN_SERVICE='TurrantPaytmTest' where app_no='"+appNo+"';"
     DataBase(configs).executeUpdateSql(sql)
     daiQian.update_Batch_Log()
-    registNo=str(random.randint(8000000000,9999999999)) #10位随机数
+    #registNo=str(random.randint(8000000000,9999999999)) #10位随机数
+    registNo='9999189008'
     token=daiQian.login_code(registNo)
     daiQian.insert_white_list(registNo)   #插入白名单数据。
     headt=daiQian.head_token(token)

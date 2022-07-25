@@ -1,4 +1,4 @@
-import random,requests
+import random,requests,json
 from database.dataBase_mex import *
 from mex_digital_pay.var_digital_pay import *
 
@@ -6,9 +6,10 @@ class RePay():
 	# 模拟还款回调信息给支付平台，进件来做清结算
 	def web_hook_repay_stp(self, loanNo, monto):
 		sql1 = "select ASSIGN_ACCOUNT_NO from cu_cust_repayment_account where CUST_NO in (select CUST_NO from lo_loan_dtl where LOAN_NO='" + loanNo + "');"
-		res = DataBase(configs).get_one(sql1)
+		res = DataBase(mex_pdl_loan).get_one(sql1)
 		res = res[0]
 		payment_id = str(random.randint(100000000, 999999999))
+		print('utr_no=',payment_id)
 		data = {"abono": {
 			"id": payment_id,
 			"fechaOperacion": "20210108",
@@ -33,4 +34,4 @@ class RePay():
 		print(r.json())
 
 if __name__ == '__main__':
-	RePay().web_hook_repay_stp('L2012207128235115601509679104','1')
+	RePay().web_hook_repay_stp('L2012207138235443318922870784','1')

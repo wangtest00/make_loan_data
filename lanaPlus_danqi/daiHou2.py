@@ -98,9 +98,9 @@ class DaiHou():
 			"previous_attributes": {}
 		},"livemode": False,
 		"webhook_status": "","id": "","object": "","type": "order.paid","created_at": 0,"webhook_logs": [{"id": "","url": "","failed_attempts": 0,"last_http_response_status": 0,"object": "","last_attempted_at": 0}]}
-		r=requests.post(host_pay+conektaWebhookUrl,data=json.dumps(data),verify=False)
-		#r=requests.post('http://192.168.1.3:8082'+conektaWebhookUrl,data=json.dumps(data),verify=False)
+		#r=requests.post(host_pay+conektaWebhookUrl,data=json.dumps(data),verify=False)
+		r=requests.post('http://192.168.20.172:8082'+conektaWebhookUrl,data=json.dumps(data),verify=False)
 		print(r.json())
 
 if __name__ == '__main__':
-    DaiHou().oxxo_repay('2140','L2012206148224986994611257344')
+    DaiHou().oxxo_repay('2140','L2012205318219844660999421952')

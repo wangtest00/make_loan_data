@@ -3,9 +3,9 @@ import time
 
 header={'Accept':'application/json, text/plain, */*',
 'Accept-Encoding': 'gzip, deflate, br',
-'Accept-Language': 'zh-CN,zh;q=0.9',
+'Accept-Language': 'zh,zh-CN;q=0.9,en-US;q=0.8,en;q=0.7',
 'Connection': 'keep-alive',
-'Cookie': 'sensorsdata2015jssdkcross={"distinct_id":"7e718045a98b455486aa2babbcd584d7","first_id":"17a8939be7c144-0ff6ddee0a3fa5-d7e1739-1327104-17a8939be7df0f","props":{"$latest_traffic_source_type":"直接流量","$latest_search_keyword":"未取到值_直接打开","$latest_referrer":""},"$device_id":"17a8939be7c144-0ff6ddee0a3fa5-d7e1739-1327104-17a8939be7df0f"}; sensorsdata2015jssdkcross={"distinct_id":"7e718045a98b455486aa2babbcd584d7","first_id":"17a8939be7c144-0ff6ddee0a3fa5-d7e1739-1327104-17a8939be7df0f","props":{"$latest_traffic_source_type":"直接流量","$latest_search_keyword":"未取到值_直接打开","$latest_referrer":""},"$device_id":"17a8939be7c144-0ff6ddee0a3fa5-d7e1739-1327104-17a8939be7df0f"}; AGL_USER_ID=92001a88-3e24-4cf0-9396-e45360b355ca; s-5f34cf9b8552f79ad949d273=184ad67e799c402983147eb29c620efe; wt_aid=10f28833-5965-4465-900a-58aeb6f0fc61',
+'Cookie': 'wt_aid=2414c070-8ca1-4df8-80fd-869b742d19fa; gr_user_id=3c2d111b-45d5-4ae1-a06f-c068a5fa267a; AGL_USER_ID=6d29ce4d-b2b8-419b-8c73-88208a938740; s-5f34cf9b8552f79ad949d273=cf89084e58634bc7aa5445f8ae80adf5; sensorsdata2015jssdkcross={"distinct_id":"7e718045a98b455486aa2babbcd584d7","first_id":"18214821bbd33e-0f444444444445-1f343371-1327104-18214821bbe127a","props":{"$latest_traffic_source_type":"直接流量","$latest_search_keyword":"未取到值_直接打开","$latest_referrer":""},"$device_id":"18214821bbd33e-0f444444444445-1f343371-1327104-18214821bbe127a"}',
 'Host': 'quantstack.pingcode.com',
 'Referer': 'https://quantstack.pingcode.com/workspace/dashboards/5ff2f731afa9fe001738acd9',
 'sec-ch-ua': '"Chromium";v="92", " Not A;Brand";v="99", "Google Chrome";v="92"',
@@ -13,8 +13,8 @@ header={'Accept':'application/json, text/plain, */*',
 'Sec-Fetch-Dest': 'empty',
 'Sec-Fetch-Mode': 'cors',
 'Sec-Fetch-Site': 'same-origin',
-'sentry-trace': '6c746120100749baa1bbae987903a8d4-a4d48ab519eadc9f-1',
-'User-Agent': 'Mozilla/'}
+'sentry-trace': 'ff2ec5cc0f984638bb8015795bdfb0f7-a6905d45bb68f53a-1',
+'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.60 Safari/537.36'}
 
 def get_mywork_list():
     url="https://quantstack.pingcode.com/api/ladon/dashboard/widgets/5ff2f731afa9fe001738acde/content?t=1629181171048"
@@ -35,7 +35,7 @@ def get_notifications():
         'Accept-Encoding': 'gzip, deflate, br',
         'Accept-Language': 'zh-CN,zh;q=0.9',
         'Connection': 'keep-alive',
-        'authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI3ZTcxODA0NWE5OGI0NTU0ODZhYTJiYWJiY2Q1ODRkNyIsInRlYW1faWQiOiI1ZjM0Y2Y5Yjg1NTJmNzlhZDk0OWQyNzMiLCJpYXQiOjE2MjkxODI0ODF9.i1xUWsSwCfYpwG-1td5FJVvGylmIySpXGeQOGU5ZSt0',
+        'authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI3ZTcxODA0NWE5OGI0NTU0ODZhYTJiYWJiY2Q1ODRkNyIsInRlYW1faWQiOiI1ZjM0Y2Y5Yjg1NTJmNzlhZDk0OWQyNzMiLCJpYXQiOjE2NTg3MTk3NjJ9.3ak1BcRdNKGLrWU9x5jjHqfumBrOpcJCWsz3RVOsg0s',
         'Host': 'iris.pingcode.com',
         'Referer': 'https://quantstack.pingcode.com/workspace/dashboards/5ff2f731afa9fe001738acd9',
         'sec-ch-ua': '"Chromium";v="92", " Not A;Brand";v="99", "Google Chrome";v="92"',
@@ -48,6 +48,7 @@ def get_notifications():
     url2="https://iris.pingcode.com/api/iris/notifications/recent?t="+timev
     r2=requests.get(url2,headers=header2)
     t=r2.json()
+    print(t)
     t=t['data']['value']
     print(t)
     for i in range(len(t)):
@@ -59,28 +60,12 @@ def get_notifications():
 
 #获取某个版本下，所有测试相关的任务项，并且组装
 def get_work_item(version_id):
-    r=requests.get('https://quantstack.pingcode.com/api/agile/projects/5f34d1a73fa4b651a03b4a48/scrum/release/work-item/related-work-items?'
-                   'version_id='+version_id+'&sort_by=type&sort_type=1&t=1634897835071 HTTP/1.1',headers=header)
+    r=requests.get('https://quantstack.pingcode.com/api/agile/projects/5f34d1a73fa4b651a03b4a48/scrum/release/work-item/related-work-items?version_id='+version_id+'&sort_by=type&sort_type=1&t=1658718676104',headers=header)
+    print(r.url)
     print(r.content)
-    t=r.json()
-    t=t['data']['value']
-    sum=[]
-    for i in range(len(t)):
-        #print(t[i])
-        r=requests.get("https://quantstack.pingcode.com/api/agile/work-items/"+t[i]['_id']+"/children?t=1634898646091",headers=header)
-        s=r.json()
-        s=s['data']['value']
-        #print(s)
-        muban=[]
-        for j in range(len(s)):
-            #print(s[j])
-            if '测试' in s[j]['title']:
-                print(str(i)+"."+s[j]['title']+"-进度100%")
-                muban.append(str(str(i)+"."+s[j]['title']+"-进度100%"))
-                sum.append(muban)
-            else:
-                pass
+
+
     #print(sum)
 if __name__ == '__main__':
-    get_work_item('6204c9e1eeb701ff8d1f5d38')    #version_id
+    get_work_item('62b42771648068316fd9f9b5')    #version_id
     #get_notifications()

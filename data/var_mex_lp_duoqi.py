@@ -23,6 +23,4 @@ head_pay = {"Host": host_pay[8:], "Connection": "keep-alive", "Content-Length": 
 
 configs={'host':'192.168.0.60','port':3306, 'user': 'cs_wangs','password': 'cs_wangs!qw####','database': 'mex_pdl_loan'}
 mex_pdl_abolish={'host':'192.168.0.60','port':3306, 'user': 'cs_wangs','password': 'cs_wangs!qw####','database': 'mex_pdl_abolish'}
-mex_pdl_abolish_prod={'host':'10.10.50.4','port':3306, 'user': 'cs_wangs','password': 'cs_wangs!qw####','database': 'mex_pdl_abolish'}
 mex_pdl_loan={'host':'192.168.0.60','port':3306, 'user': 'cs_wangs','password': 'cs_wangs!qw####','database': 'mex_pdl_loan'}
-mex_pdl_loan_prod={'host':'10.10.50.4','port':3306, 'user': 'cs_wangs','password': 'cs_wangs!qw####','database': 'mex_pdl_loan'}

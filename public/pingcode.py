@@ -5,7 +5,7 @@ header={'Accept':'application/json, text/plain, */*',
 'Accept-Encoding': 'gzip, deflate, br',
 'Accept-Language': 'zh,zh-CN;q=0.9,en-US;q=0.8,en;q=0.7',
 'Connection': 'keep-alive',
-'Cookie': 'wt_aid=2414c070-8ca1-4df8-80fd-869b742d19fa; gr_user_id=3c2d111b-45d5-4ae1-a06f-c068a5fa267a; AGL_USER_ID=6d29ce4d-b2b8-419b-8c73-88208a938740; s-5f34cf9b8552f79ad949d273=cf89084e58634bc7aa5445f8ae80adf5; sensorsdata2015jssdkcross={"distinct_id":"7e718045a98b455486aa2babbcd584d7","first_id":"18214821bbd33e-0f444444444445-1f343371-1327104-18214821bbe127a","props":{"$latest_traffic_source_type":"直接流量","$latest_search_keyword":"未取到值_直接打开","$latest_referrer":""},"$device_id":"18214821bbd33e-0f444444444445-1f343371-1327104-18214821bbe127a"}',
+'Cookie': 'wt_aid=2414c070-8ca1-4df8-80fd-869b742d19fa; gr_user_id=3c2d111b-45d5-4ae1-a06f-c068a5fa267a; AGL_USER_ID=6d29ce4d-b2b8-419b-8c73-88208a938740; s-5f34cf9b8552f79ad949d273=cf89084e58634bc7aa5445f8ae80adf5; sensorsdata2015jssdkcross=%7B%22distinct_id%22%3A%227e718045a98b455486aa2babbcd584d7%22%2C%22first_id%22%3A%2218214821bbd33e-0f444444444445-1f343371-1327104-18214821bbe127a%22%2C%22props%22%3A%7B%22%24latest_traffic_source_type%22%3A%22%E7%9B%B4%E6%8E%A5%E6%B5%81%E9%87%8F%22%2C%22%24latest_search_keyword%22%3A%22%E6%9C%AA%E5%8F%96%E5%88%B0%E5%80%BC_%E7%9B%B4%E6%8E%A5%E6%89%93%E5%BC%80%22%2C%22%24latest_referrer%22%3A%22%22%7D%2C%22%24device_id%22%3A%2218214821bbd33e-0f444444444445-1f343371-1327104-18214821bbe127a%22%7D',
 'Host': 'quantstack.pingcode.com',
 'Referer': 'https://quantstack.pingcode.com/workspace/dashboards/5ff2f731afa9fe001738acd9',
 'sec-ch-ua': '"Chromium";v="92", " Not A;Brand";v="99", "Google Chrome";v="92"',
@@ -60,9 +60,15 @@ def get_notifications():
 
 #获取某个版本下，所有测试相关的任务项，并且组装
 def get_work_item(version_id):
-    r=requests.get('https://quantstack.pingcode.com/api/agile/projects/5f34d1a73fa4b651a03b4a48/scrum/release/work-item/related-work-items?version_id='+version_id+'&sort_by=type&sort_type=1&t=1658718676104',headers=header)
-    print(r.url)
-    print(r.content)
+    r=requests.get("https://quantstack.pingcode.com/api/agile/projects/5f34d1a73fa4b651a03b4a48/scrum/release/work-item/related-work-items?version_id="+version_id+"&sort_by=type&sort_type=1&t=1658730719514",headers=header)
+    #print(r.url)
+    t=r.json()
+    data=t['data']['value']
+    data_list=[]
+    for data in data:
+        print(data['title'])
+        data_list.append(data['title'])
+    print(data_list)
 
 
     #print(sum)

@@ -44,7 +44,17 @@
 #         return n * func(n-1)
 #
 # print(func(5))
-x1=[1,2,3]
-x2=[2,3]
-x3=[3,4]
-print(list(set(x1+x2+x3)))
+# coding=utf-8
+import asyncio
+import time
+
+
+async def main():
+    print('hello')
+    await asyncio.sleep(1)
+    print('world')
+
+
+print(f"程序于 {time.strftime('%X')} 开始执行")
+asyncio.run(main())
+print(f"程序于 {time.strftime('%X')} 执行结束")

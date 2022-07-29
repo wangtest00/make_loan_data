@@ -67,11 +67,11 @@ def get_work_item(version_id):
     data_list=[]
     for data in data:
         print(data['title'])
-        data_list.append(data['title'])
+        data_list.append([data['identifier'],data['title']])
     print(data_list)
 
 
     #print(sum)
 if __name__ == '__main__':
-    get_work_item('62b42771648068316fd9f9b5')    #version_id
+    get_work_item('62da5e32709f57c6913030d5')    #version_id
     #get_notifications()

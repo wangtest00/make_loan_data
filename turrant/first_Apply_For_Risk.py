@@ -15,14 +15,15 @@ def first_apply():
     daiQian.update_Batch_Log()
     registNo=str(random.randint(8000000000,9999999999)) #10位随机数
     token=daiQian.login_code(registNo)
-    #daiQian.insert_white_list(registNo)   #插入白名单数据
+    # daiQian.insert_white_list(registNo)   #插入白名单数据
     headt=daiQian.head_token(token)
     custNo=daiQian.cert_auth(registNo,headt)
     daiQian.auth(registNo,custNo,headt)
     daiQian.update_kyc_auth(registNo,custNo)
     loanNo=daiQian.loan(registNo,custNo,headt)
+    print(loanNo)
     india_thirdservice()     #调风控定时任务
 
 
 if __name__ == '__main__':
-    first_apply
+    first_apply()

@@ -69,7 +69,7 @@ class DaiQian_Tur(ApiTest):
         st=''
         for j in range(5):  #生成5个随机英文大写字母
             st+=random.choice(string.ascii_uppercase)
-        num=str(random.randint(1000,9999))   #num+"4567"+num
+        num=str(random.randint(1000,9999))   #certNo=num+"4567"+num
         data={"appName":appName,"appNo":appNo,"birthDay":"1998-06-06","certNo":num+"4567"+num,"custFirstName":"wang","custLastName":"shuang","custMiddleName":"mmmm","education":"10190006",
               "marriage":"10050001","panNo":""+st+num+"W","registNo":registNo,"sex":"10030001","useEmail":"sdfghhhj@gmail.com","useLang":"90000001"}
         res=ApiTest.api_Request(self,'post',host_api+certAuthUrl,ApiTest.change_type(self,data),headt)
@@ -114,7 +114,8 @@ class DaiQian_Tur(ApiTest):
         DataBase(configs).executeUpdateSql(sql3)
         DataBase(configs).executeUpdateSql(sql4)
         DataBase(configs).executeUpdateSql(sql5)
-    #绑定银行卡，需要把银行卡号改成明显错的，环境怕放出真实的钱，写入cu_cust_beneficiary_account表     Razorpay渠道绑卡会掉创建资金账户接口https://test-pay.quantstack.in/api/trade/cust/create/contact/fund_account
+    #绑定银行卡，需要把银行卡号改成明显错的，环境怕放出真实的钱，写入cu_cust_beneficiary_account表
+    #Razorpay渠道绑卡会掉创建资金账户接口https://test-pay.quantstack.in/api/trade/cust/create/contact/fund_account
     def bank_auth(self,custNo,headt):                            #Back_Account-12010001, （PayTm Wallet-12010002）
         bank_acct_no=str(random.randint(1000000000,9999999999))
         #bank_acct_no='53110884994'    #生产测试卡号
@@ -123,7 +124,7 @@ class DaiQian_Tur(ApiTest):
         data2={"custNo":custNo,"bankAcctNo":bank_acct_no,"bankAcctName":"ashish rajput","accType":"12010001","ifscCode":"SCBL0036024","pageCode":"12000001","reBankAcctNo":bank_acct_no}
         r2=ApiTest.api_Request(self,'post',host_api+checkBankUrl,ApiTest.change_type(self,data2),headt)
         return bank_acct_no
-    #暂时不使用，api调支付，支付会去请求创建资金账户-razorpay
+    #暂时不使用，api调支付，支付会调用该接口去请求创建资金账户-razorpay
     def create_contact_fund_account(self):
         #data={ "appNo":appNo,'bankAcctName': 'ashish rajput', 'bankNo': '53110884994', 'custNo': 'C1042204268207123079311327232', 'ifscCode': 'SCBL0036024', 'accType': '12010001', 'pageCode': '12000001', 'repeatBankAcctNo': '53110884994', "address": "123"}
         data={
@@ -394,7 +395,6 @@ class DaiQian_Tur(ApiTest):
         ApiTest.api_Request(self,'post',host_api+'/api/common/grab/app_contact?lang=en',ApiTest.change_type(self,data3),headt)
         ApiTest.api_Request(self,'post',host_api+'/api/common/grab/app_gps_info?lang=en',ApiTest.change_type(self,data4),headt)
         ApiTest.api_Request(self,'post',host_api+'/api/common/grab/app_application_data?lang=en',ApiTest.change_type(self,data5),headt)
-
 
 if __name__ == '__main__':
     registNo='8832701318'

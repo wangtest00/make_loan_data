@@ -241,7 +241,7 @@ class DaiHou_tur():
         "TXNDATE": "2022-04-13",
         "MERCHANTLINKREFERENCEID": "81787160baf911ecb9389078412e4d89"
     }
-        print(data)                                                                  #表单格式提交
+        print(data)                                                 #表单格式提交,不转json
         r = requests.post(host_pay+"/api/trade/paytm/repay_webhook", data=data,verify=False)
         print(r.json())
     #处理还款中的订单为失效

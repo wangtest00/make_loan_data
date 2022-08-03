@@ -218,7 +218,6 @@ class DaiQian_CashTm(ApiTest):
         data={"advance":"10000000","custNo":repay_list[1],"loanNo":loanNo,"repayDate":repay_list[2],"repayInstNum":1,"tranAppType":"10090001","transAmt":str(repay_list[3])}
         t=ApiTest.api_Request(self,'post',host_api+repayUrl,ApiTest.change_type(self,data),headt)
         print(t)
-
     #razorpayx放款模拟回调，注意：记得先要申请放款,测试环境不验证签名
     def razorpayx_annon_event_callback(self,loanNo):
         sql="select TRAN_ORDER_NO,ACT_TRAN_AMT from pay_tran_dtl where LOAN_NO='"+loanNo+"' and TRAN_USE='10330001' and TRAN_CHAN_NAME='razorpayx';"
@@ -350,7 +349,7 @@ class DaiQian_CashTm(ApiTest):
     def app_version(self):
         data={"appNo": "102", "appType": "10090001", "versionNo": "2.6.8", "versionValue": "268"}
         #r=ApiTest.api_Request(self,'post',host_api+appVersionUrl,ApiTest.change_type(self,data),head_api)
-        r=ApiTest.api_Request(self,'post','https://api.quantstack.in'+appVersionUrl,ApiTest.change_type(self,data),head_api)
+        r=ApiTest.api_Request(self,'post',host_api+appVersionUrl,ApiTest.change_type(self,data),head_api)
 
 if __name__ == '__main__':
     registNo='8832701318'

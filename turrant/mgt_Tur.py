@@ -18,7 +18,7 @@ def login_mgt():
 def update_appr_user_stat():
     sql="update sys_user_info set APPR_USER_STAT='10460001',ON_LINE='10000001',IS_USE='10000001'  where user_no='"+mgtuser+"';"
     DataBase(configs).executeUpdateSql(sql)
-#分配审批人员及审批通过-递归函数
+#分配审批人员及审批通过-递归函数-慎用,怕死循环
 def approve(loan_no):
     head=head_mgt_c()
     data1={"loanNos":[loan_no],"targetUserNo":mgtuser}

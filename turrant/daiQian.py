@@ -115,7 +115,7 @@ class DaiQian_Tur(ApiTest):
         DataBase(configs).executeUpdateSql(sql4)
         DataBase(configs).executeUpdateSql(sql5)
     #绑定银行卡，需要把银行卡号改成明显错的，环境怕放出真实的钱，写入cu_cust_beneficiary_account表
-    #Razorpay渠道绑卡会掉创建资金账户接口https://test-pay.quantstack.in/api/trade/cust/create/contact/fund_account
+    #Razorpay渠道绑卡会调创建资金账户接口https://test-pay.quantstack.in/api/trade/cust/create/contact/fund_account
     def bank_auth(self,custNo,headt):                            #Back_Account-12010001, （PayTm Wallet-12010002）
         bank_acct_no=str(random.randint(1000000000,9999999999))
         #bank_acct_no='53110884994'    #生产测试卡号

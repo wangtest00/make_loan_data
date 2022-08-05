@@ -61,7 +61,7 @@ class DaiHou_tur():
         r=requests.post(host_pay+"/api/trade/cashFree/annon/event/"+tran_order_no,headers=head_pay,verify=False)
         t=r.json()
         print(t)
-    #razorpay还款模拟回调，注意：记得先要申请还款，调api,trade_fin_repay函数
+    #razorpay还款模拟回调，注意：必须有资金账户，记得先要申请还款，调api,trade_fin_repay函数
     def razorpay_annon_event_callback(self,loanNo,amount):
         sql="select TRAN_ORDER_NO from pay_tran_dtl where LOAN_NO='"+loanNo+"' and TRAN_USE='10330002' and TRAN_CHAN_NAME='razorpayx';"
         tran_order_no=DataBase(configs).get_one(sql)
@@ -244,10 +244,9 @@ class DaiHou_tur():
         print(data)                                                 #表单格式提交,不转json
         r = requests.post(host_pay+"/api/trade/paytm/repay_webhook", data=data,verify=False)
         print(r.json())
-    #处理还款中的订单为失效
+    #处理还款中的订单为失效-若未还款成功（包括单边账和减免）则统一更新还款订单状态为失败
     def handle_repay(self):
         r=requests.post(host_pay+"/api/common/handle/re_pay?isAll=false&count=5000&minutes=5&loanNo=",verify=False)
-        #r=requests.post("http://192.168.20.244:8083/api/common/handle/re_pay?isAll=false&count=5000&minutes=5&loanNo=",verify=False)
         print("处理还款中的订单为失效接口响应=",r.json())
 
 

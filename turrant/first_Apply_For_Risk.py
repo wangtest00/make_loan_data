@@ -5,7 +5,7 @@ from database.dataBase_india import *
 from turrant.mgt_Tur import *
 from data.var_tur import *
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
-from risk.risk import *
+from risk.risk_for_india import *
 
 # 禁用安全请求警告
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)

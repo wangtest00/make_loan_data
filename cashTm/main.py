@@ -5,7 +5,7 @@ from database.dataBase_india import *
 from cashTm.mgt_cashTm import *
 from data.var_cashTm import *
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
-from risk.risk import *
+from risk.risk_for_india import *
 
 # 禁用安全请求警告
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)

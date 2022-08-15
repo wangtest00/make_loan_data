@@ -2,7 +2,7 @@ import time
 #__all__=['host_api','host_action','host_mgt','head_api','head_mgt','head_lixiang','host_coll','CONFIGS','prodNo','inter_db','head_pay','host_pay','appNo','appName','mgtuser']
 
 appNo='104'
-applist={'104':['Turrant','wangs2@whalekun.com','20150801','manage_need_loan'],'102':'CashTM'}
+applist={'104':['Turrant','wangs2@whalekun.com','4','manage_need_loan'],'102':'CashTM'}
 appName=applist[appNo][0]
 mgtuser=applist[appNo][1]
 prodNo=applist[appNo][2]
@@ -22,7 +22,7 @@ head_mgt={"Host": "test-mgt.quantstack.in","Connection": "keep-alive","Content-L
 "Sec-Fetch-Dest": "empty","Referer": "https://test-mgt.quantstack.in/","Accept-Encoding": "gzip, deflate, br","Accept-Language": "zh-CN,zh;q=0.9","Cookie": "language=zh"}
 
 head_pay={"Host":"test-pay.quantstack.in","Connection":"keep-alive","Content-Length":"116","Postman-Token":"68cc47f6-8c1f-4ebd-a929-b1ae10b7dd19",
-                "User-Agent":"PostmanRuntime/7.28.2","Accept":"*/*","Content-Type":"application/json","Accept-Encoding":"gzip, deflate, br"}
+                "User-Agent":"PostmanRuntime/7.28.2","Accept":"*/*","Content-Type":"application/json","Accept-Encoding":"gzip, deflate, br","x-checksum":"123456"}
 head_lixiang={"Host":"192.168.20.246","Connection":"keep-alive","Content-Length":"116","Postman-Token":"68cc47f6-8c1f-4ebd-a929-b1ae10b7dd19",
                 "User-Agent":"PostmanRuntime/7.28.2","Accept":"*/*","Content-Type":"application/json","Accept-Encoding":"gzip, deflate, br"}
 configs= {'host':'172.31.25.83','port':3306, 'user': 'cs_wangs','password': 'cs_wangs!qw####','database': 'manage_need_loan'}

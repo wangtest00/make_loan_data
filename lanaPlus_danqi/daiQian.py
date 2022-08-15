@@ -11,8 +11,17 @@ class ApiTest(Api_Request):
         self.apiTestName=Api_Request()
 
 class DaiQian_Danqi(ApiTest):
+    def compute_code(self,m):
+        m=m[-4:]
+        x1=str(int(m[0])+5)
+        x2=str(int(m[1])+5)
+        x3=str(int(m[2])+5)
+        x4=str(int(m[3])+5)
+        x=x4[-1:]+x3[-1:]+x2[-1:]+x1[-1:]
+        return x
     #第一次验证码注册登录，返回token
-    def login_code(self,registNo,code):
+    def login_code(self,registNo):
+        code=self.compute_code(registNo)
         data1 = {"registNo": registNo, "code": code, "gaid": shenpiren[appNo][5], "channelNo": ""}
         t=ApiTest.api_Request(self,'post',host_api+loginUrl,ApiTest.change_type(self,data1),head_api)
         if t!=0:

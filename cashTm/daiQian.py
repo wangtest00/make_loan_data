@@ -298,7 +298,7 @@ class DaiQian_CashTm(ApiTest):
           "accType": "12010001"}  #注意这里区分类型，银行卡或paytm
         r=ApiTest.api_Request(self,'post',host_pay+'/api/fin/payout/apply',ApiTest.change_type(self,data),head_lixiang)
         print(r)
-    #放款模拟回调
+    #paytm放款模拟回调
     def paytm_payout_webhook(self,loanNo,status):
         t0 = str(time.time() * 1000000)
         sql="select ACT_TRAN_AMT,TRAN_FLOW_NO from pay_tran_dtl where LOAN_NO='"+loanNo+"' and TRAN_USE='10330001' and (tran_stat='10220004' or tran_stat='10220001' or tran_stat='10220003');"

@@ -2,8 +2,8 @@
 
 appNo='202'    #当前产品号，测试201用多期，马甲包只支持单期无积分和优惠券,25002400
 shenpiren={
-'201':['wangs2@whalekun.com','https://test-mgt.lanaplus.mx','28070110','mex_pdl_loan','LanaPlus'],         #GAID                           app版本号
-'202':['wangs@whalekun.com','https://test-mgt.feriarapida.mx','11800070105','mex_pdl_loan','FeriaRapida','FC423D8F-BC7E-4430-BD97-66E903FR202','118']}
+'201':['wangs2@whalekun.com','https://test-mgt.lanaplus.mx','26002401','mex_pdl_loan','LanaPlus'],         #GAID                           app版本号
+'202':['wangs@whalekun.com','https://test-mgt.feriarapida.mx','25002400','mex_pdl_loan','FeriaRapida','FC423D8F-BC7E-4430-BD97-66E903FR202','118']}
 which_db=shenpiren[appNo][3]   #数据库库名
 prodNo=shenpiren[appNo][2]     #产品编号
 host_mgt=shenpiren[appNo][1]   #MGT域名

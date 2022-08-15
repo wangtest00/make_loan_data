@@ -312,7 +312,8 @@ if __name__ == '__main__':
     #benfen_compare('8584830000','L2012206248228599068545449984')
     #benfen_compare('8888666666','')
     #benfen_compare_his('5412449999','')
-    a=bidui_table(mex_pdl_loan)
-    b=bidui_table(mex_pdl_loan_prod)
-    if a==b:
-        print("相同")
+    # a=bidui_table(mex_pdl_loan)
+    # b=bidui_table(mex_pdl_loan_prod)
+    # if a==b:
+    #     print("相同")
+    get_TableName('cust_no','mex_pdl_loan')

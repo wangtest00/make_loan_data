@@ -70,7 +70,7 @@ class DaiQian_Tur(ApiTest):
         for j in range(5):  #生成5个随机英文大写字母
             st+=random.choice(string.ascii_uppercase)
         num=str(random.randint(1000,9999))   #certNo=num+"4567"+num
-        data={"appName":appName,"appNo":appNo,"birthDay":"1998-06-06","certNo":num+"4567"+num,"custFirstName":"wang","custLastName":"shuang","custMiddleName":"mmmm","education":"10190006",
+        data={"appName":appName,"appNo":appNo,"birthDay":"1998-06-06","certNo":num+"1122"+num,"custFirstName":"wang","custLastName":"shuang","custMiddleName":"mmmm","education":"10190006",
               "marriage":"10050001","panNo":""+st+num+"W","registNo":registNo,"sex":"10030001","useEmail":"sdfghhhj@gmail.com","useLang":"90000001"}
         res=ApiTest.api_Request(self,'post',host_api+certAuthUrl,ApiTest.change_type(self,data),headt)
         if res!=0:
@@ -197,7 +197,7 @@ class DaiQian_Tur(ApiTest):
             loanAmt=trial_list[1]
             data={"custNo":custNo,"instNum":instNum,"loanAmt":loanAmt,"loanNo":loanNo,"prodNo":prodNo,"accType":accType}
             r=ApiTest.api_Request(self,'post',host_api+confirmWithdrawUrl,ApiTest.change_type(self,data),headt)
-
+    #插入资金账户数据
     def payout_for_razorpay(self,cust_no,bank_no):
         sql1="DELETE  from pay_cust_found_info where CUST_NO='"+cust_no+"';"
         DataBase(configs).executeUpdateSql(sql1)
@@ -215,11 +215,14 @@ class DaiQian_Tur(ApiTest):
     where a.LOAN_NO="'''+loanNo+'''" ;'''
         repay_list=DataBase(configs).get_one(sql)
         print(repay_list)
-        token=login_code(repay_list[0])
-        headt=head_token(token)
-        data={"advance":"10000000","custNo":repay_list[1],"loanNo":loanNo,"repayDate":repay_list[2],"repayInstNum":1,"tranAppType":"10090001","transAmt":str(repay_list[3])}
-        t=ApiTest.api_Request(self,'post',host_api+repayUrl,ApiTest.change_type(self,data),headt)
-        print(t)
+        if repay_list is None:
+            pass
+        else:
+            token=self.login_code(repay_list[0])
+            headt=self.head_token(token)
+            data={"advance":"10000000","custNo":repay_list[1],"loanNo":loanNo,"repayDate":repay_list[2],"repayInstNum":1,"tranAppType":"10090001","transAmt":str(repay_list[3])}
+            t=ApiTest.api_Request(self,'post',host_api+repayUrl,ApiTest.change_type(self,data),headt)
+            print(t)
 
     #razorpayx放款模拟回调，注意：记得先要申请放款,测试环境不验证签名
     def razorpayx_annon_event_callback(self,loanNo):
@@ -301,7 +304,7 @@ class DaiQian_Tur(ApiTest):
           "accType": "12010001"}  #注意这里区分类型，银行卡或paytm
         r=ApiTest.api_Request(self,'post',host_pay+'/api/fin/payout/apply',ApiTest.change_type(self,data),head_lixiang)
         print(r)
-    #放款模拟回调
+    #paytm放款模拟回调
     def paytm_payout_webhook(self,loanNo,status):
         t0 = str(time.time() * 1000000)
         sql="select ACT_TRAN_AMT,TRAN_FLOW_NO from pay_tran_dtl where LOAN_NO='"+loanNo+"' and TRAN_USE='10330001' and (tran_stat='10220004' or tran_stat='10220001' or tran_stat='10220003');"
@@ -397,8 +400,37 @@ class DaiQian_Tur(ApiTest):
         ApiTest.api_Request(self,'post',host_api+'/api/common/grab/app_application_data?lang=en',ApiTest.change_type(self,data5),headt)
 
 if __name__ == '__main__':
-    registNo='8832701318'
-    loanNo = 'L1042205278218431170053079040'
-    token=DaiQian_Tur().login_code(registNo)
-    headt = DaiQian_Tur().head_token(token)
-    DaiQian_Tur().trial_instalment(loanNo,headt)
+    data = ['L1042205128212979749551800320',
+            'L1042205108212273275481554944',
+            'L1042205108212200351177310208',
+            'L1042205108212197657259737088',
+            'L1042205098211916418464284672',
+            'L1042205098211898798595833856',
+            'L1042205098211896376876007424',
+            'L1042205098211895369542598656',
+            'L1042205098211893001103015936',
+            'L1042205098211884102132105216',
+            'L1042204278207529786445332480',
+            'L1042204258206832969852321792',
+            'L1042204198204640821933441024',
+            'L1042204198204640535462477824',
+            'L1042204198204639908380475392',
+            'L1042204198204639612921118720',
+            'L1042204198204639323002437632',
+            'L1042204198204639006462509056',
+            'L1042204198204637449243262976',
+            'L1042204198204626754078441472',
+            'L1042204198204626463794855936',
+            'L1042204158203253824820019200',
+            'L1042204158203246179702734848',
+            'L1042204158203205809019224064',
+            'L1042204158203129040480174080',
+            'L1042204158203128516708073472',
+            'L1042204158203128243109429248',
+            'L1042204158203127981057703936',
+            'L1042204158203127443628949504',
+            'L1042204148202933615122907136',
+            'L1042204148202933305931399168',
+            'L1042204148202932697283362816']
+    for data in data:
+        DaiQian_Tur().trade_fin_repay(data)

@@ -96,9 +96,9 @@ class DataBase():
 #loanAmt='{0:f}'.format(t[0])#decimal转字符串
 
 if __name__ == '__main__':
-    configs={'host':'192.168.0.60','port':3306, 'user': 'cs_wangs','password': 'cs_wangs!qw####','database': 'mex_msg_db'}
-    for i in range(10038):
-        t = str(time.time() * 1000000)
-        sql2="INSERT INTO `mex_msg_db`.`mesg_message_dtl`(`ID`, `LANG_TYPE`, `CHANNEL_NO`, `TEMP_NO`, `TEMP_TYPE`, `NAME`, `PHONE`, `APP_NO`, `APP_NAME`, `BRAND_NAME`, `APP_URL`, `TERM`, `PERIOD_RANK`, `AMOUNT`, `CUR_PERIOD_AMOUNT`, `DUE_DATE`, `PASTDUE_DAYS`, `COIN_NUM`, `STP_CODE`, `REFERENCE_NAME`, `GENDER_ONE`, `GENDER_TWO`, `SERVICE_NUMBER`, `PUSH_TOKEN`, `SEND_TIME`, `IS_SEND`, `REMARK`, `INST_TIME`, `INST_USER_NO`, `UPDT_TIME`, `UPDT_USER_NO`) VALUES ('"+t+"', '90000002', 'LanaPlus', 'HA&LT_WlistSunkNoAply_NT', '20010001', 'NULL', '9383893927', '201', 'LanaPlus', 'LanaPlus', 'NULL', NULL, 2, 650.00, 650.00, '2022-06-10', 0, 0, 'NULL', NULL, NULL, NULL, NULL, NULL, 10, '10000000', NULL, '2022-06-07 09:04:47', 'sys', NULL, NULL);"
-        DataBase(configs).executeUpdateSql(sql2)
-    #DataBase(configs).call_daily_important_batch('20220718','20220718')
+    configs={'host':'192.168.0.60','port':3306, 'user': 'cs_wangs','password': 'cs_wangs!qw####','database': 'mex_pdl_loan'}
+    # for i in range(10038):
+    #     t = str(time.time() * 1000000)
+    #     sql2="INSERT INTO `mex_msg_db`.`mesg_message_dtl`(`ID`, `LANG_TYPE`, `CHANNEL_NO`, `TEMP_NO`, `TEMP_TYPE`, `NAME`, `PHONE`, `APP_NO`, `APP_NAME`, `BRAND_NAME`, `APP_URL`, `TERM`, `PERIOD_RANK`, `AMOUNT`, `CUR_PERIOD_AMOUNT`, `DUE_DATE`, `PASTDUE_DAYS`, `COIN_NUM`, `STP_CODE`, `REFERENCE_NAME`, `GENDER_ONE`, `GENDER_TWO`, `SERVICE_NUMBER`, `PUSH_TOKEN`, `SEND_TIME`, `IS_SEND`, `REMARK`, `INST_TIME`, `INST_USER_NO`, `UPDT_TIME`, `UPDT_USER_NO`) VALUES ('"+t+"', '90000002', 'LanaPlus', 'HA&LT_WlistSunkNoAply_NT', '20010001', 'NULL', '9383893927', '201', 'LanaPlus', 'LanaPlus', 'NULL', NULL, 2, 650.00, 650.00, '2022-06-10', 0, 0, 'NULL', NULL, NULL, NULL, NULL, NULL, 10, '10000000', NULL, '2022-06-07 09:04:47', 'sys', NULL, NULL);"
+    #     DataBase(configs).executeUpdateSql(sql2)
+    DataBase(configs).call_daily_important_batch('20220817','20220817')

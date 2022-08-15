@@ -13,7 +13,7 @@ class DaiHou():
 		t=r.json()
 		print("模拟银行回调成功",t)
 	#app页面去选择stp渠道生成待还pay_tran_dtl数据，并从接口获取到所有未还账单日，取最近一期去模拟银行回调还款-单期足额
-	def getRepayDateList_stp(self,registNo,loanNo,headt):
+	def getRepayDateList_stp_repayment(self,registNo,loanNo,headt):
 		daiQian=DaiQian_Danqi()
 		sql="select CUST_NO from cu_cust_reg_dtl where REGIST_NO='"+registNo+"';"
 		custNo=DataBase(configs).get_one(sql)
@@ -103,4 +103,6 @@ class DaiHou():
 		print(r.json())
 
 if __name__ == '__main__':
-    DaiHou().oxxo_repay('2140','L2012206148224986994611257344')
+	token=DaiQian_Danqi().login_code('8112714085')
+	headt = head_token(token)
+	DaiHou().getRepayDateList_stp_repayment('8112714085','L2012208108245591588282236928',headt)

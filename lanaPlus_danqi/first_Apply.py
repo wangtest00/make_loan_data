@@ -18,8 +18,7 @@ import io,sys
 def first_apply(registNo):
     daiQian=DaiQian_Danqi()
     daiQian.update_batch_log()
-    code=compute_code(registNo)
-    token=daiQian.login_code(registNo,code)
+    token=daiQian.login_code(registNo)
     headt = head_token(token)
     daiQian.update_pwd(registNo, headt)
     custNo = daiQian.auth_cert(registNo, headt)
@@ -42,7 +41,7 @@ def sheiPiHou(loanNo, registNo, custNo, headt):
     daiQian = DaiQian_Danqi()
     MockData().insert_risk(loanNo)  # 匹配产品
     #停在【通过】状态，用户待提现
-    w = daiQian.withdraw(registNo, custNo, loanNo, headt)  # app页面点击提现
+    w = daiQian.withdraw(registNo, custNo, loanNo, headt)  # app页面点击确认提现
     if w == 1:
         MockData().gaishu(loanNo)
     else:

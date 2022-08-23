@@ -6,7 +6,10 @@ from lanaDigital.daihou import *
 import io,sys
 #改编码方便jenkins运行
 #sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="gb18030")
+from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
+# 禁用安全请求警告
+requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 #注册,登录，提交多种信息，4项认证，待授信状态
 def first_apply(registNo):
     update_pwd(registNo)
@@ -24,7 +27,7 @@ def first_apply(registNo):
     cx_risk_and_approve(custNo)
     withdraw(headt)
     time.sleep(1)
-    web_hook_payout_stp()   #模拟银行回调-放款
+    web_hook_payout_stp()   #模拟支付放款回调
     time.sleep(1)
     check_stat_fk(custNo)
 

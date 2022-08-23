@@ -49,29 +49,22 @@ def pl_approve(loanNo):
 #组装header+用户登录cookie
 def head_mgt_c():
     ssid=login_mgt()
-    head={"Host": "test-mgt.quantstack.in","Connection": "keep-alive","Content-Length": "55","sec-ch-ua": '"Not A;Brand";v="99", "Chromium";v="90", "Google Chrome";v="90"',"Accept": "application/json, text/plain, */*","sec-ch-ua-mobile": "?0",
-"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36","Content-Type": "application/json;charset=UTF-8","Origin": "https://test-mgt.quantx.mx","Sec-Fetch-Site": "same-origin","Sec-Fetch-Mode": "cors",
-"Sec-Fetch-Dest": "empty","Accept-Encoding": "gzip, deflate, br","Accept-Language": "zh-CN,zh;q=0.9","Cookie": "language=zh; ssid="+ssid+"; hasLogin=1"}
+    head={"Host": "test-mgt.quantstack.in","Connection": "keep-alive","Content-Length": "55","sec-ch-ua": '"Not A;Brand";v="99", "Chromium";v="90", "Google Chrome";v="90"',"Accept": "application/json, text/plain, */*","sec-ch-ua-mobile": "?0","User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36","Content-Type": "application/json;charset=UTF-8","Origin": "https://test-mgt.quantx.mx","Sec-Fetch-Site": "same-origin","Sec-Fetch-Mode": "cors","Sec-Fetch-Dest": "empty","Accept-Encoding": "gzip, deflate, br","Accept-Language": "zh-CN,zh;q=0.9","Cookie": "language=zh; ssid="+ssid+"; hasLogin=1"}
     return head
 def head_mgt_2():
     ssid=login_mgt()
-    head2={"Host": "test-mgt.quantstack.in","Connection": "keep-alive","sec-ch-ua": '"Not A;Brand";v="99", "Chromium";v="90", "Google Chrome";v="90"',
-"Accept": "application/json, text/plain, */*",
-"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36",
-"Sec-Fetch-Site": "same-origin",
-"Sec-Fetch-Mode": "cors",
-"Sec-Fetch-Dest": "empty","Accept-Encoding": "gzip, deflate, br",
-"Accept-Language": "zh-CN,zh;q=0.9","Cookie": "language=zh; ssid="+ssid+"; hasLogin=1"}
+    head2={"Host": "test-mgt.quantstack.in","Connection": "keep-alive","sec-ch-ua": '"Not A;Brand";v="99", "Chromium";v="90", "Google Chrome";v="90"',"Accept": "application/json, text/plain, */*","User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36","Sec-Fetch-Site": "same-origin","Sec-Fetch-Mode": "cors","Sec-Fetch-Dest": "empty","Accept-Encoding": "gzip, deflate, br","Accept-Language": "zh-CN,zh;q=0.9","Cookie": "language=zh; ssid="+ssid+"; hasLogin=1"}
     return head2
 #批量分配及审批
 def pl_shenpi():
     head=head_mgt_2()
-    r=requests.get(host_mgt+'/api/approve/distribution/list?pageSize=10&pageNum=1&lang=zh',headers=head,verify=False)
+    r=requests.get(host_mgt+'/api/approve/flow/list?pageSize=10&pageNum=1',headers=head,verify=False)
     t=r.json()
     t=t['list']
     loan_No_List=[]
     for i in range(len(t)):
         if t[i]['apprStat']=='10200003':
+            print(t[i])
             if t[i]['apprUserNo']=='wangs2@whalekun.com' or t[i]['apprUserNo']=='liull@quantditech.com' or t[i]['apprUserNo']=='lijiahui' or t[i]['apprUserNo']=='wangs@whalekun.com':
                 loan_no=t[i]['loanNo']
                 loan_No_List.append(loan_no)

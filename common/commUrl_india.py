@@ -11,7 +11,7 @@ fundAccountUrl='/api/trade/cust/create/contact/fund_account'
 beneficiaryAccountUrl="/api/compile/cust_beneficiary_account?lang=en"
 instalmentUrl="/api/loan_info/trial/instalment?lang=en"
 confirmWithdrawUrl="/api/trade/fin/less/withdraw?lang=en"
-raorpayCallbackUrl="/api/trade/razorpay_x/annon/event/callback"
+raorpayCallbackUrl="/api/trade/razorpay_x/annon/event/callback/cashtm"
 repayUrl="/api/trade/fin/repay?lang=en"
 paytmWebhookUrl="/api/trade/paytm/payout_webhook"
 mgtLoginUrl="/api/login/auth?lang=en&lang=zh"

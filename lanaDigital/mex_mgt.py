@@ -52,7 +52,7 @@ def approve(custNo):
             check_api(r)
             print("该笔案件-审批通过")
         else:
-            #print("该笔授信案件不是该客户的")
+            print("该笔授信案件不是该客户的")
             pass
 
 #组装header+用户登录cookie
@@ -90,5 +90,5 @@ def pl_shenpi():
     pl_approve(head)
 
 if __name__ == '__main__':
-    #approve('C2082110148136909639519502336')
-    pl_shenpi()
+    approve('C2082111038144131744472432640')
+    #pl_shenpi()

@@ -13,7 +13,7 @@ class ApiTest(Api_Request):
 class DaiQian_Duoqi(ApiTest):
     #第一次验证码注册登录，返回token
     def login_code(self,registNo,code):
-        data1 = {"registNo": registNo, "code": code, "gaid": shenpiren[appNo][5], "channelNo": ""}
+        data1 = {"registNo": registNo, "code": code, "gaid": mainInfo[appNo][5], "channelNo": ""}
         t=ApiTest.api_Request(self,'post',host_api+loginUrl,ApiTest.change_type(self,data1),head_api)
         if t!=0:
             token=t['data']['token']
@@ -22,7 +22,7 @@ class DaiQian_Duoqi(ApiTest):
             return 0
     #通过密码登录，返回token
     def login_pwd(self,registNo):
-        data2 = {"registNo": registNo, "password": "123456", "gaid": shenpiren[appNo][5], "channelNo": ""}
+        data2 = {"registNo": registNo, "password": "123456", "gaid": mainInfo[appNo][5], "channelNo": ""}
         t=ApiTest.api_Request(self,'post',host_api+loginPwdUrl,ApiTest.change_type(self,data2),head_api)
         if t!=0:
             token=t['data']['token']

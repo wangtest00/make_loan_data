@@ -70,7 +70,7 @@ class DaiQian_Tur(ApiTest):
         for j in range(5):  #生成5个随机英文大写字母
             st+=random.choice(string.ascii_uppercase)
         num=str(random.randint(1000,9999))   #certNo=num+"4567"+num
-        data={"appName":appName,"appNo":appNo,"birthDay":"1998-06-06","certNo":num+"1122"+num,"custFirstName":"wang","custLastName":"shuang","custMiddleName":"mmmm","education":"10190006",
+        data={"appName":appName,"appNo":appNo,"birthDay":"1998-06-06","certNo":num+"4567"+num,"custFirstName":"wang","custLastName":"shuang","custMiddleName":"mmmm","education":"10190006",
               "marriage":"10050001","panNo":""+st+num+"W","registNo":registNo,"sex":"10030001","useEmail":"sdfghhhj@gmail.com","useLang":"90000001"}
         res=ApiTest.api_Request(self,'post',host_api+certAuthUrl,ApiTest.change_type(self,data),headt)
         if res!=0:
@@ -344,6 +344,14 @@ class DaiQian_Tur(ApiTest):
         inst_time = str(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
         sql='''INSERT INTO `manage_need_loan`.`cu_white_list_dtl`(`ID`, `WHITE_LIST_TYPE`, `WHITE_LIST_VALUE`, `APP_NO`, `RISK_SCORE`, `USEABLE`, `VALID_START_DATE`, `VALID_END_DATE`, `ORIGIN`, `DESCRIPTION`, `REMARK`, `INST_TIME`, `INST_USER_NO`, `UPDT_TIME`, `UPDT_USER_NO`) 
         VALUES ("'''+t+'''", '10140001', "'''+registNo+'''", "'''+appNo+'''", "'''+prodNo+'''", '10000001', '20220415', '20220715', 'auto_test', NULL, NULL, "'''+inst_time+'''", 'wangs@whalekun.com', "'''+inst_time+'''", 'wangs@whalekun.com');'''
+        DataBase(configs).executeUpdateSql(sql)
+
+    def insert_black_list(self,registNo):
+        t = str(time.time() * 1000000)[:15]
+        inst_time = str(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+        sql='''INSERT INTO `manage_need_loan`.`cu_black_list_dtl`(`ID`, `BLACK_LIST_TYPE`, `BLACK_LIST_VALUE`, `USEABLE`, `VALID_START_DATE`, `VALID_END_DATE`, `ORIGIN`, `DESCRIPTION`, `APP_NO`, `BUSI_DATE`, `REMARK`, `INST_USER_NAME`, `INST_TIME`, `INST_USER_NO`, `UPDT_TIME`, `UPDT_USER_NAME`, `UPDT_USER_NO`) 
+        VALUES ("'''+t+'''", '10010001', "'''+registNo+'''", '10000001', '20220815', '21220816', '测试', NULL, '104', '20220815', NULL, NULL, '2022-08-15 11:45:29', 'wangs@whalekun.com', "'''+inst_time+'''", NULL, 'wangs@whalekun.com');
+'''
         DataBase(configs).executeUpdateSql(sql)
 
     def cx_pay_chan_service(self):

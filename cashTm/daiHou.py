@@ -6,7 +6,7 @@ from data.var_cashTm import *
 
 t=str(time.time()*1000000)[:10]
 head_pay_for_razorpay={"Host":"test-pay.quantstack.in","Connection":"keep-alive","Content-Length":"116","Postman-Token":"68cc47f6-8c1f-4ebd-a929-b1ae10b7dd19",
-                "User-Agent":"PostmanRuntime/7.28.2","Accept":"*/*","Content-Type":"application/json","Accept-Encoding":"gzip, deflate, br","X-Razorpay-Event-Id":"HDSG"+t}
+    "User-Agent":"PostmanRuntime/7.28.2","Accept":"*/*","Content-Type":"application/json","Accept-Encoding":"gzip, deflate, br","X-Razorpay-Event-Id":"HDSG"+t,"X-Razorpay-Signature":"cashtm9527"}
 class DaiHou_CashTm():
     @hulue_error()
     def payout_mock_apply(self,loanNo,custNo):

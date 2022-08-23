@@ -14,8 +14,8 @@ def first_apply():
     daiQian = DaiQian_Tur()
     daiQian.update_Batch_Log()
     registNo=str(random.randint(8000000000,9999999999)) #10位随机数
+    #daiQian.insert_white_list(registNo)
     token=daiQian.login_code(registNo)
-    # daiQian.insert_white_list(registNo)   #插入白名单数据
     headt=daiQian.head_token(token)
     custNo=daiQian.cert_auth(registNo,headt)
     daiQian.auth(registNo,custNo,headt)

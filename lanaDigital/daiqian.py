@@ -123,14 +123,9 @@ def auth_review_contact(custNo,headt):
 #抓取数据接口
 def auth_app_grab_data(phoneNo,custNo,headt):
     #设备信息
-    data4={"appNo":appNo,"phoneNo":phoneNo,"dataType":"11090003","pageGet":"Contact","recordTime":"1621332187810","grabData":{"ipAddress":"2409:8162:a46:5405:1:0:107f:acec%20","ipResolveCit":"2409:8162:a46:5405:1:0:107f:acec%20",
-    "ipResolveCom":"2409:8162:a46:5405:1:0:107f:acec%20","deviceId":"a2eff92b-86cb-4614-a66c-84ae322f3adcA2:B4:74:63:FB:40LIO-AL00","imei":"a2eff92b-86cb-4614-a66c-84ae322f3adc","mac":"A2:B4:74:63:FB:40","phoneNo":phoneNo,"recordBehavior":"抓取设备数据","recordTime":"1621332187810","userId":custNo,"mobileBrand":"HUAWEI","mobileModel":"LIO-AL00","systemVersion":"10","otherInfo":"274b98eb5c8aed06"},"custNo":custNo}
+    data4={"appNo":appNo,"phoneNo":phoneNo,"dataType":"11090003","pageGet":"Contact","recordTime":"1621332187810","grabData":{"ipAddress":"2409:8162:a46:5405:1:0:107f:acec%20","ipResolveCit":"2409:8162:a46:5405:1:0:107f:acec%20","ipResolveCom":"2409:8162:a46:5405:1:0:107f:acec%20","deviceId":"a2eff92b-86cb-4614-a66c-84ae322f3adcA2:B4:74:63:FB:40LIO-AL00","imei":"a2eff92b-86cb-4614-a66c-84ae322f3adc","mac":"A2:B4:74:63:FB:40","phoneNo":phoneNo,"recordBehavior":"抓取设备数据","recordTime":"1621332187810","userId":custNo,"mobileBrand":"HUAWEI","mobileModel":"LIO-AL00","systemVersion":"10","otherInfo":"274b98eb5c8aed06"},"custNo":custNo}
     #联系人
-    data5={"appNo":appNo,"phoneNo":phoneNo,"dataType":"11090002","pageGet":"Contact","recordTime":"1621332187811","grabData":{"data":
-    [{"contactName":"test","contactNo":"888 845 5666","deviceId":"a2eff92b-86cb-4614-a66c-84ae322f3adcA2:B4:74:63:FB:40LIO-AL00","imei":"a2eff92b-86cb-4614-a66c-84ae322f3adc",
-      "mac":"A2:B4:74:63:FB:40","phoneNo":phoneNo,"recordBehavior":"联系人列表抓取","recordTime":"1621332187811","userId":custNo},{"contactName":"test2","contactNo":"888 335 5777",
-    "deviceId":"a2eff92b-86cb-4614-a66c-84ae322f3adcA2:B4:74:63:FB:40LIO-AL00","imei":"a2eff92b-86cb-4614-a66c-84ae322f3adc","mac":"A2:B4:74:63:FB:40","phoneNo":phoneNo,"recordBehavior":"联系人列表抓取",
-    "recordTime":"1621332187811","userId":custNo}]},"custNo":custNo}
+    data5={"appNo":appNo,"phoneNo":phoneNo,"dataType":"11090002","pageGet":"Contact","recordTime":"1621332187811","grabData":{"data":[{"contactName":"test","contactNo":"888 845 5666","deviceId":"a2eff92b-86cb-4614-a66c-84ae322f3adcA2:B4:74:63:FB:40LIO-AL00","imei":"a2eff92b-86cb-4614-a66c-84ae322f3adc","mac":"A2:B4:74:63:FB:40","phoneNo":phoneNo,"recordBehavior":"联系人列表抓取","recordTime":"1621332187811","userId":custNo},{"contactName":"test2","contactNo":"888 335 5777","deviceId":"a2eff92b-86cb-4614-a66c-84ae322f3adcA2:B4:74:63:FB:40LIO-AL00","imei":"a2eff92b-86cb-4614-a66c-84ae322f3adc","mac":"A2:B4:74:63:FB:40","phoneNo":phoneNo,"recordBehavior":"联系人列表抓取","recordTime":"1621332187811","userId":custNo}]},"custNo":custNo}
     #短信内容
     data6={"appNo":appNo,"phoneNo":phoneNo,"dataType":"11090005","pageGet":"Contact","recordTime":"1621332187836","grabData":{"data":[{"body":"【中国农业银行】您尾号8579账户05月18日17:02完成支付宝交易人民币-5000.00，余额9999999999.19。","address":"95599","date":"2021-05-18 17:02:48.863","dateSent":"2021-05-18 17:02:46.000","sender":"95599","kind":"SmsMessageKind.Received"}]},"custNo":custNo}
     #位置信息
@@ -144,7 +139,6 @@ def auth_app_grab_data(phoneNo,custNo,headt):
         time.sleep(1)
 # 第四个页面，其他联系人信息认证接口
 def auth_contact(custNo,headt):
-    #data9={"contacts":[{"name":"test","phone":"8888455666","relationship":"10110004"},{"name":"test2","phone":"8883355777","relationship":"10110003"}],"custNo":custNo}
     data9={"custNo":custNo,"contacts":[{"custNo":custNo,"name":"test1","phone":"123333","relationship":"10110004","relationshipName":"Hermanos"},{"custNo":custNo,"name":"test2","phone":"543212601","relationship":"10110001","relationshipName":"Padres"}]}
     r9=requests.post(host_api+'/api/cust/auth/other/contact',data=json.dumps(data9),headers=headt,verify=False)#最后一步，填写2个联系人的联系方式
     check_api(r9)
@@ -173,16 +167,16 @@ def update_kyc_auth(phoneNo,custNo):
 
 #绑定银行卡接口，需要把银行卡号改成明显错的，环境怕放出真实的钱
 def auth_bank(custNo,headt):
-    #bank_acct_no=str(random.randint(100000,999999))
+    bank_acct_no=str(random.randint(100000,999999))
     data={"bankCode":"10020008","bankCodeName":"BBVA BANCOMER","clabe":"012121212121212128","custNo":custNo}
     r=requests.post(host_api+'/api/cust/auth/bank',data=json.dumps(data),headers=headt,verify=False)
     check_api(r)                                         #改为6位随机数
-   # sql="update cu_cust_bank_card_dtl set BANK_ACCT_NO='"+bank_acct_no+"' where CUST_NO='"+custNo+"';"
-   # DataBase(which_db).executeUpdateSql(sql)
+    sql="update cu_cust_bank_card_dtl set BANK_ACCT_NO='"+bank_acct_no+"' where CUST_NO='"+custNo+"';"
+    DataBase(which_db).executeUpdateSql(sql)
 
 #风控授信调度接口：api调风控，获得风控回调结果
 def risk_credit(headt):
-    r = requests.post(host_api+'/api/task/risk/lanaDigital',headers=headt,verify=False)
+    r = requests.post(host_api+'/api/task/risk/credit',headers=headt,verify=False)
     check_api(r)
     print("api调风控接口，获得风控回调结果")
 
@@ -204,8 +198,6 @@ def cx_risk_and_approve(custNo):
 #模拟银行回调-放款,可能会调失败
 def web_hook_payout_stp():
     delay_payout_handler()
-    #sql="select tran_no,tran_order_no from pay_tran_dtl where tran_no=(select ORDER_NO from lo_loan_payout_dtl where LOAN_NO=(select loan_no from lo_loan_dtl  where CUST_NO='"+cust_no+"')); "
-    #print(sql)
     sql="select TRAN_NO,TRAN_ORDER_NO from pay_tran_dtl t where  t.TRAN_TYPE='10320003'  and IN_ACCT_NO='012121212121212128' and  ACT_TRAN_AMT is null  order by INST_TIME desc limit 1;"
     list=DataBase(which_db).get_one(sql)
     print(list)
@@ -227,16 +219,17 @@ def web_hook_payout_stp():
 #唤醒延迟放款
 def delay_payout_handler():
     for i in range(1):
-        r=requests.post(host_api+"/api/lanaDigital/payment/anon/delay_payout_handler",headers=head_api,verify=False)
+        r=requests.post(host_api+"/api/credit/payment/anon/delay_payout_handler",headers=head_api,verify=False)
         check_api(r)
         time.sleep(3)
 
 def payment_detail(headt):
-    r=requests.post(host_api+"/api/lanaDigital/payment/detail",headers=headt,verify=False)
+    r=requests.post(host_api+"/api/credit/payment/detail",headers=headt,verify=False)
     check_api(r)
+
 def payment(headt):
     data={"withdrawAmt":"500.0"}
-    r=requests.post(host_api+"/api/lanaDigital/payment",data=json.dumps(data),headers=headt,verify=False)
+    r=requests.post(host_api+"/api/credit/payment",data=json.dumps(data),headers=headt,verify=False)
     check_api(r)
 
 #检查放款成功

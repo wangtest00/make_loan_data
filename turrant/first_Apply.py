@@ -15,12 +15,13 @@ requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 1.白名单用户直接走白名单老逻辑，贷前状态变更为“待匹配产品”
 2.非黑非白用户才能进入风控
 '''
-def first_apply_bank_razorpay():#白名单用户进件
+def first_apply_bank_razorpay_w():#白名单用户进件
     daiQian = DaiQian_Tur()
-    sql = "UPDATE sys_app_info set PAY_CHAN_SERVICE='TurrantRazorpayTest' where app_no='"+appNo+"';"
-    DataBase(configs).executeUpdateSql(sql)
+    # sql = "UPDATE sys_app_info set PAY_CHAN_SERVICE='TurrantRazorpayTest' where app_no='"+appNo+"';"
+    # DataBase(configs).executeUpdateSql(sql)
     daiQian.update_Batch_Log()
-    registNo=str(random.randint(8000000000,9999999999)) #10位随机数
+    #registNo=str(random.randint(8000000000,9999999999)) #10位随机数
+    registNo='7428000111'
     token=daiQian.login_code(registNo)
     daiQian.insert_white_list(registNo)   #插入白名单数据。
     headt=daiQian.head_token(token)
@@ -30,17 +31,17 @@ def first_apply_bank_razorpay():#白名单用户进件
     daiQian.update_kyc_auth(registNo,custNo)
     daiQian.bank_auth(custNo,headt)
     loanNo=daiQian.loan(registNo,custNo,headt)
-    DataBase(configs).call_proc('proc_apr_loan_prod_sel')  # 产品匹配
-    daiQian.withdraw(custNo,loanNo,headt,headw,'12010001')#类型选择绑银行卡，申请提现类型为银行卡
-    pay_chan_service=daiQian.cx_pay_chan_service()
-    if pay_chan_service=='TurrantRazorpayTest':
-        daiQian.razorpayx_annon_event_callback(loanNo)
-    else:
-        print("当前产品的支付渠道=",pay_chan_service,"暂不模拟回调")
-    time.sleep(3)
-    DaiHou_tur().chaXun_Stat(loanNo)
+    # DataBase(configs).call_proc('proc_apr_loan_prod_sel')  # 产品匹配
+    # daiQian.withdraw(custNo,loanNo,headt,headw,'12010001')#类型选择绑银行卡，申请提现类型为银行卡
+    # pay_chan_service=daiQian.cx_pay_chan_service()
+    # if pay_chan_service=='TurrantRazorpayTest':
+    #     daiQian.razorpayx_annon_event_callback(loanNo)
+    # else:
+    #     print("当前产品的支付渠道=",pay_chan_service,"暂不模拟回调")
+    # time.sleep(3)
+    # DaiHou_tur().chaXun_Stat(loanNo)
 
-def first_apply_bank_razorpay_2():#非黑非白走风控，测试环境给人审
+def first_apply_bank_razorpay():#非黑非白走风控，测试环境给人审
     daiQian = DaiQian_Tur()
     sql = "UPDATE sys_app_info set PAY_CHAN_SERVICE='TurrantRazorpayTest' where app_no='"+appNo+"';"
     DataBase(configs).executeUpdateSql(sql)
@@ -54,7 +55,8 @@ def first_apply_bank_razorpay_2():#非黑非白走风控，测试环境给人审
     daiQian.update_kyc_auth(registNo,custNo)
     daiQian.bank_auth(custNo, headt)
     loanNo=daiQian.loan(registNo,custNo,headt)
-
+    india_thirdservice()
+    approve(loanNo)
 
 def first_apply_paytm():
     daiQian = DaiQian_Tur()
@@ -98,14 +100,13 @@ def first_apply_paytm():
     time.sleep(3)
     DaiHou_tur().chaXun_Stat(loanNo)
 
-def first_apply_bank_cashfree():#白名单用户进件
+def first_apply_bank_cashfree():
     daiQian = DaiQian_Tur()
     sql = "UPDATE sys_app_info set PAY_CHAN_SERVICE='TurrantCashFreeTest' where app_no='"+appNo+"';"
     DataBase(configs).executeUpdateSql(sql)
     daiQian.update_Batch_Log()
     registNo=str(random.randint(8000000000,9999999999)) #10位随机数
     token=daiQian.login_code(registNo)
-    daiQian.insert_white_list(registNo)   #插入白名单数据。
     headt=daiQian.head_token(token)
     headw = daiQian.head_token_w(token)
     custNo=daiQian.cert_auth(registNo,headt)
@@ -115,14 +116,14 @@ def first_apply_bank_cashfree():#白名单用户进件
     loanNo=daiQian.loan(registNo,custNo,headt)
     DataBase(configs).call_proc('proc_apr_loan_prod_sel')  # 产品匹配
     daiQian.withdraw(custNo,loanNo,headt,headw,'12010001')#类型选择绑银行卡，申请提现类型为银行卡
-    # pay_chan_service=daiQian.cx_pay_chan_service()
-    # if pay_chan_service=='TurrantCashFreeTest':
-    #     DaiHou_tur().payout_mock_apply(loanNo,custNo,'12010001')
-    # else:
-    #     print("当前产品的支付渠道=",pay_chan_service,"暂不模拟回调")
-    # time.sleep(3)
+    pay_chan_service=daiQian.cx_pay_chan_service()
+    if pay_chan_service=='TurrantCashFreeTest':
+        DaiHou_tur().payout_mock_apply(loanNo,custNo,'12010001')
+    else:
+        print("当前产品的支付渠道=",pay_chan_service,"暂不模拟回调")
+    time.sleep(3)
     DaiHou_tur().chaXun_Stat(loanNo)
 
 if __name__ == '__main__':
     for i in range(1):
-        first_apply_paytm()
+        first_apply_bank_razorpay_w()

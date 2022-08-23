@@ -12,11 +12,11 @@ requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 #改编码方便jenkins运行
 #sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="gb18030")
 '''
-目前只有白名单和非黑非白用户才能进入风控走人审，其余一律拒绝
+目前只有非黑非白用户才能进入风控走人审
 '''
 def first_apply_bank():
     daiQian = DaiQian_CashTm()
-    sql = "UPDATE sys_app_info set PAY_CHAN_SERVICE='CashTmBankOpenTest' where app_no='"+appNo+"';"
+    sql = "UPDATE sys_app_info set PAY_CHAN_SERVICE='CashTmRazorpayTest' where app_no='"+appNo+"';"
     DataBase(configs).executeUpdateSql(sql)
     daiQian.update_Batch_Log()
     registNo=str(random.randint(8000000000,9999999999)) #10位随机数
@@ -53,14 +53,40 @@ def first_apply_bank():
     DataBase(configs).call_many_proc()  # 产品匹配
     daiQian.withdraw(custNo,loanNo,headt,headw,'12010001')#类型选择绑银行卡，申请提现类型为银行卡
     pay_chan_service=daiQian.cx_pay_chan_service()
-    if pay_chan_service=='CashTmBankOpenTest':
+    if pay_chan_service=='CashTmRazorpayTest':
         DaiHou_CashTm().payout_mock_apply(loanNo,custNo)
     else:
         print("当前产品的支付渠道=",pay_chan_service,"暂不模拟回调")
     time.sleep(3)
     DaiHou_CashTm().chaXun_Stat(loanNo)
 
+def first_apply_bank_Razorpay():
+    daiQian = DaiQian_CashTm()
+    sql = "UPDATE sys_app_info set PAY_CHAN_SERVICE='CashTmRazorpayTest' where app_no='"+appNo+"';"
+    DataBase(configs).executeUpdateSql(sql)
+    daiQian.update_Batch_Log()
+    registNo=str(random.randint(8000000000,9999999999)) #10位随机数
+    token=daiQian.login_code(registNo)
+    daiQian.insert_white_list(registNo)   #插入白名单数据。
+    headt=daiQian.head_token(token)
+    headw = daiQian.head_token_w(token)
+    custNo=daiQian.cert_auth(registNo,headt)
+    daiQian.auth(registNo,custNo,headt)
+    daiQian.update_kyc_auth(registNo,custNo)
+    loanNo=daiQian.loan(registNo,custNo,headt)
+    daiQian.lunXunDaiQian(loanNo)
+    daiQian.bank_auth(custNo,headt)
+    DataBase(configs).call_many_proc()  # 产品匹配
+    daiQian.withdraw(custNo,loanNo,headt,headw,'12010001')#类型选择绑银行卡，申请提现类型为银行卡
+
+    # pay_chan_service=daiQian.cx_pay_chan_service()
+    # if pay_chan_service=='CashTmRazorpayTest':
+    #     daiQian.razorpayx_annon_event_callback(loanNo)
+    # else:
+    #     print("当前产品的支付渠道=",pay_chan_service,"暂不模拟回调")
+    # time.sleep(3)
+    # DaiHou_CashTm().chaXun_Stat(loanNo)
 
 if __name__ == '__main__':
     for i in range(1):
-        first_apply_bank()
+        first_apply_bank_Razorpay()

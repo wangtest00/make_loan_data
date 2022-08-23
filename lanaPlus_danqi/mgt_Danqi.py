@@ -9,7 +9,7 @@ from requests.packages.urllib3.exceptions import InsecureRequestWarning
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 #登录mgt,返回ssid值
 def login_mgt():
-    data={"loginName":shenpiren[appNo][0],"password":"jk@123123"}
+    data={"loginName":mainInfo[appNo][0],"password":"jk@123123"}
     r=requests.post(host_mgt+'/api/login/auth?lang=en&lang=zh',data=json.dumps(data),headers=head_mgt,verify=False)
     check_api(r)
     for item in r.cookies:
@@ -20,12 +20,12 @@ def login_mgt():
 #注意：审批人员平均推单存储过程，只对空闲在线的审批人推单
 ##将审批人的审批状态为空闲： 空闲10460001   审批中10460002 离开10460003
 def update_appr_user_stat():
-    sql="update sys_user_info set APPR_USER_STAT='10460001',ON_LINE='10000001',IS_USE='10000001'  where user_no='"+shenpiren[appNo][0]+"';"
+    sql="update sys_user_info set APPR_USER_STAT='10460001',ON_LINE='10000001',IS_USE='10000001'  where user_no='"+mainInfo[appNo][0]+"';"
     DataBase(configs).executeUpdateSql(sql)
 #分配审批人员及审批通过
 def approve(loan_no):
     head=head_mgt_c()
-    data1={"loanNos":[loan_no],"targetUserNo":shenpiren[appNo][0]}
+    data1={"loanNos":[loan_no],"targetUserNo":mainInfo[appNo][0]}
     r=requests.post(host_mgt+'/api/approve/distribution/case?lang=zh',data=json.dumps(data1),headers=head,verify=False)  #1.分配审批人员
     check_api(r)
     data2={"loanNo":loan_no,"decisionReason":"10280038","apprRemark":"备注:测试通过","riskLevel":"AA","riskScore":prodNo,"approveResultType":"PASS"}

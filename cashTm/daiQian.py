@@ -70,7 +70,7 @@ class DaiQian_CashTm(ApiTest):
         for j in range(5):  #生成5个随机英文大写字母
             st+=random.choice(string.ascii_uppercase)
         num=str(random.randint(1000,9999))   #num+"4567"+num
-        data = {"appName": appName, "appNo": appNo, "birthDay": "1991-05-06", "certNo": num + "4566" + num,
+        data = {"appName": appName, "appNo": appNo, "birthDay": "1991-05-06", "certNo": num + "3366" + num,
                 "custFirstName": "wang", "custLastName": "shuang", "custMiddleName": "mmmm", "education": "10190006",
                 "marriage": "10050001", "panNo": "" + st + num + "W", "registNo": registNo, "sex": "10030001",
                 "useEmail": "sdfghhhj@gmail.com", "useLang": "90000001"}
@@ -126,16 +126,15 @@ class DaiQian_CashTm(ApiTest):
         r2=ApiTest.api_Request(self,'post',host_api+checkBankUrl,ApiTest.change_type(self,data2),headt)
         return bank_acct_no
     #暂时不使用，api调支付，支付会去请求创建资金账户-razorpay
-    def create_contact_fund_account(self):
-        #data={ "appNo":appNo,'bankAcctName': 'ashish rajput', 'bankNo': '53110884994', 'custNo': 'C1042204268207123079311327232', 'ifscCode': 'SCBL0036024', 'accType': '12010001', 'pageCode': '12000001', 'repeatBankAcctNo': '53110884994', "address": "123"}
+    def create_contact_fund_account(self,registNo,custNo,headt):
         data={
           "appNo": appNo,
-          "custNo": "C1042204268207123079311327232",
-          "phoneNo": "9054856632",
-          "acctNo": "53110884994",
+          "custNo": custNo,
+          "phoneNo": registNo,
+          "acctNo": "53110884999",
           "acctName": "ashish rajput",
           "ifscCode": "SCBL0036024",
-          "address": "123456"
+          "address": "123456address"
     }
         r = ApiTest.api_Request(self,'post',host_pay +fundAccountUrl,ApiTest.change_type(self,data),headt)
         print(r)
@@ -184,13 +183,13 @@ class DaiQian_CashTm(ApiTest):
             return 0
 
     def withdraw(self,custNo,loanNo,headt,headw,accType):
-        test_phoneNo = '7777777777'
+        #test_phoneNo = '7777777777'
         trial_list=self.trial_instalment(loanNo,headw)
         if trial_list==0:
             print("未获取到期数和贷款金额,不调提现接口")
         else:
-            sql = "delete from pay_tran_dtl where IN_ACCT_NO='"+test_phoneNo+"';"  # 支付要查重复
-            DataBase(configs).executeUpdateSql(sql)
+            # sql = "delete from pay_tran_dtl where IN_ACCT_NO='"+test_phoneNo+"';"  # 支付要查重复
+            # DataBase(configs).executeUpdateSql(sql)
             instNum=trial_list[0]
             loanAmt=trial_list[1]
             data={"custNo":custNo,"instNum":instNum,"loanAmt":loanAmt,"loanNo":loanNo,"prodNo":prodNo,"accType":accType}
@@ -285,7 +284,7 @@ class DaiQian_CashTm(ApiTest):
       }
     }
         t=ApiTest.api_Request(self,'post',host_pay+raorpayCallbackUrl,ApiTest.change_type(self,data),head_pay_for_razorpay)
-        print('razorpay模拟放款回调，响应=',t)
+        print('(需要签名信息，暂不模拟回调)razorpay模拟放款回调，响应=',t)
     #放款申请
     def payout_apply_test(self,loanNo):
         sql = "select CUST_NO,REPAY_DATE from lo_loan_dtl where LOAN_NO='"+loanNo+"';"
@@ -337,7 +336,7 @@ class DaiQian_CashTm(ApiTest):
         t =str(time.time() * 1000000)[:15]
         inst_time = str(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
         sql='''INSERT INTO `manage_need_loan`.`cu_white_list_dtl`(`ID`, `WHITE_LIST_TYPE`, `WHITE_LIST_VALUE`, `APP_NO`, `RISK_SCORE`, `USEABLE`, `VALID_START_DATE`, `VALID_END_DATE`, `ORIGIN`, `DESCRIPTION`, `REMARK`, `INST_TIME`, `INST_USER_NO`, `UPDT_TIME`, `UPDT_USER_NO`) 
-        VALUES ("'''+t+'''", '10140001', "'''+registNo+'''", "'''+appNo+'''", "'''+prodNo+'''", '10000001', '20220415', '20220715', 'auto_test', NULL, NULL, "'''+inst_time+'''", 'wangs@whalekun.com', "'''+inst_time+'''", 'wangs@whalekun.com');'''
+        VALUES ("'''+t+'''", '10140001', "'''+registNo+'''", "'''+appNo+'''", "'''+prodNo+'''", '10000001', '20220415', '21220715', 'auto_test', NULL, NULL, "'''+inst_time+'''", 'wangs@whalekun.com', "'''+inst_time+'''", 'wangs@whalekun.com');'''
         DataBase(configs).executeUpdateSql(sql)
 
     def cx_pay_chan_service(self):
@@ -348,11 +347,8 @@ class DaiQian_CashTm(ApiTest):
         return pay_chan_service
     def app_version(self):
         data={"appNo": "102", "appType": "10090001", "versionNo": "2.6.8", "versionValue": "268"}
-        #r=ApiTest.api_Request(self,'post',host_api+appVersionUrl,ApiTest.change_type(self,data),head_api)
         r=ApiTest.api_Request(self,'post',host_api+appVersionUrl,ApiTest.change_type(self,data),head_api)
 
 if __name__ == '__main__':
-    registNo='8832701318'
-    # loanNo = 'L1042205278218431170053079040'
-    # token=DaiQian_Tur().login_code(registNo)
-    # headt = DaiQian_Tur().head_token(token)
+    daiQian=DaiQian_CashTm()
+    daiQian.razorpayx_annon_event_callback('L1022208228249964416855113728')

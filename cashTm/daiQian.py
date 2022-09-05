@@ -118,11 +118,11 @@ class DaiQian_CashTm(ApiTest):
         DataBase(configs).executeUpdateSql(sql5)
     #绑定银行卡，需要把银行卡号改成明显错的，环境怕放出真实的钱，写入cu_cust_beneficiary_account表     Razorpay渠道绑卡会掉创建资金账户接口https://test-pay.quantstack.in/api/trade/cust/create/contact/fund_account
     def bank_auth(self,custNo,headt):                            #Back_Account-12010001, （PayTm Wallet-12010002）
-        bank_acct_no=str(random.randint(1000000000,9999999999))
-        #bank_acct_no='53110884994'    #生产测试卡号
-        data={"bankAcctName":"ashish rajput","bankAcctNo":bank_acct_no,"custNo":custNo,"ifscCode":"SCBL0036024","accType":"12010001","pageCode":"12000001","repeatBankAcctNo":bank_acct_no}
+        #bank_acct_no=str(random.randint(1000000000,9999999999))
+        bank_acct_no='20251088730'    #生产测试卡号
+        data={"bankAcctName":"ankit rajput","bankAcctNo":bank_acct_no,"custNo":custNo,"ifscCode":"SBIN0001565","accType":"12010001","pageCode":"12000001","repeatBankAcctNo":bank_acct_no}
         r=ApiTest.api_Request(self,'post',host_api+bankAuthUrl,ApiTest.change_type(self,data),headt)
-        data2={"custNo":custNo,"bankAcctNo":bank_acct_no,"bankAcctName":"ashish rajput","accType":"12010001","ifscCode":"SCBL0036024","pageCode":"12000001","repeatBankAcctNo":bank_acct_no}
+        data2={"custNo":custNo,"bankAcctNo":bank_acct_no,"bankAcctName":"ankit rajput","accType":"12010001","ifscCode":"SBIN0001565","pageCode":"12000001","repeatBankAcctNo":bank_acct_no}
         r2=ApiTest.api_Request(self,'post',host_api+checkBankUrl,ApiTest.change_type(self,data2),headt)
         return bank_acct_no
     #暂时不使用，api调支付，支付会去请求创建资金账户-razorpay
@@ -351,4 +351,4 @@ class DaiQian_CashTm(ApiTest):
 
 if __name__ == '__main__':
     daiQian=DaiQian_CashTm()
-    daiQian.razorpayx_annon_event_callback('L1022208228249964416855113728')
+    daiQian.razorpayx_annon_event_callback('L1022208238250329611381178368')

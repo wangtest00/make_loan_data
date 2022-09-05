@@ -10,8 +10,10 @@ from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
 # 禁用安全请求警告
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+
 #注册,登录，提交多种信息，4项认证，待授信状态
-def first_apply(registNo):
+def first_Apply():
+    registNo = str(random.randint(8000000000, 9999999999))  # 10位随机数作为手机号
     update_pwd(registNo)
     token=login_pwd(registNo)
     headt=head_token(token)
@@ -28,15 +30,10 @@ def first_apply(registNo):
     withdraw(headt)
     time.sleep(1)
     web_hook_payout_stp()   #模拟支付放款回调
-    time.sleep(1)
+    time.sleep(3)
     check_stat_fk(custNo)
 
-def auto_test():
-    registNo=str(random.randint(8000000000,9999999999)) #10位随机数作为手机号
-    first_apply(registNo)
 
 
 if __name__ == '__main__':
-    for i in range(1):
-        auto_test()
-    #first_apply('9383893927')
+    first_Apply()

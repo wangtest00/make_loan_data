@@ -1,7 +1,7 @@
 
 appNo='201'
 mainInfo={                                                                                            #GAID                           app版本号
-'201':['wangs2@whalekun.com','https://test-mgt.lanaplus.mx','28070110','mex_pdl_loan','LanaPlus','F000D8F-BC7E-4430-BD97-66E9033DUOQI','136','10090001'],
+'201':['wangs2@whalekun.com','https://test-mgt.lanaplus.mx','10000001','mex_pdl_loan','LanaPlus','F000D8F-BC7E-4430-BD97-66E9033DUOQI','136','10090001'],
 '202':['wangs@whalekun.com','https://test-mgt.feriarapida.mx','25002400','mex_pdl_loan','FeriaRapida']}
 which_db=mainInfo[appNo][3]   #数据库库名
 prodNo=mainInfo[appNo][2]     #产品编号

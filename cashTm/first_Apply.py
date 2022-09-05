@@ -14,7 +14,7 @@ requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 '''
 目前只有非黑非白用户才能进入风控走人审
 '''
-def first_apply_bank():
+def first_Apply_Bank():
     daiQian = DaiQian_CashTm()
     sql = "UPDATE sys_app_info set PAY_CHAN_SERVICE='CashTmRazorpayTest' where app_no='"+appNo+"';"
     DataBase(configs).executeUpdateSql(sql)
@@ -60,7 +60,7 @@ def first_apply_bank():
     time.sleep(3)
     DaiHou_CashTm().chaXun_Stat(loanNo)
 
-def first_apply_bank_Razorpay():
+def first_Apply_Bank_Razorpay_W():
     daiQian = DaiQian_CashTm()
     sql = "UPDATE sys_app_info set PAY_CHAN_SERVICE='CashTmRazorpayTest' where app_no='"+appNo+"';"
     DataBase(configs).executeUpdateSql(sql)
@@ -89,4 +89,4 @@ def first_apply_bank_Razorpay():
 
 if __name__ == '__main__':
     for i in range(1):
-        first_apply_bank_Razorpay()
+        first_Apply_Bank_Razorpay_W()

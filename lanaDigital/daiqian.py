@@ -128,7 +128,7 @@ def auth_app_grab_data(phoneNo,custNo,headt):
     data5={"appNo":appNo,"phoneNo":phoneNo,"dataType":"11090002","pageGet":"Contact","recordTime":"1621332187811","grabData":{"data":[{"contactName":"test","contactNo":"888 845 5666","deviceId":"a2eff92b-86cb-4614-a66c-84ae322f3adcA2:B4:74:63:FB:40LIO-AL00","imei":"a2eff92b-86cb-4614-a66c-84ae322f3adc","mac":"A2:B4:74:63:FB:40","phoneNo":phoneNo,"recordBehavior":"联系人列表抓取","recordTime":"1621332187811","userId":custNo},{"contactName":"test2","contactNo":"888 335 5777","deviceId":"a2eff92b-86cb-4614-a66c-84ae322f3adcA2:B4:74:63:FB:40LIO-AL00","imei":"a2eff92b-86cb-4614-a66c-84ae322f3adc","mac":"A2:B4:74:63:FB:40","phoneNo":phoneNo,"recordBehavior":"联系人列表抓取","recordTime":"1621332187811","userId":custNo}]},"custNo":custNo}
     #短信内容
     data6={"appNo":appNo,"phoneNo":phoneNo,"dataType":"11090005","pageGet":"Contact","recordTime":"1621332187836","grabData":{"data":[{"body":"【中国农业银行】您尾号8579账户05月18日17:02完成支付宝交易人民币-5000.00，余额9999999999.19。","address":"95599","date":"2021-05-18 17:02:48.863","dateSent":"2021-05-18 17:02:46.000","sender":"95599","kind":"SmsMessageKind.Received"}]},"custNo":custNo}
-    #位置信息
+    #GPS位置信息
     data7={"appNo":appNo,"phoneNo":phoneNo,"dataType":"11090004","pageGet":"Contact","recordTime":"1621332187838","grabData":{"latitude":"30.550366","longitude":"104.062236","deviceId":"a2eff92b-86cb-4614-a66c-84ae322f3adcA2:B4:74:63:FB:40LIO-AL00","imei":"a2eff92b-86cb-4614-a66c-84ae322f3adc","mac":"A2:B4:74:63:FB:40","phoneNo":phoneNo,"recordBehavior":"11000003","recordTime":"1621332187838","userId":custNo},"custNo":custNo}
     #已安装应用
     data8={"appNo":appNo,"phoneNo":phoneNo,"dataType":"11090001","pageGet":"Contact","recordTime":"1621332187731","grabData":{"data":[{"appName":"安全教育平台","appPackage":"com.jzzs.ParentsHelper","appVersionNo":"1.7.0","deviceId":"a2eff92b-86cb-4614-a66c-84ae322f3adcA2:B4:74:63:FB:40LIO-AL00","imei":"a2eff92b-86cb-4614-a66c-84ae322f3adc","installTime":1599480832637,"lastUpdateTime":1618934047038,"mac":"A2:B4:74:63:FB:40","phoneNo":phoneNo,"recordBehavior":"App列表抓取","recordTime":"1621332187731","userId":custNo}]},"custNo":custNo}
@@ -198,7 +198,7 @@ def cx_risk_and_approve(custNo):
 #模拟银行回调-放款,可能会调失败
 def web_hook_payout_stp():
     delay_payout_handler()
-    sql="select TRAN_NO,TRAN_ORDER_NO from pay_tran_dtl t where  t.TRAN_TYPE='10320003'  and IN_ACCT_NO='012121212121212128' and  ACT_TRAN_AMT is null  order by INST_TIME desc limit 1;"
+    sql="select TRAN_NO,TRAN_ORDER_NO from pay_tran_dtl t where  t.TRAN_TYPE='10320003'  and  ACT_TRAN_AMT is null  order by INST_TIME desc limit 1;"
     list=DataBase(which_db).get_one(sql)
     print(list)
     data={

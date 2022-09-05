@@ -165,6 +165,7 @@ def repay_stp(registNo):
     sql="select CUST_NO from cu_cust_reg_dtl where PHONE_NO='"+registNo+"';"
     custNo=DataBase(which_db).get_one(sql)
     custNo=custNo[0]
+    time.sleep(5)
     check_stat_jq(custNo)
 
 
@@ -173,4 +174,4 @@ if __name__ == '__main__':
    #stp_repayment('646180244001052731','600')
    # getRepayDateList_stp('8545945423','L2012106248096585023351070720')
    # oxxo_repay('1','L2022109278130737450944495616')
-   repay_stp('9983163090')
+   repay_stp('8886957121')

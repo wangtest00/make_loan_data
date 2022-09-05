@@ -242,7 +242,7 @@ def check_stat_fk(cust_no):
         print("【贷前贷后状态未更新】",cust_no)
 #检查还款结清
 def check_stat_jq(cust_no):
-    sql="select BEFORE_STAT,AFTER_STAT from lo_loan_dtl t where CUST_NO='"+cust_no+"' order by INST_TIME desc limit 1;"
+    sql="select BEFORE_STAT,AFTER_STAT from lo_loan_dtl t where CUST_NO='"+cust_no+"' order by INST_TIME asc limit 1;"
     res=DataBase(which_db).get_one(sql)
     if res[0]=='10260005' and res[1]=='10270005':
         print("【lo_loan_dtl表状态已更新为-已结清】",cust_no)

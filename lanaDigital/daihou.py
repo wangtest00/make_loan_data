@@ -4,7 +4,10 @@ import requests
 from database.credit_database import *
 from lanaDigital.daiqian import *
 from data.var_mex_credit import *
+from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
+# 禁用安全请求警告
+requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 #模拟银行回调接口-模拟还款stp（只需修改卡号cuentaBeneficiario和金额monto）
 def stp_repayment(cuentaBeneficiario,monto):
@@ -123,8 +126,9 @@ def oxxo_repay(amount,loanNo):
 
 #查询账单接口
 def get_repayment_bill(headt):
-    r=requests.get(host_api+"/api/lanaDigital/repayment/bill",headers=headt,verify=False)
+    r=requests.get(host_api+"/api/credit/repayment/bill",headers=headt,verify=False)
     t=r.json()
+    print(t)
     billDetailList=t['data']['billDetailList']
     listjk=[]
     for i in range(len(billDetailList)):
@@ -138,7 +142,7 @@ def get_repayment_bill(headt):
 #申请还款接口-STP方式,返回卡号和还款金额
 def repayment_repay(datas,headt):
     data={"repaymentList":datas,"repaymentMethod":"STP"}
-    r=requests.post(host_api+"/api/lanaDigital/repayment/repay",data=json.dumps(data),headers=headt,verify=False)
+    r=requests.post(host_api+"/api/credit/repayment/repay",data=json.dumps(data),headers=headt,verify=False)
     check_api(r)
     t=r.json()
     st=[]
@@ -152,9 +156,12 @@ def repayment_repay(datas,headt):
 def repay_stp(registNo):
     token=login_pwd(registNo)
     headt=head_token(token)
-    st=get_repayment_bill(headt) #查询账单
-    clabeno_and_money=repayment_repay(st,headt)  #申请还款
-    stp_repayment(clabeno_and_money[0],clabeno_and_money[1])  #stp模拟还款
+	# 查询账单
+    st=get_repayment_bill(headt)
+	# 申请还款
+    clabeno_and_money=repayment_repay(st,headt)
+	# stp模拟还款
+    stp_repayment(clabeno_and_money[0],clabeno_and_money[1])
     sql="select CUST_NO from cu_cust_reg_dtl where PHONE_NO='"+registNo+"';"
     custNo=DataBase(which_db).get_one(sql)
     custNo=custNo[0]
@@ -163,7 +170,7 @@ def repay_stp(registNo):
 
 if __name__ == '__main__':
    #stp_repayment('646170000000001403','30.45')
-   stp_repayment('646180244001052731','600')
+   #stp_repayment('646180244001052731','600')
    # getRepayDateList_stp('8545945423','L2012106248096585023351070720')
    # oxxo_repay('1','L2022109278130737450944495616')
-   #repay_stp('9532088528')
+   repay_stp('9983163090')
